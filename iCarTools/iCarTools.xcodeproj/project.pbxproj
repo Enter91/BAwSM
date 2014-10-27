@@ -1,0 +1,539 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1C30475619FED07300D2EE5E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C30475519FED07300D2EE5E /* main.m */; };
+		1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C30475819FED07300D2EE5E /* AppDelegate.m */; };
+		1C30476119FED07300D2EE5E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C30476019FED07300D2EE5E /* Images.xcassets */; };
+		1C30477019FED07400D2EE5E /* iCarToolsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C30476F19FED07400D2EE5E /* iCarToolsTests.m */; };
+		1C30479319FED74C00D2EE5E /* DINPro-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C30478919FED74C00D2EE5E /* DINPro-Black.otf */; };
+		1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C30478A19FED74C00D2EE5E /* DINPro-BlackItalic.otf */; };
+		1C30479519FED74C00D2EE5E /* DINPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C30478B19FED74C00D2EE5E /* DINPro-Bold.otf */; };
+		1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C30478C19FED74C00D2EE5E /* DINPro-BoldItalic.otf */; };
+		1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C30478D19FED74C00D2EE5E /* DINPro-Italic.otf */; };
+		1C30479819FED74C00D2EE5E /* DINPro-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C30478E19FED74C00D2EE5E /* DINPro-Light.otf */; };
+		1C30479919FED74C00D2EE5E /* DINPro-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C30478F19FED74C00D2EE5E /* DINPro-LightItalic.otf */; };
+		1C30479A19FED74C00D2EE5E /* DINPro-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C30479019FED74C00D2EE5E /* DINPro-Medium.otf */; };
+		1C30479B19FED74C00D2EE5E /* DINPro-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C30479119FED74C00D2EE5E /* DINPro-MediumItalic.otf */; };
+		1C30479C19FED74C00D2EE5E /* DINPro.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C30479219FED74C00D2EE5E /* DINPro.otf */; };
+		1C3047A019FEDDD500D2EE5E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C30478119FED5A100D2EE5E /* ViewController.m */; };
+		1C3047A419FEE09100D2EE5E /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047A619FEE09100D2EE5E /* ViewController.xib */; };
+		1C3047AA19FEE11D00D2EE5E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047AC19FEE11D00D2EE5E /* Localizable.strings */; };
+		1C3047BB19FEE7B600D2EE5E /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047BA19FEE7B600D2EE5E /* background.png */; };
+		1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3047BE19FEE9EC00D2EE5E /* GPSUtilities.m */; };
+		1C3047C319FEEA2B00D2EE5E /* RecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3047C119FEEA2B00D2EE5E /* RecorderViewController.m */; };
+		1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1C30476A19FED07400D2EE5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1C30474819FED07300D2EE5E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C30474F19FED07300D2EE5E;
+			remoteInfo = iCarTools;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1C30475019FED07300D2EE5E /* iCarTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCarTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C30475419FED07300D2EE5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C30475519FED07300D2EE5E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1C30475719FED07300D2EE5E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1C30475819FED07300D2EE5E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1C30476019FED07300D2EE5E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1C30476919FED07400D2EE5E /* iCarToolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iCarToolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C30476E19FED07400D2EE5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C30476F19FED07400D2EE5E /* iCarToolsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarToolsTests.m; sourceTree = "<group>"; };
+		1C30478019FED5A100D2EE5E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		1C30478119FED5A100D2EE5E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		1C30478919FED74C00D2EE5E /* DINPro-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-Black.otf"; sourceTree = "<group>"; };
+		1C30478A19FED74C00D2EE5E /* DINPro-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-BlackItalic.otf"; sourceTree = "<group>"; };
+		1C30478B19FED74C00D2EE5E /* DINPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-Bold.otf"; sourceTree = "<group>"; };
+		1C30478C19FED74C00D2EE5E /* DINPro-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-BoldItalic.otf"; sourceTree = "<group>"; };
+		1C30478D19FED74C00D2EE5E /* DINPro-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-Italic.otf"; sourceTree = "<group>"; };
+		1C30478E19FED74C00D2EE5E /* DINPro-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-Light.otf"; sourceTree = "<group>"; };
+		1C30478F19FED74C00D2EE5E /* DINPro-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-LightItalic.otf"; sourceTree = "<group>"; };
+		1C30479019FED74C00D2EE5E /* DINPro-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-Medium.otf"; sourceTree = "<group>"; };
+		1C30479119FED74C00D2EE5E /* DINPro-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-MediumItalic.otf"; sourceTree = "<group>"; };
+		1C30479219FED74C00D2EE5E /* DINPro.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DINPro.otf; sourceTree = "<group>"; };
+		1C3047B819FEE35900D2EE5E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		1C3047B919FEE36100D2EE5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1C3047BA19FEE7B600D2EE5E /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		1C3047BD19FEE9EC00D2EE5E /* GPSUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSUtilities.h; sourceTree = "<group>"; };
+		1C3047BE19FEE9EC00D2EE5E /* GPSUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSUtilities.m; sourceTree = "<group>"; };
+		1C3047C019FEEA2B00D2EE5E /* RecorderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderViewController.h; sourceTree = "<group>"; };
+		1C3047C119FEEA2B00D2EE5E /* RecorderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderViewController.m; sourceTree = "<group>"; };
+		1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecorderViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1C30474D19FED07300D2EE5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1C30476619FED07400D2EE5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1C30474719FED07300D2EE5E = {
+			isa = PBXGroup;
+			children = (
+				1C30475219FED07300D2EE5E /* iCarTools */,
+				1C30476C19FED07400D2EE5E /* iCarToolsTests */,
+				1C30475119FED07300D2EE5E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1C30475119FED07300D2EE5E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1C30475019FED07300D2EE5E /* iCarTools.app */,
+				1C30476919FED07400D2EE5E /* iCarToolsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1C30475219FED07300D2EE5E /* iCarTools */ = {
+			isa = PBXGroup;
+			children = (
+				1C3047BC19FEE9AA00D2EE5E /* Singletons */,
+				1C30478619FED65200D2EE5E /* Stats Files */,
+				1C30478519FED64600D2EE5E /* Recorder Files */,
+				1C30475719FED07300D2EE5E /* AppDelegate.h */,
+				1C30475819FED07300D2EE5E /* AppDelegate.m */,
+				1C30475319FED07300D2EE5E /* Supporting Files */,
+				1C30478019FED5A100D2EE5E /* ViewController.h */,
+				1C30478119FED5A100D2EE5E /* ViewController.m */,
+				1C3047A619FEE09100D2EE5E /* ViewController.xib */,
+				1C30479D19FED76000D2EE5E /* Resources */,
+			);
+			path = iCarTools;
+			sourceTree = "<group>";
+		};
+		1C30475319FED07300D2EE5E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1C30475419FED07300D2EE5E /* Info.plist */,
+				1C30475519FED07300D2EE5E /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1C30476C19FED07400D2EE5E /* iCarToolsTests */ = {
+			isa = PBXGroup;
+			children = (
+				1C30476F19FED07400D2EE5E /* iCarToolsTests.m */,
+				1C30476D19FED07400D2EE5E /* Supporting Files */,
+			);
+			path = iCarToolsTests;
+			sourceTree = "<group>";
+		};
+		1C30476D19FED07400D2EE5E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1C30476E19FED07400D2EE5E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1C30478519FED64600D2EE5E /* Recorder Files */ = {
+			isa = PBXGroup;
+			children = (
+				1C3047C019FEEA2B00D2EE5E /* RecorderViewController.h */,
+				1C3047C119FEEA2B00D2EE5E /* RecorderViewController.m */,
+				1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */,
+			);
+			name = "Recorder Files";
+			sourceTree = "<group>";
+		};
+		1C30478619FED65200D2EE5E /* Stats Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Stats Files";
+			sourceTree = "<group>";
+		};
+		1C30478719FED65B00D2EE5E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1C30478919FED74C00D2EE5E /* DINPro-Black.otf */,
+				1C30478A19FED74C00D2EE5E /* DINPro-BlackItalic.otf */,
+				1C30478B19FED74C00D2EE5E /* DINPro-Bold.otf */,
+				1C30478C19FED74C00D2EE5E /* DINPro-BoldItalic.otf */,
+				1C30478D19FED74C00D2EE5E /* DINPro-Italic.otf */,
+				1C30478E19FED74C00D2EE5E /* DINPro-Light.otf */,
+				1C30478F19FED74C00D2EE5E /* DINPro-LightItalic.otf */,
+				1C30479019FED74C00D2EE5E /* DINPro-Medium.otf */,
+				1C30479119FED74C00D2EE5E /* DINPro-MediumItalic.otf */,
+				1C30479219FED74C00D2EE5E /* DINPro.otf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		1C30478819FED66700D2EE5E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				1C3047BA19FEE7B600D2EE5E /* background.png */,
+				1C30476019FED07300D2EE5E /* Images.xcassets */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		1C30479D19FED76000D2EE5E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1C30478719FED65B00D2EE5E /* Fonts */,
+				1C30478819FED66700D2EE5E /* Images */,
+				1C3047AC19FEE11D00D2EE5E /* Localizable.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		1C3047BC19FEE9AA00D2EE5E /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				1C3047BD19FEE9EC00D2EE5E /* GPSUtilities.h */,
+				1C3047BE19FEE9EC00D2EE5E /* GPSUtilities.m */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1C30474F19FED07300D2EE5E /* iCarTools */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C30477319FED07400D2EE5E /* Build configuration list for PBXNativeTarget "iCarTools" */;
+			buildPhases = (
+				1C30474C19FED07300D2EE5E /* Sources */,
+				1C30474D19FED07300D2EE5E /* Frameworks */,
+				1C30474E19FED07300D2EE5E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iCarTools;
+			productName = iCarTools;
+			productReference = 1C30475019FED07300D2EE5E /* iCarTools.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1C30476819FED07400D2EE5E /* iCarToolsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C30477619FED07400D2EE5E /* Build configuration list for PBXNativeTarget "iCarToolsTests" */;
+			buildPhases = (
+				1C30476519FED07400D2EE5E /* Sources */,
+				1C30476619FED07400D2EE5E /* Frameworks */,
+				1C30476719FED07400D2EE5E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1C30476B19FED07400D2EE5E /* PBXTargetDependency */,
+			);
+			name = iCarToolsTests;
+			productName = iCarToolsTests;
+			productReference = 1C30476919FED07400D2EE5E /* iCarToolsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1C30474819FED07300D2EE5E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Michał Czwarnowski";
+				TargetAttributes = {
+					1C30474F19FED07300D2EE5E = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					1C30476819FED07400D2EE5E = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 1C30474F19FED07300D2EE5E;
+					};
+				};
+			};
+			buildConfigurationList = 1C30474B19FED07300D2EE5E /* Build configuration list for PBXProject "iCarTools" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 1C30474719FED07300D2EE5E;
+			productRefGroup = 1C30475119FED07300D2EE5E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1C30474F19FED07300D2EE5E /* iCarTools */,
+				1C30476819FED07400D2EE5E /* iCarToolsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1C30474E19FED07300D2EE5E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C30479819FED74C00D2EE5E /* DINPro-Light.otf in Resources */,
+				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
+				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
+				1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */,
+				1C3047A419FEE09100D2EE5E /* ViewController.xib in Resources */,
+				1C30479A19FED74C00D2EE5E /* DINPro-Medium.otf in Resources */,
+				1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */,
+				1C30476119FED07300D2EE5E /* Images.xcassets in Resources */,
+				1C30479319FED74C00D2EE5E /* DINPro-Black.otf in Resources */,
+				1C30479B19FED74C00D2EE5E /* DINPro-MediumItalic.otf in Resources */,
+				1C3047BB19FEE7B600D2EE5E /* background.png in Resources */,
+				1C3047AA19FEE11D00D2EE5E /* Localizable.strings in Resources */,
+				1C30479C19FED74C00D2EE5E /* DINPro.otf in Resources */,
+				1C30479519FED74C00D2EE5E /* DINPro-Bold.otf in Resources */,
+				1C30479919FED74C00D2EE5E /* DINPro-LightItalic.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1C30476719FED07400D2EE5E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1C30474C19FED07300D2EE5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C3047C319FEEA2B00D2EE5E /* RecorderViewController.m in Sources */,
+				1C3047A019FEDDD500D2EE5E /* ViewController.m in Sources */,
+				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,
+				1C30475619FED07300D2EE5E /* main.m in Sources */,
+				1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1C30476519FED07400D2EE5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C30477019FED07400D2EE5E /* iCarToolsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1C30476B19FED07400D2EE5E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1C30474F19FED07300D2EE5E /* iCarTools */;
+			targetProxy = 1C30476A19FED07400D2EE5E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1C3047A619FEE09100D2EE5E /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1C3047B819FEE35900D2EE5E /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+		1C3047AC19FEE11D00D2EE5E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1C3047B919FEE36100D2EE5E /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1C30477119FED07400D2EE5E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		1C30477219FED07400D2EE5E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1C30477419FED07400D2EE5E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = iCarTools/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1C30477519FED07400D2EE5E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = iCarTools/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1C30477719FED07400D2EE5E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = iCarToolsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iCarTools.app/iCarTools";
+			};
+			name = Debug;
+		};
+		1C30477819FED07400D2EE5E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = iCarToolsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iCarTools.app/iCarTools";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1C30474B19FED07300D2EE5E /* Build configuration list for PBXProject "iCarTools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C30477119FED07400D2EE5E /* Debug */,
+				1C30477219FED07400D2EE5E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1C30477319FED07400D2EE5E /* Build configuration list for PBXNativeTarget "iCarTools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C30477419FED07400D2EE5E /* Debug */,
+				1C30477519FED07400D2EE5E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1C30477619FED07400D2EE5E /* Build configuration list for PBXNativeTarget "iCarToolsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C30477719FED07400D2EE5E /* Debug */,
+				1C30477819FED07400D2EE5E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1C30474819FED07300D2EE5E /* Project object */;
+}

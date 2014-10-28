@@ -50,7 +50,6 @@
 - (IBAction)statsOpenAction:(id)sender {
     NSURL *url = [NSURL URLWithString:@"http://maps.apple.com/maps?q=Szczecin"];
     [[UIApplication sharedApplication] openURL:url];
-    
 }
 
 - (IBAction)settingsOpenAction:(id)sender {

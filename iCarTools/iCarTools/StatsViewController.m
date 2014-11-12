@@ -19,6 +19,11 @@
      
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    
+    [self.view setBackgroundColor:[UIColor blackColor]];
+
 
 }
 

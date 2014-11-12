@@ -28,6 +28,9 @@
 		1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3047BE19FEE9EC00D2EE5E /* GPSUtilities.m */; };
 		1C3047C319FEEA2B00D2EE5E /* RecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3047C119FEEA2B00D2EE5E /* RecorderViewController.m */; };
 		1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */; };
+		1CF81C491A12954800496116 /* record_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C481A12954800496116 /* record_button.png */; };
+		1CF81C4B1A12971800496116 /* white line.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4A1A12971800496116 /* white line.png */; };
+		1CF81C4D1A129A6B00496116 /* smallDotImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4C1A129A6B00496116 /* smallDotImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +73,9 @@
 		1C3047C019FEEA2B00D2EE5E /* RecorderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderViewController.h; sourceTree = "<group>"; };
 		1C3047C119FEEA2B00D2EE5E /* RecorderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderViewController.m; sourceTree = "<group>"; };
 		1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecorderViewController.xib; sourceTree = "<group>"; };
+		1CF81C481A12954800496116 /* record_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record_button.png; sourceTree = "<group>"; };
+		1CF81C4A1A12971800496116 /* white line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white line.png"; sourceTree = "<group>"; };
+		1CF81C4C1A129A6B00496116 /* smallDotImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallDotImage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +194,9 @@
 		1C30478819FED66700D2EE5E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1CF81C4C1A129A6B00496116 /* smallDotImage.png */,
+				1CF81C4A1A12971800496116 /* white line.png */,
+				1CF81C481A12954800496116 /* record_button.png */,
 				1C3047BA19FEE7B600D2EE5E /* background.png */,
 				1C30476019FED07300D2EE5E /* Images.xcassets */,
 			);
@@ -297,8 +306,10 @@
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
 				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
 				1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */,
+				1CF81C4D1A129A6B00496116 /* smallDotImage.png in Resources */,
 				1C3047A419FEE09100D2EE5E /* ViewController.xib in Resources */,
 				1C30479A19FED74C00D2EE5E /* DINPro-Medium.otf in Resources */,
+				1CF81C4B1A12971800496116 /* white line.png in Resources */,
 				1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */,
 				1C30476119FED07300D2EE5E /* Images.xcassets in Resources */,
 				1C30479319FED74C00D2EE5E /* DINPro-Black.otf in Resources */,
@@ -307,6 +318,7 @@
 				1C3047AA19FEE11D00D2EE5E /* Localizable.strings in Resources */,
 				1C30479C19FED74C00D2EE5E /* DINPro.otf in Resources */,
 				1C30479519FED74C00D2EE5E /* DINPro-Bold.otf in Resources */,
+				1CF81C491A12954800496116 /* record_button.png in Resources */,
 				1C30479919FED74C00D2EE5E /* DINPro-LightItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -524,6 +536,7 @@
 				1C30477519FED07400D2EE5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1C30477619FED07400D2EE5E /* Build configuration list for PBXNativeTarget "iCarToolsTests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +545,7 @@
 				1C30477819FED07400D2EE5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

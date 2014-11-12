@@ -60,15 +60,23 @@
                 self.pickerController.cameraViewTransform = CGAffineTransformIdentity;
                 self.pickerController.videoQuality = UIImagePickerControllerQualityType640x480;
                 
-                CGRect originalCameraFrame = self.pickerController.view.frame;
+                /*CGRect originalCameraFrame = self.pickerController.view.frame;
                 originalCameraFrame.origin.x = (self.view.frame.size.width - originalCameraFrame.size.width)/2;
                 originalCameraFrame.origin.y = (self.view.frame.size.height - originalCameraFrame.size.height)/2;
-                self.pickerController.view.frame = originalCameraFrame;
+                self.pickerController.view.frame = originalCameraFrame;*/
+                
                 [self.pickerController setModalPresentationStyle:UIModalPresentationFullScreen];
                 
                 if (![self.pickerController.view isDescendantOfView:self.view]) {
                     [self.view addSubview:self.pickerController.view];
                 }
+                
+                [self.pickerController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+                
+                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pickerController.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pickerController.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pickerController.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pickerController.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
                 
             } else {
                 UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
@@ -108,6 +116,12 @@
     
     if (![self.upperBackgroundView isDescendantOfView:self.view]) {
         [self.view addSubview:self.upperBackgroundView];
+        
+        [self.upperBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.upperBackgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeHeight multiplier:320.0/44.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
     
     if (!self.lowerBackgroundView) {
@@ -118,6 +132,12 @@
     
     if (![self.lowerBackgroundView isDescendantOfView:self.view]) {
         [self.view addSubview:self.lowerBackgroundView];
+        
+        [self.lowerBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.lowerBackgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeHeight multiplier:320.0/95.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
     }
     
     if (!self.exitButton) {
@@ -127,6 +147,12 @@
     
     if (![self.exitButton isDescendantOfView:self.view]) {
         [self.view addSubview:self.exitButton];
+        
+        [self.exitButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.exitButton addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.exitButton attribute:NSLayoutAttributeHeight multiplier:50.0/44.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:10.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
     
     [self.exitButton removeTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
@@ -134,13 +160,20 @@
     
     if (!self.cameraRecordingButton) {
         self.cameraRecordingButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-75, 75, 75)];
+        [self.cameraRecordingButton setBackgroundColor:[UIColor clearColor]];
+        [self.cameraRecordingButton setImage:[UIImage imageNamed:@"record_button"] forState:UIControlStateNormal];
         [self.cameraRecordingButton setUserInteractionEnabled:YES];
-        [self.cameraRecordingButton setBackgroundColor:[UIColor redColor]];
-        [self.cameraRecordingButton.layer setCornerRadius:self.cameraRecordingButton.frame.size.width/2.0];
+        
     }
     
     if (![self.cameraRecordingButton isDescendantOfView:self.view]) {
         [self.view addSubview:self.cameraRecordingButton];
+        
+        [self.cameraRecordingButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.cameraRecordingButton addConstraint:[NSLayoutConstraint constraintWithItem:self.cameraRecordingButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.cameraRecordingButton attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.cameraRecordingButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeHeight multiplier:75.0/95.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.cameraRecordingButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.cameraRecordingButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
     }
     
     [self.cameraRecordingButton removeTarget:self action:@selector(toggleVideoRecording) forControlEvents:UIControlEventTouchUpInside];
@@ -149,10 +182,22 @@
     UIImageView *whiteLine1 = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"white line" ofType:@"png"]]];
     [whiteLine1 setFrame:CGRectMake(10, self.view.frame.size.height-46-2, whiteLine1.frame.size.width/2, whiteLine1.frame.size.height/2)];
     [self.view addSubview:whiteLine1];
+    [whiteLine1 setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [whiteLine1 addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine1 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:whiteLine1 attribute:NSLayoutAttributeHeight multiplier:205.0/2.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine1 attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.cameraRecordingButton attribute:NSLayoutAttributeLeft multiplier:1.0 constant:-10.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine1 attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:10.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine1 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
     
     UIImageView *whiteLine2 = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"white line" ofType:@"png"]]];
     [whiteLine2 setFrame:CGRectMake(self.view.frame.size.width-10-whiteLine2.frame.size.width/2, self.view.frame.size.height-46-2, whiteLine2.frame.size.width/2, whiteLine2.frame.size.height/2)];
     [self.view addSubview:whiteLine2];
+    [whiteLine2 setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [whiteLine2 addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine2 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:whiteLine2 attribute:NSLayoutAttributeHeight multiplier:205.0/2.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine2 attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.cameraRecordingButton attribute:NSLayoutAttributeRight multiplier:1.0 constant:10.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine2 attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:-10.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine2 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
     
     if (!self.speedLabel) {
         self.speedLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height-47-48, 73, 48)];
@@ -160,6 +205,12 @@
         [self.speedLabel setTextAlignment:NSTextAlignmentRight];
         [self.speedLabel setTextColor:[UIColor whiteColor]];
         [self.view addSubview:self.speedLabel];
+        
+        [self.speedLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.speedLabel addConstraint:[NSLayoutConstraint constraintWithItem:self.speedLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.speedLabel attribute:NSLayoutAttributeHeight multiplier:73.0/48.0 constant:1.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeHeight multiplier:48.0/95.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedLabel attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:10.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
     
     if (!self.speedUnitsLabel) {
@@ -169,6 +220,12 @@
         [self.speedUnitsLabel setTextColor:[UIColor whiteColor]];
         [self.speedUnitsLabel setText:@"km/h"];
         [self.view addSubview:self.speedUnitsLabel];
+        
+        [self.speedUnitsLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.speedUnitsLabel addConstraint:[NSLayoutConstraint constraintWithItem:self.speedUnitsLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.speedUnitsLabel attribute:NSLayoutAttributeHeight multiplier:25.0/27.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedUnitsLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:25.0/320.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedUnitsLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.speedLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:2.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedUnitsLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
 }
 
@@ -237,6 +294,12 @@
     self.smallDotImageView.alpha = 0.0f;
     
     [self.cameraRecordingButton addSubview:self.smallDotImageView];
+    
+    [self.smallDotImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.smallDotImageView addConstraint:[NSLayoutConstraint constraintWithItem:self.smallDotImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.smallDotImageView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0]];
+    [self.cameraRecordingButton addConstraint:[NSLayoutConstraint constraintWithItem:self.smallDotImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.cameraRecordingButton attribute:NSLayoutAttributeWidth multiplier:65.0/75.0 constant:0.0]];
+    [self.cameraRecordingButton addConstraint:[NSLayoutConstraint constraintWithItem:self.smallDotImageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.cameraRecordingButton attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+    [self.cameraRecordingButton addConstraint:[NSLayoutConstraint constraintWithItem:self.smallDotImageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.cameraRecordingButton attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
     
     [UIView animateWithDuration:0.5 animations:^{
         self.smallDotImageView.alpha = 1.0f;

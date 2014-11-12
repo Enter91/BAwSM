@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GPSUtilities.h"
 
 @interface StatsViewController : UIViewController
+
+@property (strong, nonatomic) IBOutlet UIView *view;
+
+@property (nonatomic, assign) id delegate;
 
 @end

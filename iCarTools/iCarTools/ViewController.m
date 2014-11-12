@@ -48,8 +48,17 @@
 
 #pragma mark- Obsługa StatsViewController
 - (IBAction)statsOpenAction:(id)sender {
-    NSURL *url = [NSURL URLWithString:@"http://maps.apple.com/maps?q=Szczecin"];
-    [[UIApplication sharedApplication] openURL:url];
+    if (_statsView) {
+        _statsView.delegate = nil;
+        _statsView = nil;
+    }
+    
+    _statsView = [[StatsViewController alloc] initWithNibName:@"StatsViewController" bundle:nil];
+    _statsView.delegate = self;
+    [self presentViewController:_statsView animated:YES completion:nil];
+    
+    //NSURL *url = [NSURL URLWithString:@"http://maps.apple.com/maps?q=Szczecin"];
+    //[[UIApplication sharedApplication] openURL:url];
 }
 
 - (IBAction)settingsOpenAction:(id)sender {

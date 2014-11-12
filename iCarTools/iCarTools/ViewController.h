@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "RecorderViewController.h"
+#import "StatsViewController.h"
 
 @interface ViewController : UIViewController <RecorderViewControllerDelegate, UINavigationControllerDelegate>
 
@@ -17,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *settingsOpenButton;
 
 @property (strong, nonatomic) RecorderViewController *recorderView;
+@property (strong, nonatomic) StatsViewController *statsView;
 
 - (IBAction)videoRecorderOpenAction:(id)sender;
 - (IBAction)statsOpenAction:(id)sender;

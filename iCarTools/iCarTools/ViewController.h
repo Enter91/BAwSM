@@ -10,7 +10,7 @@
 #import "RecorderViewController.h"
 #import "StatsViewController.h"
 
-@interface ViewController : UIViewController <RecorderViewControllerDelegate, UINavigationControllerDelegate>
+@interface ViewController : UIViewController <RecorderViewControllerDelegate, UINavigationControllerDelegate, StatsViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (weak, nonatomic) IBOutlet UIButton *videoRecorderOpenButton;

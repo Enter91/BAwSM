@@ -9,9 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "GPSUtilities.h"
 
-@interface StatsViewController : UIViewController
+@protocol StatsViewControllerDelegate <NSObject>
+
+- (void)statsViewWantsDismiss;
+
+@end
+
+@interface StatsViewController : UIViewController <GPSUtilitiesDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *view;
+
+@property (strong, nonatomic) GPSUtilities *gpsUtilities;
 
 @property (nonatomic, assign) id delegate;
 

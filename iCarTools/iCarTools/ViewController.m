@@ -61,6 +61,13 @@
     //[[UIApplication sharedApplication] openURL:url];
 }
 
+- (void)statsViewWantsDismiss {
+    [_statsView dismissViewControllerAnimated:YES completion:^{
+        _statsView.delegate = nil;
+        _statsView = nil;
+    }];
+}
+
 - (IBAction)settingsOpenAction:(id)sender {
 }
 

@@ -27,6 +27,15 @@
 
 }
 
+- (void)locationUpdate:(CLLocation *)location {
+    NSLog(@"New Location: %@", location);
+}
+
+- (void)locationError:(NSError *)error {
+    NSLog(@"Location error: %@", [error localizedDescription]);
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

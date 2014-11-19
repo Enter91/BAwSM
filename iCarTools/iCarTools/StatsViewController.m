@@ -24,7 +24,6 @@
     
     [self.view setBackgroundColor:[UIColor blackColor]];
 
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -76,6 +75,15 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 - (void)exit {

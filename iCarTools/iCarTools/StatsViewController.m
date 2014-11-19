@@ -43,7 +43,10 @@
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
-
+        
+        //NSURL *url = [NSURL URLWithString:@"http://maps.apple.com/maps?q=Szczecin"];
+        //[[UIApplication sharedApplication] openURL:url];
+        
     if (!self.exitButton) {
         self.exitButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 50, self.upperBackgroundView.frame.size.height)];
         [self.exitButton setTitle:NSLocalizedString(@"BACK", nil) forState:UIControlStateNormal];
@@ -58,9 +61,9 @@
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:10.0]];
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
+    
     [self.exitButton removeTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
     [self.exitButton addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
-    
 }
 
 - (void)locationUpdate:(CLLocation *)location {

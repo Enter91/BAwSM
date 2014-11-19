@@ -56,9 +56,6 @@
     _statsView = [[StatsViewController alloc] initWithNibName:@"StatsViewController" bundle:nil];
     _statsView.delegate = self;
     [self presentViewController:_statsView animated:YES completion:nil];
-    
-    //NSURL *url = [NSURL URLWithString:@"http://maps.apple.com/maps?q=Szczecin"];
-    //[[UIApplication sharedApplication] openURL:url];
 }
 
 - (void)statsViewWantsDismiss {

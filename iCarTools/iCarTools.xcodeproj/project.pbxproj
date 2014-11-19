@@ -31,6 +31,7 @@
 		1CF81C491A12954800496116 /* record_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C481A12954800496116 /* record_button.png */; };
 		1CF81C4B1A12971800496116 /* white line.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4A1A12971800496116 /* white line.png */; };
 		1CF81C4D1A129A6B00496116 /* smallDotImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4C1A129A6B00496116 /* smallDotImage.png */; };
+		F0D25C2D1A1D542800E99E7C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D25C2C1A1D542800E99E7C /* MapKit.framework */; };
 		F0F167601A13CCE4003C779E /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F1675E1A13CCE4003C779E /* StatsViewController.m */; };
 		F0F167611A13CCE4003C779E /* StatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F1675F1A13CCE4003C779E /* StatsViewController.xib */; };
 /* End PBXBuildFile section */
@@ -78,6 +79,7 @@
 		1CF81C481A12954800496116 /* record_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record_button.png; sourceTree = "<group>"; };
 		1CF81C4A1A12971800496116 /* white line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white line.png"; sourceTree = "<group>"; };
 		1CF81C4C1A129A6B00496116 /* smallDotImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallDotImage.png; sourceTree = "<group>"; };
+		F0D25C2C1A1D542800E99E7C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F0F1675D1A13CCE4003C779E /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
 		F0F1675E1A13CCE4003C779E /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
 		F0F1675F1A13CCE4003C779E /* StatsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsViewController.xib; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0D25C2D1A1D542800E99E7C /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +107,7 @@
 		1C30474719FED07300D2EE5E = {
 			isa = PBXGroup;
 			children = (
+				F0D25C2C1A1D542800E99E7C /* MapKit.framework */,
 				1C30475219FED07300D2EE5E /* iCarTools */,
 				1C30476C19FED07400D2EE5E /* iCarToolsTests */,
 				1C30475119FED07300D2EE5E /* Products */,

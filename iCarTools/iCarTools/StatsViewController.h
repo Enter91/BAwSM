@@ -21,6 +21,10 @@
 
 @property (strong, nonatomic) GPSUtilities *gpsUtilities;
 
+@property (strong, nonatomic) UIView *upperBackgroundView;
+
+@property (strong, nonatomic) UIButton *exitButton;
+
 @property (nonatomic, assign) id delegate;
 
 @end

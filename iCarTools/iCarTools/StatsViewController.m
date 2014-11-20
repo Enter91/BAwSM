@@ -64,6 +64,22 @@
     
     [self.exitButton removeTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
     [self.exitButton addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (!self.lowerBackgroundView) {
+        self.lowerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-95, self.view.frame.size.width, 95)];
+        [self.lowerBackgroundView setBackgroundColor:[UIColor colorWithRed:52.0/255.0 green:59.0/255.0 blue:65.0/255.0 alpha:1.0]];
+        [self.lowerBackgroundView setAlpha:0.9];
+    }
+    
+    if (![self.lowerBackgroundView isDescendantOfView:self.view]) {
+        [self.view addSubview:self.lowerBackgroundView];
+        
+        [self.lowerBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.lowerBackgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeHeight multiplier:320.0/95.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+    }
 }
 
 - (void)locationUpdate:(CLLocation *)location {

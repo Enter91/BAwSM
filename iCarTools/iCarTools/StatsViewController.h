@@ -22,6 +22,7 @@
 @property (strong, nonatomic) GPSUtilities *gpsUtilities;
 
 @property (strong, nonatomic) UIView *upperBackgroundView;
+@property (strong, nonatomic) UIView *lowerBackgroundView;
 
 @property (strong, nonatomic) UIButton *exitButton;
 

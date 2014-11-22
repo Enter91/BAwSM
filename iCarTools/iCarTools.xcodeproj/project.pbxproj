@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1940EB23AAB28288C7115767 /* libPods-iCarTools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1552B581BF3D227784D9CF4E /* libPods-iCarTools.a */; };
 		1C30475619FED07300D2EE5E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C30475519FED07300D2EE5E /* main.m */; };
 		1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C30475819FED07300D2EE5E /* AppDelegate.m */; };
 		1C30476119FED07300D2EE5E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C30476019FED07300D2EE5E /* Images.xcassets */; };
@@ -28,12 +29,12 @@
 		1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3047BE19FEE9EC00D2EE5E /* GPSUtilities.m */; };
 		1C3047C319FEEA2B00D2EE5E /* RecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3047C119FEEA2B00D2EE5E /* RecorderViewController.m */; };
 		1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */; };
+		1CB4B01B1A2073C800172BA4 /* StatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CB4B0181A2073C800172BA4 /* StatsViewController.xib */; };
+		1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB4B0191A2073C800172BA4 /* StatsViewController.m */; };
+		1CB4B01E1A2073F400172BA4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB4B01D1A2073F400172BA4 /* MapKit.framework */; };
 		1CF81C491A12954800496116 /* record_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C481A12954800496116 /* record_button.png */; };
 		1CF81C4B1A12971800496116 /* white line.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4A1A12971800496116 /* white line.png */; };
 		1CF81C4D1A129A6B00496116 /* smallDotImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4C1A129A6B00496116 /* smallDotImage.png */; };
-		F0D25C2D1A1D542800E99E7C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D25C2C1A1D542800E99E7C /* MapKit.framework */; };
-		F0F167601A13CCE4003C779E /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F1675E1A13CCE4003C779E /* StatsViewController.m */; };
-		F0F167611A13CCE4003C779E /* StatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F1675F1A13CCE4003C779E /* StatsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1552B581BF3D227784D9CF4E /* libPods-iCarTools.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iCarTools.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C30475019FED07300D2EE5E /* iCarTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCarTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C30475419FED07300D2EE5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C30475519FED07300D2EE5E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -76,13 +78,15 @@
 		1C3047C019FEEA2B00D2EE5E /* RecorderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderViewController.h; sourceTree = "<group>"; };
 		1C3047C119FEEA2B00D2EE5E /* RecorderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderViewController.m; sourceTree = "<group>"; };
 		1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecorderViewController.xib; sourceTree = "<group>"; };
+		1CB4B0181A2073C800172BA4 /* StatsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsViewController.xib; sourceTree = "<group>"; };
+		1CB4B0191A2073C800172BA4 /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
+		1CB4B01A1A2073C800172BA4 /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
+		1CB4B01D1A2073F400172BA4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1CF81C481A12954800496116 /* record_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record_button.png; sourceTree = "<group>"; };
 		1CF81C4A1A12971800496116 /* white line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white line.png"; sourceTree = "<group>"; };
 		1CF81C4C1A129A6B00496116 /* smallDotImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallDotImage.png; sourceTree = "<group>"; };
-		F0D25C2C1A1D542800E99E7C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		F0F1675D1A13CCE4003C779E /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
-		F0F1675E1A13CCE4003C779E /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
-		F0F1675F1A13CCE4003C779E /* StatsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsViewController.xib; sourceTree = "<group>"; };
+		45CD27C558CF0F1030656D4F /* Pods-iCarTools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCarTools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iCarTools/Pods-iCarTools.debug.xcconfig"; sourceTree = "<group>"; };
+		BE45EDF14A5B125379C8472B /* Pods-iCarTools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCarTools.release.xcconfig"; path = "Pods/Target Support Files/Pods-iCarTools/Pods-iCarTools.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0D25C2D1A1D542800E99E7C /* MapKit.framework in Frameworks */,
+				1CB4B01E1A2073F400172BA4 /* MapKit.framework in Frameworks */,
+				1940EB23AAB28288C7115767 /* libPods-iCarTools.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,10 +112,11 @@
 		1C30474719FED07300D2EE5E = {
 			isa = PBXGroup;
 			children = (
-				F0D25C2C1A1D542800E99E7C /* MapKit.framework */,
 				1C30475219FED07300D2EE5E /* iCarTools */,
 				1C30476C19FED07400D2EE5E /* iCarToolsTests */,
 				1C30475119FED07300D2EE5E /* Products */,
+				376440F35061682691655F99 /* Pods */,
+				98947EAF29920919EE5C4D97 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -179,9 +185,9 @@
 		1C30478619FED65200D2EE5E /* Stats Files */ = {
 			isa = PBXGroup;
 			children = (
-				F0F1675D1A13CCE4003C779E /* StatsViewController.h */,
-				F0F1675E1A13CCE4003C779E /* StatsViewController.m */,
-				F0F1675F1A13CCE4003C779E /* StatsViewController.xib */,
+				1CB4B0181A2073C800172BA4 /* StatsViewController.xib */,
+				1CB4B0191A2073C800172BA4 /* StatsViewController.m */,
+				1CB4B01A1A2073C800172BA4 /* StatsViewController.h */,
 			);
 			name = "Stats Files";
 			sourceTree = "<group>";
@@ -234,6 +240,24 @@
 			name = Singletons;
 			sourceTree = "<group>";
 		};
+		376440F35061682691655F99 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				45CD27C558CF0F1030656D4F /* Pods-iCarTools.debug.xcconfig */,
+				BE45EDF14A5B125379C8472B /* Pods-iCarTools.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		98947EAF29920919EE5C4D97 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1CB4B01D1A2073F400172BA4 /* MapKit.framework */,
+				1552B581BF3D227784D9CF4E /* libPods-iCarTools.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -241,9 +265,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1C30477319FED07400D2EE5E /* Build configuration list for PBXNativeTarget "iCarTools" */;
 			buildPhases = (
+				1B36B7CDCE00BA519B503FBE /* Check Pods Manifest.lock */,
 				1C30474C19FED07300D2EE5E /* Sources */,
 				1C30474D19FED07300D2EE5E /* Frameworks */,
 				1C30474E19FED07300D2EE5E /* Resources */,
+				26C946F29FAAA82506D2AC97 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -314,6 +340,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CB4B01B1A2073C800172BA4 /* StatsViewController.xib in Resources */,
 				1C30479819FED74C00D2EE5E /* DINPro-Light.otf in Resources */,
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
 				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
@@ -322,7 +349,6 @@
 				1C3047A419FEE09100D2EE5E /* ViewController.xib in Resources */,
 				1C30479A19FED74C00D2EE5E /* DINPro-Medium.otf in Resources */,
 				1CF81C4B1A12971800496116 /* white line.png in Resources */,
-				F0F167611A13CCE4003C779E /* StatsViewController.xib in Resources */,
 				1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */,
 				1C30476119FED07300D2EE5E /* Images.xcassets in Resources */,
 				1C30479319FED74C00D2EE5E /* DINPro-Black.otf in Resources */,
@@ -345,6 +371,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1B36B7CDCE00BA519B503FBE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		26C946F29FAAA82506D2AC97 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iCarTools/Pods-iCarTools-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1C30474C19FED07300D2EE5E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -352,7 +411,7 @@
 			files = (
 				1C3047C319FEEA2B00D2EE5E /* RecorderViewController.m in Sources */,
 				1C3047A019FEDDD500D2EE5E /* ViewController.m in Sources */,
-				F0F167601A13CCE4003C779E /* StatsViewController.m in Sources */,
+				1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */,
 				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,
 				1C30475619FED07300D2EE5E /* main.m in Sources */,
 				1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */,
@@ -475,6 +534,7 @@
 		};
 		1C30477419FED07400D2EE5E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 45CD27C558CF0F1030656D4F /* Pods-iCarTools.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -487,6 +547,7 @@
 		};
 		1C30477519FED07400D2EE5E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE45EDF14A5B125379C8472B /* Pods-iCarTools.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

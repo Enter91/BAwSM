@@ -23,15 +23,7 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     [self.view setBackgroundColor:[UIColor blackColor]];
-
-}
-/**
- *  @Author Damian Klimaszewski
- *
- *  Initializes subviews
- */
-- (void)viewDidAppear:(BOOL)animated {
-    //TODO: Create tutorial here
+    
     if (!self.upperBackgroundView) {
         self.upperBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
         [self.upperBackgroundView setBackgroundColor:[UIColor colorWithRed:52.0/255.0 green:59.0/255.0 blue:65.0/255.0 alpha:1.0]];
@@ -47,7 +39,7 @@
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
-        
+    
     if (!self.exitButton) {
         self.exitButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 50, self.upperBackgroundView.frame.size.height)];
         [self.exitButton setTitle:NSLocalizedString(@"BACK", nil) forState:UIControlStateNormal];
@@ -81,6 +73,7 @@
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
     }
+
 }
 
 - (void)locationUpdate:(CLLocation *)location {

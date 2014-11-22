@@ -1,0 +1,13 @@
+PODS:
+  - PKRevealController (2.0.6)
+  - SBJson (4.0.1)
+
+DEPENDENCIES:
+  - PKRevealController
+  - SBJson (~> 4.0.0)
+
+SPEC CHECKSUMS:
+  PKRevealController: 4f175a432ad868c806dce1ebb3fd8a35d228bdb5
+  SBJson: d71212c078abf4679d54b0d0565260c474e46235
+
+COCOAPODS: 0.35.0

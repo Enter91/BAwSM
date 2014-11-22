@@ -17,12 +17,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    SWRevealViewController *revealController = [self revealViewController];
+    [revealController panGestureRecognizer];
+    [revealController tapGestureRecognizer];
+    
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     [self.view setBackgroundColor:[UIColor blackColor]];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -396,7 +401,9 @@
 }
 
 - (void)exit {
-    [_delegate recorderViewWantsDismiss];
+    [self.revealViewController pushFrontViewController:_parentView animated:YES];
+    _parentView = nil;
+//    [self.delegate recorderViewWantsDismiss];
 }
 
 @end

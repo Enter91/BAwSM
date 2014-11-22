@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "GPSUtilities.h"
+#import <SWRevealViewController.h>
 
 @protocol StatsViewControllerDelegate <NSObject>
 
@@ -28,5 +29,7 @@
 @property (strong, nonatomic) UIButton *exitButton;
 
 @property (nonatomic, assign) id delegate;
+
+@property (nonatomic, strong) UIViewController *parentView;
 
 @end

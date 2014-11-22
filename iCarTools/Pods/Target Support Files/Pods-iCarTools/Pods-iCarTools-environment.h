@@ -6,15 +6,15 @@
 // project.
 
 
-// PKRevealController
-#define COCOAPODS_POD_AVAILABLE_PKRevealController
-#define COCOAPODS_VERSION_MAJOR_PKRevealController 2
-#define COCOAPODS_VERSION_MINOR_PKRevealController 0
-#define COCOAPODS_VERSION_PATCH_PKRevealController 6
-
 // SBJson
 #define COCOAPODS_POD_AVAILABLE_SBJson
 #define COCOAPODS_VERSION_MAJOR_SBJson 4
 #define COCOAPODS_VERSION_MINOR_SBJson 0
 #define COCOAPODS_VERSION_PATCH_SBJson 1
+
+// SWRevealViewController
+#define COCOAPODS_POD_AVAILABLE_SWRevealViewController
+#define COCOAPODS_VERSION_MAJOR_SWRevealViewController 2
+#define COCOAPODS_VERSION_MINOR_SWRevealViewController 3
+#define COCOAPODS_VERSION_PATCH_SWRevealViewController 0
 

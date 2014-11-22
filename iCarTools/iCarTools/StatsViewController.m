@@ -16,7 +16,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     
+    
+    /*SWRevealViewController *revealController = [self revealViewController];
+    [revealController panGestureRecognizer];
+    [revealController tapGestureRecognizer];*/
+    
+    
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
     
@@ -73,6 +78,8 @@
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
     }
+    
+    self.navigationController.navigationBar.hidden = YES;
 
 }
 
@@ -99,7 +106,8 @@
 }
 
 - (void)exit {
-    [_delegate statsViewWantsDismiss];
+    [self.revealViewController pushFrontViewController:_parentView animated:YES];
+    _parentView = nil;
 }
 
 @end

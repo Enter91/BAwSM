@@ -21,7 +21,16 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
+    //self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
+    
+    ViewController *frontViewController = [[ViewController alloc] init];
+    SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithCellsTitlesArray:@[@"opcja 1", @"opcja 2", @"opcja 3"]];
+    
+    SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:settingsViewController frontViewController:frontViewController];
+    revealController.delegate = self;
+    
+    self.viewController = revealController;
+    
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     

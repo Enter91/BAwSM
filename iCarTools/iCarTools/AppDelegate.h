@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SWRevealViewController.h>
+#import "LoginViewController.h"
+#import "SettingsViewController.h"
 
-@class ViewController;
+@class SWRevealViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, SWRevealViewControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) ViewController *viewController;
+@property (strong, nonatomic) SWRevealViewController *viewController;
 
 @end
 

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="DINPro-Light.otf">
+            <string>DINPro-Light</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsViewController">
+            <connections>
+                <outlet property="loginInfoView" destination="eE2-6n-OxQ" id="Gqa-Rd-d2r"/>
+                <outlet property="settingsTableView" destination="0oA-w5-nDQ" id="Ot5-nE-0sE"/>
+                <outlet property="usernameLabel" destination="wyL-PY-VyM" id="lrz-H8-sW7"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.png" translatesAutoresizingMaskIntoConstraints="NO" id="EcI-5V-tTs">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eE2-6n-OxQ" userLabel="Login Info">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo-256.png" translatesAutoresizingMaskIntoConstraints="NO" id="bnr-ow-MIe">
+                            <rect key="frame" x="30" y="25" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="bnr-ow-MIe" secondAttribute="height" id="Nh9-NP-4Ul"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wyL-PY-VyM" userLabel="User Name">
+                            <rect key="frame" x="110" y="25" width="460" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="glo-nE-0Gr"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="20"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="bnr-ow-MIe" firstAttribute="height" secondItem="eE2-6n-OxQ" secondAttribute="height" multiplier="1:2" id="2P2-CF-hrh"/>
+                        <constraint firstItem="bnr-ow-MIe" firstAttribute="leading" secondItem="eE2-6n-OxQ" secondAttribute="leading" constant="30" id="3AK-Td-2mA"/>
+                        <constraint firstAttribute="trailing" secondItem="wyL-PY-VyM" secondAttribute="trailing" constant="30" id="4CO-7J-vZl"/>
+                        <constraint firstItem="wyL-PY-VyM" firstAttribute="top" secondItem="bnr-ow-MIe" secondAttribute="top" id="9Mo-1k-pbq"/>
+                        <constraint firstAttribute="height" constant="100" id="S8j-hg-YUL"/>
+                        <constraint firstItem="wyL-PY-VyM" firstAttribute="leading" secondItem="bnr-ow-MIe" secondAttribute="trailing" constant="30" id="Xka-HB-FgP"/>
+                        <constraint firstAttribute="centerY" secondItem="bnr-ow-MIe" secondAttribute="centerY" id="pOz-4e-G7w"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="0oA-w5-nDQ">
+                    <rect key="frame" x="0.0" y="100" width="600" height="500"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="jp8-Tf-0fK"/>
+                        <outlet property="delegate" destination="-1" id="4eR-T3-nbk"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="eE2-6n-OxQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="0Ea-Cv-mlu"/>
+                <constraint firstAttribute="trailing" secondItem="0oA-w5-nDQ" secondAttribute="trailing" id="7Ku-ax-79I"/>
+                <constraint firstAttribute="centerY" secondItem="EcI-5V-tTs" secondAttribute="centerY" id="DJj-tk-AaI"/>
+                <constraint firstAttribute="trailing" secondItem="eE2-6n-OxQ" secondAttribute="trailing" id="Enj-j3-vSk"/>
+                <constraint firstAttribute="centerX" secondItem="EcI-5V-tTs" secondAttribute="centerX" id="M5H-jP-58n"/>
+                <constraint firstItem="eE2-6n-OxQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QSO-Gf-42G"/>
+                <constraint firstAttribute="trailing" secondItem="EcI-5V-tTs" secondAttribute="trailing" id="cuR-6Y-yRb"/>
+                <constraint firstAttribute="bottom" secondItem="EcI-5V-tTs" secondAttribute="bottom" id="jWy-z5-gma"/>
+                <constraint firstAttribute="bottom" secondItem="0oA-w5-nDQ" secondAttribute="bottom" id="nz7-Sq-5hf"/>
+                <constraint firstItem="EcI-5V-tTs" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qD3-gv-XHi"/>
+                <constraint firstItem="0oA-w5-nDQ" firstAttribute="top" secondItem="eE2-6n-OxQ" secondAttribute="bottom" id="sIR-fo-wlm"/>
+                <constraint firstItem="EcI-5V-tTs" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tVw-8l-ucE"/>
+                <constraint firstItem="0oA-w5-nDQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xYp-vp-DwH"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="background.png" width="1242" height="2208"/>
+        <image name="photo-256.png" width="256" height="256"/>
+    </resources>
+</document>

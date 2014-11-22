@@ -29,9 +29,16 @@
 		1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3047BE19FEE9EC00D2EE5E /* GPSUtilities.m */; };
 		1C3047C319FEEA2B00D2EE5E /* RecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3047C119FEEA2B00D2EE5E /* RecorderViewController.m */; };
 		1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */; };
+		1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4135441A20AB7200D3F1CC /* SettingsViewController.m */; };
+		1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */; };
 		1CB4B01B1A2073C800172BA4 /* StatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CB4B0181A2073C800172BA4 /* StatsViewController.xib */; };
 		1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB4B0191A2073C800172BA4 /* StatsViewController.m */; };
 		1CB4B01E1A2073F400172BA4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB4B01D1A2073F400172BA4 /* MapKit.framework */; };
+		1CEDCA261A2074E000BFADB5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CEDCA241A2074E000BFADB5 /* LoginViewController.m */; };
+		1CEDCA271A2074E000BFADB5 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CEDCA251A2074E000BFADB5 /* LoginViewController.xib */; };
+		1CEDCA2B1A2076A100BFADB5 /* photo-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CEDCA281A2076A100BFADB5 /* photo-256.png */; };
+		1CEDCA2C1A2076A100BFADB5 /* speedometer-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CEDCA291A2076A100BFADB5 /* speedometer-256.png */; };
+		1CEDCA2D1A2076A100BFADB5 /* settings3-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CEDCA2A1A2076A100BFADB5 /* settings3-256.png */; };
 		1CF81C491A12954800496116 /* record_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C481A12954800496116 /* record_button.png */; };
 		1CF81C4B1A12971800496116 /* white line.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4A1A12971800496116 /* white line.png */; };
 		1CF81C4D1A129A6B00496116 /* smallDotImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4C1A129A6B00496116 /* smallDotImage.png */; };
@@ -78,10 +85,19 @@
 		1C3047C019FEEA2B00D2EE5E /* RecorderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderViewController.h; sourceTree = "<group>"; };
 		1C3047C119FEEA2B00D2EE5E /* RecorderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderViewController.m; sourceTree = "<group>"; };
 		1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecorderViewController.xib; sourceTree = "<group>"; };
+		1C4135431A20AB7200D3F1CC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		1C4135441A20AB7200D3F1CC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		1CB4B0181A2073C800172BA4 /* StatsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsViewController.xib; sourceTree = "<group>"; };
 		1CB4B0191A2073C800172BA4 /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
 		1CB4B01A1A2073C800172BA4 /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
 		1CB4B01D1A2073F400172BA4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		1CEDCA231A2074E000BFADB5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		1CEDCA241A2074E000BFADB5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		1CEDCA251A2074E000BFADB5 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		1CEDCA281A2076A100BFADB5 /* photo-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-256.png"; sourceTree = "<group>"; };
+		1CEDCA291A2076A100BFADB5 /* speedometer-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speedometer-256.png"; sourceTree = "<group>"; };
+		1CEDCA2A1A2076A100BFADB5 /* settings3-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings3-256.png"; sourceTree = "<group>"; };
 		1CF81C481A12954800496116 /* record_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record_button.png; sourceTree = "<group>"; };
 		1CF81C4A1A12971800496116 /* white line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white line.png"; sourceTree = "<group>"; };
 		1CF81C4C1A129A6B00496116 /* smallDotImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallDotImage.png; sourceTree = "<group>"; };
@@ -142,6 +158,12 @@
 				1C30478119FED5A100D2EE5E /* ViewController.m */,
 				1C3047A619FEE09100D2EE5E /* ViewController.xib */,
 				1C30479D19FED76000D2EE5E /* Resources */,
+				1CEDCA231A2074E000BFADB5 /* LoginViewController.h */,
+				1CEDCA241A2074E000BFADB5 /* LoginViewController.m */,
+				1CEDCA251A2074E000BFADB5 /* LoginViewController.xib */,
+				1C4135431A20AB7200D3F1CC /* SettingsViewController.h */,
+				1C4135441A20AB7200D3F1CC /* SettingsViewController.m */,
+				1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */,
 			);
 			path = iCarTools;
 			sourceTree = "<group>";
@@ -212,6 +234,9 @@
 		1C30478819FED66700D2EE5E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1CEDCA281A2076A100BFADB5 /* photo-256.png */,
+				1CEDCA291A2076A100BFADB5 /* speedometer-256.png */,
+				1CEDCA2A1A2076A100BFADB5 /* settings3-256.png */,
 				1CF81C4C1A129A6B00496116 /* smallDotImage.png */,
 				1CF81C4A1A12971800496116 /* white line.png */,
 				1CF81C481A12954800496116 /* record_button.png */,
@@ -340,7 +365,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CEDCA271A2074E000BFADB5 /* LoginViewController.xib in Resources */,
 				1CB4B01B1A2073C800172BA4 /* StatsViewController.xib in Resources */,
+				1CEDCA2D1A2076A100BFADB5 /* settings3-256.png in Resources */,
 				1C30479819FED74C00D2EE5E /* DINPro-Light.otf in Resources */,
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
 				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
@@ -350,6 +377,8 @@
 				1C30479A19FED74C00D2EE5E /* DINPro-Medium.otf in Resources */,
 				1CF81C4B1A12971800496116 /* white line.png in Resources */,
 				1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */,
+				1CEDCA2C1A2076A100BFADB5 /* speedometer-256.png in Resources */,
+				1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */,
 				1C30476119FED07300D2EE5E /* Images.xcassets in Resources */,
 				1C30479319FED74C00D2EE5E /* DINPro-Black.otf in Resources */,
 				1C30479B19FED74C00D2EE5E /* DINPro-MediumItalic.otf in Resources */,
@@ -358,6 +387,7 @@
 				1C30479C19FED74C00D2EE5E /* DINPro.otf in Resources */,
 				1C30479519FED74C00D2EE5E /* DINPro-Bold.otf in Resources */,
 				1CF81C491A12954800496116 /* record_button.png in Resources */,
+				1CEDCA2B1A2076A100BFADB5 /* photo-256.png in Resources */,
 				1C30479919FED74C00D2EE5E /* DINPro-LightItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,7 +442,9 @@
 				1C3047C319FEEA2B00D2EE5E /* RecorderViewController.m in Sources */,
 				1C3047A019FEDDD500D2EE5E /* ViewController.m in Sources */,
 				1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */,
+				1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */,
 				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,
+				1CEDCA261A2074E000BFADB5 /* LoginViewController.m in Sources */,
 				1C30475619FED07300D2EE5E /* main.m in Sources */,
 				1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */,
 			);

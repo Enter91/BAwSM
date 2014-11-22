@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "GPSUtilities.h"
 
+#import "LoginViewController.h"
+#import <SWRevealViewController.h>
+
 @import MobileCoreServices;
 
 @protocol RecorderViewControllerDelegate <NSObject>
@@ -45,5 +48,7 @@
 @property BOOL isRecording;
 
 @property (nonatomic, assign) id delegate;
+
+@property (nonatomic, strong) UIViewController *parentView;
 
 @end

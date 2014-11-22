@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RecorderViewController.h"
 #import "StatsViewController.h"
+#import <SWRevealViewController.h>
 
 @interface ViewController : UIViewController <RecorderViewControllerDelegate, UINavigationControllerDelegate, StatsViewControllerDelegate>
 
@@ -23,5 +24,7 @@
 - (IBAction)videoRecorderOpenAction:(id)sender;
 - (IBAction)statsOpenAction:(id)sender;
 - (IBAction)settingsOpenAction:(id)sender;
+
+@property (strong, nonatomic) UIWindow *window;
 
 @end

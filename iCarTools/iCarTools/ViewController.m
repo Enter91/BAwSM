@@ -17,9 +17,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    SWRevealViewController *revealController = [self revealViewController];
+    [revealController panGestureRecognizer];
+    [revealController tapGestureRecognizer];
+    
     [self.statsOpenButton setTitle:NSLocalizedString(@"stats", nil) forState:UIControlStateNormal];
     [self.videoRecorderOpenButton setTitle:NSLocalizedString(@"recorder", nil) forState:UIControlStateNormal];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,7 +39,9 @@
     
     _recorderView = [[RecorderViewController alloc] initWithNibName:@"RecorderViewController" bundle:nil];
     _recorderView.delegate = self;
-    [self presentViewController:_recorderView animated:YES completion:nil];
+    _recorderView.parentView = self;
+    [self.revealViewController pushFrontViewController:_recorderView animated:YES];
+//    [self.revealViewController presentViewController:_recorderView animated:YES completion:nil];
 }
 
 - (void)recorderViewWantsDismiss {
@@ -55,7 +60,9 @@
     
     _statsView = [[StatsViewController alloc] initWithNibName:@"StatsViewController" bundle:nil];
     _statsView.delegate = self;
-    [self presentViewController:_statsView animated:YES completion:nil];
+    _statsView.parentView = self;
+    [self.revealViewController pushFrontViewController:_statsView animated:YES];
+//    [self.revealViewController presentViewController:_statsView animated:YES completion:nil];
 }
 
 - (void)statsViewWantsDismiss {
@@ -66,6 +73,7 @@
 }
 
 - (IBAction)settingsOpenAction:(id)sender {
+    [self.revealViewController revealToggle:nil];
 }
 
 #pragma mark- Helpers

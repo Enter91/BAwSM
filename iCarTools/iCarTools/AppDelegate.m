@@ -21,17 +21,23 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    //self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
-    
-    ViewController *frontViewController = [[ViewController alloc] init];
-    SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithCellsTitlesArray:@[@"opcja 1", @"opcja 2", @"opcja 3"]];
-    
-    SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:settingsViewController frontViewController:frontViewController];
-    revealController.delegate = self;
-    
-    self.viewController = revealController;
-    
-    self.window.rootViewController = self.viewController;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:YES] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
+//        _tutorial = [[TutorialViewController alloc] init];
+//        _tutorial.delegate = self;
+//        self.window.rootViewController = _tutorial;
+    //} else {
+        //SWReveal
+        ViewController *frontViewController = [[ViewController alloc] init];
+        SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithCellsTitlesArray:@[@"opcja 1", @"opcja 2", @"opcja 3"]];
+        
+        SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:settingsViewController frontViewController:frontViewController];
+        revealController.delegate = self;
+        
+        self.viewController = revealController;
+        
+        self.window.rootViewController = self.viewController;
+        //end SWReveal
+    }
     [self.window makeKeyAndVisible];
     
     return YES;

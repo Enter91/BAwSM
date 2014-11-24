@@ -17,13 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    /*SWRevealViewController *revealController = [self revealViewController];
-    [revealController panGestureRecognizer];
-    [revealController tapGestureRecognizer];*/
-    
-    
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
+    
+    self.mapView.showsUserLocation = YES;
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     

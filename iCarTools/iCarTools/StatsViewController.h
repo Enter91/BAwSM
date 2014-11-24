@@ -20,6 +20,7 @@
 @interface StatsViewController : UIViewController <GPSUtilitiesDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *view;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 
 @property (strong, nonatomic) GPSUtilities *gpsUtilities;
 

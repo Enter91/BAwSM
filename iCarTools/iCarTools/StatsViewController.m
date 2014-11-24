@@ -20,7 +20,8 @@
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
     
-    self.mapView.showsUserLocation = YES;
+    self.mapView.mapType = 3;
+    [self.mapView setShowsUserLocation:YES];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
@@ -77,7 +78,7 @@
     }
     
     self.navigationController.navigationBar.hidden = YES;
-
+    
 }
 
 - (void)locationUpdate:(CLLocation *)location {

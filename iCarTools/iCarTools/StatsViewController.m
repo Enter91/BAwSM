@@ -79,24 +79,10 @@
     
     self.navigationController.navigationBar.hidden = YES;
     
-    [self.mapView.userLocation addObserver:self
-                                forKeyPath:@"location"
-                                   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
-                                   context:nil];
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 100, 100);
+    MKCoordinateRegion adjustRegion = [self.mapView regionThatFits:region];
+    [self.mapView setRegion:adjustRegion animated:YES];
     
-}
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    MKCoordinateRegion region;
-    region.center = self.mapView.userLocation.coordinate;
-    
-    MKCoordinateSpan span;
-    span.latitudeDelta  = 0.1;
-    span.longitudeDelta = 0.1;
-    region.span = span;
-    
-    [self.mapView setRegion:region animated:YES];
 }
 
 - (void)locationUpdate:(CLLocation *)location {

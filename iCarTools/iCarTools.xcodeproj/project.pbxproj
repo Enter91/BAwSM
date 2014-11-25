@@ -46,6 +46,7 @@
 		1CF81C491A12954800496116 /* record_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C481A12954800496116 /* record_button.png */; };
 		1CF81C4B1A12971800496116 /* white line.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4A1A12971800496116 /* white line.png */; };
 		1CF81C4D1A129A6B00496116 /* smallDotImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4C1A129A6B00496116 /* smallDotImage.png */; };
+		F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,8 @@
 		1CF81C4C1A129A6B00496116 /* smallDotImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallDotImage.png; sourceTree = "<group>"; };
 		45CD27C558CF0F1030656D4F /* Pods-iCarTools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCarTools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iCarTools/Pods-iCarTools.debug.xcconfig"; sourceTree = "<group>"; };
 		BE45EDF14A5B125379C8472B /* Pods-iCarTools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCarTools.release.xcconfig"; path = "Pods/Target Support Files/Pods-iCarTools/Pods-iCarTools.release.xcconfig"; sourceTree = "<group>"; };
+		F0C3700D1A246C48000C5A82 /* FixedCompassLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixedCompassLayout.h; sourceTree = "<group>"; };
+		F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixedCompassLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +225,8 @@
 				1CB4B0181A2073C800172BA4 /* StatsViewController.xib */,
 				1CB4B0191A2073C800172BA4 /* StatsViewController.m */,
 				1CB4B01A1A2073C800172BA4 /* StatsViewController.h */,
+				F0C3700D1A246C48000C5A82 /* FixedCompassLayout.h */,
+				F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */,
 			);
 			name = "Stats Files";
 			sourceTree = "<group>";
@@ -459,6 +464,7 @@
 				1C3047C319FEEA2B00D2EE5E /* RecorderViewController.m in Sources */,
 				1C3047A019FEDDD500D2EE5E /* ViewController.m in Sources */,
 				1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */,
+				F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */,
 				1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */,
 				1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */,
 				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,

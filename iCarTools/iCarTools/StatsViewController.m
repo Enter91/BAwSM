@@ -22,6 +22,12 @@
     
     self.mapView.mapType = 3;
     [self.mapView setShowsUserLocation:YES];
+    [self.mapView.userLocation setTitle:NSLocalizedString(@"currentLocation", nil)];
+    
+    [self.mapView.userLocation addObserver:self
+                                forKeyPath:@"location"
+                                   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
+                                   context:NULL];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
@@ -78,12 +84,6 @@
     }
     
     self.navigationController.navigationBar.hidden = YES;
-    
-    [self.mapView.userLocation addObserver:self
-                                forKeyPath:@"location"
-                                   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
-                                   context:NULL];
-    
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -99,6 +99,22 @@
     region.span = span;
     
     [self.mapView setRegion:region animated:YES];
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [super touchesMoved:touches withEvent:event];
+    
+    for (UITouch * touch in touches) {
+        CGPoint loc = [touch locationInView:self.mapView];
+        if ([self.mapView pointInside:loc withEvent:event]) {
+            @try{
+                [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
+            }@catch(id anException){
+            }
+            break;
+        }
+    }
 }
 
 - (void)locationUpdate:(CLLocation *)location {
@@ -124,7 +140,11 @@
 }
 
 - (void)exit {
-    [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
+    @try{
+        [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
+    }@catch(id anException){
+    }
+
     [self.revealViewController pushFrontViewController:_parentView animated:YES];
     _parentView = nil;
 }

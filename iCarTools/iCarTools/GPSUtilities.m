@@ -72,8 +72,8 @@ static bool isFirstAccess = YES;
         
         if( [CLLocationManager locationServicesEnabled] &&  [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied)
         {
-            if ([self.locManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-                [self.locManager requestAlwaysAuthorization];
+            if ([self.locManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+                [self.locManager requestWhenInUseAuthorization];
             }
             
             [self.locManager startUpdatingLocation];
@@ -83,18 +83,64 @@ static bool isFirstAccess = YES;
     return self;
 }
 
+- (void)startGPS {
+    if (!self.locManager) {
+        self.locManager = [[CLLocationManager alloc] init];
+    }
+    self.locManager.delegate = self;
+    
+    if( [CLLocationManager locationServicesEnabled] &&  [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied)
+    {
+        if ([self.locManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            [self.locManager requestWhenInUseAuthorization];
+        }
+        
+        [self.locManager startUpdatingLocation];
+    }
+}
+
+- (void)startGPSWithAccuracy:(CLLocationAccuracy)accuracy {
+    [self startGPS];
+    [self setAccuracy:accuracy];
+}
+
+- (void)stopGPS {
+    if (self.locManager) {
+        if ([self.locManager respondsToSelector:@selector(stopUpdatingLocation)]) {
+            self.locManager.delegate = nil;
+            [self.locManager stopUpdatingLocation];
+        }
+    }
+}
+
+- (void)setAccuracy:(CLLocationAccuracy)accuracy {
+    if (self.locManager) {
+        if ([self.locManager respondsToSelector:@selector(setDesiredAccuracy:)]) {
+            [self.locManager setDesiredAccuracy:accuracy];
+        }
+    }
+}
+
 #pragma mark- CLLocationManager Delegaty
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
-    {
-        [self.delegate locationUpdate:newLocation];
+    if (self.delegate) {
+        if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
+        {
+            [self.delegate locationUpdate:newLocation];
+        }
+    } else {
+        [self stopGPS];
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
-    {
-        [self.delegate locationError:error];
+    if (self.delegate) {
+        if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
+        {
+            [self.delegate locationError:error];
+        }
+    } else {
+        [self stopGPS];
     }
 }
 

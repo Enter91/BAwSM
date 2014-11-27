@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "GPSUtilities.h"
+@import AVFoundation;
+@import AssetsLibrary;
+@import MobileCoreServices;
 
 #import "LoginViewController.h"
 #import <SWRevealViewController.h>
 
-@import MobileCoreServices;
+#import "SettingsViewController.h"
 
 @protocol RecorderViewControllerDelegate <NSObject>
 
@@ -20,7 +23,7 @@
 
 @end
 
-@interface RecorderViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, GPSUtilitiesDelegate>
+@interface RecorderViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (strong, nonatomic) UIImagePickerController *pickerController;
@@ -38,6 +41,8 @@
 
 @property (strong, nonatomic) UIView *lowerBackgroundView;
 @property (strong, nonatomic) UIView *upperBackgroundView;
+@property (strong, nonatomic) UIImageView *whiteLine1;
+@property (strong, nonatomic) UIImageView *whiteLine2;
 
 @property (strong, nonatomic) UIImageView *smallDotImageView;
 
@@ -50,5 +55,12 @@
 @property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) UIViewController *parentView;
+
+@property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
+@property BOOL haveImage;
+@property (strong, nonatomic) UIImageView *captureImage;
+
+- (void) initializeCamera;
+- (void)stopCamera;
 
 @end

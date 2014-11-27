@@ -8,7 +8,17 @@
 
 #import "RecorderViewController.h"
 
-@interface RecorderViewController ()
+#define RADIANS_TO_DEGREES(radians) ((radians) * (180.0 / M_PI))
+
+@interface RecorderViewController () {
+    AVCaptureSession *session;
+    AVCaptureDevice *device;
+    AVCaptureDeviceInput *input;
+    AVCaptureVideoDataOutput *output;
+    AVCaptureVideoPreviewLayer *mCameraLayer;
+    UIView *mCameraView;
+    AVCaptureMovieFileOutput *movieFile;
+}
 
 @end
 
@@ -27,84 +37,28 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     [self.view setBackgroundColor:[UIColor blackColor]];
+    
+    [self updateDataSourceInLeftRevealViewController];
 
 }
 
+- (void)updateDataSourceInLeftRevealViewController {
+    if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[@"Settings", @"Recordings"]];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    NSLog(@"will appear");
+}
+
+
 - (void)viewDidAppear:(BOOL)animated {
-    //TODO: Create tutorial here
+    NSLog(@"did load");
+    
     [self initializeCamera];
     
     [self initializeInterface];
-}
-/**
- *  @Author Michał Czwarnowski
- *
- *  Initializes main camera picker and adds its view to main view as subview
- */
-- (void)initializeCamera {
-    if (!self.pickerController) {
-        
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            
-            if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront] ||
-                [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]) {
-                self.pickerController = [[UIImagePickerController alloc] init];
-                [self.pickerController setSourceType:UIImagePickerControllerSourceTypeCamera];
-                //[self.pickerController setCameraCaptureMode:UIImagePickerControllerCameraCaptureModeVideo];
-                self.pickerController.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
-                [self.pickerController setAllowsEditing:NO];
-                
-                if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]) {
-                    [self.pickerController setCameraDevice:UIImagePickerControllerCameraDeviceRear];
-                } else {
-                    [self.pickerController setCameraDevice:UIImagePickerControllerCameraDeviceFront];
-                }
-                
-                [self.pickerController setShowsCameraControls:NO];
-                [self.pickerController setDelegate:self];
-                self.pickerController.cameraViewTransform = CGAffineTransformIdentity;
-                self.pickerController.videoQuality = UIImagePickerControllerQualityType640x480;
-                
-                /*CGRect originalCameraFrame = self.pickerController.view.frame;
-                originalCameraFrame.origin.x = (self.view.frame.size.width - originalCameraFrame.size.width)/2;
-                originalCameraFrame.origin.y = (self.view.frame.size.height - originalCameraFrame.size.height)/2;
-                self.pickerController.view.frame = originalCameraFrame;*/
-                
-                [self.pickerController setModalPresentationStyle:UIModalPresentationFullScreen];
-                
-                if (![self.pickerController.view isDescendantOfView:self.view]) {
-                    [self.view addSubview:self.pickerController.view];
-                }
-                
-                [self.pickerController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
-                
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pickerController.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pickerController.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pickerController.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pickerController.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
-                
-            } else {
-                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
-                                                                      message:NSLocalizedString(@"Camera is not available", @"Camera is not available")
-                                                                     delegate:nil
-                                                            cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-                                                            otherButtonTitles: nil];
-                
-                [myAlertView show];
-            }
-            
-        } else {
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
-                                                                  message:NSLocalizedString(@"Device has no camera", @"Device has no camera")
-                                                                 delegate:nil
-                                                        cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-                                                        otherButtonTitles: nil];
-            
-            [myAlertView show];
-        }
-    }
-    
-    
 }
 
 /**
@@ -121,12 +75,6 @@
     
     if (![self.upperBackgroundView isDescendantOfView:self.view]) {
         [self.view addSubview:self.upperBackgroundView];
-        
-        [self.upperBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.upperBackgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeHeight multiplier:320.0/44.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
     
     if (!self.lowerBackgroundView) {
@@ -137,12 +85,6 @@
     
     if (![self.lowerBackgroundView isDescendantOfView:self.view]) {
         [self.view addSubview:self.lowerBackgroundView];
-        
-        [self.lowerBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.lowerBackgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeHeight multiplier:320.0/95.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
     }
     
     if (!self.exitButton) {
@@ -152,12 +94,6 @@
     
     if (![self.exitButton isDescendantOfView:self.view]) {
         [self.view addSubview:self.exitButton];
-        
-        [self.exitButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.exitButton addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.exitButton attribute:NSLayoutAttributeHeight multiplier:50.0/44.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:10.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
     
     [self.exitButton removeTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
@@ -173,49 +109,30 @@
     
     if (![self.cameraRecordingButton isDescendantOfView:self.view]) {
         [self.view addSubview:self.cameraRecordingButton];
-        
-        [self.cameraRecordingButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.cameraRecordingButton addConstraint:[NSLayoutConstraint constraintWithItem:self.cameraRecordingButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.cameraRecordingButton attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.cameraRecordingButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeHeight multiplier:75.0/95.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.cameraRecordingButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.cameraRecordingButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
     }
     
     [self.cameraRecordingButton removeTarget:self action:@selector(toggleVideoRecording) forControlEvents:UIControlEventTouchUpInside];
     [self.cameraRecordingButton addTarget:self action:@selector(toggleVideoRecording) forControlEvents:UIControlEventTouchUpInside];
     
-    UIImageView *whiteLine1 = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"white line" ofType:@"png"]]];
-    [whiteLine1 setFrame:CGRectMake(10, self.view.frame.size.height-46-2, whiteLine1.frame.size.width/2, whiteLine1.frame.size.height/2)];
-    [self.view addSubview:whiteLine1];
-    [whiteLine1 setTranslatesAutoresizingMaskIntoConstraints:NO];
+    if (!_whiteLine1) {
+        _whiteLine1 = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"white line" ofType:@"png"]]];
+        [_whiteLine1 setFrame:CGRectMake(10, self.view.frame.size.height-46-2, (self.view.frame.size.width-75.0)/2-20, _whiteLine1.frame.size.height/2)];
+        [self.view addSubview:_whiteLine1];
+    }
     
-    [whiteLine1 addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine1 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:whiteLine1 attribute:NSLayoutAttributeHeight multiplier:205.0/2.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine1 attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.cameraRecordingButton attribute:NSLayoutAttributeLeft multiplier:1.0 constant:-10.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine1 attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:10.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine1 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
-    
-    UIImageView *whiteLine2 = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"white line" ofType:@"png"]]];
-    [whiteLine2 setFrame:CGRectMake(self.view.frame.size.width-10-whiteLine2.frame.size.width/2, self.view.frame.size.height-46-2, whiteLine2.frame.size.width/2, whiteLine2.frame.size.height/2)];
-    [self.view addSubview:whiteLine2];
-    [whiteLine2 setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    [whiteLine2 addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine2 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:whiteLine2 attribute:NSLayoutAttributeHeight multiplier:205.0/2.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine2 attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.cameraRecordingButton attribute:NSLayoutAttributeRight multiplier:1.0 constant:10.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine2 attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:-10.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:whiteLine2 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+    if (!_whiteLine2) {
+        _whiteLine2 = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"white line" ofType:@"png"]]];
+        [_whiteLine2 setFrame:CGRectMake(self.view.frame.size.width-((self.view.frame.size.width-75.0)/2-10), self.view.frame.size.height-46-2, (self.view.frame.size.width-75.0)/2-20, _whiteLine2.frame.size.height/2)];
+        [self.view addSubview:_whiteLine2];
+    }
     
     if (!self.speedLabel) {
         self.speedLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height-47-48, 73, 48)];
         [self.speedLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:40]];
         [self.speedLabel setTextAlignment:NSTextAlignmentRight];
         [self.speedLabel setTextColor:[UIColor whiteColor]];
+        [self.speedLabel setText:@"0"];
         [self.view addSubview:self.speedLabel];
-        
-        [self.speedLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.speedLabel addConstraint:[NSLayoutConstraint constraintWithItem:self.speedLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.speedLabel attribute:NSLayoutAttributeHeight multiplier:73.0/48.0 constant:1.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeHeight multiplier:48.0/95.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedLabel attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:10.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
     
     if (!self.speedUnitsLabel) {
@@ -225,13 +142,120 @@
         [self.speedUnitsLabel setTextColor:[UIColor whiteColor]];
         [self.speedUnitsLabel setText:@"km/h"];
         [self.view addSubview:self.speedUnitsLabel];
-        
-        [self.speedUnitsLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.speedUnitsLabel addConstraint:[NSLayoutConstraint constraintWithItem:self.speedUnitsLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.speedUnitsLabel attribute:NSLayoutAttributeHeight multiplier:25.0/27.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedUnitsLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:25.0/320.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedUnitsLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.speedLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:2.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.speedUnitsLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
+    
+    if (!self.speedNotificationButton) {
+        self.speedNotificationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+4, 79, 37)];
+        [self.speedNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.speedNotificationButton.center.y)];
+        [self.speedNotificationButton setImage:[UIImage imageNamed:@"suszarka"] forState:UIControlStateNormal];
+        [self.view addSubview:self.speedNotificationButton];
+    }
+    
+    if (!self.crashNotificationButton) {
+        self.crashNotificationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.whiteLine2.frame.origin.y+6, 79, 37)];
+        [self.crashNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.crashNotificationButton.center.y)];
+        [self.crashNotificationButton setImage:[UIImage imageNamed:@"wypadek"] forState:UIControlStateNormal];
+        [self.view addSubview:self.crashNotificationButton];
+    }
+    
+    if (!self.gpsStatusImageView) {
+        self.gpsStatusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps_searching-256"]];
+        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.whiteLine1.frame.origin.y+6, 37, 37)];
+        [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.gpsStatusImageView.center.y)];
+        [self.view addSubview:self.gpsStatusImageView];
+    }
+    
+    [self setFramesForInterface:self.interfaceOrientation];
+}
+
+- (void)setFramesForInterface:(UIInterfaceOrientation)toInterfaceOrientation {
+    
+    switch (toInterfaceOrientation) {
+        case UIInterfaceOrientationUnknown:
+            [self setFramesForPortrait];
+            break;
+        case UIInterfaceOrientationPortrait:
+            [self setFramesForPortrait];
+            break;
+        case UIInterfaceOrientationPortraitUpsideDown:
+             [self setFramesForPortrait];
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+            [self setFramesForLandscapeLeft];
+            break;
+        case UIInterfaceOrientationLandscapeRight:
+            [self setFramesForLandscapeRight];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)setFramesForPortrait {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.upperBackgroundView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+        [self.lowerBackgroundView setFrame:CGRectMake(0, self.view.frame.size.height-95, self.view.frame.size.width, 95)];
+        [self.exitButton setFrame:CGRectMake(10, 0, 50, self.upperBackgroundView.frame.size.height)];
+        [self.cameraRecordingButton setFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-75, 75, 75)];
+        [self.cameraRecordingButton setCenter:self.lowerBackgroundView.center];
+        [self.whiteLine1 setFrame:CGRectMake(10, self.lowerBackgroundView.center.y-1, (self.view.frame.size.width-75.0)/2-20, 2)];
+        [self.whiteLine2 setFrame:CGRectMake(self.cameraRecordingButton.frame.origin.x + self.cameraRecordingButton.frame.size.width + 10, self.lowerBackgroundView.center.y-1, (self.view.frame.size.width-75.0)/2-20, 2)];
+        [self.speedUnitsLabel setFrame:CGRectMake(self.cameraRecordingButton.center.x - 75/2.0 - 35, self.view.frame.size.height-68-27, 25, 27)];
+        [self.speedLabel setFrame:CGRectMake(10, self.view.frame.size.height-47-48, self.speedUnitsLabel.frame.origin.x - 10, 48)];
+        [self.speedNotificationButton setFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+4, 79, 37)];
+        [self.speedNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.speedNotificationButton.center.y)];
+        [self.crashNotificationButton setFrame:CGRectMake(0, self.whiteLine2.frame.origin.y+6, 79, 37)];
+        [self.crashNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.crashNotificationButton.center.y)];
+        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.whiteLine1.frame.origin.y+6, 37, 37)];
+        [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.gpsStatusImageView.center.y)];
+    });
+}
+
+- (void)setFramesForLandscapeLeft {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.upperBackgroundView setFrame:CGRectMake(0, 0, 44, self.view.frame.size.height)];
+        [self.lowerBackgroundView setFrame:CGRectMake(self.view.frame.size.width-95, 0, 95, self.view.frame.size.height)];
+        [self.exitButton setFrame:CGRectMake(0, 0, 44, 44)];
+        [self.cameraRecordingButton setFrame:CGRectMake(self.view.frame.size.width-10-75, (self.view.frame.size.height-75)/2, 75, 75)];
+        [self.cameraRecordingButton setCenter:self.lowerBackgroundView.center];
+        [self.whiteLine1 setFrame:CGRectMake(self.view.frame.size.width - 90, (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
+        [self.whiteLine2 setFrame:CGRectMake(self.view.frame.size.width - 90, self.view.frame.size.height - (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
+        [self.speedLabel setFrame:CGRectMake(self.view.frame.size.width - 85, 0, 60, self.whiteLine1.frame.origin.y)];
+        [self.speedUnitsLabel setFrame:CGRectMake(self.view.frame.size.width - 25, 0, 25, 27)];
+        
+        [self.speedNotificationButton setFrame:CGRectMake(0, 0, 79, 37)];
+        [self.speedNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.cameraRecordingButton.frame.origin.y + self.cameraRecordingButton.frame.size.height + (self.whiteLine2.frame.origin.y - self.cameraRecordingButton.frame.origin.y - self.cameraRecordingButton.frame.size.height)/2.0)];
+        
+        [self.crashNotificationButton setFrame:CGRectMake(0, 0, 79, 37)];
+        [self.crashNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.whiteLine2.frame.origin.y + self.whiteLine2.frame.size.height + (self.view.frame.size.height - (self.whiteLine2.frame.origin.y+self.whiteLine2.frame.size.height))/2.0)];
+        
+        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height + (self.cameraRecordingButton.frame.origin.y - (self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height))/2.0, 37, 37)];
+        [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height + (self.cameraRecordingButton.frame.origin.y - (self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height))/2.0)];
+    });
+}
+
+- (void)setFramesForLandscapeRight {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.upperBackgroundView setFrame:CGRectMake(self.view.frame.size.width-44, 0, 44, self.view.frame.size.height)];
+        [self.lowerBackgroundView setFrame:CGRectMake(0, 0, 95, self.view.frame.size.height)];
+        [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.center.x, 0, 44, 44)];
+        [self.cameraRecordingButton setFrame:CGRectMake(10, (self.view.frame.size.height-75)/2, 75, 75)];
+        [self.cameraRecordingButton setCenter:self.lowerBackgroundView.center];
+        [self.whiteLine1 setFrame:CGRectMake(5, (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
+        [self.whiteLine2 setFrame:CGRectMake(5, self.view.frame.size.height - (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
+        [self.speedLabel setFrame:CGRectMake(10, 0, 60, self.whiteLine1.frame.origin.y)];
+        [self.speedUnitsLabel setFrame:CGRectMake(70, 0, 25, 27)];
+        
+        [self.speedNotificationButton setFrame:CGRectMake(0, 0, 79, 37)];
+        [self.speedNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.cameraRecordingButton.frame.origin.y + self.cameraRecordingButton.frame.size.height + (self.whiteLine2.frame.origin.y - self.cameraRecordingButton.frame.origin.y - self.cameraRecordingButton.frame.size.height)/2.0)];
+        
+        [self.crashNotificationButton setFrame:CGRectMake(0, 0, 79, 37)];
+        [self.crashNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.whiteLine2.frame.origin.y + self.whiteLine2.frame.size.height + (self.view.frame.size.height - (self.whiteLine2.frame.origin.y+self.whiteLine2.frame.size.height))/2.0)];
+        
+        [self.gpsStatusImageView setFrame:CGRectMake(0.0, 0.0, 37, 37)];
+        [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height + (self.cameraRecordingButton.frame.origin.y - (self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height))/2.0)];
+    });
 }
 
 /**
@@ -248,27 +272,6 @@
         [self stopRecording];
     }
 }
-
-/**
- *  @Author Michał Czwarnowski
- *
- *  Blinks recording button when isRecording flag is set to YES
- */
-/*- (void)flashCameraButton {
- if (_isRecording) {
- dispatch_async(dispatch_get_main_queue(), ^{
- [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionAllowUserInteraction animations:^{
- [self.cameraRecordingButton setBackgroundColor:[UIColor whiteColor]];
- } completion:^(BOOL finished) {
- [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionAllowUserInteraction animations:^{
- [self.cameraRecordingButton setBackgroundColor:[UIColor redColor]];
- } completion:^(BOOL finished) {
- [self flashCameraButton];
- }];
- }];
- });
- }
- }*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -321,8 +324,20 @@
     
     rotationAnimation = nil;
     
-    [self.pickerController startVideoCapture];
-    
+    NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"output.mov"];
+    NSURL *outputURL = [[NSURL alloc] initFileURLWithPath:outputPath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:outputPath])
+    {
+        NSError *error;
+        if ([fileManager removeItemAtPath:outputPath error:&error] == NO)
+        {
+            
+        }
+    }
+    //Start recording
+    [movieFile startRecordingToOutputFileURL:outputURL recordingDelegate:self];
+        
 }
 
 - (void)stopRecording {
@@ -335,40 +350,226 @@
         self.smallDotImageView.alpha = 1.0f;
     }];
     
-    
-    
-    [self.pickerController stopVideoCapture];
+    [movieFile stopRecording];
 }
 
-#pragma mark- UIImagePicker Delegates
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+- (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error {
     
-    NSURL *videoURL = [info valueForKey:UIImagePickerControllerMediaURL];
-    NSString *pathToVideo = [videoURL path];
-    BOOL okToSaveVideo = UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(pathToVideo);
-    if (okToSaveVideo) {
-        UISaveVideoAtPathToSavedPhotosAlbum(pathToVideo, self, @selector(video:didFinishSavingWithError:contextInfo:), NULL);
-    } else {
-        [self video:pathToVideo didFinishSavingWithError:nil contextInfo:NULL];
+    NSLog(@"didFinishRecordingToOutputFileAtURL - enter");
+    
+    BOOL RecordedSuccessfully = YES;
+    if ([error code] != noErr)
+    {
+        id value = [[error userInfo] objectForKey:AVErrorRecordingSuccessfullyFinishedKey];
+        if (value)
+        {
+            RecordedSuccessfully = [value boolValue];
+        }
+    }
+    if (RecordedSuccessfully)
+    {
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputFileURL])
+        {
+            [library writeVideoAtPathToSavedPhotosAlbum:outputFileURL
+                                        completionBlock:^(NSURL *assetURL, NSError *error)
+             {
+                 if (error)
+                 {
+                     
+                 }
+             }];
+        }
+    }
+}
+
+- (void) initializeCamera {
+    //Capture Session
+    
+    if (!mCameraView) {
+        mCameraView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
     }
     
-}
-
-- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if (![mCameraView isDescendantOfView:self.view]) {
+        [self.view addSubview:mCameraView];
+    }
     
-    if (error) {
+    if (session) {
+        session = nil;
+    }
+    
+    if (device) {
+        device = nil;
+    }
+    
+    if (input) {
+        input = nil;
+    }
+    
+    session = [[AVCaptureSession alloc]init];
+    session.sessionPreset = AVCaptureSessionPresetPhoto;
+
+    device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    
+    if (device)
+    {
+        NSError *error;
+        input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+        if (!error)
+        {
+            if ([session canAddInput:input]) {
+                [session addInput:input];
+            } else {
+                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                                      message:NSLocalizedString(@"Couldn\'t add video input", @"Couldn\'t add video input")
+                                                                     delegate:nil
+                                                            cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                                            otherButtonTitles: nil];
+                [myAlertView show];
+                myAlertView = nil;
+                input = nil;
+                device = nil;
+                session = nil;
+                return;
+            }
+            
+        }
+        else
+        {
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                                  message:NSLocalizedString(@"Couldn\'t create video input", @"Couldn\'t create video input")
+                                                                 delegate:nil
+                                                        cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                                        otherButtonTitles: nil];
+            [myAlertView show];
+            myAlertView = nil;
+            input = nil;
+            device = nil;
+            session = nil;
+            return;
+        }
+    }
+    else
+    {
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
-                                                              message:NSLocalizedString(@"Video can not be saved.", @"Video can not be saved.")
+                                                              message:NSLocalizedString(@"Couldn\'t create video capture device", @"Couldn\'t create video capture device")
                                                              delegate:nil
                                                     cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
                                                     otherButtonTitles: nil];
-        
         [myAlertView show];
-        
-        NSLog(@"Error: %@", [error localizedDescription]);
+        myAlertView = nil;
+        input = nil;
+        device = nil;
+        session = nil;
+        return;
     }
     
+    AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
+    NSError *error = nil;
+    AVCaptureDeviceInput *audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
+    if (audioInput)
+    {
+        [session addInput:audioInput];
+    }
+    
+    movieFile = [[AVCaptureMovieFileOutput alloc] init];
+    Float64 TotalSeconds = 3600;
+    int32_t preferredTimeScale = 24;
+    CMTime maxDuration = CMTimeMakeWithSeconds(TotalSeconds, preferredTimeScale);	//<<SET MAX DURATION
+    movieFile.maxRecordedDuration = maxDuration;
+    
+    movieFile.minFreeDiskSpaceLimit = 1024 * 1024 * 100;
+    if ([session canAddOutput:movieFile])
+        [session addOutput:movieFile];
+    
+    [session setSessionPreset:AVCaptureSessionPresetMedium];
+    if ([session canSetSessionPreset:AVCaptureSessionPreset1280x720])
+        [session setSessionPreset:AVCaptureSessionPreset1280x720];
+    else if ([session canSetSessionPreset:AVCaptureSessionPreset640x480])
+        [session setSessionPreset:AVCaptureSessionPreset640x480];
+    else
+        [session setSessionPreset:AVCaptureSessionPresetMedium];
+    
+    [self startCamera];
 }
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    mCameraView.alpha = 0.0;
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self setFramesForInterface:toInterfaceOrientation];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    mCameraView.alpha = 0.0;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([session isRunning]) {
+            mCameraView.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height);
+            mCameraView.bounds = CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height);
+            [self startCamera];
+            mCameraView.alpha = 1.0;
+        } else {
+            [self initializeCamera];
+        }
+    });
+}
+
+- (void)startCamera
+{
+    [session startRunning];
+    
+    if (mCameraLayer) {
+        [mCameraLayer removeFromSuperlayer];
+        mCameraLayer = nil;
+    }
+    
+    mCameraLayer = [AVCaptureVideoPreviewLayer layerWithSession: session];
+    [self updateCameraLayer];
+    [mCameraView.layer addSublayer:mCameraLayer];
+}
+
+- (void)stopCamera
+{
+    [session stopRunning];
+    [mCameraLayer removeFromSuperlayer];
+    mCameraLayer = nil;
+    session = nil;
+}
+
+- (void)toggleCamera
+{
+    session.isRunning ? [self stopCamera] : [self startCamera];
+}
+
+- (void)updateCameraLayer
+{
+    mCameraLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    mCameraLayer.frame = mCameraView.bounds;
+    float x = mCameraView.frame.origin.x;
+    float y = mCameraView.frame.origin.y;
+    float w = mCameraView.frame.size.width;
+    float h = mCameraView.frame.size.height;
+    CATransform3D transform = CATransform3DIdentity;
+    if (UIDeviceOrientationLandscapeLeft == [[UIDevice currentDevice] orientation]) {
+        mCameraLayer.frame = CGRectMake(x, y, h, w);
+        transform = CATransform3DTranslate(transform, (w - h) / 2, (h - w) / 2, 0);
+        transform = CATransform3DRotate(transform, -M_PI/2, 0, 0, 1);
+    } else if (UIDeviceOrientationLandscapeRight == [[UIDevice currentDevice] orientation]) {
+        mCameraLayer.frame = CGRectMake(x, y, h, w);
+        transform = CATransform3DTranslate(transform, (w - h) / 2, (h - w) / 2, 0);
+        transform = CATransform3DRotate(transform, M_PI/2, 0, 0, 1);
+    } else if (UIDeviceOrientationPortraitUpsideDown == [[UIDevice currentDevice] orientation]) {
+        mCameraLayer.frame = mCameraView.bounds;
+        transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
+    } else {
+        mCameraLayer.frame = mCameraView.bounds;
+    }
+    mCameraLayer.transform  = transform;
+}
+
 
 #pragma mark- GPSUtilities Delegates
 - (void)locationUpdate:(CLLocation *)location {
@@ -403,7 +604,7 @@
 - (void)exit {
     [self.revealViewController pushFrontViewController:_parentView animated:YES];
     _parentView = nil;
-//    [self.delegate recorderViewWantsDismiss];
+    //    [self.delegate recorderViewWantsDismiss];
 }
 
 @end

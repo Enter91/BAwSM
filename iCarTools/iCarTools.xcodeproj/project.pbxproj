@@ -38,6 +38,12 @@
 		1CB4B01B1A2073C800172BA4 /* StatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CB4B0181A2073C800172BA4 /* StatsViewController.xib */; };
 		1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB4B0191A2073C800172BA4 /* StatsViewController.m */; };
 		1CB4B01E1A2073F400172BA4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB4B01D1A2073F400172BA4 /* MapKit.framework */; };
+		1CD407291A26919500F6A2E7 /* suszarka.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD407281A26919500F6A2E7 /* suszarka.png */; };
+		1CD4072B1A27AA7A00F6A2E7 /* user_male4-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */; };
+		1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072C1A27AC8000F6A2E7 /* wypadek.png */; };
+		1CD407311A27AE1100F6A2E7 /* gps_disconnected-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072E1A27AE1100F6A2E7 /* gps_disconnected-256.png */; };
+		1CD407321A27AE1100F6A2E7 /* gps_receiving-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072F1A27AE1100F6A2E7 /* gps_receiving-256.png */; };
+		1CD407331A27AE1100F6A2E7 /* gps_searching-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD407301A27AE1100F6A2E7 /* gps_searching-256.png */; };
 		1CEDCA261A2074E000BFADB5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CEDCA241A2074E000BFADB5 /* LoginViewController.m */; };
 		1CEDCA271A2074E000BFADB5 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CEDCA251A2074E000BFADB5 /* LoginViewController.xib */; };
 		1CEDCA2B1A2076A100BFADB5 /* photo-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CEDCA281A2076A100BFADB5 /* photo-256.png */; };
@@ -102,6 +108,12 @@
 		1CB4B0191A2073C800172BA4 /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
 		1CB4B01A1A2073C800172BA4 /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
 		1CB4B01D1A2073F400172BA4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		1CD407281A26919500F6A2E7 /* suszarka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suszarka.png; sourceTree = "<group>"; };
+		1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_male4-256.png"; sourceTree = "<group>"; };
+		1CD4072C1A27AC8000F6A2E7 /* wypadek.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wypadek.png; sourceTree = "<group>"; };
+		1CD4072E1A27AE1100F6A2E7 /* gps_disconnected-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gps_disconnected-256.png"; sourceTree = "<group>"; };
+		1CD4072F1A27AE1100F6A2E7 /* gps_receiving-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gps_receiving-256.png"; sourceTree = "<group>"; };
+		1CD407301A27AE1100F6A2E7 /* gps_searching-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gps_searching-256.png"; sourceTree = "<group>"; };
 		1CEDCA231A2074E000BFADB5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		1CEDCA241A2074E000BFADB5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		1CEDCA251A2074E000BFADB5 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -251,6 +263,12 @@
 		1C30478819FED66700D2EE5E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1CD4072E1A27AE1100F6A2E7 /* gps_disconnected-256.png */,
+				1CD4072F1A27AE1100F6A2E7 /* gps_receiving-256.png */,
+				1CD407301A27AE1100F6A2E7 /* gps_searching-256.png */,
+				1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */,
+				1CD4072C1A27AC8000F6A2E7 /* wypadek.png */,
+				1CD407281A26919500F6A2E7 /* suszarka.png */,
 				1CA7299A1A21466800FEBD51 /* Tutorial-Background */,
 				1CA7299C1A21466F00FEBD51 /* Tutorial-iPhone.png */,
 				1CEDCA281A2076A100BFADB5 /* photo-256.png */,
@@ -387,20 +405,25 @@
 				1CEDCA271A2074E000BFADB5 /* LoginViewController.xib in Resources */,
 				1CB4B01B1A2073C800172BA4 /* StatsViewController.xib in Resources */,
 				1CEDCA2D1A2076A100BFADB5 /* settings3-256.png in Resources */,
+				1CD407331A27AE1100F6A2E7 /* gps_searching-256.png in Resources */,
 				1C30479819FED74C00D2EE5E /* DINPro-Light.otf in Resources */,
+				1CD407321A27AE1100F6A2E7 /* gps_receiving-256.png in Resources */,
 				1CA7299B1A21466800FEBD51 /* Tutorial-Background in Resources */,
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
 				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
 				1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */,
 				1CA7299D1A21466F00FEBD51 /* Tutorial-iPhone.png in Resources */,
+				1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */,
 				1CF81C4D1A129A6B00496116 /* smallDotImage.png in Resources */,
 				1C3047A419FEE09100D2EE5E /* ViewController.xib in Resources */,
 				1C30479A19FED74C00D2EE5E /* DINPro-Medium.otf in Resources */,
 				1CF81C4B1A12971800496116 /* white line.png in Resources */,
 				1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */,
 				1CEDCA2C1A2076A100BFADB5 /* speedometer-256.png in Resources */,
+				1CD407311A27AE1100F6A2E7 /* gps_disconnected-256.png in Resources */,
 				1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */,
 				1C30476119FED07300D2EE5E /* Images.xcassets in Resources */,
+				1CD4072B1A27AA7A00F6A2E7 /* user_male4-256.png in Resources */,
 				1C30479319FED74C00D2EE5E /* DINPro-Black.otf in Resources */,
 				1C30479B19FED74C00D2EE5E /* DINPro-MediumItalic.otf in Resources */,
 				1C3047BB19FEE7B600D2EE5E /* background.png in Resources */,
@@ -409,6 +432,7 @@
 				1C30479519FED74C00D2EE5E /* DINPro-Bold.otf in Resources */,
 				1CA729991A21458900FEBD51 /* TutorialViewController.xib in Resources */,
 				1CF81C491A12954800496116 /* record_button.png in Resources */,
+				1CD407291A26919500F6A2E7 /* suszarka.png in Resources */,
 				1CEDCA2B1A2076A100BFADB5 /* photo-256.png in Resources */,
 				1C30479919FED74C00D2EE5E /* DINPro-LightItalic.otf in Resources */,
 			);

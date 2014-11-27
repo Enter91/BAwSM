@@ -31,7 +31,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eE2-6n-OxQ" userLabel="Login Info">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo-256.png" translatesAutoresizingMaskIntoConstraints="NO" id="bnr-ow-MIe">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_male4-256.png" translatesAutoresizingMaskIntoConstraints="NO" id="bnr-ow-MIe">
                             <rect key="frame" x="30" y="25" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="bnr-ow-MIe" secondAttribute="height" id="Nh9-NP-4Ul"/>
@@ -86,6 +86,6 @@
     </objects>
     <resources>
         <image name="background.png" width="1242" height="2208"/>
-        <image name="photo-256.png" width="256" height="256"/>
+        <image name="user_male4-256.png" width="256" height="256"/>
     </resources>
 </document>

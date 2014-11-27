@@ -35,6 +35,13 @@
     return self;
 }
 
+- (void)updateMenuWithTitlesArray:(NSArray *)titlesArray {
+    _cellsTitles = nil;
+    _cellsTitles = [[NSArray alloc] initWithArray:titlesArray];
+    
+    [_settingsTableView reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

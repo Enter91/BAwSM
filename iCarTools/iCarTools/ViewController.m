@@ -25,6 +25,18 @@
     [self.videoRecorderOpenButton setTitle:NSLocalizedString(@"recorder", nil) forState:UIControlStateNormal];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    NSLog(@"view will appear");
+    
+    if (_recorderView) {
+        _recorderView = nil;
+    }
+    
+    if (_statsView) {
+        _statsView = nil;
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

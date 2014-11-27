@@ -19,4 +19,5 @@
 @property (weak, nonatomic) IBOutlet UIView *loginInfoView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 
+- (void)updateMenuWithTitlesArray:(NSArray *)titlesArray;
 @end

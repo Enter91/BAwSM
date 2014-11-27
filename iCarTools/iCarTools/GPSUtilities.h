@@ -24,6 +24,38 @@
  */
 + (GPSUtilities*)sharedInstance;
 
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Uruchamia GPS
+ */
+- (void)startGPS;
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Uruchamia GPS z zadaną dokładnością pomiaru
+ *
+ *  @param accuracy Precyzja GPSa
+ */
+- (void)startGPSWithAccuracy:(CLLocationAccuracy)accuracy;
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Zatrzymuje GPS
+ */
+- (void)stopGPS;
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Pozwala na zmianę precyzji w trakcie działania GPSa
+ *
+ *  @param accuracy Precyzja GPSa
+ */
+- (void)setAccuracy:(CLLocationAccuracy)accuracy;
+
 @property (nonatomic, retain) CLLocationManager *locManager;
 @property (nonatomic, assign) id delegate;
 

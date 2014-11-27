@@ -48,8 +48,9 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"will appear");
+- (void)dealloc {
+    self.gpsUtilities.delegate = nil;
+    self.gpsUtilities = nil;
 }
 
 
@@ -602,6 +603,7 @@
 }
 
 - (void)exit {
+    [self.gpsUtilities stopGPS];
     [self.revealViewController pushFrontViewController:_parentView animated:YES];
     _parentView = nil;
     //    [self.delegate recorderViewWantsDismiss];

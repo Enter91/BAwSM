@@ -24,6 +24,10 @@
     [self.mapView setShowsUserLocation:YES];
     [self.mapView.userLocation setTitle:NSLocalizedString(@"currentLocation", nil)];
     
+    SWRevealViewController *revealController = [self revealViewController];
+    [revealController panGestureRecognizer];
+    [revealController tapGestureRecognizer];
+    
     [self.mapView.userLocation addObserver:self
                                 forKeyPath:@"location"
                                    options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
@@ -32,7 +36,6 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     [self.view setBackgroundColor:[UIColor blackColor]];
-    
     if (!self.upperBackgroundView) {
         self.upperBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
         [self.upperBackgroundView setBackgroundColor:[UIColor colorWithRed:52.0/255.0 green:59.0/255.0 blue:65.0/255.0 alpha:1.0]];
@@ -41,12 +44,16 @@
     
     if (![self.upperBackgroundView isDescendantOfView:self.view]) {
         [self.view addSubview:self.upperBackgroundView];
-        
-        [self.upperBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.upperBackgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeHeight multiplier:320.0/44.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.upperBackgroundView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
+    }
+    
+    if (!self.lowerBackgroundView) {
+        self.lowerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-95, self.view.frame.size.width, 95)];
+        [self.lowerBackgroundView setBackgroundColor:[UIColor colorWithRed:52.0/255.0 green:59.0/255.0 blue:65.0/255.0 alpha:1.0]];
+        [self.lowerBackgroundView setAlpha:0.9];
+    }
+    
+    if (![self.lowerBackgroundView isDescendantOfView:self.view]) {
+        [self.view addSubview:self.lowerBackgroundView];
     }
     
     if (!self.exitButton) {
@@ -56,34 +63,22 @@
     
     if (![self.exitButton isDescendantOfView:self.view]) {
         [self.view addSubview:self.exitButton];
-        
-        [self.exitButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.exitButton addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.exitButton attribute:NSLayoutAttributeHeight multiplier:50.0/44.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:10.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.exitButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.upperBackgroundView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     }
     
     [self.exitButton removeTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
     [self.exitButton addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
     
-    if (!self.lowerBackgroundView) {
-        self.lowerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-65, self.view.frame.size.width, 65)];
-        [self.lowerBackgroundView setBackgroundColor:[UIColor colorWithRed:52.0/255.0 green:59.0/255.0 blue:65.0/255.0 alpha:1.0]];
-        [self.lowerBackgroundView setAlpha:0.9];
-    }
-    
-    if (![self.lowerBackgroundView isDescendantOfView:self.view]) {
-        [self.view addSubview:self.lowerBackgroundView];
-        
-        [self.lowerBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.lowerBackgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.lowerBackgroundView attribute:NSLayoutAttributeHeight multiplier:320.0/65.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.lowerBackgroundView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-    }
-    
     self.navigationController.navigationBar.hidden = YES;
+    
+    [self updateDataSourceInLeftRevealViewController];
+    
+    [self setFramesForInterface:self.interfaceOrientation];
+}
+
+- (void)updateDataSourceInLeftRevealViewController {
+    if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[@"Settings", @"Map type"]];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -117,6 +112,59 @@
     }
 }
 
+- (void)setFramesForInterface:(UIInterfaceOrientation)toInterfaceOrientation {
+    
+    switch (toInterfaceOrientation) {
+        case UIInterfaceOrientationUnknown:
+            [self setFramesForPortrait];
+            break;
+        case UIInterfaceOrientationPortrait:
+            [self setFramesForPortrait];
+            break;
+        case UIInterfaceOrientationPortraitUpsideDown:
+            [self setFramesForPortrait];
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+            [self setFramesForLandscapeLeft];
+            break;
+        case UIInterfaceOrientationLandscapeRight:
+            [self setFramesForLandscapeRight];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)setFramesForPortrait {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.upperBackgroundView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+        [self.lowerBackgroundView setFrame:CGRectMake(0, self.view.frame.size.height-95, self.view.frame.size.width, 95)];
+        [self.exitButton setFrame:CGRectMake(10, 0, 50, self.upperBackgroundView.frame.size.height)];
+    });
+}
+
+- (void)setFramesForLandscapeLeft {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.upperBackgroundView setFrame:CGRectMake(0, 0, 44, self.view.frame.size.height)];
+        [self.lowerBackgroundView setFrame:CGRectMake(self.view.frame.size.width-95, 0, 95, self.view.frame.size.height)];
+        [self.exitButton setFrame:CGRectMake(0, 0, 44, 44)];
+    });
+}
+
+- (void)setFramesForLandscapeRight {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.upperBackgroundView setFrame:CGRectMake(self.view.frame.size.width-44, 0, 44, self.view.frame.size.height)];
+        [self.lowerBackgroundView setFrame:CGRectMake(0, 0, 95, self.view.frame.size.height)];
+        [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.center.x, 0, 44, 44)];
+    });
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self setFramesForInterface:toInterfaceOrientation];
+}
+
 - (void)locationUpdate:(CLLocation *)location {
     NSLog(@"New Location: %@", location);
 }
@@ -139,6 +187,11 @@
     return YES;
 }
 
+- (void)dealloc {
+    self.gpsUtilities.delegate = nil;
+    self.gpsUtilities = nil;
+}
+
 - (void)exit {
     @try{
         [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
@@ -147,6 +200,8 @@
 
     [self.revealViewController pushFrontViewController:_parentView animated:YES];
     _parentView = nil;
+    
+    [self.gpsUtilities stopGPS];
 }
 
 @end

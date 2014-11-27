@@ -9,7 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "GPSUtilities.h"
+
+@import AVFoundation;
+@import AssetsLibrary;
+@import MobileCoreServices;
+
+#import "LoginViewController.h"
 #import <SWRevealViewController.h>
+#import "SettingsViewController.h"
 
 @protocol StatsViewControllerDelegate <NSObject>
 
@@ -26,6 +33,8 @@
 
 @property (strong, nonatomic) UIView *upperBackgroundView;
 @property (strong, nonatomic) UIView *lowerBackgroundView;
+
+@property (strong, nonatomic) UIImageView *gpsStatusImageView;
 
 @property (strong, nonatomic) UIButton *exitButton;
 

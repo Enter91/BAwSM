@@ -240,8 +240,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.upperBackgroundView setFrame:CGRectMake(0, 0, 44, self.view.frame.size.height)];
         [self.lowerBackgroundView setFrame:CGRectMake(self.view.frame.size.width-95, 0, 95, self.view.frame.size.height)];
-        [self.menuButton setFrame:CGRectMake(0, 10, 44, 44)];
-        [self.exitButton setFrame:CGRectMake(0, 0, 44, 44)];
+        [self.menuButton setFrame:CGRectMake(5, 10, 34, 34)];
+        [self.exitButton setFrame:CGRectMake(5, self.view.frame.size.height-55, 34, 34)];
         [self.findStationButton setFrame:CGRectMake(self.view.frame.size.width-10-75, (self.view.frame.size.height-75)/2, 75, 75)];
         [self.findStationButton setCenter:self.lowerBackgroundView.center];
         [self.whiteLine1 setFrame:CGRectMake(self.view.frame.size.width - 90, (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];

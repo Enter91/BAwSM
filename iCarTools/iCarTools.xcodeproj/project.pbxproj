@@ -52,6 +52,11 @@
 		1CF81C491A12954800496116 /* record_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C481A12954800496116 /* record_button.png */; };
 		1CF81C4B1A12971800496116 /* white line.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4A1A12971800496116 /* white line.png */; };
 		1CF81C4D1A129A6B00496116 /* smallDotImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4C1A129A6B00496116 /* smallDotImage.png */; };
+		F02351871A287F240077C1A2 /* exit-50.png in Resources */ = {isa = PBXBuildFile; fileRef = F02351861A287F240077C1A2 /* exit-50.png */; };
+		F02351891A28874A0077C1A2 /* search-256.png in Resources */ = {isa = PBXBuildFile; fileRef = F02351881A28874A0077C1A2 /* search-256.png */; };
+		F023518B1A2889DE0077C1A2 /* map_marker-256.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518A1A2889DE0077C1A2 /* map_marker-256.png */; };
+		F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518C1A288FDB0077C1A2 /* plus-128.png */; };
+		F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518E1A28A03E0077C1A2 /* menu-128.png */; };
 		F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +130,11 @@
 		1CF81C4C1A129A6B00496116 /* smallDotImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallDotImage.png; sourceTree = "<group>"; };
 		45CD27C558CF0F1030656D4F /* Pods-iCarTools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCarTools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iCarTools/Pods-iCarTools.debug.xcconfig"; sourceTree = "<group>"; };
 		BE45EDF14A5B125379C8472B /* Pods-iCarTools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCarTools.release.xcconfig"; path = "Pods/Target Support Files/Pods-iCarTools/Pods-iCarTools.release.xcconfig"; sourceTree = "<group>"; };
+		F02351861A287F240077C1A2 /* exit-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exit-50.png"; sourceTree = "<group>"; };
+		F02351881A28874A0077C1A2 /* search-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-256.png"; sourceTree = "<group>"; };
+		F023518A1A2889DE0077C1A2 /* map_marker-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_marker-256.png"; sourceTree = "<group>"; };
+		F023518C1A288FDB0077C1A2 /* plus-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-128.png"; sourceTree = "<group>"; };
+		F023518E1A28A03E0077C1A2 /* menu-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-128.png"; sourceTree = "<group>"; };
 		F0C3700D1A246C48000C5A82 /* FixedCompassLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixedCompassLayout.h; sourceTree = "<group>"; };
 		F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixedCompassLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -266,6 +276,11 @@
 				1CD4072E1A27AE1100F6A2E7 /* gps_disconnected-256.png */,
 				1CD4072F1A27AE1100F6A2E7 /* gps_receiving-256.png */,
 				1CD407301A27AE1100F6A2E7 /* gps_searching-256.png */,
+				F02351881A28874A0077C1A2 /* search-256.png */,
+				F023518E1A28A03E0077C1A2 /* menu-128.png */,
+				F023518C1A288FDB0077C1A2 /* plus-128.png */,
+				F02351861A287F240077C1A2 /* exit-50.png */,
+				F023518A1A2889DE0077C1A2 /* map_marker-256.png */,
 				1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */,
 				1CD4072C1A27AC8000F6A2E7 /* wypadek.png */,
 				1CD407281A26919500F6A2E7 /* suszarka.png */,
@@ -411,6 +426,7 @@
 				1CA7299B1A21466800FEBD51 /* Tutorial-Background in Resources */,
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
 				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
+				F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */,
 				1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */,
 				1CA7299D1A21466F00FEBD51 /* Tutorial-iPhone.png in Resources */,
 				1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */,
@@ -419,19 +435,23 @@
 				1C30479A19FED74C00D2EE5E /* DINPro-Medium.otf in Resources */,
 				1CF81C4B1A12971800496116 /* white line.png in Resources */,
 				1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */,
+				F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */,
 				1CEDCA2C1A2076A100BFADB5 /* speedometer-256.png in Resources */,
 				1CD407311A27AE1100F6A2E7 /* gps_disconnected-256.png in Resources */,
 				1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */,
+				F02351871A287F240077C1A2 /* exit-50.png in Resources */,
 				1C30476119FED07300D2EE5E /* Images.xcassets in Resources */,
 				1CD4072B1A27AA7A00F6A2E7 /* user_male4-256.png in Resources */,
 				1C30479319FED74C00D2EE5E /* DINPro-Black.otf in Resources */,
 				1C30479B19FED74C00D2EE5E /* DINPro-MediumItalic.otf in Resources */,
+				F02351891A28874A0077C1A2 /* search-256.png in Resources */,
 				1C3047BB19FEE7B600D2EE5E /* background.png in Resources */,
 				1C3047AA19FEE11D00D2EE5E /* Localizable.strings in Resources */,
 				1C30479C19FED74C00D2EE5E /* DINPro.otf in Resources */,
 				1C30479519FED74C00D2EE5E /* DINPro-Bold.otf in Resources */,
 				1CA729991A21458900FEBD51 /* TutorialViewController.xib in Resources */,
 				1CF81C491A12954800496116 /* record_button.png in Resources */,
+				F023518B1A2889DE0077C1A2 /* map_marker-256.png in Resources */,
 				1CD407291A26919500F6A2E7 /* suszarka.png in Resources */,
 				1CEDCA2B1A2076A100BFADB5 /* photo-256.png in Resources */,
 				1C30479919FED74C00D2EE5E /* DINPro-LightItalic.otf in Resources */,

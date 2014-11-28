@@ -88,9 +88,17 @@
         [self.view addSubview:self.lowerBackgroundView];
     }
     
+    if (!self.menuButton) {
+        self.menuButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 5, 30, self.upperBackgroundView.frame.size.height-10)];
+        [self.menuButton setImage:[UIImage imageNamed:@"menu-128"] forState:UIControlStateNormal];  }
+    
+    if (![self.menuButton isDescendantOfView:self.view]) {
+        [self.view addSubview:self.menuButton];
+    }
+
     if (!self.exitButton) {
-        self.exitButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 50, self.upperBackgroundView.frame.size.height)];
-        [self.exitButton setTitle:NSLocalizedString(@"BACK", nil) forState:UIControlStateNormal];
+        self.exitButton = [[UIButton alloc] initWithFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
+        [self.exitButton setImage:[UIImage imageNamed:@"exit-50"] forState:UIControlStateNormal];
     }
     
     if (![self.exitButton isDescendantOfView:self.view]) {
@@ -197,7 +205,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.upperBackgroundView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
         [self.lowerBackgroundView setFrame:CGRectMake(0, self.view.frame.size.height-95, self.view.frame.size.width, 95)];
-        [self.exitButton setFrame:CGRectMake(10, 0, 50, self.upperBackgroundView.frame.size.height)];
+        [self.menuButton setFrame:CGRectMake(10, 5, 30, self.upperBackgroundView.frame.size.height-10)];
+        [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
         [self.cameraRecordingButton setFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-75, 75, 75)];
         [self.cameraRecordingButton setCenter:self.lowerBackgroundView.center];
         [self.whiteLine1 setFrame:CGRectMake(10, self.lowerBackgroundView.center.y-1, (self.view.frame.size.width-75.0)/2-20, 2)];
@@ -217,6 +226,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.upperBackgroundView setFrame:CGRectMake(0, 0, 44, self.view.frame.size.height)];
         [self.lowerBackgroundView setFrame:CGRectMake(self.view.frame.size.width-95, 0, 95, self.view.frame.size.height)];
+        [self.menuButton setFrame:CGRectMake(0, 10, 44, 44)];
         [self.exitButton setFrame:CGRectMake(0, 0, 44, 44)];
         [self.cameraRecordingButton setFrame:CGRectMake(self.view.frame.size.width-10-75, (self.view.frame.size.height-75)/2, 75, 75)];
         [self.cameraRecordingButton setCenter:self.lowerBackgroundView.center];
@@ -240,6 +250,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.upperBackgroundView setFrame:CGRectMake(self.view.frame.size.width-44, 0, 44, self.view.frame.size.height)];
         [self.lowerBackgroundView setFrame:CGRectMake(0, 0, 95, self.view.frame.size.height)];
+        [self.menuButton setFrame:CGRectMake(0, 10, 44, 44)];
         [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.center.x, 0, 44, 44)];
         [self.cameraRecordingButton setFrame:CGRectMake(10, (self.view.frame.size.height-75)/2, 75, 75)];
         [self.cameraRecordingButton setCenter:self.lowerBackgroundView.center];

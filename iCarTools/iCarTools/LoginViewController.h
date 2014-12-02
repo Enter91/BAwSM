@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SBJson4.h>
+#import "AmazingJSON.h"
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : UIViewController <UITextFieldDelegate, AmazingJSONDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *loginTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;

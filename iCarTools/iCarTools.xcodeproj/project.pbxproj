@@ -31,9 +31,10 @@
 		1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */; };
 		1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4135441A20AB7200D3F1CC /* SettingsViewController.m */; };
 		1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */; };
+		1C86508A1A2DEA9A009B02AA /* AmazingJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8650891A2DEA9A009B02AA /* AmazingJSON.m */; };
 		1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA729961A21458900FEBD51 /* TutorialViewController.m */; };
 		1CA729991A21458900FEBD51 /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CA729971A21458900FEBD51 /* TutorialViewController.xib */; };
-		1CA7299B1A21466800FEBD51 /* Tutorial-Background in Resources */ = {isa = PBXBuildFile; fileRef = 1CA7299A1A21466800FEBD51 /* Tutorial-Background */; };
+		1CA7299B1A21466800FEBD51 /* Tutorial-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA7299A1A21466800FEBD51 /* Tutorial-Background.png */; };
 		1CA7299D1A21466F00FEBD51 /* Tutorial-iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA7299C1A21466F00FEBD51 /* Tutorial-iPhone.png */; };
 		1CB4B01B1A2073C800172BA4 /* StatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CB4B0181A2073C800172BA4 /* StatsViewController.xib */; };
 		1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB4B0191A2073C800172BA4 /* StatsViewController.m */; };
@@ -104,10 +105,12 @@
 		1C4135431A20AB7200D3F1CC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1C4135441A20AB7200D3F1CC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		1C8650881A2DEA9A009B02AA /* AmazingJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazingJSON.h; sourceTree = "<group>"; };
+		1C8650891A2DEA9A009B02AA /* AmazingJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazingJSON.m; sourceTree = "<group>"; };
 		1CA729951A21458900FEBD51 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		1CA729961A21458900FEBD51 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		1CA729971A21458900FEBD51 /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
-		1CA7299A1A21466800FEBD51 /* Tutorial-Background */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tutorial-Background"; sourceTree = "<group>"; };
+		1CA7299A1A21466800FEBD51 /* Tutorial-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tutorial-Background.png"; sourceTree = "<group>"; };
 		1CA7299C1A21466F00FEBD51 /* Tutorial-iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tutorial-iPhone.png"; sourceTree = "<group>"; };
 		1CB4B0181A2073C800172BA4 /* StatsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsViewController.xib; sourceTree = "<group>"; };
 		1CB4B0191A2073C800172BA4 /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
@@ -284,7 +287,7 @@
 				1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */,
 				1CD4072C1A27AC8000F6A2E7 /* wypadek.png */,
 				1CD407281A26919500F6A2E7 /* suszarka.png */,
-				1CA7299A1A21466800FEBD51 /* Tutorial-Background */,
+				1CA7299A1A21466800FEBD51 /* Tutorial-Background.png */,
 				1CA7299C1A21466F00FEBD51 /* Tutorial-iPhone.png */,
 				1CEDCA281A2076A100BFADB5 /* photo-256.png */,
 				1CEDCA291A2076A100BFADB5 /* speedometer-256.png */,
@@ -313,6 +316,8 @@
 			children = (
 				1C3047BD19FEE9EC00D2EE5E /* GPSUtilities.h */,
 				1C3047BE19FEE9EC00D2EE5E /* GPSUtilities.m */,
+				1C8650881A2DEA9A009B02AA /* AmazingJSON.h */,
+				1C8650891A2DEA9A009B02AA /* AmazingJSON.m */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";
@@ -423,7 +428,7 @@
 				1CD407331A27AE1100F6A2E7 /* gps_searching-256.png in Resources */,
 				1C30479819FED74C00D2EE5E /* DINPro-Light.otf in Resources */,
 				1CD407321A27AE1100F6A2E7 /* gps_receiving-256.png in Resources */,
-				1CA7299B1A21466800FEBD51 /* Tutorial-Background in Resources */,
+				1CA7299B1A21466800FEBD51 /* Tutorial-Background.png in Resources */,
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
 				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
 				F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */,
@@ -512,6 +517,7 @@
 				1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */,
 				1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */,
 				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,
+				1C86508A1A2DEA9A009B02AA /* AmazingJSON.m in Sources */,
 				1CEDCA261A2074E000BFADB5 /* LoginViewController.m in Sources */,
 				1C30475619FED07300D2EE5E /* main.m in Sources */,
 				1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */,

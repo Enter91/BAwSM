@@ -28,6 +28,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"view will appear");
     
+    if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[@"opcja 1", @"opcja 2", @"opcja 3"]];
+    }
+    
     if (_recorderView) {
         _recorderView = nil;
     }

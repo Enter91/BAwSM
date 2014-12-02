@@ -157,7 +157,7 @@
                                 <constraint firstAttribute="width" constant="200" id="yae-NL-WsV"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
                     </subviews>
                     <constraints>

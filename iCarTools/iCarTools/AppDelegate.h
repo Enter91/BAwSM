@@ -19,6 +19,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) SWRevealViewController *viewController;
 @property (strong, nonatomic) TutorialViewController *tutorial;
-
+@property (strong, nonatomic) LoginViewController *loginViewController;
 @end
 

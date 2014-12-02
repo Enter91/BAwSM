@@ -41,9 +41,29 @@
 
 - (IBAction)loginAction:(id)sender {
     
+    //TODO: Zmienić na PHP z logowania
+    [[AmazingJSON sharedInstance] setDelegate:self];
+    [[AmazingJSON sharedInstance] getResponseFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bawsm.comuf.com/checkUser.php?login=%@&password=%@", _loginTextField.text, _passwordTextField.text]]];
+    
 }
+
 - (IBAction)registerAction:(id)sender {
+    
+    [[AmazingJSON sharedInstance] setDelegate:self];
+    [[AmazingJSON sharedInstance] getResponseFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bawsm.comuf.com/checkUser.php?login=%@&password=%@", _loginTextField.text, _passwordTextField.text]]];
+    
 }
+
+- (void)responseDictionary:(NSDictionary *)responseDict {
+    
+    NSLog(@"response: %@", responseDict);
+    if ([[responseDict objectForKey:@"code"] intValue] == 200) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        alert = nil;
+    }
+}
+
 - (IBAction)forgotPasswordAction:(id)sender {
 }
 @end

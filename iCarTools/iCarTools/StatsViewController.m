@@ -86,59 +86,18 @@
     if (![self.findStationButton isDescendantOfView:self.view]) {
         [self.view addSubview:self.findStationButton];
     }
-    
-    if (!_whiteLine1) {
-        _whiteLine1 = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"white line" ofType:@"png"]]];
-        [_whiteLine1 setFrame:CGRectMake(10, self.view.frame.size.height-46-2, (self.view.frame.size.width-75.0)/2-20, _whiteLine1.frame.size.height/2)];
-        [self.view addSubview:_whiteLine1];
-    }
-    
-    if (!_whiteLine2) {
-        _whiteLine2 = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"white line" ofType:@"png"]]];
-        [_whiteLine2 setFrame:CGRectMake(self.view.frame.size.width-((self.view.frame.size.width-75.0)/2-10), self.view.frame.size.height-46-2, (self.view.frame.size.width-75.0)/2-20, _whiteLine2.frame.size.height/2)];
-        [self.view addSubview:_whiteLine2];
-    }
-    
-    if (!self.speedLabel) {
-        self.speedLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height-47-48, 73, 48)];
-        [self.speedLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:40]];
-        [self.speedLabel setTextAlignment:NSTextAlignmentRight];
-        [self.speedLabel setTextColor:[UIColor whiteColor]];
-        [self.speedLabel setText:@"0"];
-        [self.view addSubview:self.speedLabel];
-    }
-    
-    if (!self.speedUnitsLabel) {
-        self.speedUnitsLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, self.view.frame.size.height-68-27, 25, 27)];
-        [self.speedUnitsLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10]];
-        [self.speedUnitsLabel setTextAlignment:NSTextAlignmentCenter];
-        [self.speedUnitsLabel setTextColor:[UIColor whiteColor]];
-        [self.speedUnitsLabel setText:@"km/h"];
-        [self.view addSubview:self.speedUnitsLabel];
-    }
-
-    
+  
     if (!self.addStationButton) {
-        self.addStationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+4, 37, 37)];
-        [self.addStationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.addStationButton.center.y)];
+        self.addStationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+15, 50, 50)];
+        [self.addStationButton setCenter:CGPointMake(self.findStationButton.center.x*1.5+8, self.addStationButton.center.y+4)];
         [self.addStationButton setImage:[UIImage imageNamed:@"plus-128"] forState:UIControlStateNormal];
         [self.view addSubview:self.addStationButton];
     }
     
-    if (!self.mapTypeButton) {
-        self.mapTypeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.whiteLine2.frame.origin.y+6, 37, 37)];
-        [self.mapTypeButton setCenter:CGPointMake(self.whiteLine2.center.x, self.mapTypeButton.center.y)];
-        [self.mapTypeButton setImage:[UIImage imageNamed:@"layers-256"] forState:UIControlStateNormal];
-        [self.view addSubview:self.mapTypeButton];
-    }
-    
-    [self.mapTypeButton removeTarget:self action:@selector(mapType) forControlEvents:UIControlEventTouchUpInside];
-    [self.mapTypeButton addTarget:self action:@selector(mapType) forControlEvents:UIControlEventTouchUpInside];
-    
     if (!self.gpsStatusImageView) {
         self.gpsStatusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps_searching-256"]];
-        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.whiteLine1.frame.origin.y+6, 37, 37)];
-        [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.gpsStatusImageView.center.y)];
+        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y+15, 47, 47)];
+        [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-8, self.gpsStatusImageView.center.y+4)];
         [self.view addSubview:self.gpsStatusImageView];
     }
 
@@ -223,16 +182,10 @@
         [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
         [self.findStationButton setFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-75, 75, 75)];
         [self.findStationButton setCenter:self.lowerBackgroundView.center];
-        [self.whiteLine1 setFrame:CGRectMake(10, self.lowerBackgroundView.center.y-1, (self.view.frame.size.width-75.0)/2-20, 2)];
-        [self.whiteLine2 setFrame:CGRectMake(self.findStationButton.frame.origin.x + self.findStationButton.frame.size.width + 10, self.lowerBackgroundView.center.y-1, (self.view.frame.size.width-75.0)/2-20, 2)];
-        [self.speedUnitsLabel setFrame:CGRectMake(self.findStationButton.center.x - 75/2.0 - 35, self.view.frame.size.height-68-27, 25, 27)];
-        [self.speedLabel setFrame:CGRectMake(10, self.view.frame.size.height-47-48, self.speedUnitsLabel.frame.origin.x - 10, 48)];
-        [self.addStationButton setFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+4, 37, 37)];
-        [self.addStationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.addStationButton.center.y)];
-        [self.mapTypeButton setFrame:CGRectMake(0, self.whiteLine2.frame.origin.y+6, 37, 37)];
-        [self.mapTypeButton setCenter:CGPointMake(self.whiteLine2.center.x, self.mapTypeButton.center.y)];
-        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.whiteLine1.frame.origin.y+6, 37, 37)];
-        [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.gpsStatusImageView.center.y)];
+        [self.addStationButton setFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+15, 50, 50)];
+        [self.addStationButton setCenter:CGPointMake(self.findStationButton.center.x*1.5+8, self.addStationButton.center.y+4)];
+        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y+15, 47, 47)];
+        [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-8, self.gpsStatusImageView.center.y+4)];
     });
 }
 
@@ -244,21 +197,12 @@
         [self.exitButton setFrame:CGRectMake(5, self.view.frame.size.height-55, 34, 34)];
         [self.findStationButton setFrame:CGRectMake(self.view.frame.size.width-10-75, (self.view.frame.size.height-75)/2, 75, 75)];
         [self.findStationButton setCenter:self.lowerBackgroundView.center];
-        [self.whiteLine1 setFrame:CGRectMake(self.view.frame.size.width - 90, (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
-        [self.whiteLine2 setFrame:CGRectMake(self.view.frame.size.width - 90, self.view.frame.size.height - (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
-        [self.speedLabel setFrame:CGRectMake(self.view.frame.size.width - 85, 0, 60, self.whiteLine1.frame.origin.y)];
-        [self.speedUnitsLabel setFrame:CGRectMake(self.view.frame.size.width - 25, 0, 25, 27)];
         
-        [self.addStationButton setFrame:CGRectMake(0, 0, 37, 37)];
-        [self.addStationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.findStationButton.frame.origin.y + self.findStationButton.frame.size.height + (self.whiteLine2.frame.origin.y - self.findStationButton.frame.origin.y - self.findStationButton.frame.size.height)/2.0)];
+        [self.addStationButton setFrame:CGRectMake(0, 0, 50, 50)];
+        [self.addStationButton setCenter:CGPointMake(self.lowerBackgroundView.center.x, self.findStationButton.frame.origin.y + self.findStationButton.frame.size.height + (self.lowerBackgroundView.frame.origin.y - self.findStationButton.frame.origin.y - self.findStationButton.frame.size.height)/2.0-20)];
         
-        [self.mapTypeButton setFrame:CGRectMake(0, 0, 37, 37)];
-        [self.mapTypeButton setCenter:CGPointMake(self.whiteLine2.center.x, self.whiteLine2.frame.origin.y + self.whiteLine2.frame.size.height + (self.view.frame.size.height - (self.whiteLine2.frame.origin.y+self.whiteLine2.frame.size.height))/2.0)];
-        
-        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height + (self.findStationButton.frame.origin.y - (self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height))/2.0, 37, 37)];
-        [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height + (self.findStationButton.frame.origin.y - (self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height))/2.0)];
-
-
+        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0, 47, 47)];
+        [self.gpsStatusImageView setCenter:CGPointMake(self.lowerBackgroundView.center.x, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0+20)];
     });
 }
 
@@ -270,19 +214,6 @@
         [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.center.x, 0, 44, 44)];
         [self.findStationButton setFrame:CGRectMake(10, (self.view.frame.size.height-75)/2, 75, 75)];
         [self.findStationButton setCenter:self.lowerBackgroundView.center];
-        [self.whiteLine1 setFrame:CGRectMake(5, (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
-        [self.whiteLine2 setFrame:CGRectMake(5, self.view.frame.size.height - (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
-        [self.speedLabel setFrame:CGRectMake(10, 0, 60, self.whiteLine1.frame.origin.y)];
-        [self.speedUnitsLabel setFrame:CGRectMake(70, 0, 25, 27)];
-        
-        [self.addStationButton setFrame:CGRectMake(0, 0, 37, 37)];
-        [self.addStationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.findStationButton.frame.origin.y + self.findStationButton.frame.size.height + (self.whiteLine2.frame.origin.y - self.findStationButton.frame.origin.y - self.findStationButton.frame.size.height)/2.0)];
-        
-        [self.mapTypeButton setFrame:CGRectMake(0, 0, 37, 37)];
-        [self.mapTypeButton setCenter:CGPointMake(self.whiteLine2.center.x, self.whiteLine2.frame.origin.y + self.whiteLine2.frame.size.height + (self.view.frame.size.height - (self.whiteLine2.frame.origin.y+self.whiteLine2.frame.size.height))/2.0)];
-        
-        [self.gpsStatusImageView setFrame:CGRectMake(0.0, 0.0, 37, 37)];
-        [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height + (self.findStationButton.frame.origin.y - (self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height))/2.0)];
     });
 }
 
@@ -295,17 +226,6 @@
 }
 
 - (void)locationUpdate:(CLLocation *)location {
-    float speedInMetersPerSecond = location.speed;
-    int speedInKilometersPerHour = speedInMetersPerSecond * 3600 / 1000;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (speedInKilometersPerHour >= 0) {
-            [self.speedLabel setText:[NSString stringWithFormat:@"%d", speedInKilometersPerHour]];
-        } else {
-            [self.speedLabel setText:@"0"];
-        }
-    });
-    
     NSLog(@"New Location: %@", location);
 }
 

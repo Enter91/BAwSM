@@ -128,7 +128,7 @@
     if (!self.mapTypeButton) {
         self.mapTypeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.whiteLine2.frame.origin.y+6, 37, 37)];
         [self.mapTypeButton setCenter:CGPointMake(self.whiteLine2.center.x, self.mapTypeButton.center.y)];
-        [self.mapTypeButton setImage:[UIImage imageNamed:@"map_marker-256"] forState:UIControlStateNormal];
+        [self.mapTypeButton setImage:[UIImage imageNamed:@"layers-256"] forState:UIControlStateNormal];
         [self.view addSubview:self.mapTypeButton];
     }
     
@@ -315,7 +315,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated

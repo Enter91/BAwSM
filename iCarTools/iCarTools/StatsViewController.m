@@ -207,7 +207,7 @@
             [self setFramesForLandscapeLeft];
             break;
         case UIInterfaceOrientationLandscapeRight:
-            [self setFramesForLandscapeRight];
+            [self setFramesForLandscapeLeft];
             break;
             
         default:

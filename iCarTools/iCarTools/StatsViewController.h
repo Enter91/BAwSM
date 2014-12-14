@@ -24,7 +24,11 @@
 
 @end
 
-@interface StatsViewController : UIViewController <GPSUtilitiesDelegate>
+@interface StatsViewController : UIViewController <GPSUtilitiesDelegate, MKAnnotation, MKMapViewDelegate> {
+     CLLocationCoordinate2D coordinate;
+}
+
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;

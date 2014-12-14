@@ -14,6 +14,8 @@
 
 @implementation StatsViewController
 
+@synthesize coordinate;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

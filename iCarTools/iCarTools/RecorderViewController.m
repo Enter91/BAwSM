@@ -33,6 +33,7 @@
     
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
+    [self.gpsUtilities startGPS];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
@@ -49,6 +50,7 @@
 }
 
 - (void)dealloc {
+    [self.gpsUtilities stopGPS];
     self.gpsUtilities.delegate = nil;
     self.gpsUtilities = nil;
 }
@@ -346,6 +348,7 @@
         }
     }
     //Start recording
+    [[mCameraLayer connection] setVideoOrientation:(AVCaptureVideoOrientation)[self interfaceOrientation]];
     [movieFile startRecordingToOutputFileURL:outputURL recordingDelegate:self];
         
 }
@@ -417,7 +420,7 @@
     }
     
     session = [[AVCaptureSession alloc]init];
-    session.sessionPreset = AVCaptureSessionPresetPhoto;
+    session.sessionPreset = AVCaptureSessionPreset1280x720;
 
     device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     
@@ -492,7 +495,6 @@
     if ([session canAddOutput:movieFile])
         [session addOutput:movieFile];
     
-    [session setSessionPreset:AVCaptureSessionPresetMedium];
     if ([session canSetSessionPreset:AVCaptureSessionPreset1280x720])
         [session setSessionPreset:AVCaptureSessionPreset1280x720];
     else if ([session canSetSessionPreset:AVCaptureSessionPreset640x480])
@@ -616,6 +618,18 @@
     [self.revealViewController pushFrontViewController:_parentView animated:YES];
     _parentView = nil;
     //    [self.delegate recorderViewWantsDismiss];
+}
+
+#pragma mark- SettingsViewController Delegates
+- (void)clickedOption:(int)number {
+    switch (number) {
+        case <#constant#>:
+            <#statements#>
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

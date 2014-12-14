@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import <CoreLocation/CoreLocation.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "GPSUtilities.h"
 
 @protocol TutorialViewControllerDelegate <NSObject>
 
@@ -24,4 +28,7 @@
 @property (strong, nonatomic) UIButton *permissionButton;
 
 @property (nonatomic, assign) id delegate;
+
+- (void)recoverCurrentState;
+
 @end

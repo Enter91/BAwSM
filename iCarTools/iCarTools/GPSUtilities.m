@@ -69,18 +69,27 @@ static bool isFirstAccess = YES;
             self.locManager = [[CLLocationManager alloc] init];
         }
         self.locManager.delegate = self;
-        
-        if( [CLLocationManager locationServicesEnabled] &&  [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied)
-        {
+    }
+    
+    return self;
+}
+
+- (BOOL)askPermission {
+    if([CLLocationManager locationServicesEnabled]) {
+        if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied) {
             if ([self.locManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
                 [self.locManager requestWhenInUseAuthorization];
             }
             
-            [self.locManager startUpdatingLocation];
+            return YES;
+        } else {
+            return NO;
         }
+    } else {
+        return NO;
     }
     
-    return self;
+    return NO;
 }
 
 - (void)startGPS {

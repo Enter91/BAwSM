@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <SWRevealViewController.h>
 
+@protocol SettingsViewControllerDelegate <NSObject>
+
+- (void)clickedOption:(int)number;
+
+@end
+
 @interface SettingsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 - (id)initWithCellsTitlesArray:(NSArray *)titlesArray;
@@ -20,4 +26,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 
 - (void)updateMenuWithTitlesArray:(NSArray *)titlesArray;
+
+@property (nonatomic, assign) id delegate;
 @end

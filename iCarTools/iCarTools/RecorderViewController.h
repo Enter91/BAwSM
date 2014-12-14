@@ -23,7 +23,7 @@
 
 @end
 
-@interface RecorderViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate>
+@interface RecorderViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate, SettingsViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (strong, nonatomic) UIImagePickerController *pickerController;

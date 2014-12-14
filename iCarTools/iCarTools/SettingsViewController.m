@@ -89,7 +89,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    //TODO: Dodać akcje w zależności od klikniętej opcji
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [_delegate clickedOption:(int)indexPath.row];
+    
 }
 
 #pragma mark- UINavigationController Delegates

@@ -19,6 +19,7 @@
     
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
+    [self.gpsUtilities startGPS];
     
     self.mapView.mapType = 3;
     [self.mapView setShowsUserLocation:YES];
@@ -328,6 +329,7 @@
 }
 
 - (void)dealloc {
+    [self.gpsUtilities stopGPS];
     self.gpsUtilities.delegate = nil;
     self.gpsUtilities = nil;
 }

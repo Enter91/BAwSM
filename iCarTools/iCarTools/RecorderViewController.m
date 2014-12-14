@@ -18,6 +18,7 @@
     AVCaptureVideoPreviewLayer *mCameraLayer;
     UIView *mCameraView;
     AVCaptureMovieFileOutput *movieFile;
+    int menuType;
 }
 
 @end
@@ -27,12 +28,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _wantsCustomAnimation = YES;
+    
     SWRevealViewController *revealController = [self revealViewController];
     [revealController panGestureRecognizer];
     [revealController tapGestureRecognizer];
     
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
+    [self.gpsUtilities startGPS];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
@@ -44,11 +48,18 @@
 
 - (void)updateDataSourceInLeftRevealViewController {
     if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
-        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[@"Settings", @"Recordings"]];
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
+                                                                        NSLocalizedString(@"Recorded videos", nil),
+                                                                        NSLocalizedString(@"Enable sound", nil),
+                                                                        NSLocalizedString(@"Video quality", nil),
+                                                                        NSLocalizedString(@"Max video length", nil),
+                                                                        NSLocalizedString(@"Speed unit", nil)]
+                                                                                                andMenuType:0];
     }
 }
 
 - (void)dealloc {
+    [self.gpsUtilities stopGPS];
     self.gpsUtilities.delegate = nil;
     self.gpsUtilities = nil;
 }
@@ -346,6 +357,7 @@
         }
     }
     //Start recording
+    [[mCameraLayer connection] setVideoOrientation:(AVCaptureVideoOrientation)[self interfaceOrientation]];
     [movieFile startRecordingToOutputFileURL:outputURL recordingDelegate:self];
         
 }
@@ -417,7 +429,7 @@
     }
     
     session = [[AVCaptureSession alloc]init];
-    session.sessionPreset = AVCaptureSessionPresetPhoto;
+    session.sessionPreset = AVCaptureSessionPreset1280x720;
 
     device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     
@@ -492,7 +504,6 @@
     if ([session canAddOutput:movieFile])
         [session addOutput:movieFile];
     
-    [session setSessionPreset:AVCaptureSessionPresetMedium];
     if ([session canSetSessionPreset:AVCaptureSessionPreset1280x720])
         [session setSessionPreset:AVCaptureSessionPreset1280x720];
     else if ([session canSetSessionPreset:AVCaptureSessionPreset640x480])
@@ -580,7 +591,6 @@
     mCameraLayer.transform  = transform;
 }
 
-
 #pragma mark- GPSUtilities Delegates
 - (void)locationUpdate:(CLLocation *)location {
     float speedInMetersPerSecond = location.speed;
@@ -613,9 +623,84 @@
 
 - (void)exit {
     [self.gpsUtilities stopGPS];
-    [self.revealViewController pushFrontViewController:_parentView animated:YES];
+    [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
-    //    [self.delegate recorderViewWantsDismiss];
 }
+
+#pragma mark- SettingsViewController
+- (void)clickedOption:(int)number {
+    
+    /*NSLocalizedString(@"Recorded videos", nil),
+     NSLocalizedString(@"Enable sound", nil),
+     NSLocalizedString(@"Video quality", nil),
+     NSLocalizedString(@"Max video length", nil),
+     NSLocalizedString(@"Speed unit", nil)]]*/
+    
+    if (menuType == 0) {
+        switch (number) {
+            case 0:
+                [self showRecordedVideosList];
+                break;
+            case 1:
+                [self showEnableSoundList];
+                break;
+            case 2:
+                [self showVideoQualityList];
+                break;
+            case 3:
+                [self showMaxVideoLengthList];
+                break;
+            case 4:
+                [self showSpeedUnitSettings];
+                break;
+                
+            default:
+                break;
+        }
+    } else if (menuType == 4) {
+        switch (number) {
+            case 0:
+                [[NSUserDefaults standardUserDefaults] setObject:@"km/h" forKey:@"speed unit"];
+                break;
+            case 1:
+                [[NSUserDefaults standardUserDefaults] setObject:@"mph" forKey:@"speed unit"];
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    
+}
+
+
+- (void)showRecordedVideosList {
+    
+}
+
+- (void)showEnableSoundList {
+    
+}
+
+- (void)showVideoQualityList {
+    
+}
+
+- (void)showMaxVideoLengthList {
+    
+}
+
+- (void)showSpeedUnitSettings {
+    if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
+                                                                                NSLocalizedString(@"km/h", nil),
+                                                                                NSLocalizedString(@"mph", nil)]
+                                                                                                andMenuType:4];
+    }
+}
+
+#pragma mark- Update After Settings Changes
+
 
 @end

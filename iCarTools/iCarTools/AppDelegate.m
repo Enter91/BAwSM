@@ -21,11 +21,11 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:YES] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
-//        _tutorial = [[TutorialViewController alloc] init];
-//        _tutorial.delegate = self;
-//        self.window.rootViewController = _tutorial;
-//    } else {
+    /*if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:YES] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
+        _tutorial = [[TutorialViewController alloc] init];
+        _tutorial.delegate = self;
+        self.window.rootViewController = _tutorial;
+    } else {*/
         //SWReveal
         ViewController *frontViewController = [[ViewController alloc] init];
         SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithCellsTitlesArray:@[@"opcja 1", @"opcja 2", @"opcja 3"]];
@@ -37,7 +37,7 @@
         
         self.window.rootViewController = self.viewController;
         //end SWReveal
-    }
+    //}
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -64,9 +64,14 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    if ([self.viewController.frontViewController isKindOfClass:NSClassFromString(@"RecorderViewController")]) {
-        if ([self.viewController.frontViewController respondsToSelector:@selector(initializeCamera)]) {
-            [(RecorderViewController *)self.viewController.frontViewController initializeCamera];
+    
+    if ([self.window.rootViewController isKindOfClass:NSClassFromString(@"TutorialViewController")]) {
+        [((TutorialViewController *)self.window.rootViewController) recoverCurrentState];
+    } else {
+        if ([self.viewController.frontViewController isKindOfClass:NSClassFromString(@"RecorderViewController")]) {
+            if ([self.viewController.frontViewController respondsToSelector:@selector(initializeCamera)]) {
+                [(RecorderViewController *)self.viewController.frontViewController initializeCamera];
+            }
         }
     }
 }

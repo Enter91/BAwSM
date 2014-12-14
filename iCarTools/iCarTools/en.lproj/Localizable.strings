@@ -10,6 +10,14 @@
 "stats"="Open fuel prices map";
 
 "Tutorial1Title"="Welcome in iCarTools";
-"Tutorial1"="Welcome in iCarTools - the ultimate car app.\n\nThis tutorial will show You different options of iCarTools and will ask about some permissions needed such as camera or GPS.\n\nTo start please click green button below.";
+"Tutorial1"="Welcome in iCarTools - the ultimate car app.\n\nThis tutorial will show you different options of iCarTools and will ask about some permissions needed such as camera or GPS.\n\nTo start please click green button below.";
 
+"Tutorial2Title"="Camera and microphone";
+"Tutorial2"="Recorder needs camera and microphone permissions to work properly. After tapping green button below iOS will ask you whether you agree or not to give iCarTools this permissions. Please select OK";
+
+"Tutorial3Title"="Camera roll";
+"Tutorial3"="To save or watch recorded videos we also need access to camera roll.";
+
+"TutorialErrorTitle"="No permission";
+"TutorialErrorDescription"="You have disabled one of needed permission. Please go to Settings and enable camera, microphone and GPS";
 "currentLocation"="You're here";

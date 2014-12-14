@@ -9,33 +9,36 @@
 #import "TutorialViewController.h"
 
 @interface TutorialViewController () {
-    NSLayoutConstraint *backgroundImageXPosition;
-    NSLayoutConstraint *iPhoneXPosition;
+    int currentState;
+    __block BOOL runningAnimation;
 }
+
 @end
 
 @implementation TutorialViewController
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        currentState = 0;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    currentState = 0;
+    
     _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Tutorial-Background"]];
+    [_backgroundImageView setFrame:CGRectMake(0, 0, self.view.frame.size.height*(256.0/160.0), self.view.frame.size.height)];
+    [_backgroundImageView setCenter:CGPointMake(self.view.center.x, self.view.center.y)];
     [self.view addSubview:_backgroundImageView];
-    [_backgroundImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [_backgroundImageView addConstraint:[NSLayoutConstraint constraintWithItem:_backgroundImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_backgroundImageView attribute:NSLayoutAttributeHeight multiplier:256.0/160.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_backgroundImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_backgroundImageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
-    backgroundImageXPosition = [NSLayoutConstraint constraintWithItem:_backgroundImageView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
-    [self.view addConstraint:backgroundImageXPosition];
     
     _iPhoneImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Tutorial-iPhone"]];
+    [_iPhoneImageView setFrame:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.height * 0.75 * 763.0/1602.0, self.view.frame.size.height * 0.75)];
+    [_iPhoneImageView setCenter:CGPointMake(_iPhoneImageView.center.x, self.view.center.y)];
     [self.view addSubview:_iPhoneImageView];
-    [_iPhoneImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [_iPhoneImageView addConstraint:[NSLayoutConstraint constraintWithItem:_iPhoneImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_iPhoneImageView attribute:NSLayoutAttributeHeight multiplier:763.0/1602.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_iPhoneImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.75/1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_iPhoneImageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
-    iPhoneXPosition = [NSLayoutConstraint constraintWithItem:_iPhoneImageView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0];
-    [self.view addConstraint:iPhoneXPosition];
     
     _permissionTitle = [[UILabel alloc] init];
     [_permissionTitle setFont:[UIFont fontWithName:@"DINPro-Light" size:30.0]];
@@ -43,13 +46,8 @@
     [_permissionTitle setTextColor:[UIColor whiteColor]];
     [_permissionTitle setTextAlignment:NSTextAlignmentCenter];
     [_permissionTitle setText:NSLocalizedString(@"Tutorial1Title", nil)];
-    
+    [_permissionTitle setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height*0.125)];
     [self.view addSubview:_permissionTitle];
-    [_permissionTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionTitle attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionTitle attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionTitle attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionTitle attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_iPhoneImageView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
     
     _permissionDescription = [[UILabel alloc] init];
     [_permissionDescription setFont:[UIFont fontWithName:@"DINPro-Light" size:18.0]];
@@ -58,13 +56,8 @@
     [_permissionDescription setTextColor:[UIColor whiteColor]];
     [_permissionDescription setTextAlignment:NSTextAlignmentCenter];
     [_permissionDescription setText:NSLocalizedString(@"Tutorial1", nil)];
+    [_permissionDescription setFrame:CGRectMake(10.0, _iPhoneImageView.frame.origin.y + 10, self.view.frame.size.width - 120, _iPhoneImageView.frame.size.height - 20)];
     [self.view addSubview:_permissionDescription];
-    [_permissionDescription setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionDescription attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:10.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionDescription attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationLessThanOrEqual toItem:_iPhoneImageView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:-10.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionDescription attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_iPhoneImageView attribute:NSLayoutAttributeTop multiplier:1.0 constant:10.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionDescription attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_iPhoneImageView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-10.0]];
-    _permissionDescription.alpha = 0.0;
     
     _permissionButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_permissionButton setBackgroundColor:[UIColor colorWithRed:0.01 green:0.82 blue:0.31 alpha:1]];
@@ -72,34 +65,294 @@
     [_permissionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_permissionButton setTitle:NSLocalizedString(@"Start", nil) forState:UIControlStateNormal];
     [_permissionButton.layer setCornerRadius:5.0];
-    [_permissionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [_permissionButton setFrame:CGRectMake(0.0, _permissionTitle.frame.size.height + _iPhoneImageView.frame.size.height + 15.0, self.view.frame.size.width * 0.75, self.view.frame.size.height - (_permissionTitle.frame.size.height + _iPhoneImageView.frame.size.height + 15.0) - 15.0)];
+    [_permissionButton setCenter:CGPointMake(self.view.center.x, _permissionButton.center.y)];
+    [_permissionButton setUserInteractionEnabled:NO];
+    [_permissionButton addTarget:self action:@selector(goToNextState) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_permissionButton];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.75/1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_iPhoneImageView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:15.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_permissionButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-15.0]];
     _permissionButton.alpha = 0.0;
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    
     [super viewDidAppear:animated];
     
-    iPhoneXPosition.constant = -100.0;
+    CGRect iPhoneFrame = _iPhoneImageView.frame;
+    iPhoneFrame.origin.x = iPhoneFrame.origin.x - 100;
     
-    [UIView animateWithDuration:0.5 animations:^{
-        [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.3 animations:^{
+        [_iPhoneImageView setFrame:iPhoneFrame];
+    } completion:^(BOOL finished) {
+        [_iPhoneImageView setFrame:iPhoneFrame];
     }];
     
-    [UIView animateWithDuration:0.3 delay:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
+    [UIView animateWithDuration:0.3 delay:0.3 options:UIViewAnimationOptionCurveEaseIn animations:^{
         _permissionDescription.alpha = 1.0f;
         _permissionButton.alpha = 1.0f;
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        [_permissionButton setUserInteractionEnabled:YES];
+    }];
     
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)goToNextState {
+    currentState = currentState + 1;
+    
+    switch (currentState) {
+        case 0:
+            //[self viewDidLoad];
+            break;
+        case 1:
+            //pierwszy screen - pytanie o kamerę i mikrofon
+            [self firstStateAskCameraAndMicrophone];
+            break;
+        case 2:
+            [self askPermissioniPhoneCentered];
+            [self gotCameraPermission];
+            break;
+        case 3:
+            //drugi screen - dostęp do zdjęć
+            [self secondStateAskLibrary];
+            break;
+        case 4:
+            [self askPermissioniPhoneCentered];
+            [self gotLibraryPermission];
+            break;
+        case 5:
+            //drugi screen - GPS
+            [self thirdStateAskGPS];
+            break;
+        case 6:
+            [self finishTutorial];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)recoverCurrentState {
+    currentState = currentState - 1;
+    [self goToNextState];
+}
+
+- (void)firstStateAskCameraAndMicrophone {
+    
+    //przesunięcie iPhone'a na lewo
+    [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [_iPhoneImageView setFrame:CGRectMake(-_iPhoneImageView.frame.size.width + 100, _iPhoneImageView.frame.origin.y, _iPhoneImageView.frame.size.width, _iPhoneImageView.frame.size.height)];
+    } completion:^(BOOL finished) {
+        [_iPhoneImageView setFrame:CGRectMake(-_iPhoneImageView.frame.size.width + 100, _iPhoneImageView.frame.origin.y, _iPhoneImageView.frame.size.width, _iPhoneImageView.frame.size.height)];
+        
+        [_permissionDescription setText:NSLocalizedString(@"Tutorial2", nil)];
+        [_permissionDescription setFrame:CGRectMake(self.view.frame.size.width, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
+        [UIView animateWithDuration:0.3 animations:^{
+            [_permissionDescription setFrame:CGRectMake(110.0, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
+            [_permissionDescription setAlpha:1.0];
+        } completion:^(BOOL finished) {
+            [_permissionDescription setFrame:CGRectMake(110.0, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
+            [_permissionDescription setAlpha:1.0];
+        }];
+    }];
+    
+    //schowanie opisu
+    [UIView animateWithDuration:0.5 animations:^{
+        [_permissionDescription setCenter:CGPointMake(-(_permissionDescription.frame.size.width/2.0), _permissionDescription.center.y)];
+        [_permissionDescription setAlpha:0.0];
+        
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.5 delay:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            [_permissionTitle setText:NSLocalizedString(@"Tutorial2Title", nil)];
+            [_permissionButton setTitle:NSLocalizedString(@"Continue", nil) forState:UIControlStateNormal];
+        } completion:^(BOOL finished) {
+            [_permissionTitle setText:NSLocalizedString(@"Tutorial2Title", nil)];
+            [_permissionButton setTitle:NSLocalizedString(@"Continue", nil) forState:UIControlStateNormal];
+        }];
+    }];
+}
+
+- (void)secondStateAskLibrary {
+    NSLog(@"secondStateAskLibrary");
+    
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(secondStateAskLibrary) object:nil];
+    
+    if (runningAnimation == YES) {
+        [self performSelector:@selector(secondStateAskLibrary) withObject:nil afterDelay:1.0];
+    } else {
+        
+        NSLog(@"iphone nie animuje sie");
+        [_permissionTitle setText:NSLocalizedString(@"Tutorial3Title", nil)];
+        [_permissionDescription setText:NSLocalizedString(@"Tutorial3", nil)];
+        [_permissionButton setTitle:NSLocalizedString(@"Continue", nil) forState:UIControlStateNormal];
+        
+        [_permissionTitle setAlpha:0.0];
+        [_permissionDescription setAlpha:0.0];
+        [_permissionButton setAlpha:0.0];
+        
+        [_permissionDescription setFrame:CGRectMake(-_permissionDescription.frame.size.width, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            [_permissionTitle setFrame:CGRectMake(_permissionTitle.frame.origin.x, 0, _permissionTitle.frame.size.width, _permissionTitle.frame.size.height)];
+            [_permissionTitle setAlpha:1.0];
+            
+            [_permissionButton setFrame:CGRectMake(self.view.frame.size.width * 0.125, _permissionTitle.frame.size.height + _iPhoneImageView.frame.size.height + 15.0, self.view.frame.size.width * 0.75, self.view.frame.size.height - (_permissionTitle.frame.size.height + _iPhoneImageView.frame.size.height + 15.0) - 15.0)];
+            [_permissionButton setAlpha:1.0];
+            
+            [_iPhoneImageView setFrame:CGRectMake(self.view.frame.size.width - 100.0, _iPhoneImageView.frame.origin.y, _iPhoneImageView.frame.size.width, _iPhoneImageView.frame.size.height)];
+            
+            [_permissionDescription setFrame:CGRectMake(10.0, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
+            [_permissionDescription setAlpha:1.0];
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+}
+
+- (void)thirdStateAskGPS {
+    [GPSUtilities sharedInstance];
+    BOOL permission = [[GPSUtilities sharedInstance] askPermission];
+    if (permission) {
+        [self goToNextState];
+    } else {
+        [self noPermissionScreen];
+    }
+}
+
+- (void)finishTutorial {
+    
+}
+
+- (void)askPermissioniPhoneCentered {
+    
+    NSLog(@"askPermissioniPhoneCentered");
+    
+    runningAnimation = YES;
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [_permissionDescription setFrame:CGRectMake(self.view.frame.size.width, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
+        [_permissionDescription setAlpha:0.0];
+        
+        [_permissionTitle setFrame:CGRectMake(_permissionTitle.frame.origin.x, -_permissionTitle.frame.size.height, _permissionTitle.frame.size.width, _permissionTitle.frame.size.height)];
+        [_permissionButton setFrame:CGRectMake(_permissionButton.frame.origin.x, self.view.frame.size.height, _permissionButton.frame.size.width, _permissionButton.frame.size.height)];
+        
+        [_permissionTitle setAlpha:0.0];
+        [_permissionButton setAlpha:0.0];
+        
+        [_iPhoneImageView setAlpha:1.0];
+        
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.5 animations:^{
+            [_iPhoneImageView setCenter:CGPointMake(self.view.center.x, self.view.center.y)];
+        } completion:^(BOOL finished) {
+            NSLog(@"ask permission finished");
+            runningAnimation = NO;
+        }];
+    }];
+
+}
+
+- (void)noPermissionScreen {
+    [self.view setBackgroundColor:[UIColor redColor]];
+    [UIView animateWithDuration:0.3 animations:^{
+        [_permissionDescription setAlpha:0.0];
+        [_permissionButton setAlpha:0.0];
+        [_iPhoneImageView setAlpha:0.0];
+        [_backgroundImageView setAlpha:0.0];
+    } completion:^(BOOL finished) {
+        [_permissionTitle setText:NSLocalizedString(@"TutorialErrorTitle", nil)];
+        [_permissionDescription setText:NSLocalizedString(@"TutorialErrorDescription", nil)];
+        [_permissionTitle setFrame:CGRectMake(_permissionTitle.frame.origin.x, 0.0, _permissionTitle.frame.size.width, _permissionTitle.frame.size.height)];
+        [_permissionDescription setFrame:CGRectMake(10.0, _permissionDescription.frame.origin.y, self.view.frame.size.width-20.0, _permissionDescription.frame.size.height)];
+        [UIView animateWithDuration:0.3 animations:^{
+            [_permissionDescription setAlpha:1.0];
+            [_permissionTitle setAlpha:1.0];
+        }];
+    }];
+}
+
+#pragma mark- Helpers
+- (BOOL)gotCameraPermission {
+    
+    NSLog(@"gotCameraPermission");
+    
+    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    
+    if (status == AVAuthorizationStatusAuthorized) {
+        //authorized
+        [self gotMicrophonePermission];
+        return YES;
+    } else if (status == AVAuthorizationStatusDenied) {
+        //denied
+        [self noPermissionScreen];
+        return NO;
+    } else if (status == AVAuthorizationStatusNotDetermined) {
+        //not determined
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+            if (granted) {
+                [self gotMicrophonePermission];
+            } else {
+                [self noPermissionScreen];
+            }
+        }];
+    }
+    
+    return NO;
+}
+
+- (BOOL)gotMicrophonePermission {
+    
+    NSLog(@"gotMicrofonePermission");
+    
+    __block BOOL gotPermission = NO;
+    
+    
+    
+    if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])
+    {
+        [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+            if (granted) {
+                gotPermission = YES;
+                [self goToNextState];
+            } else {
+                gotPermission = NO;
+                [self noPermissionScreen];
+            }
+        }];
+    }
+
+    
+    return gotPermission;
+}
+
+- (BOOL)gotLibraryPermission {
+    ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
+    
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(gotLibraryPermission) object:nil];
+    
+    if (status == ALAuthorizationStatusAuthorized) {
+        [self goToNextState];
+        return YES;
+    } else if (status == ALAuthorizationStatusDenied) {
+        [self noPermissionScreen];
+        return NO;
+    } else if (status == ALAuthorizationStatusNotDetermined) {
+        
+        ALAssetsLibrary *aLib = [[ALAssetsLibrary alloc]init];
+        
+        [aLib enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:nil failureBlock:nil];
+        
+        aLib = nil;
+        
+        [self performSelector:@selector(gotLibraryPermission) withObject:nil afterDelay:0.5];
+    }
+    
+    return NO;
 }
 
 #pragma mark- UINavigationController Delegates

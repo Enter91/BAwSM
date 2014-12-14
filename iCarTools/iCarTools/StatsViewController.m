@@ -21,6 +21,7 @@
     
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
+    [self.gpsUtilities startGPS];
     
     self.mapView.mapType = 3;
     [self.mapView setShowsUserLocation:YES];
@@ -249,6 +250,7 @@
 }
 
 - (void)dealloc {
+    [self.gpsUtilities stopGPS];
     self.gpsUtilities.delegate = nil;
     self.gpsUtilities = nil;
 }
@@ -260,7 +262,9 @@
     }
 
     [self.gpsUtilities stopGPS];
-    [self.revealViewController pushFrontViewController:_parentView animated:YES];
+//    [self.revealViewController pushFrontViewController:_parentView animated:YES];
+    
+    [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
 }
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1940EB23AAB28288C7115767 /* libPods-iCarTools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1552B581BF3D227784D9CF4E /* libPods-iCarTools.a */; };
+		1C18491B1A3D77A200E14DAE /* CustomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */; };
 		1C30475619FED07300D2EE5E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C30475519FED07300D2EE5E /* main.m */; };
 		1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C30475819FED07300D2EE5E /* AppDelegate.m */; };
 		1C30476119FED07300D2EE5E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C30476019FED07300D2EE5E /* Images.xcassets */; };
@@ -33,7 +34,6 @@
 		1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */; };
 		1C86508A1A2DEA9A009B02AA /* AmazingJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8650891A2DEA9A009B02AA /* AmazingJSON.m */; };
 		1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA729961A21458900FEBD51 /* TutorialViewController.m */; };
-		1CA729991A21458900FEBD51 /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CA729971A21458900FEBD51 /* TutorialViewController.xib */; };
 		1CA7299B1A21466800FEBD51 /* Tutorial-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA7299A1A21466800FEBD51 /* Tutorial-Background.png */; };
 		1CA7299D1A21466F00FEBD51 /* Tutorial-iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA7299C1A21466F00FEBD51 /* Tutorial-iPhone.png */; };
 		1CB4B01B1A2073C800172BA4 /* StatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CB4B0181A2073C800172BA4 /* StatsViewController.xib */; };
@@ -72,6 +72,8 @@
 
 /* Begin PBXFileReference section */
 		1552B581BF3D227784D9CF4E /* libPods-iCarTools.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iCarTools.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C1849191A3D77A200E14DAE /* CustomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnimationController.h; sourceTree = "<group>"; };
+		1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnimationController.m; sourceTree = "<group>"; };
 		1C30475019FED07300D2EE5E /* iCarTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCarTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C30475419FED07300D2EE5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C30475519FED07300D2EE5E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -108,7 +110,6 @@
 		1C8650891A2DEA9A009B02AA /* AmazingJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazingJSON.m; sourceTree = "<group>"; };
 		1CA729951A21458900FEBD51 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		1CA729961A21458900FEBD51 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
-		1CA729971A21458900FEBD51 /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
 		1CA7299A1A21466800FEBD51 /* Tutorial-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tutorial-Background.png"; sourceTree = "<group>"; };
 		1CA7299C1A21466F00FEBD51 /* Tutorial-iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tutorial-iPhone.png"; sourceTree = "<group>"; };
 		1CB4B0181A2073C800172BA4 /* StatsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsViewController.xib; sourceTree = "<group>"; };
@@ -201,7 +202,8 @@
 				1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */,
 				1CA729951A21458900FEBD51 /* TutorialViewController.h */,
 				1CA729961A21458900FEBD51 /* TutorialViewController.m */,
-				1CA729971A21458900FEBD51 /* TutorialViewController.xib */,
+				1C1849191A3D77A200E14DAE /* CustomAnimationController.h */,
+				1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */,
 			);
 			path = iCarTools;
 			sourceTree = "<group>";
@@ -451,7 +453,6 @@
 				1C3047AA19FEE11D00D2EE5E /* Localizable.strings in Resources */,
 				1C30479C19FED74C00D2EE5E /* DINPro.otf in Resources */,
 				1C30479519FED74C00D2EE5E /* DINPro-Bold.otf in Resources */,
-				1CA729991A21458900FEBD51 /* TutorialViewController.xib in Resources */,
 				1CF81C491A12954800496116 /* record_button.png in Resources */,
 				1CD407291A26919500F6A2E7 /* suszarka.png in Resources */,
 				1CEDCA2B1A2076A100BFADB5 /* photo-256.png in Resources */,
@@ -515,6 +516,7 @@
 				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,
 				1C86508A1A2DEA9A009B02AA /* AmazingJSON.m in Sources */,
 				1CEDCA261A2074E000BFADB5 /* LoginViewController.m in Sources */,
+				1C18491B1A3D77A200E14DAE /* CustomAnimationController.m in Sources */,
 				1C30475619FED07300D2EE5E /* main.m in Sources */,
 				1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */,
 			);

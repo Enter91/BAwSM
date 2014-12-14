@@ -11,6 +11,8 @@
 #import "LoginViewController.h"
 #import "SettingsViewController.h"
 #import "TutorialViewController.h"
+#import "RecorderViewController.h"
+#import "StatsViewController.h"
 
 @class SWRevealViewController;
 
@@ -20,5 +22,6 @@
 @property (strong, nonatomic) SWRevealViewController *viewController;
 @property (strong, nonatomic) TutorialViewController *tutorial;
 @property (strong, nonatomic) LoginViewController *loginViewController;
+
 @end
 

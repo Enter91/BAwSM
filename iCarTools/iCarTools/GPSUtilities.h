@@ -27,6 +27,15 @@
 /**
  *  @Author Michał Czwarnowski
  *
+ *  Sprawdza dostęp do GPSa i wyświetla systemowy komunikat z prośbą o dostęp, jeżeli status inny niż Authorized i Denied
+ *
+ *  @return Dostęp do GPSa
+ */
+- (BOOL)askPermission;
+
+/**
+ *  @Author Michał Czwarnowski
+ *
  *  Uruchamia GPS
  */
 - (void)startGPS;

@@ -17,7 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _wantsCustomAnimation = YES;
+    
     SWRevealViewController *revealController = [self revealViewController];
+    [revealController setDelegate:self];
     [revealController panGestureRecognizer];
     [revealController tapGestureRecognizer];
     
@@ -29,14 +32,18 @@
     NSLog(@"view will appear");
     
     if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
-        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[@"opcja 1", @"opcja 2", @"opcja 3"]];
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
+                                                                                            NSLocalizedString(@"About", nil)]
+                                                                                                andMenuType:0];
     }
     
     if (_recorderView) {
+//        [_recorderView setDelegate:nil];
         _recorderView = nil;
     }
     
     if (_statsView) {
+//        [_statsView setDelegate:nil];
         _statsView = nil;
     }
 }
@@ -49,44 +56,31 @@
 #pragma mark- Obsługa RecorderViewController
 - (IBAction)videoRecorderOpenAction:(id)sender {
     if (_recorderView) {
-        _recorderView.delegate = nil;
+//        _recorderView.delegate = nil;
         _recorderView = nil;
     }
     
     _recorderView = [[RecorderViewController alloc] initWithNibName:@"RecorderViewController" bundle:nil];
-    _recorderView.delegate = self;
+//    _recorderView.delegate = self;
     _recorderView.parentView = self;
-    [self.revealViewController pushFrontViewController:_recorderView animated:YES];
-//    [self.revealViewController presentViewController:_recorderView animated:YES completion:nil];
-}
-
-- (void)recorderViewWantsDismiss {
-    [_recorderView dismissViewControllerAnimated:YES completion:^{
-        _recorderView.delegate = nil;
-        _recorderView = nil;
-    }];
+    _recorderView.wantsCustomAnimation = YES;
+    [self.revealViewController setFrontViewController:_recorderView animated:YES];
 }
 
 #pragma mark- Obsługa StatsViewController
 - (IBAction)statsOpenAction:(id)sender {
     if (_statsView) {
-        _statsView.delegate = nil;
+//        _statsView.delegate = nil;
         _statsView = nil;
     }
     
     _statsView = [[StatsViewController alloc] initWithNibName:@"StatsViewController" bundle:nil];
-    _statsView.delegate = self;
+//    _statsView.delegate = self;
     _statsView.parentView = self;
-    [self.revealViewController pushFrontViewController:_statsView animated:YES];
-//    [self.revealViewController presentViewController:_statsView animated:YES completion:nil];
+    _statsView.wantsCustomAnimation = YES;
+    [self.revealViewController setFrontViewController:_statsView animated:YES];
 }
 
-- (void)statsViewWantsDismiss {
-    [_statsView dismissViewControllerAnimated:YES completion:^{
-        _statsView.delegate = nil;
-        _statsView = nil;
-    }];
-}
 
 - (IBAction)settingsOpenAction:(id)sender {
     [self.revealViewController revealToggle:nil];
@@ -113,5 +107,43 @@
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+
+#pragma mark - SWRevealViewDelegate
+
+- (id <UIViewControllerAnimatedTransitioning>)revealController:(SWRevealViewController *)revealController animationControllerForOperation:(SWRevealControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
+{
+    if ( operation != SWRevealControllerOperationReplaceFrontController )
+        return nil;
+    
+    if ( [toVC isKindOfClass:[RecorderViewController class]] )
+    {
+        if ( [(RecorderViewController*)toVC wantsCustomAnimation] )
+        {
+            id<UIViewControllerAnimatedTransitioning> animationController = [[CustomAnimationController alloc] init];
+            return animationController;
+        }
+    }
+    
+    if ( [toVC isKindOfClass:[StatsViewController class]] )
+    {
+        if ( [(StatsViewController*)toVC wantsCustomAnimation] )
+        {
+            id<UIViewControllerAnimatedTransitioning> animationController = [[CustomAnimationController alloc] init];
+            return animationController;
+        }
+    }
+    
+    if ( [toVC isKindOfClass:[ViewController class]] )
+    {
+        if ( [(ViewController*)toVC wantsCustomAnimation] )
+        {
+            id<UIViewControllerAnimatedTransitioning> animationController = [[CustomAnimationController alloc] init];
+            return animationController;
+        }
+    }
+    
+    return nil;
 }
 @end

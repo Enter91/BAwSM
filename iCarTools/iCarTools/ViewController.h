@@ -10,8 +10,9 @@
 #import "RecorderViewController.h"
 #import "StatsViewController.h"
 #import <SWRevealViewController.h>
+#import "CustomAnimationController.h"
 
-@interface ViewController : UIViewController <RecorderViewControllerDelegate, UINavigationControllerDelegate, StatsViewControllerDelegate>
+@interface ViewController : UIViewController <UINavigationControllerDelegate, SWRevealViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (weak, nonatomic) IBOutlet UIButton *videoRecorderOpenButton;
@@ -26,5 +27,6 @@
 - (IBAction)settingsOpenAction:(id)sender;
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic) BOOL wantsCustomAnimation;
 
 @end

@@ -18,6 +18,7 @@
     self = [super init];
     if (self) {
         _cellsTitles = [[NSArray alloc] init];
+        _menuType = 0;
     }
     
     return self;
@@ -38,6 +39,15 @@
 - (void)updateMenuWithTitlesArray:(NSArray *)titlesArray {
     _cellsTitles = nil;
     _cellsTitles = [[NSArray alloc] initWithArray:titlesArray];
+    
+    [_settingsTableView reloadData];
+}
+
+- (void)updateMenuWithTitlesArray:(NSArray *)titlesArray andMenuType:(int)depth {
+    _cellsTitles = nil;
+    _cellsTitles = [[NSArray alloc] initWithArray:titlesArray];
+    
+    _menuType = depth;
     
     [_settingsTableView reloadData];
 }

@@ -17,12 +17,6 @@
 
 #import "SettingsViewController.h"
 
-@protocol RecorderViewControllerDelegate <NSObject>
-
-- (void)recorderViewWantsDismiss;
-
-@end
-
 @interface RecorderViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate, SettingsViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *view;
@@ -52,13 +46,15 @@
 
 @property BOOL isRecording;
 
-@property (nonatomic, assign) id delegate;
+//@property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) UIViewController *parentView;
 
 @property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
 @property BOOL haveImage;
 @property (strong, nonatomic) UIImageView *captureImage;
+
+@property (nonatomic) BOOL wantsCustomAnimation;
 
 - (void) initializeCamera;
 - (void)stopCamera;

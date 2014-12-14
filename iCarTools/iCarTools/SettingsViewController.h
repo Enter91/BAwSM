@@ -25,7 +25,10 @@
 @property (weak, nonatomic) IBOutlet UIView *loginInfoView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 
+@property int menuType;
+
 - (void)updateMenuWithTitlesArray:(NSArray *)titlesArray;
+- (void)updateMenuWithTitlesArray:(NSArray *)titlesArray andMenuType:(int)depth;
 
 @property (nonatomic, assign) id delegate;
 @end

@@ -341,7 +341,9 @@
     }
 
     [self.gpsUtilities stopGPS];
-    [self.revealViewController pushFrontViewController:_parentView animated:YES];
+//    [self.revealViewController pushFrontViewController:_parentView animated:YES];
+    
+    [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
 }
 

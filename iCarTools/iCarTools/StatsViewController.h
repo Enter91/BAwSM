@@ -18,12 +18,6 @@
 #import <SWRevealViewController.h>
 #import "SettingsViewController.h"
 
-@protocol StatsViewControllerDelegate <NSObject>
-
-- (void)statsViewWantsDismiss;
-
-@end
-
 @interface StatsViewController : UIViewController <GPSUtilitiesDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *view;
@@ -47,8 +41,10 @@
 @property (strong, nonatomic) UIImageView *whiteLine2;
 @property (strong, nonatomic) UIImageView *gpsStatusImageView;
 
-@property (nonatomic, assign) id delegate;
+//@property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) UIViewController *parentView;
+
+@property (nonatomic) BOOL wantsCustomAnimation;
 
 @end

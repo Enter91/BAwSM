@@ -21,11 +21,11 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:YES] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
+    /*if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:YES] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
         _tutorial = [[TutorialViewController alloc] init];
         _tutorial.delegate = self;
         self.window.rootViewController = _tutorial;
-    } else {
+    } else {*/
         //SWReveal
         ViewController *frontViewController = [[ViewController alloc] init];
         SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithCellsTitlesArray:@[@"opcja 1", @"opcja 2", @"opcja 3"]];
@@ -37,7 +37,7 @@
         
         self.window.rootViewController = self.viewController;
         //end SWReveal
-    }
+    //}
     [self.window makeKeyAndVisible];
     
     return YES;

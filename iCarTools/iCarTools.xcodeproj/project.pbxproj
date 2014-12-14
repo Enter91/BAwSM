@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1940EB23AAB28288C7115767 /* libPods-iCarTools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1552B581BF3D227784D9CF4E /* libPods-iCarTools.a */; };
+		1C18491B1A3D77A200E14DAE /* CustomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */; };
 		1C30475619FED07300D2EE5E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C30475519FED07300D2EE5E /* main.m */; };
 		1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C30475819FED07300D2EE5E /* AppDelegate.m */; };
 		1C30476119FED07300D2EE5E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C30476019FED07300D2EE5E /* Images.xcassets */; };
@@ -72,6 +73,8 @@
 
 /* Begin PBXFileReference section */
 		1552B581BF3D227784D9CF4E /* libPods-iCarTools.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iCarTools.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C1849191A3D77A200E14DAE /* CustomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnimationController.h; sourceTree = "<group>"; };
+		1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnimationController.m; sourceTree = "<group>"; };
 		1C30475019FED07300D2EE5E /* iCarTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCarTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C30475419FED07300D2EE5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C30475519FED07300D2EE5E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -201,6 +204,8 @@
 				1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */,
 				1CA729951A21458900FEBD51 /* TutorialViewController.h */,
 				1CA729961A21458900FEBD51 /* TutorialViewController.m */,
+				1C1849191A3D77A200E14DAE /* CustomAnimationController.h */,
+				1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */,
 			);
 			path = iCarTools;
 			sourceTree = "<group>";
@@ -515,6 +520,7 @@
 				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,
 				1C86508A1A2DEA9A009B02AA /* AmazingJSON.m in Sources */,
 				1CEDCA261A2074E000BFADB5 /* LoginViewController.m in Sources */,
+				1C18491B1A3D77A200E14DAE /* CustomAnimationController.m in Sources */,
 				1C30475619FED07300D2EE5E /* main.m in Sources */,
 				1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */,
 			);

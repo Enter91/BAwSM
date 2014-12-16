@@ -23,6 +23,7 @@
 + (AmazingJSON*)sharedInstance;
 
 - (void)getResponseFromURL:(NSURL *)url;
+- (void)getResponseFromStringURL:(NSString *)stringURL;
 
 @property (nonatomic, assign) id delegate;
 

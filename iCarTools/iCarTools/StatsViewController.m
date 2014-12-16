@@ -155,8 +155,10 @@
 }
 
 - (void)sendCoordinate:(CLLocationCoordinate2D )coordinate {
+    
     [[AmazingJSON sharedInstance] setDelegate:self];
-    [[AmazingJSON sharedInstance] getResponseFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bawsm.comlu.com/addStation.php?name=%@&address=%@&latitude=%f&longitude=%f", @"Stacja", @"Niedziałkowskiego 1 Szczecin",coordinate.latitude,coordinate.longitude]]];
+    
+    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addStation.php?name=%@&address=%@&latitude=%f&longitude=%f", @"Stacja", @"Niedziałkowskiego 1 Szczecin",coordinate.latitude,coordinate.longitude]];
 
 }
 

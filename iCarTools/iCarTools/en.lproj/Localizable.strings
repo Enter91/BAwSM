@@ -8,6 +8,11 @@
 
 "recorder"="Open recorder";
 "stats"="Open fuel prices map";
+"about"="About";
+
+"normal"="Normal map";
+"hybrid"="Hybrid map";
+"satellite"="Satellite map";
 
 "Tutorial1Title"="Welcome in iCarTools";
 "Tutorial1"="Welcome in iCarTools - the ultimate car app.\n\nThis tutorial will show you different options of iCarTools and will ask about some permissions needed such as camera or GPS.\n\nTo start please click green button below.";

@@ -31,10 +31,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"view will appear");
     
+    [self.settingsOpenButton setTitle:NSLocalizedString(@"about", nil) forState:UIControlStateNormal];
+    
     if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
-        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
-                                                                                            NSLocalizedString(@"About", nil)]
-                                                                                                andMenuType:0];
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[NSLocalizedString(@"about", nil)] andMenuType:0];
     }
     
     if (_recorderView) {

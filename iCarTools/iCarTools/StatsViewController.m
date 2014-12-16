@@ -14,8 +14,6 @@
 
 @implementation StatsViewController
 
-@synthesize coordinate;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -37,6 +35,17 @@
                                    context:NULL];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    
+    // TODO: Pętla pobierająca wszystkie dane z bazy
+        CLLocationCoordinate2D userCoordinate;
+        userCoordinate.latitude = 37.33;
+        userCoordinate.longitude = -122.03;
+        
+        MyCustomAnnotation *annotation = [[MyCustomAnnotation alloc] init];
+        annotation.coordinate = userCoordinate;
+        annotation.title = @"BLA";
+        annotation.subtitle = @"SUBBLA";
+        [self.mapView addAnnotation:annotation];
     
     [self.view setBackgroundColor:[UIColor blackColor]];
     if (!self.upperBackgroundView) {
@@ -89,6 +98,9 @@
     if (![self.findStationButton isDescendantOfView:self.view]) {
         [self.view addSubview:self.findStationButton];
     }
+    
+    [self.findStationButton removeTarget:self action:@selector(findStationAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.findStationButton addTarget:self action:@selector(findStationAction:) forControlEvents:UIControlEventTouchUpInside];
   
     if (!self.addStationButton) {
         self.addStationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+15, 50, 50)];
@@ -97,13 +109,34 @@
         [self.view addSubview:self.addStationButton];
     }
     
+    [self.addStationButton removeTarget:self action:@selector(addStationAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.addStationButton addTarget:self action:@selector(addStationAction:) forControlEvents:UIControlEventTouchUpInside];
+    
     if (!self.gpsStatusImageView) {
         self.gpsStatusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps_searching-256"]];
         [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y+15, 47, 47)];
         [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-8, self.gpsStatusImageView.center.y+4)];
         [self.view addSubview:self.gpsStatusImageView];
     }
-
+    
+    if (!self.searchBar) {
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-10, 44, self.mapView.frame.size.width+20, 25)];
+    }
+    
+    if (![self.searchBar isDescendantOfView:self.view]) {
+        [self.view addSubview:self.searchBar];
+        self.searchBar.hidden = YES;
+    }
+    
+    if (!self.searchBar) {
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-10, 44, self.mapView.frame.size.width+20, 25)];
+    }
+    
+    if (![self.searchBar isDescendantOfView:self.view]) {
+        [self.view addSubview:self.searchBar];
+        self.searchBar.hidden = YES;
+    }
+    
     self.navigationController.navigationBar.hidden = YES;
     
     [self updateDataSourceInLeftRevealViewController];
@@ -113,7 +146,61 @@
 
 - (void)updateDataSourceInLeftRevealViewController {
     if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
-        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[@"Settings", @"Map type"]];
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
+                                                                                                              NSLocalizedString(@"normal", nil),
+                                                                                                              NSLocalizedString(@"hybrid", nil),
+                                                                                                              NSLocalizedString(@"satellite", nil)]
+                                                                                                andMenuType:0];
+    }
+}
+
+- (void)sendCoordinate:(CLLocationCoordinate2D )coordinate {
+    [[AmazingJSON sharedInstance] setDelegate:self];
+    [[AmazingJSON sharedInstance] getResponseFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bawsm.comlu.com/addStation.php?name=%@&address=%@&latitude=%f&longitude=%f", @"Stacja", @"Niedziałkowskiego 1 Szczecin",coordinate.latitude,coordinate.longitude]]];
+
+}
+
+- (IBAction)addStationAction:(id)sender {
+    
+    if (!self.geocoder)
+        self.geocoder = [[CLGeocoder alloc] init];
+    
+    [self.geocoder geocodeAddressString:@"Niedziałkowskiego 1 Szczecin"
+                 completionHandler:^(NSArray* placemarks, NSError* error){
+                     if (error == nil) {
+                         CLLocationCoordinate2D coordinate;
+                         // Process the placemark.
+                         CLPlacemark *placemark = [placemarks lastObject];
+                         CLLocation *location = placemark.location;
+                         coordinate = location.coordinate;
+                         
+                         [self sendCoordinate:coordinate];
+                     }
+                     else {
+                     }
+                 }];
+}
+
+- (IBAction)findStationAction:(id)sender {
+    
+    [[AmazingJSON sharedInstance] setDelegate:self];
+    //[[AmazingJSON sharedInstance] getResponseFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bawsm.comlu.com/checkUser.php?login=%@&password=%@", _loginTextField.text, _passwordTextField.text]]];
+
+    if (self.searchBar.hidden == YES) {
+        self.searchBar.hidden = NO;
+    }
+    else {
+        self.searchBar.hidden =YES;
+    }
+}
+
+- (void)responseDictionary:(NSDictionary *)responseDict {
+    
+    NSLog(@"response: %@", responseDict);
+    if ([[responseDict objectForKey:@"code"] intValue] == 200) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        alert = nil;
     }
 }
 

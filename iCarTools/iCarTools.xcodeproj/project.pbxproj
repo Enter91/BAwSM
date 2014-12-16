@@ -57,6 +57,7 @@
 		F02351891A28874A0077C1A2 /* search-256.png in Resources */ = {isa = PBXBuildFile; fileRef = F02351881A28874A0077C1A2 /* search-256.png */; };
 		F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518C1A288FDB0077C1A2 /* plus-128.png */; };
 		F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518E1A28A03E0077C1A2 /* menu-128.png */; };
+		F07994D11A3EC3990087419C /* MyCustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F07994D01A3EC3990087419C /* MyCustomAnnotation.m */; };
 		F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */; };
 /* End PBXBuildFile section */
 
@@ -137,6 +138,8 @@
 		F02351881A28874A0077C1A2 /* search-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-256.png"; sourceTree = "<group>"; };
 		F023518C1A288FDB0077C1A2 /* plus-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-128.png"; sourceTree = "<group>"; };
 		F023518E1A28A03E0077C1A2 /* menu-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-128.png"; sourceTree = "<group>"; };
+		F07994CF1A3EC3990087419C /* MyCustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCustomAnnotation.h; sourceTree = "<group>"; };
+		F07994D01A3EC3990087419C /* MyCustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCustomAnnotation.m; sourceTree = "<group>"; };
 		F0C3700D1A246C48000C5A82 /* FixedCompassLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixedCompassLayout.h; sourceTree = "<group>"; };
 		F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixedCompassLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -252,6 +255,8 @@
 				1CB4B01A1A2073C800172BA4 /* StatsViewController.h */,
 				F0C3700D1A246C48000C5A82 /* FixedCompassLayout.h */,
 				F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */,
+				F07994CF1A3EC3990087419C /* MyCustomAnnotation.h */,
+				F07994D01A3EC3990087419C /* MyCustomAnnotation.m */,
 			);
 			name = "Stats Files";
 			sourceTree = "<group>";
@@ -519,6 +524,7 @@
 				1C18491B1A3D77A200E14DAE /* CustomAnimationController.m in Sources */,
 				1C30475619FED07300D2EE5E /* main.m in Sources */,
 				1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */,
+				F07994D11A3EC3990087419C /* MyCustomAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

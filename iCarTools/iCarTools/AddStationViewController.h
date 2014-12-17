@@ -7,9 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SWRevealViewController.h>
 #import "AmazingJSON.h"
+#import "GPSUtilities.h"
+#import "SettingsViewController.h"
 
-@interface AddStationViewController : UIViewController <UITextFieldDelegate, AmazingJSONDelegate>
+@import AVFoundation;
+@import AssetsLibrary;
+@import MobileCoreServices;
+
+@interface AddStationViewController : UIViewController <UITextFieldDelegate, AmazingJSONDelegate, GPSUtilitiesDelegate, AmazingJSONDelegate>
+
+@property (strong, nonatomic) CLGeocoder *geocoder;
+
+@property (strong, nonatomic) GPSUtilities *gpsUtilities;
 
 @property (weak, nonatomic) IBOutlet UILabel *stationNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addresLabel;
@@ -37,5 +48,9 @@
 - (IBAction)cancelAction:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UISwitch *actualPositionSwitch;
+
+@property (nonatomic, strong) UIViewController *parentView;
+
+@property (nonatomic) BOOL wantsCustomAnimation;
 
 @end

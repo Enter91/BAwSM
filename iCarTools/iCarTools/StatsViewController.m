@@ -163,24 +163,16 @@
 }
 
 - (IBAction)addStationAction:(id)sender {
+    if (_addStationView) {
+        //        _statsView.delegate = nil;
+        _addStationView = nil;
+    }
     
-    if (!self.geocoder)
-        self.geocoder = [[CLGeocoder alloc] init];
-    
-    [self.geocoder geocodeAddressString:@"Niedziałkowskiego 1 Szczecin"
-                 completionHandler:^(NSArray* placemarks, NSError* error){
-                     if (error == nil) {
-                         CLLocationCoordinate2D coordinate;
-                         // Process the placemark.
-                         CLPlacemark *placemark = [placemarks lastObject];
-                         CLLocation *location = placemark.location;
-                         coordinate = location.coordinate;
-                         
-                         [self sendCoordinate:coordinate];
-                     }
-                     else {
-                     }
-                 }];
+    _addStationView = [[AddStationViewController alloc] initWithNibName:@"AddStationViewController" bundle:nil];
+    //    _statsView.delegate = self;
+    _addStationView.parentView = self;
+    _addStationView.wantsCustomAnimation = YES;
+    [self.revealViewController setFrontViewController:_addStationView animated:YES];
 }
 
 - (IBAction)findStationAction:(id)sender {

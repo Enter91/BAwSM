@@ -26,3 +26,15 @@
 "TutorialErrorTitle"="No permission";
 "TutorialErrorDescription"="You have disabled one of needed permission. Please go to Settings and enable camera, microphone and GPS";
 "currentLocation"="You're here";
+
+"StationName"="Station name";
+"Address"="Address";
+"ActualPosition"="Actual position";
+"Prices"="Prices";
+"Pb95"="Pb95";
+"Pb98"="Pb98";
+"On"="On";
+"Lpg"="Lpg";
+"Comment"="Comment";
+"AddStation"="Add station";
+"Cancel"="Cancel";

@@ -59,6 +59,8 @@
 		F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518E1A28A03E0077C1A2 /* menu-128.png */; };
 		F07994D11A3EC3990087419C /* MyCustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F07994D01A3EC3990087419C /* MyCustomAnnotation.m */; };
 		F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */; };
+		F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EEF6801A41995200157AA8 /* AddStationViewController.m */; };
+		F0EEF6831A41995200157AA8 /* AddStationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EEF6811A41995200157AA8 /* AddStationViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +144,9 @@
 		F07994D01A3EC3990087419C /* MyCustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCustomAnnotation.m; sourceTree = "<group>"; };
 		F0C3700D1A246C48000C5A82 /* FixedCompassLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixedCompassLayout.h; sourceTree = "<group>"; };
 		F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixedCompassLayout.m; sourceTree = "<group>"; };
+		F0EEF67F1A41995200157AA8 /* AddStationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStationViewController.h; sourceTree = "<group>"; };
+		F0EEF6801A41995200157AA8 /* AddStationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddStationViewController.m; sourceTree = "<group>"; };
+		F0EEF6811A41995200157AA8 /* AddStationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddStationViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +262,9 @@
 				F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */,
 				F07994CF1A3EC3990087419C /* MyCustomAnnotation.h */,
 				F07994D01A3EC3990087419C /* MyCustomAnnotation.m */,
+				F0EEF67F1A41995200157AA8 /* AddStationViewController.h */,
+				F0EEF6801A41995200157AA8 /* AddStationViewController.m */,
+				F0EEF6811A41995200157AA8 /* AddStationViewController.xib */,
 			);
 			name = "Stats Files";
 			sourceTree = "<group>";
@@ -433,6 +441,7 @@
 				1C30479819FED74C00D2EE5E /* DINPro-Light.otf in Resources */,
 				1CD407321A27AE1100F6A2E7 /* gps_receiving-256.png in Resources */,
 				1CA7299B1A21466800FEBD51 /* Tutorial-Background.png in Resources */,
+				F0EEF6831A41995200157AA8 /* AddStationViewController.xib in Resources */,
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
 				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
 				F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */,
@@ -517,6 +526,7 @@
 				1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */,
 				F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */,
 				1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */,
+				F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */,
 				1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */,
 				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,
 				1C86508A1A2DEA9A009B02AA /* AmazingJSON.m in Sources */,

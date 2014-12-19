@@ -37,7 +37,7 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     // TODO: Pętla pobierająca wszystkie dane z bazy
-        CLLocationCoordinate2D userCoordinate;
+       /* CLLocationCoordinate2D userCoordinate;
         userCoordinate.latitude = 37.33;
         userCoordinate.longitude = -122.03;
         
@@ -45,7 +45,7 @@
         annotation.coordinate = userCoordinate;
         annotation.title = @"BLA";
         annotation.subtitle = @"SUBBLA";
-        [self.mapView addAnnotation:annotation];
+        [self.mapView addAnnotation:annotation];*/
     
     [self.view setBackgroundColor:[UIColor blackColor]];
     if (!self.upperBackgroundView) {
@@ -120,16 +120,8 @@
     }
     
     if (!self.searchBar) {
-        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-10, 44, self.mapView.frame.size.width+20, 25)];
-    }
-    
-    if (![self.searchBar isDescendantOfView:self.view]) {
-        [self.view addSubview:self.searchBar];
-        self.searchBar.hidden = YES;
-    }
-    
-    if (!self.searchBar) {
-        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-10, 44, self.mapView.frame.size.width+20, 25)];
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-9, 44, self.mapView.frame.size.width+20, 25)];
+        [self.searchBar setBackgroundImage:[UIImage new]];
     }
     
     if (![self.searchBar isDescendantOfView:self.view]) {
@@ -154,14 +146,6 @@
     }
 }
 
-- (void)sendCoordinate:(CLLocationCoordinate2D )coordinate {
-    
-    [[AmazingJSON sharedInstance] setDelegate:self];
-    
-    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addStation.php?name=%@&address=%@&latitude=%f&longitude=%f", @"Stacja", @"Niedziałkowskiego 1 Szczecin",coordinate.latitude,coordinate.longitude]];
-
-}
-
 - (IBAction)addStationAction:(id)sender {
     if (_addStationView) {
         //        _statsView.delegate = nil;
@@ -173,6 +157,8 @@
     _addStationView.parentView = self;
     _addStationView.wantsCustomAnimation = YES;
     [self.revealViewController setFrontViewController:_addStationView animated:YES];
+    
+    self.searchBar.hidden = YES;
 }
 
 - (IBAction)findStationAction:(id)sender {
@@ -184,7 +170,7 @@
         self.searchBar.hidden = NO;
     }
     else {
-        self.searchBar.hidden =YES;
+        self.searchBar.hidden = YES;
     }
 }
 
@@ -270,6 +256,7 @@
         [self.addStationButton setCenter:CGPointMake(self.findStationButton.center.x*1.5+8, self.addStationButton.center.y+4)];
         [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y+15, 47, 47)];
         [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-8, self.gpsStatusImageView.center.y+4)];
+        [self.searchBar setFrame:CGRectMake(-9, 44, self.mapView.frame.size.width+20, 25)];
     });
 }
 
@@ -287,17 +274,8 @@
         
         [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0, 47, 47)];
         [self.gpsStatusImageView setCenter:CGPointMake(self.lowerBackgroundView.center.x, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0+20)];
-    });
-}
-
-- (void)setFramesForLandscapeRight {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.upperBackgroundView setFrame:CGRectMake(self.view.frame.size.width-44, 0, 44, self.view.frame.size.height)];
-        [self.lowerBackgroundView setFrame:CGRectMake(0, 0, 95, self.view.frame.size.height)];
-        [self.menuButton setFrame:CGRectMake(0, 10, 44, 44)];
-        [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.center.x, 0, 44, 44)];
-        [self.findStationButton setFrame:CGRectMake(10, (self.view.frame.size.height-75)/2, 75, 75)];
-        [self.findStationButton setCenter:self.lowerBackgroundView.center];
+        
+        [self.searchBar setFrame:CGRectMake(36, 0, self.mapView.frame.size.width-44-79, 25)];
     });
 }
 
@@ -347,6 +325,7 @@
     
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
+    self.searchBar = nil;
 }
 
 @end

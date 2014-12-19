@@ -16,7 +16,7 @@
 @import AssetsLibrary;
 @import MobileCoreServices;
 
-@interface AddStationViewController : UIViewController <UITextFieldDelegate, AmazingJSONDelegate, GPSUtilitiesDelegate, AmazingJSONDelegate>
+@interface AddStationViewController : UIViewController <UITextFieldDelegate, AmazingJSONDelegate, GPSUtilitiesDelegate, AmazingJSONDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) CLGeocoder *geocoder;
 

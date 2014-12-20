@@ -119,6 +119,14 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
     [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addStation.php?name=%@&address=%@&latitude=%f&longitude=%f", _stationNameTextField.text, _addressTextField.text,coordinate.latitude,coordinate.longitude]];
     
+    //[[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getStationId.php?name=%@", _stationNameTextField.text]];
+    
+    NSDateFormatter *dateformate=[[NSDateFormatter alloc]init];
+    [dateformate setDateFormat:@"YYYY-MM-dd"];
+    NSString *date_String=[dateformate stringFromDate:[NSDate date]];
+    
+    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addVisit.php?user_id=%d&gas_station_id=%d&visit_date=%@&pb95_price=%@&pb98_price=%@&on_price=%@&lpg_price=%@&comment=%@", 10, 52, date_String, _pb95TextField.text, _pb98TextField.text, _onTextField.text, _lpgTextField.text, _commentTextView.text]];
+    
 }
 
 - (IBAction)addStationAction:(id)sender {

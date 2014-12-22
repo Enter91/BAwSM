@@ -14,6 +14,9 @@
 
 @implementation AddStationViewController{
     CLLocation *userLocation;
+    BOOL numericError;
+    id gas_station_id;
+    int gas_station_id_int;
 }
 
 - (void)viewDidLoad {
@@ -92,11 +95,49 @@
         [alert show];
         alert = nil;
     }
+    
+    if ([[responseDict objectForKey:@"code"] intValue] == 202) {
+        
+        numericError = YES;
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        alert = nil;
+    }
+
+    
     if ([[responseDict objectForKey:@"code"] intValue] == 400) {
+        
+        numericError = NO;
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         alert = nil;
     }
+    
+    if ([[responseDict objectForKey:@"code"] intValue] == 401) {
+        
+        gas_station_id = [responseDict objectForKey:@"gas_station_id"];
+        gas_station_id_int = [gas_station_id integerValue];
+        
+        if ([_pb95TextField.text isEqual:@""] && [_pb98TextField.text isEqual:@""] && [_onTextField.text isEqual:@""] && [_lpgTextField.text isEqual:@""] && [_commentTextView.text isEqual:@""]) {
+
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            alert = nil;
+        }
+    }
+    
+    if ([[responseDict objectForKey:@"code"] intValue] == 402) {
+        
+        if ([_pb95TextField.text isEqual:@""] && [_pb98TextField.text isEqual:@""] && [_onTextField.text isEqual:@""] && [_lpgTextField.text isEqual:@""] && [_commentTextView.text isEqual:@""]) {
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            alert = nil;
+        }
+    }
+
 
 }
 
@@ -113,44 +154,62 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     _addressTextField.text = address;
 }
 
-- (void)sendCoordinate:(CLLocationCoordinate2D )coordinate {
+- (void)addStationDatabaseConnect:(CLLocationCoordinate2D )coordinate {
     
     [[AmazingJSON sharedInstance] setDelegate:self];
 
     [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addStation.php?name=%@&address=%@&latitude=%f&longitude=%f", _stationNameTextField.text, _addressTextField.text,coordinate.latitude,coordinate.longitude]];
+}
+
+- (void) addVisitDatabaseConnect {
     
-    //[[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getStationId.php?name=%@", _stationNameTextField.text]];
+    [[AmazingJSON sharedInstance] setDelegate:self];
     
     NSDateFormatter *dateformate=[[NSDateFormatter alloc]init];
     [dateformate setDateFormat:@"YYYY-MM-dd"];
     NSString *date_String=[dateformate stringFromDate:[NSDate date]];
-    
-    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addVisit.php?user_id=%d&gas_station_id=%d&visit_date=%@&pb95_price=%@&pb98_price=%@&on_price=%@&lpg_price=%@&comment=%@", 10, 52, date_String, _pb95TextField.text, _pb98TextField.text, _onTextField.text, _lpgTextField.text, _commentTextView.text]];
+
+    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addVisit.php?user_id=%d&gas_station_id=%d&visit_date=%@&pb95_price=%@&pb98_price=%@&on_price=%@&lpg_price=%@&comment=%@", 10, gas_station_id_int, date_String, _pb95TextField.text, _pb98TextField.text, _onTextField.text, _lpgTextField.text, _commentTextView.text]];
     
 }
 
+- (void)removeStation {
+
+    [[AmazingJSON sharedInstance] setDelegate:self];
+    
+    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/removeStation.php?name=%@", _stationNameTextField.text]];
+}
+
 - (IBAction)addStationAction:(id)sender {
-    if (_actualPositionSwitch.on) {
-        if (!self.geocoder)
-            self.geocoder = [[CLGeocoder alloc] init];
+ 
+    if(![_stationNameTextField.text isEqual:@""]) {
         
-        [self.geocoder reverseGeocodeLocation:userLocation completionHandler:^(NSArray *placemarks, NSError *error){
-            CLPlacemark *placemark = placemarks[0];
+     if(![_addressTextField.text isEqual:@""] || _actualPositionSwitch.on) {
+         
+        if (_actualPositionSwitch.on) {
             
-            CLLocationCoordinate2D coordinate;
-            coordinate.latitude = userLocation.coordinate.latitude;
-            coordinate.longitude = userLocation.coordinate.longitude;
-            
-            [self sendAddress:placemark.name];
-            [self sendCoordinate:coordinate];
-        }];
-    }
-    else {
-        if (!self.geocoder)
-            self.geocoder = [[CLGeocoder alloc] init];
+            if (!self.geocoder)
+                self.geocoder = [[CLGeocoder alloc] init];
         
-        [self.geocoder geocodeAddressString:_addressTextField.text
+                [self.geocoder reverseGeocodeLocation:userLocation completionHandler:^(NSArray *placemarks, NSError *error){
+                CLPlacemark *placemark = placemarks[0];
+            
+                CLLocationCoordinate2D coordinate;
+                coordinate.latitude = userLocation.coordinate.latitude;
+                coordinate.longitude = userLocation.coordinate.longitude;
+                     
+                [self sendAddress:placemark.name];
+                [self addStationDatabaseConnect:coordinate];
+            }];
+        }
+        else {
+            
+            if (!self.geocoder)
+                self.geocoder = [[CLGeocoder alloc] init];
+        
+                [self.geocoder geocodeAddressString:_addressTextField.text
                           completionHandler:^(NSArray* placemarks, NSError* error){
+                              
                               if (error == nil) {
                                   CLLocationCoordinate2D coordinate;
                                   // Process the placemark.
@@ -158,19 +217,52 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                                   CLLocation *location = placemark.location;
                                   coordinate = location.coordinate;
                                   
-                                  [self sendCoordinate:coordinate];
+                                  [self addStationDatabaseConnect:coordinate];
                               }
                               else {
+                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Address unknown error"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                  [alert show];
+                                  alert = nil;
+
                               }
                           }];
 
+        }
+    } else {
+         
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Address is empty"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            alert = nil;
+          }
+     } else {
+        
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Station name is empty"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+         [alert show];
+          alert = nil;
     }
+    
+    if (![_pb95TextField.text isEqual:@""] || ![_pb98TextField.text isEqual:@""] || ![_onTextField.text isEqual:@""] || ![_lpgTextField.text isEqual:@""] || ![_commentTextView.text isEqual:@""]) {
+    
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            [self addVisitDatabaseConnect];
+        
+            double delayInSeconds = 1.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 
+                if (numericError == YES) {
+            
+                    [self removeStation];
+                }
+            });
+        });
+    }
 }
 
 - (IBAction)cancelAction:(id)sender {
-    
-
 }
 
 - (void)setFramesForInterface:(UIInterfaceOrientation)toInterfaceOrientation {

@@ -360,7 +360,6 @@
         }
     }
     //Start recording
-    [[mCameraLayer connection] setVideoOrientation:(AVCaptureVideoOrientation)[self interfaceOrientation]];
     [movieFile startRecordingToOutputFileURL:outputURL recordingDelegate:self];
         
 }

@@ -8,7 +8,10 @@
 
 #import "StatsViewController.h"
 
-@interface StatsViewController ()
+@interface StatsViewController () {
+    
+    int menuType;
+}
 
 @end
 
@@ -16,6 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.mapView.delegate = self;
     
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
@@ -34,18 +39,9 @@
                                    options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
                                    context:NULL];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    [self addAnnotation];
     
-    // TODO: Pętla pobierająca wszystkie dane z bazy
-       /* CLLocationCoordinate2D userCoordinate;
-        userCoordinate.latitude = 37.33;
-        userCoordinate.longitude = -122.03;
-        
-        MyCustomAnnotation *annotation = [[MyCustomAnnotation alloc] init];
-        annotation.coordinate = userCoordinate;
-        annotation.title = @"BLA";
-        annotation.subtitle = @"SUBBLA";
-        [self.mapView addAnnotation:annotation];*/
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     [self.view setBackgroundColor:[UIColor blackColor]];
     if (!self.upperBackgroundView) {
@@ -146,6 +142,39 @@
     }
 }
 
+-(void)addAnnotation {
+        
+    [[AmazingJSON sharedInstance] setDelegate:self];
+    
+    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getStationList.php?latitude=%f&longitude=%f&diff=%f",53.4,15.0,1.0]];
+    
+     CLLocationCoordinate2D userCoordinate;
+     userCoordinate.latitude = 53.41;
+     userCoordinate.longitude = 15.001;
+    
+     MyCustomAnnotation *annotation = [[MyCustomAnnotation alloc] initWithTitle:@"My bla" Location:userCoordinate];
+    
+        [self.mapView addAnnotation:annotation];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    
+    if([annotation isKindOfClass:[MyCustomAnnotation class]]) {
+        
+        MyCustomAnnotation *myLocation = (MyCustomAnnotation *)annotation;
+        MKAnnotationView *annotationView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:@"MyCustomAnnotation"];
+        
+        if(annotationView == nil)
+            annotationView = myLocation.annotationView;
+        else
+            annotationView.annotation = annotation;
+        
+        return annotationView;
+    }
+    else
+        return nil;
+}
+
 - (IBAction)addStationAction:(id)sender {
     if (_addStationView) {
         //        _statsView.delegate = nil;
@@ -182,6 +211,14 @@
         [alert show];
         alert = nil;
     }
+    
+    if ([[responseDict objectForKey:@"code"] intValue] == 400) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        alert = nil;
+    }
+        //NSArray *arr = [responseDict objectForKey:@"response"];
+
 }
 
 /**
@@ -307,6 +344,28 @@
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
+
+#pragma mark- StatsViewController
+- (void)clickedOption:(int)number {
+    
+    if (menuType == 0) {
+        switch (number) {
+            case 0:
+                self.mapView.mapType = MKMapTypeStandard;
+                break;
+            case 1:
+                self.mapView.mapType = MKMapTypeHybrid;
+                break;
+            case 2:
+                self.mapView.mapType = MKMapTypeSatellite;
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+#pragma mark- Update After Settings Changes
 
 - (void)dealloc {
     [self.gpsUtilities stopGPS];

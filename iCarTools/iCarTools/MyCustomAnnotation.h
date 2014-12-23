@@ -11,9 +11,12 @@
 #import <MapKit/MapKit.h>
 #import "GPSUtilities.h"
 
-@interface MyCustomAnnotation : NSObject <MKAnnotation>
+@interface MyCustomAnnotation : MKAnnotationView <MKAnnotation>
 
-@property (assign, nonatomic) CLLocationCoordinate2D coordinate;
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+
+- (id)initWithTitle:(NSString *)newTitle Location:(CLLocationCoordinate2D)location;
+- (MKAnnotationView *) annotationView;
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;

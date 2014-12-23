@@ -57,6 +57,7 @@
 		F02351891A28874A0077C1A2 /* search-256.png in Resources */ = {isa = PBXBuildFile; fileRef = F02351881A28874A0077C1A2 /* search-256.png */; };
 		F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518C1A288FDB0077C1A2 /* plus-128.png */; };
 		F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518E1A28A03E0077C1A2 /* menu-128.png */; };
+		F05F03841A49DF0D003928C5 /* gas.png in Resources */ = {isa = PBXBuildFile; fileRef = F05F03831A49DF0D003928C5 /* gas.png */; };
 		F07994D11A3EC3990087419C /* MyCustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F07994D01A3EC3990087419C /* MyCustomAnnotation.m */; };
 		F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */; };
 		F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EEF6801A41995200157AA8 /* AddStationViewController.m */; };
@@ -140,6 +141,7 @@
 		F02351881A28874A0077C1A2 /* search-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-256.png"; sourceTree = "<group>"; };
 		F023518C1A288FDB0077C1A2 /* plus-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-128.png"; sourceTree = "<group>"; };
 		F023518E1A28A03E0077C1A2 /* menu-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-128.png"; sourceTree = "<group>"; };
+		F05F03831A49DF0D003928C5 /* gas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gas.png; sourceTree = "<group>"; };
 		F07994CF1A3EC3990087419C /* MyCustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCustomAnnotation.h; sourceTree = "<group>"; };
 		F07994D01A3EC3990087419C /* MyCustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCustomAnnotation.m; sourceTree = "<group>"; };
 		F0C3700D1A246C48000C5A82 /* FixedCompassLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixedCompassLayout.h; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				1CD4072F1A27AE1100F6A2E7 /* gps_receiving-256.png */,
 				1CD407301A27AE1100F6A2E7 /* gps_searching-256.png */,
 				F02351881A28874A0077C1A2 /* search-256.png */,
+				F05F03831A49DF0D003928C5 /* gas.png */,
 				F023518E1A28A03E0077C1A2 /* menu-128.png */,
 				F023518C1A288FDB0077C1A2 /* plus-128.png */,
 				F02351861A287F240077C1A2 /* exit-50.png */,
@@ -445,6 +448,7 @@
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
 				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
 				F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */,
+				F05F03841A49DF0D003928C5 /* gas.png in Resources */,
 				1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */,
 				1CA7299D1A21466F00FEBD51 /* Tutorial-iPhone.png in Resources */,
 				1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */,

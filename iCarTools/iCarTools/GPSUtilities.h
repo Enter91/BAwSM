@@ -67,5 +67,6 @@
 
 @property (nonatomic, retain) CLLocationManager *locManager;
 @property (nonatomic, assign) id delegate;
+@property CLLocationCoordinate2D locationCoordinates;
 
 @end

@@ -92,8 +92,11 @@ static bool isFirstAccess = YES;
     if (responseData) {
         NSObject *object = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&error];
         
-        if (object == nil) {
+        if (object != nil) {
             NSString *json = [[NSString alloc] initWithData:responseData encoding:NSASCIIStringEncoding];
+            
+            NSRange range = [json rangeOfString:@"{"];
+            json = [json substringFromIndex:range.location];
             
             NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\s+<!--.*$" options:NSRegularExpressionDotMatchesLineSeparators error:nil];
             
@@ -110,6 +113,13 @@ static bool isFirstAccess = YES;
                 json = nil;
                 
                 [_delegate responseDictionary:dictionary];
+            } else {
+                 NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+                
+                json = nil;
+                
+                [_delegate responseDictionary:dictionary];
+                
             }
         } else {
             [_delegate responseDictionary:nil];

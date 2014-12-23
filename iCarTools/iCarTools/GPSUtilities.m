@@ -69,6 +69,7 @@ static bool isFirstAccess = YES;
             self.locManager = [[CLLocationManager alloc] init];
         }
         self.locManager.delegate = self;
+        _locationCoordinates = CLLocationCoordinate2DMake(0.0f, 0.0f);
     }
     
     return self;
@@ -135,6 +136,7 @@ static bool isFirstAccess = YES;
     if (self.delegate) {
         if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
         {
+            _locationCoordinates = newLocation.coordinate;
             [self.delegate locationUpdate:newLocation];
         }
     } else {

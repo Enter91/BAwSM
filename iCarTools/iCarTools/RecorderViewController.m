@@ -44,6 +44,7 @@
     
     [self updateDataSourceInLeftRevealViewController];
 
+    [[AmazingJSON sharedInstance] setDelegate:self];
 }
 
 - (void)updateDataSourceInLeftRevealViewController {
@@ -167,6 +168,7 @@
         self.speedNotificationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+4, 79, 37)];
         [self.speedNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.speedNotificationButton.center.y)];
         [self.speedNotificationButton setImage:[UIImage imageNamed:@"suszarka"] forState:UIControlStateNormal];
+        [self.speedNotificationButton addTarget:self action:@selector(submitSpeedCameraPosition) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.speedNotificationButton];
     }
     
@@ -174,6 +176,7 @@
         self.crashNotificationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.whiteLine2.frame.origin.y+6, 79, 37)];
         [self.crashNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.crashNotificationButton.center.y)];
         [self.crashNotificationButton setImage:[UIImage imageNamed:@"wypadek"] forState:UIControlStateNormal];
+        [self.crashNotificationButton addTarget:self action:@selector(submitAccidentPosition) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.crashNotificationButton];
     }
     
@@ -357,7 +360,6 @@
         }
     }
     //Start recording
-    [[mCameraLayer connection] setVideoOrientation:(AVCaptureVideoOrientation)[self interfaceOrientation]];
     [movieFile startRecordingToOutputFileURL:outputURL recordingDelegate:self];
         
 }
@@ -589,6 +591,35 @@
         mCameraLayer.frame = mCameraView.bounds;
     }
     mCameraLayer.transform  = transform;
+}
+
+#pragma mark- Obsługa przycisków zdarzeń
+- (void)submitAccidentPosition {
+    //accident_type_id 2
+    
+    CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
+    
+    if (location.latitude != 0.0f && location.longitude != 0.0f) {
+        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=2&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, [NSDate date]]];
+    }
+    
+    //('$_GET[user_id]','$_GET[accident_type_id]','$_GET[latitude]','$_GET[longitude]','$_GET[date]')";
+    
+}
+
+- (void)submitSpeedCameraPosition {
+    //accident_type_id 1
+    
+    CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
+    
+    if (location.latitude != 0.0f && location.longitude != 0.0f) {
+        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=1&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, [NSDate date]]];
+    }
+    
+}
+
+- (void)responseDictionary:(NSDictionary *)responseDict {
+    NSLog(@"%@", responseDict);
 }
 
 #pragma mark- GPSUtilities Delegates

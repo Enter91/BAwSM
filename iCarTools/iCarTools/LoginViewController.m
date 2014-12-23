@@ -43,14 +43,14 @@
     
     //TODO: Zmienić na PHP z logowania
     [[AmazingJSON sharedInstance] setDelegate:self];
-    [[AmazingJSON sharedInstance] getResponseFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bawsm.comuf.com/checkUser.php?login=%@&password=%@", _loginTextField.text, _passwordTextField.text]]];
+    [[AmazingJSON sharedInstance] getResponseFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bawsm.comlu.com/checkUser.php?login=%@&password=%@", _loginTextField.text, _passwordTextField.text]]];
     
 }
 
 - (IBAction)registerAction:(id)sender {
     
     [[AmazingJSON sharedInstance] setDelegate:self];
-    [[AmazingJSON sharedInstance] getResponseFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bawsm.comuf.com/checkUser.php?login=%@&password=%@", _loginTextField.text, _passwordTextField.text]]];
+    [[AmazingJSON sharedInstance] getResponseFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bawsm.comlu.com/checkUser.php?login=%@&password=%@", _loginTextField.text, _passwordTextField.text]]];
     
 }
 

@@ -80,4 +80,22 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark- Rotacje ekranu
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    
+    NSUInteger orientations = UIInterfaceOrientationMaskPortrait;
+    
+    if (self.orientationIsLocked) {
+        
+        return self.lockedOrientation;
+        
+    }
+    else {
+        if (self.window.rootViewController) {
+            orientations = [[((SWRevealViewController *)self.window.rootViewController) revealViewController] supportedInterfaceOrientations];
+        }
+        return orientations;
+    }
+}
+
 @end

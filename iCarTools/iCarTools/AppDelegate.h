@@ -23,5 +23,8 @@
 @property (strong, nonatomic) TutorialViewController *tutorial;
 @property (strong, nonatomic) LoginViewController *loginViewController;
 
+@property (nonatomic) BOOL orientationIsLocked;
+@property (nonatomic) NSUInteger lockedOrientation;
+
 @end
 

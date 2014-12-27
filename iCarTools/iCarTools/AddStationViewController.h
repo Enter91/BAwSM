@@ -19,7 +19,6 @@
 @interface AddStationViewController : UIViewController <UITextFieldDelegate, AmazingJSONDelegate, GPSUtilitiesDelegate, AmazingJSONDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) CLGeocoder *geocoder;
-
 @property (strong, nonatomic) GPSUtilities *gpsUtilities;
 
 @property (weak, nonatomic) IBOutlet UILabel *stationNameLabel;

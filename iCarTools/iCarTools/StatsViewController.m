@@ -11,6 +11,9 @@
 @interface StatsViewController () {
     
     int menuType;
+    NSArray *responseArray;
+    CLLocationCoordinate2D userCoordinate;
+    CLLocationCoordinate2D stationCoordinate;
 }
 
 @end
@@ -38,8 +41,6 @@
                                 forKeyPath:@"location"
                                    options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
                                    context:NULL];
-    
-    [self addAnnotation];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
@@ -130,6 +131,8 @@
     [self updateDataSourceInLeftRevealViewController];
     
     [self setFramesForInterface:self.interfaceOrientation];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"showAnnotations"];
 }
 
 - (void)updateDataSourceInLeftRevealViewController {
@@ -143,18 +146,9 @@
 }
 
 -(void)addAnnotation {
-        
     [[AmazingJSON sharedInstance] setDelegate:self];
     
-    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getStationList.php?latitude=%f&longitude=%f&diff=%f",53.4,15.0,1.0]];
-    
-     CLLocationCoordinate2D userCoordinate;
-     userCoordinate.latitude = 53.41;
-     userCoordinate.longitude = 15.001;
-    
-     MyCustomAnnotation *annotation = [[MyCustomAnnotation alloc] initWithTitle:@"My bla" Location:userCoordinate];
-    
-        [self.mapView addAnnotation:annotation];
+    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getStationList.php?latitude=%f&longitude=%f&diff=%f",userCoordinate.latitude,userCoordinate.longitude,0.5]];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
@@ -207,18 +201,30 @@
     
     NSLog(@"response: %@", responseDict);
     if ([[responseDict objectForKey:@"code"] intValue] == 200) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        alert = nil;
+      
     }
     
     if ([[responseDict objectForKey:@"code"] intValue] == 400) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        alert = nil;
-    }
-        //NSArray *arr = [responseDict objectForKey:@"response"];
+        
+        if (responseArray) {
+            responseArray = nil;
+        }
+        responseArray = [responseDict objectForKey:@"response"];
+        
+        for (int i = 0; i<[responseArray count]; i++) {
+      
+            MyCustomAnnotation *annotation = nil;
+            NSString *categoryString = nil;
+            categoryString = responseArray[i][@"name"];
+            stationCoordinate.latitude = [responseArray[i][@"latitude"] doubleValue];
+            stationCoordinate.longitude = [responseArray[i][@"longitude"] doubleValue];
+            NSString *subtitle = responseArray[i][@"address"];
+            //NSString *subtitle = [NSString stringWithFormat:@"Pb95: %@ Pb98: %@ On: %@ Lpg: %@ Comment: %@",pb95_price,pb98_price,on_price,lpg_price,comment];
+            annotation = [[MyCustomAnnotation alloc] initWithTitle:categoryString Subtitle:subtitle Location:stationCoordinate];
+            [self.mapView addAnnotation:annotation];
 
+        }
+    }
 }
 
 /**
@@ -234,8 +240,8 @@
     MKCoordinateRegion region;
     region.center = self.mapView.userLocation.coordinate;
     MKCoordinateSpan span;
-    span.latitudeDelta  = 0.1;
-    span.longitudeDelta = 0.1;
+    span.latitudeDelta  = 0.03;
+    span.longitudeDelta = 0.03;
     region.span = span;
     
     [self.mapView setRegion:region animated:YES];
@@ -325,6 +331,14 @@
 }
 
 - (void)locationUpdate:(CLLocation *)location {
+    userCoordinate.latitude = location.coordinate.latitude;
+    userCoordinate.longitude = location.coordinate.longitude;
+    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"showAnnotations"]) {
+        [self addAnnotation];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"showAnnotations"];
+    }
+    
     NSLog(@"New Location: %@", location);
 }
 

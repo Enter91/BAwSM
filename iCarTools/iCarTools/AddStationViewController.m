@@ -166,11 +166,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [[AmazingJSON sharedInstance] setDelegate:self];
     
     NSDateFormatter *dateformate=[[NSDateFormatter alloc]init];
-    [dateformate setDateFormat:@"YYYY-MM-dd"];
+    [dateformate setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     NSString *date_String=[dateformate stringFromDate:[NSDate date]];
 
     [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addVisit.php?user_id=%d&gas_station_id=%d&visit_date=%@&pb95_price=%@&pb98_price=%@&on_price=%@&lpg_price=%@&comment=%@", 10, gas_station_id_int, date_String, _pb95TextField.text, _pb98TextField.text, _onTextField.text, _lpgTextField.text, _commentTextView.text]];
     
+    dateformate = nil;
+    date_String = nil;
 }
 
 - (void)removeStation {
@@ -186,10 +188,12 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         
      if(![_addressTextField.text isEqual:@""] || _actualPositionSwitch.on) {
          
-        if (_actualPositionSwitch.on) {
+         if (![_pb95TextField.text isEqual:@""] || ![_pb98TextField.text isEqual:@""] || ![_onTextField.text isEqual:@""] || ![_lpgTextField.text isEqual:@""] || ![_commentTextView.text isEqual:@""]) {
+         
+             if (_actualPositionSwitch.on) {
             
-            if (!self.geocoder)
-                self.geocoder = [[CLGeocoder alloc] init];
+                 if (!self.geocoder)
+                     self.geocoder = [[CLGeocoder alloc] init];
         
                 [self.geocoder reverseGeocodeLocation:userLocation completionHandler:^(NSArray *placemarks, NSError *error){
                 CLPlacemark *placemark = placemarks[0];
@@ -200,12 +204,12 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                      
                 [self sendAddress:placemark.name];
                 [self addStationDatabaseConnect:coordinate];
-            }];
-        }
-        else {
+                }];
+             }
+             else {
             
-            if (!self.geocoder)
-                self.geocoder = [[CLGeocoder alloc] init];
+                 if (!self.geocoder)
+                     self.geocoder = [[CLGeocoder alloc] init];
         
                 [self.geocoder geocodeAddressString:_addressTextField.text
                           completionHandler:^(NSArray* placemarks, NSError* error){
@@ -227,8 +231,34 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                               }
                           }];
 
-        }
-    } else {
+             }
+             
+             double delayInSeconds = 2.0;
+             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                 
+                 [self addVisitDatabaseConnect];
+                 
+                 double delayInSeconds = 1.0;
+                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                     
+                     if (numericError == YES) {
+                         
+                         [self removeStation];
+                     } else {
+                         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"showAnnotations"];
+                     }
+                 });
+             });
+         
+         } else {
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Please, write some visit info"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+             [alert show];
+             alert = nil;
+
+         }
+     } else {
          
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Address is empty"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
@@ -239,26 +269,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Station name is empty"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
          [alert show];
           alert = nil;
-    }
-    
-    if (![_pb95TextField.text isEqual:@""] || ![_pb98TextField.text isEqual:@""] || ![_onTextField.text isEqual:@""] || ![_lpgTextField.text isEqual:@""] || ![_commentTextView.text isEqual:@""]) {
-    
-        double delayInSeconds = 1.5;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            
-            [self addVisitDatabaseConnect];
-        
-            double delayInSeconds = 1.0;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-
-                if (numericError == YES) {
-            
-                    [self removeStation];
-                }
-            });
-        });
     }
 }
 
@@ -383,7 +393,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 - (void)exit {
+
     [self.revealViewController setFrontViewController:_parentView animated:YES];
+    self.gpsUtilities.delegate = _parentView;
     _parentView = nil;
     SWRevealViewController *reveal = self.revealViewController;
     reveal.panGestureRecognizer.enabled = YES;

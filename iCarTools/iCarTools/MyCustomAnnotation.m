@@ -10,12 +10,13 @@
 
 @implementation MyCustomAnnotation
 
-- (id)initWithTitle:(NSString *)newTitle Location:(CLLocationCoordinate2D)location {
+- (id)initWithTitle:(NSString *)newTitle Subtitle:(NSString *)newSubtitle Location:(CLLocationCoordinate2D)location {
     
     self = [super init];
     
     if(self) {
         _title = newTitle;
+        _subtitle = newSubtitle;
         _coordinate = location;
     }
     
@@ -39,7 +40,7 @@
 }
 
 - (void)stationView {
-
+   
 }
 
 @end

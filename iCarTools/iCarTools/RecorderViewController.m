@@ -290,10 +290,20 @@
 - (void)toggleVideoRecording {
     if (!_isRecording) {
         _isRecording = YES;
+        
+        if (_pointsOnTheRouteArray) {
+            if (_pointsOnTheRouteArray.count > 0) {
+                [_pointsOnTheRouteArray removeAllObjects];
+            }
+            _pointsOnTheRouteArray = nil;
+        }
+        
+        [self orientationLock];
         [self startRecording];
     } else {
         _isRecording = NO;
         [self stopRecording];
+        [self orientationUnlock];
     }
 }
 
@@ -308,8 +318,6 @@
  *  Starts recording showing small rotating white dot at button
  */
 - (void)startRecording {
-    
-    //    [self flashCameraButton];
     
     if ([self.smallDotImageView isDescendantOfView:self.cameraRecordingButton]) {
         [self.smallDotImageView removeFromSuperview];
@@ -360,6 +368,34 @@
         }
     }
     //Start recording
+    
+    
+    //SET THE CONNECTION PROPERTIES (output properties)
+    AVCaptureConnection *CaptureConnection = [movieFile connectionWithMediaType:AVMediaTypeVideo];
+    
+    //Set landscape (if required)
+    if ([CaptureConnection isVideoOrientationSupported])
+    {
+        switch ([[UIDevice currentDevice] orientation]) {
+            case UIDeviceOrientationUnknown:
+                CaptureConnection.videoOrientation = AVCaptureVideoOrientationPortrait;
+                break;
+            case UIDeviceOrientationPortrait:
+                CaptureConnection.videoOrientation = AVCaptureVideoOrientationPortrait;
+                break;
+            case UIDeviceOrientationLandscapeLeft:
+                CaptureConnection.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
+                break;
+            case UIDeviceOrientationLandscapeRight:
+                CaptureConnection.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
+                break;
+                
+            default:
+                CaptureConnection.videoOrientation = AVCaptureVideoOrientationPortrait;
+                break;
+        }
+    }
+    
     [movieFile startRecordingToOutputFileURL:outputURL recordingDelegate:self];
         
 }
@@ -389,20 +425,35 @@
         {
             RecordedSuccessfully = [value boolValue];
         }
+    } else {
+        NSLog(@"did finish recording with error: %@", [error localizedDescription]);
     }
+    
     if (RecordedSuccessfully)
     {
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputFileURL])
         {
-            [library writeVideoAtPathToSavedPhotosAlbum:outputFileURL
-                                        completionBlock:^(NSURL *assetURL, NSError *error)
-             {
-                 if (error)
-                 {
-                     
-                 }
-             }];
+            [library saveVideo:outputFileURL toAlbum:@"iCarTools" withCompletionBlock:^(NSError *error) {
+                
+                if (error) {
+                    NSLog(@"Can't save to custom album with error: %@", [error localizedDescription]);
+                } else {
+                    
+                    NSDictionary *route = @{@"date" : [NSDate date],
+                                            @"assetURL" : outputFileURL,
+                                            @"route" : _pointsOnTheRouteArray};
+                    
+                    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                    NSString *documentsDirectory = [paths objectAtIndex:0];
+                    NSString *path =[documentsDirectory stringByAppendingPathComponent:[route objectForKey:@"date"]];
+                    
+                    [route writeToFile:path atomically:YES];
+                    
+                    [_pointsOnTheRouteArray removeAllObjects];
+                    _pointsOnTheRouteArray = nil;
+                }
+            }];
         }
     }
 }
@@ -528,6 +579,10 @@
     
     mCameraView.alpha = 0.0;
     
+    if (_floatingAlertView) {
+        [self hideFloatingAlertView];
+    }
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([session isRunning]) {
             mCameraView.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height);
@@ -550,7 +605,27 @@
     }
     
     mCameraLayer = [AVCaptureVideoPreviewLayer layerWithSession: session];
-    [self updateCameraLayer];
+    switch ([[UIDevice currentDevice] orientation]) {
+        case UIDeviceOrientationUnknown:
+            mCameraLayer.connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+            break;
+        case UIDeviceOrientationPortrait:
+            mCameraLayer.connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            mCameraLayer.connection.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            mCameraLayer.connection.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
+            break;
+            
+        default:
+            mCameraLayer.connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+            break;
+    }
+    
+    mCameraLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    mCameraLayer.frame = mCameraView.bounds;
     [mCameraView.layer addSublayer:mCameraLayer];
 }
 
@@ -567,32 +642,6 @@
     session.isRunning ? [self stopCamera] : [self startCamera];
 }
 
-- (void)updateCameraLayer
-{
-    mCameraLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    mCameraLayer.frame = mCameraView.bounds;
-    float x = mCameraView.frame.origin.x;
-    float y = mCameraView.frame.origin.y;
-    float w = mCameraView.frame.size.width;
-    float h = mCameraView.frame.size.height;
-    CATransform3D transform = CATransform3DIdentity;
-    if (UIDeviceOrientationLandscapeLeft == [[UIDevice currentDevice] orientation]) {
-        mCameraLayer.frame = CGRectMake(x, y, h, w);
-        transform = CATransform3DTranslate(transform, (w - h) / 2, (h - w) / 2, 0);
-        transform = CATransform3DRotate(transform, -M_PI/2, 0, 0, 1);
-    } else if (UIDeviceOrientationLandscapeRight == [[UIDevice currentDevice] orientation]) {
-        mCameraLayer.frame = CGRectMake(x, y, h, w);
-        transform = CATransform3DTranslate(transform, (w - h) / 2, (h - w) / 2, 0);
-        transform = CATransform3DRotate(transform, M_PI/2, 0, 0, 1);
-    } else if (UIDeviceOrientationPortraitUpsideDown == [[UIDevice currentDevice] orientation]) {
-        mCameraLayer.frame = mCameraView.bounds;
-        transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
-    } else {
-        mCameraLayer.frame = mCameraView.bounds;
-    }
-    mCameraLayer.transform  = transform;
-}
-
 #pragma mark- Obsługa przycisków zdarzeń
 - (void)submitAccidentPosition {
     //accident_type_id 2
@@ -600,10 +649,16 @@
     CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
     
     if (location.latitude != 0.0f && location.longitude != 0.0f) {
-        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=2&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, [NSDate date]]];
+        NSDateFormatter *df=[[NSDateFormatter alloc]init];
+        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *dateString = [df stringFromDate:[NSDate date]];
+        
+        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=2&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, dateString]];
+        
+        df = nil;
+    } else {
+        [self showFloatingAlertViewWithType:0];
     }
-    
-    //('$_GET[user_id]','$_GET[accident_type_id]','$_GET[latitude]','$_GET[longitude]','$_GET[date]')";
     
 }
 
@@ -613,13 +668,101 @@
     CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
     
     if (location.latitude != 0.0f && location.longitude != 0.0f) {
-        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=1&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, [NSDate date]]];
+        
+        NSDateFormatter *df=[[NSDateFormatter alloc]init];
+        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *dateString = [df stringFromDate:[NSDate date]];
+        
+        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=1&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, dateString]];
+        
+        df = nil;
+    } else {
+        [self showFloatingAlertViewWithType:0];
     }
     
 }
 
 - (void)responseDictionary:(NSDictionary *)responseDict {
     NSLog(@"%@", responseDict);
+    
+    if (responseDict == nil || [[responseDict objectForKey:@"code"] intValue] == 200) {
+        [self showFloatingAlertViewWithType:0];
+    }
+}
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Wyświetla pięciosekundowy alert
+ *
+ *  @param type 0 - błąd, 1 - poprawne dodanie zdarzenia, 2 - odświeżenie info z bazy
+ */
+- (void)showFloatingAlertViewWithType:(int)type {
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideFloatingAlertView) object:nil];
+    
+    if (_floatingAlertView) {
+        if ([_floatingAlertView isDescendantOfView:self.view]) {
+            [_floatingAlertView removeFromSuperview];
+        }
+        _floatingAlertView = nil;
+    }
+    
+    float height = 30.0f;
+    
+    _floatingAlertView = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height)];
+    _floatingAlertView.alpha = 0.0f;
+    [_floatingAlertView.layer setCornerRadius:5.0f];
+    UILabel *floatingViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(5.0, 0.0, 270.0, height)];
+    [floatingViewLabel setTextAlignment:NSTextAlignmentCenter];
+    
+    switch (type) {
+        case 0:
+            [floatingViewLabel setText:NSLocalizedString(@"Error occured. Please try again", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor redColor]];
+            break;
+        case 1:
+            [floatingViewLabel setText:NSLocalizedString(@"Accident added successfully.", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor greenColor]];
+            break;
+        case 2:
+            [floatingViewLabel setText:NSLocalizedString(@"Database refreshed.", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor greenColor]];
+            break;
+            
+        default:
+            break;
+    }
+    
+    [floatingViewLabel setTextColor:[UIColor whiteColor]];
+    [_floatingAlertView addSubview:floatingViewLabel];
+    
+    [self.view insertSubview:_floatingAlertView belowSubview:_upperBackgroundView];
+    floatingViewLabel = nil;
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        _floatingAlertView.alpha = 1.0f;
+        [_floatingAlertView setFrame:CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height + 5.0 : 5.0, 280.0, height)];
+    } completion:^(BOOL finished) {
+        [self performSelector:@selector(hideFloatingAlertView) withObject:nil afterDelay:4.0];
+    }];
+    
+}
+
+- (void)hideFloatingAlertView {
+    if (_floatingAlertView) {
+        float height = 30.0f;
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            _floatingAlertView.alpha = 0.0f;
+            _floatingAlertView.frame = CGRectMake(_floatingAlertView.frame.origin.x, _floatingAlertView.frame.origin.y - height, _floatingAlertView.frame.size.width, _floatingAlertView.frame.size.height);
+        } completion:^(BOOL finished) {
+            _floatingAlertView.frame = CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height);
+            
+            [_floatingAlertView removeFromSuperview];
+            _floatingAlertView = nil;
+        }];
+    }
 }
 
 #pragma mark- GPSUtilities Delegates
@@ -635,7 +778,9 @@
         }
     });
     
-    NSLog(@"New Location: %@", location);
+    if (_isRecording && _pointsOnTheRouteArray) {
+        [_pointsOnTheRouteArray addObject:location];
+    }
 }
 
 - (void)locationError:(NSError *)error {
@@ -653,7 +798,12 @@
 }
 
 - (void)exit {
+    if (_isRecording) {
+        _isRecording = NO;
+        [self stopRecording];
+    }
     [self.gpsUtilities stopGPS];
+    [self orientationUnlock];
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
 }
@@ -733,5 +883,46 @@
 
 #pragma mark- Update After Settings Changes
 
+#pragma mark- Blokowanie obracania na czas nagrywania
+-(void) orientationLock {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.orientationIsLocked = YES;
+    switch ([[UIDevice currentDevice] orientation]) {
+        case UIDeviceOrientationUnknown:
+            appDelegate.lockedOrientation = UIInterfaceOrientationMaskPortrait;
+            break;
+        case UIDeviceOrientationPortrait:
+            appDelegate.lockedOrientation = UIInterfaceOrientationMaskPortrait;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            appDelegate.lockedOrientation = UIInterfaceOrientationMaskLandscapeRight;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            appDelegate.lockedOrientation = UIInterfaceOrientationMaskLandscapeLeft;
+            break;
+            
+        default:
+            appDelegate.lockedOrientation = UIInterfaceOrientationMaskPortrait;
+            break;
+    }
+}
+
+-(void) orientationUnlock {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.orientationIsLocked = NO;
+}
+
+- (NSUInteger) application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (BOOL) shouldAutorotate {
+    if (_isRecording) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
 
 @end

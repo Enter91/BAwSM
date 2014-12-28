@@ -126,11 +126,17 @@
             [self gotLibraryPermission];
             break;
         case 5:
-            //drugi screen - GPS
+            //trzeci screen - GPS
             [self thirdStateAskGPS];
             break;
         case 6:
+            [self askPermissioniPhoneCentered];
+            [self gotGPSPermission];
+        case 7:
             [self finishTutorial];
+            break;
+        case 8:
+            [_delegate didEndTutorialWithRegistration:YES];
             break;
         default:
             break;
@@ -138,8 +144,8 @@
 }
 
 - (void)recoverCurrentState {
-    currentState = currentState - 1;
-    [self goToNextState];
+    //currentState = currentState - 1;
+    //[self goToNextState];
 }
 
 - (void)firstStateAskCameraAndMicrophone {
@@ -215,17 +221,128 @@
 }
 
 - (void)thirdStateAskGPS {
-    [GPSUtilities sharedInstance];
-    BOOL permission = [[GPSUtilities sharedInstance] askPermission];
-    if (permission) {
-        [self goToNextState];
+    
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(thirdStateAskGPS) object:nil];
+    
+    if (runningAnimation == YES) {
+        [self performSelector:@selector(thirdStateAskGPS) withObject:nil afterDelay:1.0];
     } else {
-        [self noPermissionScreen];
+        
+        NSLog(@"iphone nie animuje sie");
+        [_permissionTitle setText:NSLocalizedString(@"Tutorial4Title", nil)];
+        [_permissionDescription setText:NSLocalizedString(@"Tutorial4", nil)];
+        [_permissionButton setTitle:NSLocalizedString(@"Continue", nil) forState:UIControlStateNormal];
+        
+        [_permissionTitle setAlpha:0.0];
+        [_permissionDescription setAlpha:0.0];
+        [_permissionButton setAlpha:0.0];
+        
+        [_permissionDescription setFrame:CGRectMake(-_permissionDescription.frame.size.width, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            [_permissionTitle setFrame:CGRectMake(_permissionTitle.frame.origin.x, 0, _permissionTitle.frame.size.width, _permissionTitle.frame.size.height)];
+            [_permissionTitle setAlpha:1.0];
+            
+            [_permissionButton setFrame:CGRectMake(self.view.frame.size.width * 0.125, _permissionTitle.frame.size.height + _iPhoneImageView.frame.size.height + 15.0, self.view.frame.size.width * 0.75, self.view.frame.size.height - (_permissionTitle.frame.size.height + _iPhoneImageView.frame.size.height + 15.0) - 15.0)];
+            [_permissionButton setAlpha:1.0];
+            
+            [_iPhoneImageView setFrame:CGRectMake(self.view.frame.size.width - 100.0, _iPhoneImageView.frame.origin.y, _iPhoneImageView.frame.size.width, _iPhoneImageView.frame.size.height)];
+            
+            [_permissionDescription setFrame:CGRectMake(10.0, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
+            [_permissionDescription setAlpha:1.0];
+        } completion:^(BOOL finished) {
+            
+        }];
     }
 }
 
 - (void)finishTutorial {
     
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(finishTutorial) object:nil];
+    
+    if (runningAnimation == YES) {
+        [self performSelector:@selector(finishTutorial) withObject:nil afterDelay:1.0];
+    } else {
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            [_permissionDescription setFrame:CGRectMake(self.view.frame.size.width, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
+            [_permissionDescription setAlpha:0.0];
+            
+            [_permissionTitle setFrame:CGRectMake(_permissionTitle.frame.origin.x, -_permissionTitle.frame.size.height, _permissionTitle.frame.size.width, _permissionTitle.frame.size.height)];
+            [_permissionButton setFrame:CGRectMake(_permissionButton.frame.origin.x, self.view.frame.size.height, _permissionButton.frame.size.width, _permissionButton.frame.size.height)];
+            
+            [_permissionDescription setAlpha:0.0];
+            [_permissionButton setAlpha:0.0];
+            
+            [_iPhoneImageView setAlpha:1.0];
+            
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.5 animations:^{
+                [_iPhoneImageView setCenter:CGPointMake(self.view.center.x, self.view.center.y)];
+            } completion:^(BOOL finished) {
+                
+                [_iPhoneImageView setContentMode:UIViewContentModeScaleToFill];
+                
+                [self.view bringSubviewToFront:_permissionDescription];
+                [self.view bringSubviewToFront:_permissionButton];
+                
+                [_permissionDescription setFrame:CGRectMake(10, 20, self.view.frame.size.width - 20, 200)];
+                
+                float endScale = 2.0;
+                CGAffineTransform t = CGAffineTransformMakeScale(endScale, endScale);
+                
+                [UIView animateWithDuration:0.5 animations:^{
+                    _iPhoneImageView.transform = t;
+                } completion:^(BOOL finished) {
+                    
+                    [_permissionDescription setAlpha:0.0];
+                    [_permissionButton setAlpha:0.0];
+                    
+                    [_permissionDescription setText:NSLocalizedString(@"Tutorial5", nil)];
+                    
+                    UIButton *noLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                    [noLoginButton setBackgroundColor:[UIColor clearColor]];
+                    [noLoginButton.titleLabel setFont:[UIFont fontWithName:@"DINPro-Light" size:15.0]];
+                    [noLoginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    [noLoginButton setTitle:NSLocalizedString(@"Not now", nil) forState:UIControlStateNormal];
+                    
+                    [noLoginButton setFrame:CGRectMake(0.0, self.view.frame.size.height - 25, self.view.frame.size.width * 0.75, 20)];
+                    [noLoginButton setCenter:CGPointMake(self.view.center.x, noLoginButton.center.y)];
+                    [noLoginButton setUserInteractionEnabled:NO];
+                    [noLoginButton addTarget:self action:@selector(noLogin) forControlEvents:UIControlEventTouchUpInside];
+                    [self.view addSubview:noLoginButton];
+                    noLoginButton.alpha = 0.0;
+                    
+                    [_permissionDescription setFrame:CGRectMake(self.view.frame.size.width, _permissionDescription.frame.origin.y, self.view.frame.size.width * 0.75, _permissionDescription.frame.size.height)];
+                    [_permissionButton setFrame:CGRectMake(_permissionButton.frame.origin.x, self.view.frame.size.height, _permissionButton.frame.size.width, _permissionButton.frame.size.height)];
+                    
+                    [UIView animateWithDuration:0.5 animations:^{
+                        [_permissionDescription setAlpha:1.0];
+                        [_permissionButton setAlpha:1.0];
+                        
+                        [_permissionDescription setFrame:CGRectMake(self.view.frame.size.width * 0.125, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
+                        
+                        [_permissionButton setFrame:CGRectMake(_permissionButton.frame.origin.x, self.view.frame.size.height - _permissionButton.frame.size.height - noLoginButton.frame.size.height - 15, _permissionButton.frame.size.width, _permissionButton.frame.size.height)];
+                        
+                    } completion:^(BOOL finished) {
+                        [noLoginButton setUserInteractionEnabled:YES];
+                        
+                        [UIView animateWithDuration:0.3 animations:^{
+                            [noLoginButton setAlpha:1.0];
+                        }];
+                    }];
+                    
+                }];
+                
+                
+                
+            }];
+        }];
+    }
+}
+
+- (void)noLogin {
+    [_delegate didEndTutorialWithRegistration:NO];
 }
 
 - (void)askPermissioniPhoneCentered {
@@ -281,25 +398,25 @@
     
     NSLog(@"gotCameraPermission");
     
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(gotCameraPermission) object:nil];
+    
     AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     
     if (status == AVAuthorizationStatusAuthorized) {
         //authorized
+        NSLog(@"Mamy kamerę!");
         [self gotMicrophonePermission];
         return YES;
     } else if (status == AVAuthorizationStatusDenied) {
         //denied
         [self noPermissionScreen];
         return NO;
-    } else if (status == AVAuthorizationStatusNotDetermined) {
-        //not determined
+    } else {
         [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-            if (granted) {
-                [self gotMicrophonePermission];
-            } else {
-                [self noPermissionScreen];
-            }
+            NSLog(@"Again and again: granted: %@", granted ? @"TAK" : @"NIE");
         }];
+        
+        [self performSelector:@selector(gotCameraPermission) withObject:nil afterDelay:0.5];
     }
     
     return NO;
@@ -353,6 +470,25 @@
     }
     
     return NO;
+}
+
+- (BOOL)gotGPSPermission {
+    
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(gotGPSPermission) object:nil];
+    
+    [GPSUtilities sharedInstance];
+    BOOL permission = [[GPSUtilities sharedInstance] askPermission];
+    
+    if (permission && ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse)) {
+        [self goToNextState];
+        return YES;
+    } else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
+        [self performSelector:@selector(gotGPSPermission) withObject:nil afterDelay:0.5];
+        return NO;
+    } else {
+        [self noPermissionScreen];
+        return NO;
+    }
 }
 
 #pragma mark- UINavigationController Delegates

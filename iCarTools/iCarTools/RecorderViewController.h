@@ -17,6 +17,8 @@
 
 #import "SettingsViewController.h"
 #import "AmazingJSON.h"
+#import "AppDelegate.h"
+#import "ALAssetsLibrary+CustomPhotoAlbum.h"
 
 @interface RecorderViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate, SettingsViewControllerDelegate, AmazingJSONDelegate>
 
@@ -56,6 +58,10 @@
 @property (strong, nonatomic) UIImageView *captureImage;
 
 @property (nonatomic) BOOL wantsCustomAnimation;
+
+@property (strong, nonatomic) UIView *floatingAlertView;
+
+@property (strong, nonatomic) NSMutableArray *pointsOnTheRouteArray;
 
 - (void) initializeCamera;
 - (void)stopCamera;

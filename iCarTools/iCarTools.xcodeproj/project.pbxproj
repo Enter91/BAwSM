@@ -32,6 +32,7 @@
 		1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */; };
 		1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4135441A20AB7200D3F1CC /* SettingsViewController.m */; };
 		1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */; };
+		1C6EC4881A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6EC4871A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m */; };
 		1C86508A1A2DEA9A009B02AA /* AmazingJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8650891A2DEA9A009B02AA /* AmazingJSON.m */; };
 		1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA729961A21458900FEBD51 /* TutorialViewController.m */; };
 		1CA7299B1A21466800FEBD51 /* Tutorial-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA7299A1A21466800FEBD51 /* Tutorial-Background.png */; };
@@ -110,6 +111,8 @@
 		1C4135431A20AB7200D3F1CC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1C4135441A20AB7200D3F1CC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		1C6EC4861A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsLibrary+CustomPhotoAlbum.h"; sourceTree = "<group>"; };
+		1C6EC4871A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsLibrary+CustomPhotoAlbum.m"; sourceTree = "<group>"; };
 		1C8650881A2DEA9A009B02AA /* AmazingJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazingJSON.h; sourceTree = "<group>"; };
 		1C8650891A2DEA9A009B02AA /* AmazingJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazingJSON.m; sourceTree = "<group>"; };
 		1CA729951A21458900FEBD51 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
@@ -203,7 +206,6 @@
 				1C30478019FED5A100D2EE5E /* ViewController.h */,
 				1C30478119FED5A100D2EE5E /* ViewController.m */,
 				1C3047A619FEE09100D2EE5E /* ViewController.xib */,
-				1C30479D19FED76000D2EE5E /* Resources */,
 				1CEDCA231A2074E000BFADB5 /* LoginViewController.h */,
 				1CEDCA241A2074E000BFADB5 /* LoginViewController.m */,
 				1CEDCA251A2074E000BFADB5 /* LoginViewController.xib */,
@@ -214,6 +216,7 @@
 				1CA729961A21458900FEBD51 /* TutorialViewController.m */,
 				1C1849191A3D77A200E14DAE /* CustomAnimationController.h */,
 				1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */,
+				1C30479D19FED76000D2EE5E /* Resources */,
 			);
 			path = iCarTools;
 			sourceTree = "<group>";
@@ -223,6 +226,8 @@
 			children = (
 				1C30475419FED07300D2EE5E /* Info.plist */,
 				1C30475519FED07300D2EE5E /* main.m */,
+				1C6EC4861A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.h */,
+				1C6EC4871A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -530,6 +535,7 @@
 				1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */,
 				F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */,
 				1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */,
+				1C6EC4881A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */,
 				1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */,
 				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,

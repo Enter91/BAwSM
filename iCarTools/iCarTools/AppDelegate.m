@@ -15,32 +15,47 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    /*if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:YES] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:NO] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
         _tutorial = [[TutorialViewController alloc] init];
         _tutorial.delegate = self;
         self.window.rootViewController = _tutorial;
-    } else {*/
-        //SWReveal
-        ViewController *frontViewController = [[ViewController alloc] init];
-        SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithCellsTitlesArray:@[@"opcja 1", @"opcja 2", @"opcja 3"]];
-        
-        SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:settingsViewController frontViewController:frontViewController];
-        revealController.delegate = self;
-        
-        self.viewController = revealController;
-        
-        self.window.rootViewController = self.viewController;
-        //end SWReveal
-    //}
+    } else {
+        [self setRevealViewController];
+    }
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+
+- (void)setRevealViewController {
+    ViewController *frontViewController = [[ViewController alloc] init];
+    SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithCellsTitlesArray:@[@"opcja 1", @"opcja 2", @"opcja 3"]];
+    
+    SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:settingsViewController frontViewController:frontViewController];
+    revealController.delegate = self;
+    
+    if (_tutorial) {
+        [_tutorial presentViewController:revealController animated:YES completion:^{
+            self.viewController = revealController;
+            self.window.rootViewController = self.viewController;
+            _tutorial = nil;
+        }];
+    } else if (_loginViewController) {
+        [_loginViewController presentViewController:revealController animated:YES completion:^{
+            self.viewController = revealController;
+            self.window.rootViewController = self.viewController;
+            _loginViewController = nil;
+        }];
+    } else {
+        self.viewController = revealController;
+        self.window.rootViewController = self.viewController;
+    }
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -78,6 +93,40 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)didEndTutorialWithRegistration:(BOOL)wantsRegister {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"tutorialShowed"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if (wantsRegister) {
+        _loginViewController = [[LoginViewController alloc] init];
+        
+        [_tutorial presentViewController:_loginViewController animated:YES completion:^{
+            self.window.rootViewController = _loginViewController;
+            _tutorial = nil;
+        }];
+    } else {
+        [self setRevealViewController];
+    }
+}
+
+#pragma mark- Rotacje ekranu
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    
+    NSUInteger orientations = UIInterfaceOrientationMaskPortrait;
+    
+    if (self.orientationIsLocked) {
+        
+        return self.lockedOrientation;
+        
+    }
+    else {
+        if (self.window.rootViewController) {
+            orientations = [[((SWRevealViewController *)self.window.rootViewController) revealViewController] supportedInterfaceOrientations];
+        }
+        return orientations;
+    }
 }
 
 @end

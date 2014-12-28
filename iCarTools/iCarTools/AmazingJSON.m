@@ -87,9 +87,10 @@ static bool isFirstAccess = YES;
 
 - (void)fetchedData:(NSData *)responseData {
     
-    NSError* error;
-    
     if (responseData) {
+        
+        NSError* error;
+        
         NSObject *object = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&error];
         
         if (object != nil) {

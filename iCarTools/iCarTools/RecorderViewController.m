@@ -290,6 +290,14 @@
 - (void)toggleVideoRecording {
     if (!_isRecording) {
         _isRecording = YES;
+        
+        if (_pointsOnTheRouteArray) {
+            if (_pointsOnTheRouteArray.count > 0) {
+                [_pointsOnTheRouteArray removeAllObjects];
+            }
+            _pointsOnTheRouteArray = nil;
+        }
+        
         [self orientationLock];
         [self startRecording];
     } else {
@@ -426,26 +434,24 @@
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputFileURL])
         {
-            /*[library writeVideoAtPathToSavedPhotosAlbum:outputFileURL
-                                        completionBlock:^(NSURL *assetURL, NSError *error)
-             {
-                 if (error)
-                 {
-                     NSLog(@"Can't save to library with error: %@", [error localizedDescription]);
-                 } else {
-                     [library saveVideo:outputFileURL toAlbum:@"iCarTools" withCompletionBlock:^(NSError *error) {
-                         if (error)
-                         {
-                             NSLog(@"Can't save to custom album with error: %@", [error localizedDescription]);
-                         }
-                     }];
-                 }
-             }];*/
-            
             [library saveVideo:outputFileURL toAlbum:@"iCarTools" withCompletionBlock:^(NSError *error) {
-                if (error)
-                {
+                
+                if (error) {
                     NSLog(@"Can't save to custom album with error: %@", [error localizedDescription]);
+                } else {
+                    
+                    NSDictionary *route = @{@"date" : [NSDate date],
+                                            @"assetURL" : outputFileURL,
+                                            @"route" : _pointsOnTheRouteArray};
+                    
+                    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                    NSString *documentsDirectory = [paths objectAtIndex:0];
+                    NSString *path =[documentsDirectory stringByAppendingPathComponent:[route objectForKey:@"date"]];
+                    
+                    [route writeToFile:path atomically:YES];
+                    
+                    [_pointsOnTheRouteArray removeAllObjects];
+                    _pointsOnTheRouteArray = nil;
                 }
             }];
         }
@@ -573,6 +579,10 @@
     
     mCameraView.alpha = 0.0;
     
+    if (_floatingAlertView) {
+        [self hideFloatingAlertView];
+    }
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([session isRunning]) {
             mCameraView.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height);
@@ -647,7 +657,7 @@
         
         df = nil;
     } else {
-        [self showFloatingAlertView];
+        [self showFloatingAlertViewWithType:0];
     }
     
 }
@@ -667,7 +677,7 @@
         
         df = nil;
     } else {
-        [self showFloatingAlertView];
+        [self showFloatingAlertViewWithType:0];
     }
     
 }
@@ -676,11 +686,18 @@
     NSLog(@"%@", responseDict);
     
     if (responseDict == nil || [[responseDict objectForKey:@"code"] intValue] == 200) {
-        [self showFloatingAlertView];
+        [self showFloatingAlertViewWithType:0];
     }
 }
 
-- (void)showFloatingAlertView {
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Wyświetla pięciosekundowy alert
+ *
+ *  @param type 0 - błąd, 1 - poprawne dodanie zdarzenia, 2 - odświeżenie info z bazy
+ */
+- (void)showFloatingAlertViewWithType:(int)type {
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideFloatingAlertView) object:nil];
     
@@ -698,8 +715,25 @@
     [_floatingAlertView.layer setCornerRadius:5.0f];
     UILabel *floatingViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(5.0, 0.0, 270.0, height)];
     [floatingViewLabel setTextAlignment:NSTextAlignmentCenter];
-    [floatingViewLabel setText:NSLocalizedString(@"Error occured. Please try again", nil)];
-    [_floatingAlertView setBackgroundColor:[UIColor redColor]];
+    
+    switch (type) {
+        case 0:
+            [floatingViewLabel setText:NSLocalizedString(@"Error occured. Please try again", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor redColor]];
+            break;
+        case 1:
+            [floatingViewLabel setText:NSLocalizedString(@"Accident added successfully.", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor greenColor]];
+            break;
+        case 2:
+            [floatingViewLabel setText:NSLocalizedString(@"Database refreshed.", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor greenColor]];
+            break;
+            
+        default:
+            break;
+    }
+    
     [floatingViewLabel setTextColor:[UIColor whiteColor]];
     [_floatingAlertView addSubview:floatingViewLabel];
     
@@ -744,7 +778,9 @@
         }
     });
     
-    NSLog(@"New Location: %@", location);
+    if (_isRecording && _pointsOnTheRouteArray) {
+        [_pointsOnTheRouteArray addObject:location];
+    }
 }
 
 - (void)locationError:(NSError *)error {

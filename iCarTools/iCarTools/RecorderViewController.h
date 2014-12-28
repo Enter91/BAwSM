@@ -61,6 +61,8 @@
 
 @property (strong, nonatomic) UIView *floatingAlertView;
 
+@property (strong, nonatomic) NSMutableArray *pointsOnTheRouteArray;
+
 - (void) initializeCamera;
 - (void)stopCamera;
 

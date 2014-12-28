@@ -23,6 +23,11 @@
 "Tutorial3Title"="Camera roll";
 "Tutorial3"="To save or watch recorded videos we also need access to camera roll.";
 
+"Tutorial4Title"="GPS";
+"Tutorial4"="iCarTools uses GPS to save your route during recording and show trafic alerts based on location or gas stations near you.";
+
+"Tutorial5"="Great! iCarTools is now ready to work! If you want to add new trafic accidents or update gas prices you need to register.";
+
 "TutorialErrorTitle"="No permission";
 "TutorialErrorDescription"="You have disabled one of needed permission. Please go to Settings and enable camera, microphone and GPS";
 "currentLocation"="You're here";

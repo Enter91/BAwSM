@@ -14,7 +14,7 @@
 
 @protocol TutorialViewControllerDelegate <NSObject>
 
-- (void)didEndTutorial;
+- (void)didEndTutorialWithRegistration:(BOOL)wantsRegister;
 
 @end
 

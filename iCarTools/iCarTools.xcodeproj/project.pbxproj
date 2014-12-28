@@ -206,7 +206,6 @@
 				1C30478019FED5A100D2EE5E /* ViewController.h */,
 				1C30478119FED5A100D2EE5E /* ViewController.m */,
 				1C3047A619FEE09100D2EE5E /* ViewController.xib */,
-				1C30479D19FED76000D2EE5E /* Resources */,
 				1CEDCA231A2074E000BFADB5 /* LoginViewController.h */,
 				1CEDCA241A2074E000BFADB5 /* LoginViewController.m */,
 				1CEDCA251A2074E000BFADB5 /* LoginViewController.xib */,
@@ -217,6 +216,7 @@
 				1CA729961A21458900FEBD51 /* TutorialViewController.m */,
 				1C1849191A3D77A200E14DAE /* CustomAnimationController.h */,
 				1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */,
+				1C30479D19FED76000D2EE5E /* Resources */,
 			);
 			path = iCarTools;
 			sourceTree = "<group>";

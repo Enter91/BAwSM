@@ -245,7 +245,7 @@
     //NSLog(@"accessory button tapped for annotation %@", view.annotation);
     if (control == view.leftCalloutAccessoryView) {
     
-        
+        NSLog(@"sssssssss");
     } else if (control == view.rightCalloutAccessoryView) {
 
         [[NSUserDefaults standardUserDefaults] setObject:view.annotation.title forKey:@"stationName"];

@@ -16,12 +16,15 @@
 
 @class SWRevealViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, SWRevealViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, SWRevealViewControllerDelegate, TutorialViewControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) SWRevealViewController *viewController;
 @property (strong, nonatomic) TutorialViewController *tutorial;
 @property (strong, nonatomic) LoginViewController *loginViewController;
+
+@property (nonatomic) BOOL orientationIsLocked;
+@property (nonatomic) NSUInteger lockedOrientation;
 
 @end
 

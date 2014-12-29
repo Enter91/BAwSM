@@ -15,6 +15,7 @@
 #import "MyCustomAnnotation.h"
 #import "AmazingJSON.h"
 #import "AddStationViewController.h"
+#import "ChangeViewController.h"
 
 @import AVFoundation;
 @import AssetsLibrary;
@@ -46,6 +47,7 @@
 @property (strong, nonatomic) UIImageView *gpsStatusImageView;
 
 @property (strong, nonatomic) AddStationViewController *addStationView;
+@property (strong, nonatomic) ChangeViewController *changeStationView;
 //@property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) UIViewController *parentView;

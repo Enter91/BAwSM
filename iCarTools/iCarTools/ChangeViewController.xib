@@ -13,20 +13,16 @@
             <string>DINPro-Light</string>
             <string>DINPro-Light</string>
             <string>DINPro-Light</string>
-            <string>DINPro-Light</string>
-            <string>DINPro-Light</string>
         </mutableArray>
         <mutableArray key="DINPro-Medium.otf">
+            <string>DINPro-Medium</string>
             <string>DINPro-Medium</string>
             <string>DINPro-Medium</string>
         </mutableArray>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddStationViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChangeViewController">
             <connections>
-                <outlet property="actualPositionLabel" destination="Ih5-fN-8e5" id="jsl-bg-vUZ"/>
-                <outlet property="actualPositionSwitch" destination="zma-WB-VEf" id="9X4-Yt-D4j"/>
-                <outlet property="addStationButton" destination="atC-xu-pkT" id="pfm-nH-rKc"/>
                 <outlet property="addresLabel" destination="J2d-ZV-TfF" id="4ba-0X-lxv"/>
                 <outlet property="addressTextField" destination="l0o-u0-DuQ" id="tyW-Ox-CgW"/>
                 <outlet property="cancelButton" destination="d1S-5Q-89n" id="4dn-Ga-uo7"/>
@@ -41,6 +37,7 @@
                 <outlet property="pb98Label" destination="GD9-ll-sCk" id="M0G-Xu-uiJ"/>
                 <outlet property="pb98TextField" destination="KVP-jR-jY4" id="BiH-CN-yBI"/>
                 <outlet property="pricesLabel" destination="DFJ-Xp-lbg" id="uLg-8v-7rb"/>
+                <outlet property="saveButton" destination="atC-xu-pkT" id="BeI-EA-f9h"/>
                 <outlet property="stationNameLabel" destination="e6S-hc-c2H" id="otI-Sy-CdG"/>
                 <outlet property="stationNameTextField" destination="YJX-Vz-Ouq" id="T8e-TF-URM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -55,13 +52,13 @@
                     <rect key="frame" x="-329" y="-938" width="1242" height="2208"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Station name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6S-hc-c2H">
-                    <rect key="frame" x="8" y="40" width="105" height="30"/>
+                    <rect key="frame" x="108" y="8" width="105" height="30"/>
                     <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="16"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J2d-ZV-TfF">
-                    <rect key="frame" x="8" y="85" width="105" height="30"/>
+                    <rect key="frame" x="108" y="84" width="105" height="30"/>
                     <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="16"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -72,13 +69,8 @@
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YJX-Vz-Ouq" userLabel="station">
-                    <rect key="frame" x="130" y="40" width="150" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l0o-u0-DuQ" userLabel="address">
-                    <rect key="frame" x="130" y="85" width="150" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l0o-u0-DuQ" userLabel="address">
+                    <rect key="frame" x="35" y="122" width="250" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
@@ -117,14 +109,14 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atC-xu-pkT">
-                    <rect key="frame" x="35" y="490" width="120" height="40"/>
+                    <rect key="frame" x="35" y="490" width="122" height="40"/>
                     <fontDescription key="fontDescription" name="DINPro-Medium" family="DIN Pro" pointSize="20"/>
-                    <state key="normal" title="Add station">
+                    <state key="normal" title="Add visit">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="addStationAction:" destination="-1" eventType="touchUpInside" id="pno-AT-3jk"/>
+                        <action selector="saveAction:" destination="-1" eventType="touchUpInside" id="VR8-f2-xjb"/>
                     </connections>
                 </button>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hiZ-m4-nKb" userLabel="Comment">
@@ -134,8 +126,8 @@
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Prices" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DFJ-Xp-lbg">
-                    <rect key="frame" x="108" y="185" width="105" height="30"/>
-                    <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="16"/>
+                    <rect key="frame" x="108" y="171" width="105" height="30"/>
+                    <fontDescription key="fontDescription" name="DINPro-Medium" family="DIN Pro" pointSize="24"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -144,20 +136,11 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="zma-WB-VEf" userLabel="Position">
-                    <rect key="frame" x="130" y="125" width="51" height="31"/>
-                </switch>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U2m-m2-o2E" userLabel="Lpg">
                     <rect key="frame" x="207" y="280" width="80" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Actual position" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ih5-fN-8e5" userLabel="position">
-                    <rect key="frame" x="185" y="126" width="100" height="30"/>
-                    <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="14"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1S-5Q-89n">
                     <rect key="frame" x="190" y="490" width="90" height="40"/>
                     <fontDescription key="fontDescription" name="DINPro-Medium" family="DIN Pro" pointSize="20"/>
@@ -169,9 +152,13 @@
                         <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="Wga-Q4-V2n"/>
                     </connections>
                 </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YJX-Vz-Ouq" userLabel="station">
+                    <rect key="frame" x="35" y="46" width="250" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
             <point key="canvasLocation" x="414" y="303"/>
         </view>
     </objects>

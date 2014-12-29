@@ -135,6 +135,11 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"showAnnotations"];
 }
 
+/**
+ *  @Author Damian Klimaszewski
+ *
+ *  Left menu
+ */
 - (void)updateDataSourceInLeftRevealViewController {
     if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
         [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
@@ -201,7 +206,9 @@
     
     NSLog(@"response: %@", responseDict);
     if ([[responseDict objectForKey:@"code"] intValue] == 200) {
-      
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        alert = nil;
     }
     
     if ([[responseDict objectForKey:@"code"] intValue] == 400) {
@@ -222,8 +229,40 @@
             //NSString *subtitle = [NSString stringWithFormat:@"Pb95: %@ Pb98: %@ On: %@ Lpg: %@ Comment: %@",pb95_price,pb98_price,on_price,lpg_price,comment];
             annotation = [[MyCustomAnnotation alloc] initWithTitle:categoryString Subtitle:subtitle Location:stationCoordinate];
             [self.mapView addAnnotation:annotation];
-
         }
+        responseArray = nil;
+    }
+}
+
+/**
+ *  @Author Damian Klimaszewski
+ *
+ *  Actions in annotations
+ */
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view
+    calloutAccessoryControlTapped:(UIControl *)control {
+    
+    //NSLog(@"accessory button tapped for annotation %@", view.annotation);
+    if (control == view.leftCalloutAccessoryView) {
+    
+        
+    } else if (control == view.rightCalloutAccessoryView) {
+
+        [[NSUserDefaults standardUserDefaults] setObject:view.annotation.title forKey:@"stationName"];
+        [[NSUserDefaults standardUserDefaults] setObject:view.annotation.subtitle forKey:@"stationAddress"];
+
+        if (_changeStationView) {
+            //        _statsView.delegate = nil;
+            _changeStationView = nil;
+        }
+    
+        _changeStationView = [[ChangeViewController alloc] initWithNibName:@"ChangeViewController" bundle:nil];
+        //    _statsView.delegate = self;
+        _changeStationView.parentView = self;
+        _changeStationView.wantsCustomAnimation = YES;
+        [self.revealViewController setFrontViewController:_changeStationView animated:YES];
+    
+        self.searchBar.hidden = YES;
     }
 }
 
@@ -240,8 +279,8 @@
     MKCoordinateRegion region;
     region.center = self.mapView.userLocation.coordinate;
     MKCoordinateSpan span;
-    span.latitudeDelta  = 0.03;
-    span.longitudeDelta = 0.03;
+    span.latitudeDelta  = 0.01;
+    span.longitudeDelta = 0.01;
     region.span = span;
     
     [self.mapView setRegion:region animated:YES];
@@ -325,9 +364,6 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self setFramesForInterface:toInterfaceOrientation];
-}
-
-- (void)mapType {
 }
 
 - (void)locationUpdate:(CLLocation *)location {

@@ -60,6 +60,8 @@
 		F05F03841A49DF0D003928C5 /* gas.png in Resources */ = {isa = PBXBuildFile; fileRef = F05F03831A49DF0D003928C5 /* gas.png */; };
 		F07994D11A3EC3990087419C /* MyCustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F07994D01A3EC3990087419C /* MyCustomAnnotation.m */; };
 		F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */; };
+		F0EDA5841A50CB61006D7A73 /* ChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EDA5831A50CB61006D7A73 /* ChangeViewController.m */; };
+		F0EDA5861A50CB74006D7A73 /* ChangeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EDA5851A50CB74006D7A73 /* ChangeViewController.xib */; };
 		F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EEF6801A41995200157AA8 /* AddStationViewController.m */; };
 		F0EEF6831A41995200157AA8 /* AddStationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EEF6811A41995200157AA8 /* AddStationViewController.xib */; };
 /* End PBXBuildFile section */
@@ -146,6 +148,9 @@
 		F07994D01A3EC3990087419C /* MyCustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCustomAnnotation.m; sourceTree = "<group>"; };
 		F0C3700D1A246C48000C5A82 /* FixedCompassLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixedCompassLayout.h; sourceTree = "<group>"; };
 		F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixedCompassLayout.m; sourceTree = "<group>"; };
+		F0EDA5821A50CB45006D7A73 /* ChangeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeViewController.h; sourceTree = "<group>"; };
+		F0EDA5831A50CB61006D7A73 /* ChangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeViewController.m; sourceTree = "<group>"; };
+		F0EDA5851A50CB74006D7A73 /* ChangeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeViewController.xib; sourceTree = "<group>"; };
 		F0EEF67F1A41995200157AA8 /* AddStationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStationViewController.h; sourceTree = "<group>"; };
 		F0EEF6801A41995200157AA8 /* AddStationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddStationViewController.m; sourceTree = "<group>"; };
 		F0EEF6811A41995200157AA8 /* AddStationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddStationViewController.xib; sourceTree = "<group>"; };
@@ -267,6 +272,9 @@
 				F0EEF67F1A41995200157AA8 /* AddStationViewController.h */,
 				F0EEF6801A41995200157AA8 /* AddStationViewController.m */,
 				F0EEF6811A41995200157AA8 /* AddStationViewController.xib */,
+				F0EDA5821A50CB45006D7A73 /* ChangeViewController.h */,
+				F0EDA5831A50CB61006D7A73 /* ChangeViewController.m */,
+				F0EDA5851A50CB74006D7A73 /* ChangeViewController.xib */,
 			);
 			name = "Stats Files";
 			sourceTree = "<group>";
@@ -473,6 +481,7 @@
 				1C30479519FED74C00D2EE5E /* DINPro-Bold.otf in Resources */,
 				1CF81C491A12954800496116 /* record_button.png in Resources */,
 				1CD407291A26919500F6A2E7 /* suszarka.png in Resources */,
+				F0EDA5861A50CB74006D7A73 /* ChangeViewController.xib in Resources */,
 				1CEDCA2B1A2076A100BFADB5 /* photo-256.png in Resources */,
 				1C30479919FED74C00D2EE5E /* DINPro-LightItalic.otf in Resources */,
 			);
@@ -530,6 +539,7 @@
 				1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */,
 				F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */,
 				1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */,
+				F0EDA5841A50CB61006D7A73 /* ChangeViewController.m in Sources */,
 				F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */,
 				1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */,
 				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,

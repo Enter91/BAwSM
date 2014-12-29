@@ -23,6 +23,11 @@
     return self;
 }
 
+/**
+ *  @Author Damian Klimaszewski
+ *
+ *  Set custom annotation view
+ */
 - (MKAnnotationView *)annotationView {
     
     MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:self reuseIdentifier:@"MyCustomAnnotation"];
@@ -31,9 +36,12 @@
     annotationView.canShowCallout = YES;
     annotationView.image = [UIImage imageNamed:@"gas"];
     
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
     [rightButton addTarget:self action:@selector(stationView) forControlEvents:UIControlEventTouchUpInside];
     annotationView.rightCalloutAccessoryView = rightButton;
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    [leftButton addTarget:self action:@selector(stationView) forControlEvents:UIControlEventTouchUpInside];
+    annotationView.leftCalloutAccessoryView = leftButton;
     
     
     return annotationView;

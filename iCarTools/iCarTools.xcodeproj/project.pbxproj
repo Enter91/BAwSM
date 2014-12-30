@@ -59,9 +59,9 @@
 		F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518C1A288FDB0077C1A2 /* plus-128.png */; };
 		F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518E1A28A03E0077C1A2 /* menu-128.png */; };
 		F05F03841A49DF0D003928C5 /* gas.png in Resources */ = {isa = PBXBuildFile; fileRef = F05F03831A49DF0D003928C5 /* gas.png */; };
+		F06B73211A52399D00C66496 /* ChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EDA5831A50CB61006D7A73 /* ChangeViewController.m */; };
 		F07994D11A3EC3990087419C /* MyCustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F07994D01A3EC3990087419C /* MyCustomAnnotation.m */; };
 		F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */; };
-		F0EDA5841A50CB61006D7A73 /* ChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EDA5831A50CB61006D7A73 /* ChangeViewController.m */; };
 		F0EDA5861A50CB74006D7A73 /* ChangeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EDA5851A50CB74006D7A73 /* ChangeViewController.xib */; };
 		F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EEF6801A41995200157AA8 /* AddStationViewController.m */; };
 		F0EEF6831A41995200157AA8 /* AddStationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EEF6811A41995200157AA8 /* AddStationViewController.xib */; };
@@ -539,6 +539,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F06B73211A52399D00C66496 /* ChangeViewController.m in Sources */,
 				1C3047C319FEEA2B00D2EE5E /* RecorderViewController.m in Sources */,
 				1C3047A019FEDDD500D2EE5E /* ViewController.m in Sources */,
 				1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */,

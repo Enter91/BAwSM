@@ -70,6 +70,10 @@ static bool isFirstAccess = YES;
         }
         self.locManager.delegate = self;
         _locationCoordinates = CLLocationCoordinate2DMake(0.0f, 0.0f);
+        
+        _state = 0;
+        if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
+            [_delegate gpsDidChangeState:_state];
     }
     
     return self;
@@ -105,6 +109,12 @@ static bool isFirstAccess = YES;
             [self.locManager requestWhenInUseAuthorization];
         }
         
+        if (_state != 1) {
+            _state = 1;
+            if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
+                [_delegate gpsDidChangeState:_state];
+        }
+        
         [self.locManager startUpdatingLocation];
     }
 }
@@ -117,6 +127,13 @@ static bool isFirstAccess = YES;
 - (void)stopGPS {
     if (self.locManager) {
         if ([self.locManager respondsToSelector:@selector(stopUpdatingLocation)]) {
+            
+            if (_state != 0) {
+                _state = 0;
+                if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
+                    [_delegate gpsDidChangeState:_state];
+            }
+            
             self.locManager.delegate = nil;
             [self.locManager stopUpdatingLocation];
         }
@@ -136,6 +153,11 @@ static bool isFirstAccess = YES;
     if (self.delegate) {
         if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
         {
+            if (_state != 2) {
+                _state = 2;
+                if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
+                    [_delegate gpsDidChangeState:_state];
+            }
             _locationCoordinates = newLocation.coordinate;
             [self.delegate locationUpdate:newLocation];
         }
@@ -148,6 +170,10 @@ static bool isFirstAccess = YES;
     if (self.delegate) {
         if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
         {
+            if (_state != 0) {
+                _state = 0;
+                [_delegate gpsDidChangeState:_state];
+            }
             [self.delegate locationError:error];
         }
     } else {

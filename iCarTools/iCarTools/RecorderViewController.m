@@ -104,6 +104,9 @@
     if (![self.menuButton isDescendantOfView:self.view]) {
         [self.view addSubview:self.menuButton];
     }
+    
+    [self.menuButton removeTarget:[self revealViewController] action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
+    [self.menuButton addTarget:[self revealViewController] action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
 
     if (!self.exitButton) {
         self.exitButton = [[UIButton alloc] initWithFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
@@ -787,6 +790,19 @@
 
 - (void)locationError:(NSError *)error {
     NSLog(@"Location error: %@", [error localizedDescription]);
+}
+
+- (void)gpsDidChangeState:(int)state {
+    
+    self.gpsStatusImageView.image = nil;
+    if (state == 2) {
+        self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_receiving-256"];
+    } else if (state == 1) {
+        self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_searching-256"];
+    } else {
+        self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_disconnected-256"];
+    }
+    
 }
 
 #pragma mark- UINavigationController Delegates

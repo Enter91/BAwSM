@@ -16,6 +16,7 @@
 #import "AmazingJSON.h"
 #import "AddStationViewController.h"
 #import "ChangeViewController.h"
+#import "PricesViewController.h"
 
 @import AVFoundation;
 @import AssetsLibrary;
@@ -48,6 +49,7 @@
 
 @property (strong, nonatomic) AddStationViewController *addStationView;
 @property (strong, nonatomic) ChangeViewController *changeStationView;
+@property (strong, nonatomic) PricesViewController *pricesView;
 //@property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) UIViewController *parentView;

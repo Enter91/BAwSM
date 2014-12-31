@@ -116,35 +116,6 @@
         responseArray = [responseDict objectForKey:@"response"];
         gas_station_id_int = [responseArray[0][@"gas_station_id"] intValue];
     }
-    
-    /*if ([[responseDict objectForKey:@"code"] intValue] == 401) {
-     
-     if (responseArray) {
-     responseArray = nil;
-     }
-     responseArray = [responseDict objectForKey:@"response"];
-     
-     for (int i = 0; i<[responseArray count]; i++) {
-     
-     MyCustomAnnotation *annotation = nil;
-     NSString *categoryString = nil;
-     categoryString = responseArray[i][@"name"];
-     stationCoordinate.latitude = [responseArray[i][@"latitude"] doubleValue];
-     stationCoordinate.longitude = [responseArray[i][@"longitude"] doubleValue];
-     NSString *pb95 = responseArray[i][@"pb95_price"];
-     NSString *pb98 = responseArray[i][@"pb98_price"];
-     NSString *on = responseArray[i][@"on_price"];
-     NSString *lpg = responseArray[i][@"lpg_price"];
-     NSString *comment = responseArray[i][@"comment"];
-     NSString *subtitle = [NSString stringWithFormat:@"Pb95: %@ Pb98: %@ On: %@ Lpg: %@ Comment: %@",pb95,pb98,on,lpg,comment];
-     annotation = [[MyCustomAnnotation alloc] initWithTitle:categoryString Subtitle:subtitle Location:stationCoordinate];
-     [self.mapView addAnnotation:annotation];
-     }
-     //responseArray = nil;
-     [[AmazingJSON sharedInstance] setDelegate:self];
-     
-     [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getList.php?name=%@&latitude=%f&longitude=%f&diff=%f",view.annotation.title,userCoordinate.latitude,userCoordinate.longitude,0.5]];
-     }*/
 }
 
 - (void)alertView:(UIAlertView *)alertView

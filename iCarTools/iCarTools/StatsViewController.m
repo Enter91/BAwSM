@@ -9,7 +9,6 @@
 #import "StatsViewController.h"
 
 @interface StatsViewController () {
-    
     int menuType;
     NSArray *responseArray;
     CLLocationCoordinate2D userCoordinate;
@@ -72,6 +71,9 @@
     if (![self.menuButton isDescendantOfView:self.view]) {
         [self.view addSubview:self.menuButton];
     }
+    
+    [self.menuButton removeTarget:[self revealViewController] action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
+    [self.menuButton addTarget:[self revealViewController] action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
 
     if (!self.exitButton) {
         self.exitButton = [[UIButton alloc] initWithFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
@@ -242,10 +244,48 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view
     calloutAccessoryControlTapped:(UIControl *)control {
     
-    //NSLog(@"accessory button tapped for annotation %@", view.annotation);
     if (control == view.leftCalloutAccessoryView) {
-    
-        NSLog(@"sssssssss");
+        
+        /*if ([[responseDict objectForKey:@"code"] intValue] == 401) {
+         
+         if (responseArray) {
+         responseArray = nil;
+         }
+         responseArray = [responseDict objectForKey:@"response"];
+         
+         for (int i = 0; i<[responseArray count]; i++) {
+         
+         MyCustomAnnotation *annotation = nil;
+         NSString *categoryString = nil;
+         categoryString = responseArray[i][@"name"];
+         stationCoordinate.latitude = [responseArray[i][@"latitude"] doubleValue];
+         stationCoordinate.longitude = [responseArray[i][@"longitude"] doubleValue];
+         NSString *pb95 = responseArray[i][@"pb95_price"];
+         NSString *pb98 = responseArray[i][@"pb98_price"];
+         NSString *on = responseArray[i][@"on_price"];
+         NSString *lpg = responseArray[i][@"lpg_price"];
+         NSString *comment = responseArray[i][@"comment"];
+         NSString *subtitle = [NSString stringWithFormat:@"Pb95: %@ Pb98: %@ On: %@ Lpg: %@ Comment: %@",pb95,pb98,on,lpg,comment];
+         annotation = [[MyCustomAnnotation alloc] initWithTitle:categoryString Subtitle:subtitle Location:stationCoordinate];
+         [self.mapView addAnnotation:annotation];
+         }
+         //responseArray = nil;
+         }*/
+        
+        if (_pricesView) {
+            //        _statsView.delegate = nil;
+            _pricesView = nil;
+        }
+        
+        [[NSUserDefaults standardUserDefaults] setObject:view.annotation.title forKey:@"stationName"];
+        
+        _pricesView = [[PricesViewController alloc] initWithNibName:@"PricesViewController" bundle:nil];
+        //    _statsView.delegate = self;
+        _pricesView.parentView = self;
+        _pricesView.wantsCustomAnimation = YES;
+        [self.revealViewController setFrontViewController:_pricesView animated:YES];
+        self.searchBar.hidden = YES;
+
     } else if (control == view.rightCalloutAccessoryView) {
 
         [[NSUserDefaults standardUserDefaults] setObject:view.annotation.title forKey:@"stationName"];

@@ -60,6 +60,8 @@
 		F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518E1A28A03E0077C1A2 /* menu-128.png */; };
 		F05F03841A49DF0D003928C5 /* gas.png in Resources */ = {isa = PBXBuildFile; fileRef = F05F03831A49DF0D003928C5 /* gas.png */; };
 		F06B73211A52399D00C66496 /* ChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EDA5831A50CB61006D7A73 /* ChangeViewController.m */; };
+		F06B73251A5309FF00C66496 /* PricesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B73231A5309FF00C66496 /* PricesViewController.m */; };
+		F06B73261A5309FF00C66496 /* PricesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F06B73241A5309FF00C66496 /* PricesViewController.xib */; };
 		F07994D11A3EC3990087419C /* MyCustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F07994D01A3EC3990087419C /* MyCustomAnnotation.m */; };
 		F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */; };
 		F0EDA5861A50CB74006D7A73 /* ChangeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EDA5851A50CB74006D7A73 /* ChangeViewController.xib */; };
@@ -147,6 +149,9 @@
 		F023518C1A288FDB0077C1A2 /* plus-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-128.png"; sourceTree = "<group>"; };
 		F023518E1A28A03E0077C1A2 /* menu-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-128.png"; sourceTree = "<group>"; };
 		F05F03831A49DF0D003928C5 /* gas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gas.png; sourceTree = "<group>"; };
+		F06B73221A5309FF00C66496 /* PricesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PricesViewController.h; sourceTree = "<group>"; };
+		F06B73231A5309FF00C66496 /* PricesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PricesViewController.m; sourceTree = "<group>"; };
+		F06B73241A5309FF00C66496 /* PricesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PricesViewController.xib; sourceTree = "<group>"; };
 		F07994CF1A3EC3990087419C /* MyCustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCustomAnnotation.h; sourceTree = "<group>"; };
 		F07994D01A3EC3990087419C /* MyCustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCustomAnnotation.m; sourceTree = "<group>"; };
 		F0C3700D1A246C48000C5A82 /* FixedCompassLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixedCompassLayout.h; sourceTree = "<group>"; };
@@ -280,6 +285,9 @@
 				F0EDA5821A50CB45006D7A73 /* ChangeViewController.h */,
 				F0EDA5831A50CB61006D7A73 /* ChangeViewController.m */,
 				F0EDA5851A50CB74006D7A73 /* ChangeViewController.xib */,
+				F06B73221A5309FF00C66496 /* PricesViewController.h */,
+				F06B73231A5309FF00C66496 /* PricesViewController.m */,
+				F06B73241A5309FF00C66496 /* PricesViewController.xib */,
 			);
 			name = "Stats Files";
 			sourceTree = "<group>";
@@ -456,6 +464,7 @@
 				1CD407331A27AE1100F6A2E7 /* gps_searching-256.png in Resources */,
 				1C30479819FED74C00D2EE5E /* DINPro-Light.otf in Resources */,
 				1CD407321A27AE1100F6A2E7 /* gps_receiving-256.png in Resources */,
+				F06B73261A5309FF00C66496 /* PricesViewController.xib in Resources */,
 				1CA7299B1A21466800FEBD51 /* Tutorial-Background.png in Resources */,
 				F0EEF6831A41995200157AA8 /* AddStationViewController.xib in Resources */,
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
@@ -545,6 +554,7 @@
 				1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */,
 				F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */,
 				1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */,
+				F06B73251A5309FF00C66496 /* PricesViewController.m in Sources */,
 				1C6EC4881A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */,
 				1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */,

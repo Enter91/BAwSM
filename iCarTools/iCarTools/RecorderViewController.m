@@ -60,9 +60,7 @@
 }
 
 - (void)dealloc {
-    [self.gpsUtilities stopGPS];
-    self.gpsUtilities.delegate = nil;
-    self.gpsUtilities = nil;
+    [self exit];
 }
 
 
@@ -106,6 +104,9 @@
     if (![self.menuButton isDescendantOfView:self.view]) {
         [self.view addSubview:self.menuButton];
     }
+    
+    [self.menuButton removeTarget:[self revealViewController] action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
+    [self.menuButton addTarget:[self revealViewController] action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
 
     if (!self.exitButton) {
         self.exitButton = [[UIButton alloc] initWithFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
@@ -469,17 +470,7 @@
         [self.view addSubview:mCameraView];
     }
     
-    if (session) {
-        session = nil;
-    }
-    
-    if (device) {
-        device = nil;
-    }
-    
-    if (input) {
-        input = nil;
-    }
+    if (session==nil && device==nil && input==nil) {
     
     session = [[AVCaptureSession alloc]init];
     session.sessionPreset = AVCaptureSessionPreset1280x720;
@@ -518,9 +509,7 @@
                                                         otherButtonTitles: nil];
             [myAlertView show];
             myAlertView = nil;
-            input = nil;
-            device = nil;
-            session = nil;
+            [self teardownAVCapture];
             return;
         }
     }
@@ -533,9 +522,7 @@
                                                     otherButtonTitles: nil];
         [myAlertView show];
         myAlertView = nil;
-        input = nil;
-        device = nil;
-        session = nil;
+        [self teardownAVCapture];
         return;
     }
     
@@ -565,6 +552,7 @@
         [session setSessionPreset:AVCaptureSessionPresetMedium];
     
     [self startCamera];
+    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -597,7 +585,9 @@
 
 - (void)startCamera
 {
-    [session startRunning];
+    if (![session isRunning]) {
+        [session startRunning];
+    }
     
     if (mCameraLayer) {
         [mCameraLayer removeFromSuperlayer];
@@ -631,15 +621,30 @@
 
 - (void)stopCamera
 {
-    [session stopRunning];
-    [mCameraLayer removeFromSuperlayer];
-    mCameraLayer = nil;
-    session = nil;
+    [self teardownAVCapture];
 }
 
 - (void)toggleCamera
 {
     session.isRunning ? [self stopCamera] : [self startCamera];
+}
+
+- (void)teardownAVCapture
+{
+    output = nil;
+    
+    [session removeInput:input];
+    input = nil;
+    
+    device = nil;
+    
+    [session removeOutput:output];
+    output = nil;
+    [session stopRunning];
+    session = nil;
+    [mCameraLayer removeFromSuperlayer];
+    mCameraLayer = nil;
+    
 }
 
 #pragma mark- Obsługa przycisków zdarzeń
@@ -787,6 +792,19 @@
     NSLog(@"Location error: %@", [error localizedDescription]);
 }
 
+- (void)gpsDidChangeState:(int)state {
+    
+    self.gpsStatusImageView.image = nil;
+    if (state == 2) {
+        self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_receiving-256"];
+    } else if (state == 1) {
+        self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_searching-256"];
+    } else {
+        self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_disconnected-256"];
+    }
+    
+}
+
 #pragma mark- UINavigationController Delegates
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
@@ -803,7 +821,10 @@
         [self stopRecording];
     }
     [self.gpsUtilities stopGPS];
+    self.gpsUtilities.delegate = nil;
+    self.gpsUtilities = nil;
     [self orientationUnlock];
+    [self teardownAVCapture];
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
 }

@@ -14,6 +14,15 @@
 - (void)locationUpdate:(CLLocation *)location;
 - (void)locationError:(NSError *)error;
 
+/**
+ *  @author Michał Czwarnowski
+ *
+ *  Określa stan w jakim jest aktualnie GPS
+ *
+ *  @param state 0 - GPS error, 1 - szukam GPSa, 2 - GPS aktywny
+ */
+- (void)gpsDidChangeState:(int)state;
+
 @end
 
 @interface GPSUtilities : NSObject <CLLocationManagerDelegate>
@@ -68,5 +77,7 @@
 @property (nonatomic, retain) CLLocationManager *locManager;
 @property (nonatomic, assign) id delegate;
 @property CLLocationCoordinate2D locationCoordinates;
+
+@property (nonatomic) int state;
 
 @end

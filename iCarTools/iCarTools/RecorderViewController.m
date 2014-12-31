@@ -60,9 +60,7 @@
 }
 
 - (void)dealloc {
-    [self.gpsUtilities stopGPS];
-    self.gpsUtilities.delegate = nil;
-    self.gpsUtilities = nil;
+    [self exit];
 }
 
 
@@ -469,17 +467,7 @@
         [self.view addSubview:mCameraView];
     }
     
-    if (session) {
-        session = nil;
-    }
-    
-    if (device) {
-        device = nil;
-    }
-    
-    if (input) {
-        input = nil;
-    }
+    if (session==nil && device==nil && input==nil) {
     
     session = [[AVCaptureSession alloc]init];
     session.sessionPreset = AVCaptureSessionPreset1280x720;
@@ -518,9 +506,7 @@
                                                         otherButtonTitles: nil];
             [myAlertView show];
             myAlertView = nil;
-            input = nil;
-            device = nil;
-            session = nil;
+            [self teardownAVCapture];
             return;
         }
     }
@@ -533,9 +519,7 @@
                                                     otherButtonTitles: nil];
         [myAlertView show];
         myAlertView = nil;
-        input = nil;
-        device = nil;
-        session = nil;
+        [self teardownAVCapture];
         return;
     }
     
@@ -565,6 +549,7 @@
         [session setSessionPreset:AVCaptureSessionPresetMedium];
     
     [self startCamera];
+    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -597,7 +582,9 @@
 
 - (void)startCamera
 {
-    [session startRunning];
+    if (![session isRunning]) {
+        [session startRunning];
+    }
     
     if (mCameraLayer) {
         [mCameraLayer removeFromSuperlayer];
@@ -631,15 +618,30 @@
 
 - (void)stopCamera
 {
-    [session stopRunning];
-    [mCameraLayer removeFromSuperlayer];
-    mCameraLayer = nil;
-    session = nil;
+    [self teardownAVCapture];
 }
 
 - (void)toggleCamera
 {
     session.isRunning ? [self stopCamera] : [self startCamera];
+}
+
+- (void)teardownAVCapture
+{
+    output = nil;
+    
+    [session removeInput:input];
+    input = nil;
+    
+    device = nil;
+    
+    [session removeOutput:output];
+    output = nil;
+    [session stopRunning];
+    session = nil;
+    [mCameraLayer removeFromSuperlayer];
+    mCameraLayer = nil;
+    
 }
 
 #pragma mark- Obsługa przycisków zdarzeń
@@ -803,7 +805,10 @@
         [self stopRecording];
     }
     [self.gpsUtilities stopGPS];
+    self.gpsUtilities.delegate = nil;
+    self.gpsUtilities = nil;
     [self orientationUnlock];
+    [self teardownAVCapture];
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
 }

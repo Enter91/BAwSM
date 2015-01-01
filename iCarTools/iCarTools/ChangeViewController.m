@@ -250,6 +250,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self setFramesForInterface:toInterfaceOrientation];
 }
 
+- (void)gpsDidChangeState:(int)state {
+}
+
 - (void)locationUpdate:(CLLocation *)location {
     NSLog(@"New Location: %@", location);
     userLocation = location;

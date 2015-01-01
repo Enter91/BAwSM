@@ -39,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *lpgTextField;
 
 @property (weak, nonatomic) IBOutlet UITextView *commentTextView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (weak, nonatomic) IBOutlet UIButton *addStationButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;

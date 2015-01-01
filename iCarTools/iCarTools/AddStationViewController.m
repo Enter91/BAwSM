@@ -359,6 +359,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self setFramesForInterface:toInterfaceOrientation];
 }
 
+- (void)gpsDidChangeState:(int)state {
+}
+
 - (void)mapType {
 }
 

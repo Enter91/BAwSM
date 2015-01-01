@@ -22,8 +22,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="background.png" translatesAutoresizingMaskIntoConstraints="NO" id="FmI-6m-MJO">
+                    <rect key="frame" x="-442" y="-699" width="1242" height="2208"/>
+                </imageView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="DeZ-TO-SR7">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="600"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="530"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="m5n-kZ-jmx"/>
@@ -31,7 +34,7 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="97o-cI-4KT">
-                    <rect key="frame" x="115" y="520" width="90" height="40"/>
+                    <rect key="frame" x="115" y="528" width="90" height="40"/>
                     <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="20"/>
                     <state key="normal" title="Back">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -47,4 +50,7 @@
             <point key="canvasLocation" x="300" y="267"/>
         </view>
     </objects>
+    <resources>
+        <image name="background.png" width="1242" height="2208"/>
+    </resources>
 </document>

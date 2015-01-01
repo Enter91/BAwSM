@@ -406,6 +406,19 @@
     [self setFramesForInterface:toInterfaceOrientation];
 }
 
+- (void)gpsDidChangeState:(int)state {
+    
+    self.gpsStatusImageView.image = nil;
+    if (state == 2) {
+        self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_receiving-256"];
+    } else if (state == 1) {
+        self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_searching-256"];
+    } else {
+        self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_disconnected-256"];
+    }
+    
+}
+
 - (void)locationUpdate:(CLLocation *)location {
     userCoordinate.latitude = location.coordinate.latitude;
     userCoordinate.longitude = location.coordinate.longitude;
@@ -453,14 +466,13 @@
             default:
                 break;
         }
+        [self.mapView reloadInputViews];
     }
 }
 #pragma mark- Update After Settings Changes
 
 - (void)dealloc {
-    [self.gpsUtilities stopGPS];
-    self.gpsUtilities.delegate = nil;
-    self.gpsUtilities = nil;
+    [self exit];
 }
 
 - (void)exit {
@@ -470,6 +482,8 @@
     }
 
     [self.gpsUtilities stopGPS];
+    self.gpsUtilities.delegate = nil;
+    self.gpsUtilities = nil;
 //    [self.revealViewController pushFrontViewController:_parentView animated:YES];
     
     [self.revealViewController setFrontViewController:_parentView animated:YES];

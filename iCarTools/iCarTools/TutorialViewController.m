@@ -7,6 +7,7 @@
 //
 
 #import "TutorialViewController.h"
+#import "AppDelegate.h"
 
 @interface TutorialViewController () {
     int currentState;
@@ -21,6 +22,9 @@
     self = [super init];
     if (self) {
         currentState = 0;
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        appDelegate.orientationIsLocked = YES;
+        appDelegate.lockedOrientation = UIInterfaceOrientationMaskPortrait;
     }
     return self;
 }
@@ -499,6 +503,15 @@
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+- (NSUInteger) application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (BOOL) shouldAutorotate {
+    return NO;
 }
 
 @end

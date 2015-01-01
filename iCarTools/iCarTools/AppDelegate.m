@@ -20,7 +20,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:NO] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:YES] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
         _tutorial = [[TutorialViewController alloc] init];
         _tutorial.delegate = self;
         self.window.rootViewController = _tutorial;
@@ -34,7 +34,7 @@
 
 - (void)setRevealViewController {
     ViewController *frontViewController = [[ViewController alloc] init];
-    SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithCellsTitlesArray:@[@"opcja 1", @"opcja 2", @"opcja 3"]];
+    SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithCellsTitlesArray:@[]];
     
     SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:settingsViewController frontViewController:frontViewController];
     revealController.delegate = self;
@@ -45,16 +45,27 @@
             self.window.rootViewController = self.viewController;
             _tutorial = nil;
         }];
+    } else if (_registerUserViewController) {
+        [_registerUserViewController presentViewController:revealController animated:YES completion:^{
+            self.viewController = revealController;
+            self.window.rootViewController = self.viewController;
+            _registerUserViewController.delegate = nil;
+            _registerUserViewController = nil;
+        }];
     } else if (_loginViewController) {
         [_loginViewController presentViewController:revealController animated:YES completion:^{
             self.viewController = revealController;
             self.window.rootViewController = self.viewController;
+            _loginViewController.delegate = nil;
             _loginViewController = nil;
         }];
     } else {
         self.viewController = revealController;
         self.window.rootViewController = self.viewController;
     }
+    
+    frontViewController = nil;
+    settingsViewController = nil;
     
 }
 
@@ -100,15 +111,67 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     if (wantsRegister) {
-        _loginViewController = [[LoginViewController alloc] init];
+        _registerUserViewController = [[RegisterUserViewController alloc] init];
+        _registerUserViewController.delegate = self;
         
-        [_tutorial presentViewController:_loginViewController animated:YES completion:^{
-            self.window.rootViewController = _loginViewController;
+        [self.window.rootViewController presentViewController:_registerUserViewController animated:YES completion:^{
+            self.window.rootViewController = _registerUserViewController;
             _tutorial = nil;
         }];
     } else {
         [self setRevealViewController];
     }
+}
+
+#pragma mark- Delegaty Register i Login
+
+- (void)registerUserSuccess {
+    [self setRevealViewController];
+}
+
+- (void)registerUserAlreadyRegistered {
+    _loginViewController = [[LoginViewController alloc] init];
+    _loginViewController.delegate = self;
+    
+    [self.window.rootViewController presentViewController:_loginViewController animated:YES completion:^{
+        self.window.rootViewController = _loginViewController;
+        _registerUserViewController.delegate = nil;
+        _registerUserViewController = nil;
+    }];
+}
+
+- (void)registerUserCancel {
+    [self setRevealViewController];
+}
+
+- (void)loginWantsRegisterUser {
+    _registerUserViewController = [[RegisterUserViewController alloc] init];
+    _registerUserViewController.delegate = self;
+    
+    if ([self.window.rootViewController isKindOfClass:NSClassFromString(@"LoginViewController")]) {
+        [_loginViewController presentViewController:_registerUserViewController animated:YES completion:^{
+            self.window.rootViewController = _registerUserViewController;
+            _loginViewController.delegate = nil;
+            _loginViewController = nil;
+        }];
+    } else if ([self.window.rootViewController isKindOfClass:NSClassFromString(@"SWRevealViewController")]) {
+        [self.viewController setFrontViewController:_registerUserViewController animated:YES];
+        _loginViewController.delegate = nil;
+        _loginViewController = nil;
+    } else {
+        [self setRevealViewController];
+    }
+
+}
+
+- (void)loginSuccess {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"isLogged"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if (![self.window.rootViewController isKindOfClass:NSClassFromString(@"SWRevealViewController")]) {
+        [self setRevealViewController];
+    }
+
 }
 
 #pragma mark- Rotacje ekranu

@@ -32,6 +32,12 @@
 		1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */; };
 		1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4135441A20AB7200D3F1CC /* SettingsViewController.m */; };
 		1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */; };
+		1C5B891F1A55A10D007BA4CD /* RegisterUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B891D1A55A10D007BA4CD /* RegisterUserViewController.m */; };
+		1C5B89201A55A10D007BA4CD /* RegisterUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C5B891E1A55A10D007BA4CD /* RegisterUserViewController.xib */; };
+		1C5B89231A55C4FE007BA4CD /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B89221A55C4FE007BA4CD /* UserInfo.m */; };
+		1C5B89261A55F017007BA4CD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C5B89251A55F017007BA4CD /* Security.framework */; };
+		1C5B89291A55F031007BA4CD /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B89281A55F031007BA4CD /* KeychainItemWrapper.m */; };
+		1C5B892C1A55F2FC007BA4CD /* DejalActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B892B1A55F2FC007BA4CD /* DejalActivityView.m */; };
 		1C6EC4881A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6EC4871A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m */; };
 		1C86508A1A2DEA9A009B02AA /* AmazingJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8650891A2DEA9A009B02AA /* AmazingJSON.m */; };
 		1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA729961A21458900FEBD51 /* TutorialViewController.m */; };
@@ -115,6 +121,17 @@
 		1C4135431A20AB7200D3F1CC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1C4135441A20AB7200D3F1CC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		1C5B891C1A55A10D007BA4CD /* RegisterUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterUserViewController.h; sourceTree = "<group>"; };
+		1C5B891D1A55A10D007BA4CD /* RegisterUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterUserViewController.m; sourceTree = "<group>"; };
+		1C5B891E1A55A10D007BA4CD /* RegisterUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterUserViewController.xib; sourceTree = "<group>"; };
+		1C5B89211A55C4FE007BA4CD /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		1C5B89221A55C4FE007BA4CD /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		1C5B89241A55EFDE007BA4CD /* iCarTools.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = iCarTools.entitlements; sourceTree = "<group>"; };
+		1C5B89251A55F017007BA4CD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		1C5B89271A55F031007BA4CD /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		1C5B89281A55F031007BA4CD /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
+		1C5B892A1A55F2FC007BA4CD /* DejalActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DejalActivityView.h; sourceTree = "<group>"; };
+		1C5B892B1A55F2FC007BA4CD /* DejalActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DejalActivityView.m; sourceTree = "<group>"; };
 		1C6EC4861A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsLibrary+CustomPhotoAlbum.h"; sourceTree = "<group>"; };
 		1C6EC4871A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsLibrary+CustomPhotoAlbum.m"; sourceTree = "<group>"; };
 		1C8650881A2DEA9A009B02AA /* AmazingJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazingJSON.h; sourceTree = "<group>"; };
@@ -169,6 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C5B89261A55F017007BA4CD /* Security.framework in Frameworks */,
 				1CB4B01E1A2073F400172BA4 /* MapKit.framework in Frameworks */,
 				1940EB23AAB28288C7115767 /* libPods-iCarTools.a in Frameworks */,
 			);
@@ -207,6 +225,7 @@
 		1C30475219FED07300D2EE5E /* iCarTools */ = {
 			isa = PBXGroup;
 			children = (
+				1C5B89241A55EFDE007BA4CD /* iCarTools.entitlements */,
 				1C3047BC19FEE9AA00D2EE5E /* Singletons */,
 				1C30478619FED65200D2EE5E /* Stats Files */,
 				1C30478519FED64600D2EE5E /* Recorder Files */,
@@ -219,6 +238,9 @@
 				1CEDCA231A2074E000BFADB5 /* LoginViewController.h */,
 				1CEDCA241A2074E000BFADB5 /* LoginViewController.m */,
 				1CEDCA251A2074E000BFADB5 /* LoginViewController.xib */,
+				1C5B891C1A55A10D007BA4CD /* RegisterUserViewController.h */,
+				1C5B891D1A55A10D007BA4CD /* RegisterUserViewController.m */,
+				1C5B891E1A55A10D007BA4CD /* RegisterUserViewController.xib */,
 				1C4135431A20AB7200D3F1CC /* SettingsViewController.h */,
 				1C4135441A20AB7200D3F1CC /* SettingsViewController.m */,
 				1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */,
@@ -234,6 +256,10 @@
 		1C30475319FED07300D2EE5E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1C5B892A1A55F2FC007BA4CD /* DejalActivityView.h */,
+				1C5B892B1A55F2FC007BA4CD /* DejalActivityView.m */,
+				1C5B89271A55F031007BA4CD /* KeychainItemWrapper.h */,
+				1C5B89281A55F031007BA4CD /* KeychainItemWrapper.m */,
 				1C30475419FED07300D2EE5E /* Info.plist */,
 				1C30475519FED07300D2EE5E /* main.m */,
 				1C6EC4861A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.h */,
@@ -354,6 +380,8 @@
 				1C3047BE19FEE9EC00D2EE5E /* GPSUtilities.m */,
 				1C8650881A2DEA9A009B02AA /* AmazingJSON.h */,
 				1C8650891A2DEA9A009B02AA /* AmazingJSON.m */,
+				1C5B89211A55C4FE007BA4CD /* UserInfo.h */,
+				1C5B89221A55C4FE007BA4CD /* UserInfo.m */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";
@@ -370,6 +398,7 @@
 		98947EAF29920919EE5C4D97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1C5B89251A55F017007BA4CD /* Security.framework */,
 				1CB4B01D1A2073F400172BA4 /* MapKit.framework */,
 				1552B581BF3D227784D9CF4E /* libPods-iCarTools.a */,
 			);
@@ -428,6 +457,11 @@
 					1C30474F19FED07300D2EE5E = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = FJ77D2H6RU;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					1C30476819FED07400D2EE5E = {
 						CreatedOnToolsVersion = 6.1;
@@ -487,6 +521,7 @@
 				F02351871A287F240077C1A2 /* exit-50.png in Resources */,
 				1C30476119FED07300D2EE5E /* Images.xcassets in Resources */,
 				1CD4072B1A27AA7A00F6A2E7 /* user_male4-256.png in Resources */,
+				1C5B89201A55A10D007BA4CD /* RegisterUserViewController.xib in Resources */,
 				1C30479319FED74C00D2EE5E /* DINPro-Black.otf in Resources */,
 				1C30479B19FED74C00D2EE5E /* DINPro-MediumItalic.otf in Resources */,
 				F02351891A28874A0077C1A2 /* search-256.png in Resources */,
@@ -554,9 +589,13 @@
 				1C3047A019FEDDD500D2EE5E /* ViewController.m in Sources */,
 				1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */,
 				F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */,
+				1C5B89231A55C4FE007BA4CD /* UserInfo.m in Sources */,
+				1C5B892C1A55F2FC007BA4CD /* DejalActivityView.m in Sources */,
 				1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */,
 				F06B73251A5309FF00C66496 /* PricesViewController.m in Sources */,
+				1C5B89291A55F031007BA4CD /* KeychainItemWrapper.m in Sources */,
 				1C6EC4881A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
+				1C5B891F1A55A10D007BA4CD /* RegisterUserViewController.m in Sources */,
 				F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */,
 				1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */,
 				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,
@@ -691,6 +730,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = iCarTools/iCarTools.entitlements;
 				CODE_SIGN_IDENTITY = "";
 				INFOPLIST_FILE = iCarTools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -706,6 +746,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = iCarTools/iCarTools.entitlements;
 				CODE_SIGN_IDENTITY = "";
 				INFOPLIST_FILE = iCarTools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

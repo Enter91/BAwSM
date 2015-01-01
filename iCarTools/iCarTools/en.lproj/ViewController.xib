@@ -74,7 +74,7 @@
                         <constraint firstAttribute="width" constant="60" id="xhR-ZZ-0QO"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iCarTools" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mD-PE-CXF">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="iCarTools" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mD-PE-CXF">
                     <rect key="frame" x="156" y="50" width="288" height="110"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="110" id="0Tx-Pq-FDX"/>

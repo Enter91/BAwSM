@@ -14,19 +14,23 @@
 #import "RecorderViewController.h"
 #import "StatsViewController.h"
 #import "RegisterUserViewController.h"
+#import "LoginManager.h"
 
 @class SWRevealViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, SWRevealViewControllerDelegate, TutorialViewControllerDelegate, RegisterUserViewControllerDelegate, LoginViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, SWRevealViewControllerDelegate, TutorialViewControllerDelegate, RegisterUserViewControllerDelegate, LoginViewControllerDelegate, LoginManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) SWRevealViewController *viewController;
 @property (strong, nonatomic) TutorialViewController *tutorial;
 @property (strong, nonatomic) LoginViewController *loginViewController;
 @property (strong, nonatomic) RegisterUserViewController *registerUserViewController;
+@property (strong, nonatomic) LoginManager *loginManager;
 
 @property (nonatomic) BOOL orientationIsLocked;
 @property (nonatomic) NSUInteger lockedOrientation;
+
+- (void)showLoginViewScreen;
 
 @end
 

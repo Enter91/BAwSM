@@ -59,7 +59,10 @@
 }
 
 - (void)dealloc {
-    [[AmazingJSON sharedInstance] setDelegate:nil];
+    if (_loginManager) {
+        [_loginManager setDelegate:nil];
+        _loginManager = nil;
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (_parentView) {
         _parentView = nil;
@@ -68,16 +71,13 @@
 
 - (IBAction)loginAction:(id)sender {
     
-    /*KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"mobi.byss.tests.iCarTools" accessGroup:nil];
-    
-    NSString *password = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
-    NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
-    
-    keychainItem = nil;*/
-    
     [DejalBezelActivityView activityViewForView:self.view withLabel:NSLocalizedString(@"Please wait...", nil)];
-    [[AmazingJSON sharedInstance] setDelegate:self];
-    [[AmazingJSON sharedInstance] getResponseFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bawsm.comlu.com/loginUser.php?l=%@&p=%@", _loginTextField.text, _passwordTextField.text]]];
+    
+    if (!_loginManager) {
+        _loginManager = [[LoginManager alloc] init];
+    }
+    [_loginManager setDelegate:self];
+    [_loginManager loginUserWithLogin:_loginTextField.text andPassword:_passwordTextField.text];
     
 }
 
@@ -94,52 +94,32 @@
     
 }
 
-- (void)responseDictionary:(NSDictionary *)responseDict {
+- (void)loginManagerSuccess {
     
-    if ([[responseDict objectForKey:@"code"] intValue] == 200) {
-        [DejalBezelActivityView removeViewAnimated:YES];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Login incorrect", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        alert = nil;
-    } else if ([[responseDict objectForKey:@"code"] intValue] == 201) {
-        [DejalBezelActivityView removeViewAnimated:YES];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Password incorrect", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        alert = nil;
-    } else if ([[responseDict objectForKey:@"code"] intValue] == 400) {
-        
-        KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"mobi.byss.tests.iCarTools" accessGroup:nil];
-        [keychainItem resetKeychainItem];
-        [keychainItem setObject:_passwordTextField.text forKey:(__bridge id)(kSecValueData)];
-        [keychainItem setObject:_loginTextField.text forKey:(__bridge id)(kSecAttrAccount)];
-        keychainItem = nil;
-        
-        NSDictionary *userInfo = [[responseDict objectForKey:@"response"] objectAtIndex:0];
-        
-        [[UserInfo sharedInstance] setUserInfoWithLogin:[[userInfo objectForKey:@"user_id"] intValue]
-                                                  login:[userInfo objectForKey:@"login"]
-                                              firstName:[userInfo objectForKey:@"first_name"]
-                                               lastName:[userInfo objectForKey:@"last_name"]
-                                               andEmail:[userInfo objectForKey:@"email"]];
-        
-        [DejalBezelActivityView removeViewAnimated:YES];
-        if (_delegate) {
-            if ([_delegate respondsToSelector:@selector(loginSuccess)]) {
-                [_delegate loginSuccess];
-            }
+    [_loginManager setDelegate:nil];
+    _loginManager = nil;
+    
+    [DejalBezelActivityView removeViewAnimated:YES];
+    if (_delegate) {
+        if ([_delegate respondsToSelector:@selector(loginSuccess)]) {
+            [_delegate loginSuccess];
         }
-        if (_parentView) {
-            [self.revealViewController setFrontViewController:_parentView animated:YES];
-            _parentView = nil;
-        }
-        
-    } else {
-        [DejalBezelActivityView removeViewAnimated:YES];
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Error occured. Please try again", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        alert = nil;
     }
+    if (_parentView) {
+        [self.revealViewController setFrontViewController:_parentView animated:YES];
+        _parentView = nil;
+    }
+}
+
+- (void)loginManagerFailWithErrorMessage:(NSString *)errorMessage {
+    
+    [_loginManager setDelegate:nil];
+    _loginManager = nil;
+    
+    [DejalBezelActivityView removeViewAnimated:YES];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    alert = nil;
 }
 
 - (void)setFramesForPortrait {
@@ -342,10 +322,15 @@
 }
 
 #pragma mark- Helpers
-- (void)handleSingleTap:(UITapGestureRecognizer *) sender
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+- (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
     _keepActualViewFrame = NO;
-    [self.view endEditing:YES];
+    [self.navigationController.navigationBar endEditing:YES];
 }
 
 - (BOOL) shouldAutorotate {

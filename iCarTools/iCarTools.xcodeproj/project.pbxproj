@@ -46,6 +46,7 @@
 		1CB4B01B1A2073C800172BA4 /* StatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CB4B0181A2073C800172BA4 /* StatsViewController.xib */; };
 		1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB4B0191A2073C800172BA4 /* StatsViewController.m */; };
 		1CB4B01E1A2073F400172BA4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB4B01D1A2073F400172BA4 /* MapKit.framework */; };
+		1CBC05621A571D9700ECECC1 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC05611A571D9700ECECC1 /* LoginManager.m */; };
 		1CD407291A26919500F6A2E7 /* suszarka.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD407281A26919500F6A2E7 /* suszarka.png */; };
 		1CD4072B1A27AA7A00F6A2E7 /* user_male4-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */; };
 		1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072C1A27AC8000F6A2E7 /* wypadek.png */; };
@@ -144,6 +145,8 @@
 		1CB4B0191A2073C800172BA4 /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
 		1CB4B01A1A2073C800172BA4 /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
 		1CB4B01D1A2073F400172BA4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		1CBC05601A571D9700ECECC1 /* LoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginManager.h; sourceTree = "<group>"; };
+		1CBC05611A571D9700ECECC1 /* LoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginManager.m; sourceTree = "<group>"; };
 		1CD407281A26919500F6A2E7 /* suszarka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suszarka.png; sourceTree = "<group>"; };
 		1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_male4-256.png"; sourceTree = "<group>"; };
 		1CD4072C1A27AC8000F6A2E7 /* wypadek.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wypadek.png; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 				1C1849191A3D77A200E14DAE /* CustomAnimationController.h */,
 				1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */,
 				1C30479D19FED76000D2EE5E /* Resources */,
+				1CBC05601A571D9700ECECC1 /* LoginManager.h */,
+				1CBC05611A571D9700ECECC1 /* LoginManager.m */,
 			);
 			path = iCarTools;
 			sourceTree = "<group>";
@@ -605,6 +610,7 @@
 				1C30475619FED07300D2EE5E /* main.m in Sources */,
 				1C3047BF19FEE9EC00D2EE5E /* GPSUtilities.m in Sources */,
 				F07994D11A3EC3990087419C /* MyCustomAnnotation.m in Sources */,
+				1CBC05621A571D9700ECECC1 /* LoginManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -736,7 +742,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ad0c25c5-97ca-4a15-bbf1-31d7da40f34e";
+				PROVISIONING_PROFILE = "49f27aa3-6d12-4e5b-a9a8-c80b88ba4dfb";
 			};
 			name = Debug;
 		};
@@ -752,7 +758,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ad0c25c5-97ca-4a15-bbf1-31d7da40f34e";
+				PROVISIONING_PROFILE = "49f27aa3-6d12-4e5b-a9a8-c80b88ba4dfb";
 			};
 			name = Release;
 		};

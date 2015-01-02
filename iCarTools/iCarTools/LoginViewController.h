@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AmazingJSON.h"
+#import "LoginManager.h"
 
 @protocol LoginViewControllerDelegate <NSObject>
 
@@ -16,7 +16,7 @@
 
 @end
 
-@interface LoginViewController : UIViewController <UITextFieldDelegate, AmazingJSONDelegate>
+@interface LoginViewController : UIViewController <UITextFieldDelegate, LoginManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *loginTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
@@ -30,5 +30,7 @@
 @property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) UIViewController *parentView;
+
+@property (strong, nonatomic) LoginManager *loginManager;
 
 @end

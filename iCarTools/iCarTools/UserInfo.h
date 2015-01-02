@@ -17,6 +17,7 @@
 + (UserInfo*)sharedInstance;
 
 - (void)setUserInfoWithLogin:(int)user_id login:(NSString *)login firstName:(NSString *)firstName lastName:(NSString *)lastName andEmail:(NSString *)email;
+- (void)clearAllData;
 
 @property (nonatomic) int user_id;
 @property (strong, nonatomic) NSString *login;

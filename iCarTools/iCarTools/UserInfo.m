@@ -74,5 +74,12 @@ static bool isFirstAccess = YES;
     _email = [NSString stringWithString:email];
 }
 
+- (void)clearAllData {
+    _user_id = -1;
+    _login = nil;
+    _first_name = nil;
+    _last_name = nil;
+    _email = nil;
+}
 
 @end

@@ -389,10 +389,15 @@
 }
 
 #pragma mark- Helpers
-- (void)handleSingleTap:(UITapGestureRecognizer *) sender
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+- (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
     _keepActualViewFrame = NO;
-    [self.view endEditing:YES];
+    [self.navigationController.navigationBar endEditing:YES];
 }
 
 -(BOOL) NSStringIsValidEmail:(NSString *)checkString

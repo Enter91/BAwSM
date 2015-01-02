@@ -40,6 +40,7 @@
     
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
+    [self.gpsUtilities setAccuracy:kCLLocationAccuracyBestForNavigation];
     [self.gpsUtilities startGPS];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];

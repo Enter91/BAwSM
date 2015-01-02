@@ -28,11 +28,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self orientationUnlock];
+    
     _wantsCustomAnimation = YES;
     
     SWRevealViewController *revealController = [self revealViewController];
     [revealController panGestureRecognizer];
     [revealController tapGestureRecognizer];
+    
+    _pointsOnTheRouteArray = [[NSMutableArray alloc] init];
     
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
@@ -296,7 +300,8 @@
             if (_pointsOnTheRouteArray.count > 0) {
                 [_pointsOnTheRouteArray removeAllObjects];
             }
-            _pointsOnTheRouteArray = nil;
+        } else {
+            _pointsOnTheRouteArray = [[NSMutableArray alloc] init];
         }
         
         [self orientationLock];
@@ -441,18 +446,35 @@
                     NSLog(@"Can't save to custom album with error: %@", [error localizedDescription]);
                 } else {
                     
-                    NSDictionary *route = @{@"date" : [NSDate date],
-                                            @"assetURL" : outputFileURL,
-                                            @"route" : _pointsOnTheRouteArray};
+                    if (_pointsOnTheRouteArray) {
+                        
+                        if (_pointsOnTheRouteArray.count>0) {
+                            NSDictionary *route = @{@"date" : [self getStringDateFromCurrentDate],
+                                                    @"assetURL" : outputFileURL,
+                                                    @"route" : _pointsOnTheRouteArray};
+                            
+                            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                            NSString *documentsDirectory = [paths objectAtIndex:0];
+                            NSString *path =[documentsDirectory stringByAppendingPathComponent:[route objectForKey:@"date"]];
+                            
+                            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:route];
+                            NSError *error;
+                            BOOL success = [data writeToFile:path options:0 error:&error];
+                            
+                            if (!success) {
+                                NSLog(@"writeToFile failed with error %@", error);
+                            } else {
+                                NSLog(@"writeToFile success");
+                            }
+                            
+                            data = nil;
+                            [_pointsOnTheRouteArray removeAllObjects];
+                            _pointsOnTheRouteArray = nil;
+                        }
+                        
+                        _pointsOnTheRouteArray = nil;
+                    }
                     
-                    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                    NSString *documentsDirectory = [paths objectAtIndex:0];
-                    NSString *path =[documentsDirectory stringByAppendingPathComponent:[route objectForKey:@"date"]];
-                    
-                    [route writeToFile:path atomically:YES];
-                    
-                    [_pointsOnTheRouteArray removeAllObjects];
-                    _pointsOnTheRouteArray = nil;
                 }
             }];
         }
@@ -654,13 +676,8 @@
     CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
     
     if (location.latitude != 0.0f && location.longitude != 0.0f) {
-        NSDateFormatter *df=[[NSDateFormatter alloc]init];
-        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString *dateString = [df stringFromDate:[NSDate date]];
-        
-        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=2&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, dateString]];
-        
-        df = nil;
+        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=2&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, [self getStringDateFromCurrentDate]]];
+
     } else {
         [self showFloatingAlertViewWithType:0];
     }
@@ -784,6 +801,7 @@
     });
     
     if (_isRecording && _pointsOnTheRouteArray) {
+        NSLog(@"Dodano lokalizację: %@", location);
         [_pointsOnTheRouteArray addObject:location];
     }
 }
@@ -823,10 +841,20 @@
     [self.gpsUtilities stopGPS];
     self.gpsUtilities.delegate = nil;
     self.gpsUtilities = nil;
+    [_pointsOnTheRouteArray removeAllObjects];
+    _pointsOnTheRouteArray = nil;
     [self orientationUnlock];
     [self teardownAVCapture];
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
+}
+
+- (NSString *)getStringDateFromCurrentDate {
+    NSDateFormatter *df=[[NSDateFormatter alloc]init];
+    [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateString = [df stringFromDate:[NSDate date]];
+    df = nil;
+    return dateString;
 }
 
 #pragma mark- SettingsViewController

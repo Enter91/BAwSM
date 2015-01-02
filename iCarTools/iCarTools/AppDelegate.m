@@ -20,7 +20,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:YES] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:NO] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
         _tutorial = [[TutorialViewController alloc] init];
         _tutorial.delegate = self;
         self.window.rootViewController = _tutorial;

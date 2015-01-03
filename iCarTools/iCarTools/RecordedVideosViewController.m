@@ -27,7 +27,9 @@
     [_videosTableView setRowHeight:80.0];
     [_videosTableView setEstimatedRowHeight:80.0];
     
-    [self listFileAtPath];
+    _videosArray = [[NSMutableArray alloc] initWithArray:[self listFileAtPath]];
+    
+    [_videosTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,7 +72,26 @@
     for (count = 0; count < (int)[directoryContent count]; count++)
     {
         NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
+        
+        
+        
     }
+    
+    /*ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
+    
+    // Try to load asset at mediaURL
+    [library assetForURL:mediaURL resultBlock:^(ALAsset *asset) {
+        // If asset exists
+        if (asset) {
+            // Type your code here for successful
+        } else {
+            // Type your code here for not existing asset
+        }
+    } failureBlock:^(NSError *error) {
+        // Type your code here for failure (when user doesn't allow location in your app)
+    }];*/
+    
     return directoryContent;
 }
 

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "RecordedVideosTableViewCell.h"
+@import AssetsLibrary;
 
 @interface RecordedVideosViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

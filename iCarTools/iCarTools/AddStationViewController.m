@@ -185,8 +185,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSDateFormatter *dateformate=[[NSDateFormatter alloc]init];
     [dateformate setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     NSString *date_String=[dateformate stringFromDate:[NSDate date]];
+    
+    _pb95TextField.text = [_pb95TextField.text stringByReplacingOccurrencesOfString:@"," withString:@"."];
+    _pb98TextField.text = [_pb98TextField.text stringByReplacingOccurrencesOfString:@"," withString:@"."];
+    _onTextField.text = [_onTextField.text stringByReplacingOccurrencesOfString:@"," withString:@"."];
+    _lpgTextField.text = [_lpgTextField.text stringByReplacingOccurrencesOfString:@"," withString:@"."];
 
-    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addVisit.php?user_id=%d&gas_station_id=%d&visit_date=%@&pb95_price=%@&pb98_price=%@&on_price=%@&lpg_price=%@&comment=%@", 10, gas_station_id_int, date_String, _pb95TextField.text, _pb98TextField.text, _onTextField.text, _lpgTextField.text, _commentTextView.text]];
+    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addVisit.php?user_id=%d&gas_station_id=%d&visit_date=%@&pb95_price=%@&pb98_price=%@&on_price=%@&lpg_price=%@&comment=%@", [[UserInfo sharedInstance] user_id], gas_station_id_int, date_String, _pb95TextField.text, _pb98TextField.text, _onTextField.text, _lpgTextField.text, _commentTextView.text]];
     
     dateformate = nil;
     date_String = nil;

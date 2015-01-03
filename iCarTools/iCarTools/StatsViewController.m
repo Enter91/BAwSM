@@ -199,18 +199,26 @@
 }
 
 - (IBAction)addStationAction:(id)sender {
-    if (_addStationView) {
-        //        _statsView.delegate = nil;
-        _addStationView = nil;
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isLogged"] == [NSNumber numberWithBool:YES]) {
+        
+        if (_addStationView) {
+            //        _statsView.delegate = nil;
+            _addStationView = nil;
+        }
+    
+        _addStationView = [[AddStationViewController alloc] initWithNibName:@"AddStationViewController" bundle:nil];
+        //    _statsView.delegate = self;
+        _addStationView.parentView = self;
+        _addStationView.wantsCustomAnimation = YES;
+        [self.revealViewController setFrontViewController:_addStationView animated:YES];
+    
+        self.searchBar.hidden = YES;
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[NSString stringWithFormat:@"This option is only available for logged-in users"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        alert = nil;
     }
-    
-    _addStationView = [[AddStationViewController alloc] initWithNibName:@"AddStationViewController" bundle:nil];
-    //    _statsView.delegate = self;
-    _addStationView.parentView = self;
-    _addStationView.wantsCustomAnimation = YES;
-    [self.revealViewController setFrontViewController:_addStationView animated:YES];
-    
-    self.searchBar.hidden = YES;
 }
 
 - (IBAction)findStationAction:(id)sender {
@@ -256,6 +264,7 @@
             }
             [self.mapView setRegion:region animated:YES];
             [self.mapView reloadInputViews];
+            break;
         }
         else if ([subtitle containsString:[self.searchBar text]])
         {
@@ -275,6 +284,7 @@
             }
             [self.mapView setRegion:region animated:YES];
             [self.mapView reloadInputViews];
+            break;
         }
     }
 }
@@ -336,21 +346,29 @@
 
     } else if (control == view.rightCalloutAccessoryView) {
 
-        [[NSUserDefaults standardUserDefaults] setObject:view.annotation.title forKey:@"stationName"];
-        [[NSUserDefaults standardUserDefaults] setObject:view.annotation.subtitle forKey:@"stationAddress"];
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isLogged"] == [NSNumber numberWithBool:YES]) {
 
-        if (_changeStationView) {
-            //        _statsView.delegate = nil;
-            _changeStationView = nil;
+            [[NSUserDefaults standardUserDefaults] setObject:view.annotation.title forKey:@"stationName"];
+            [[NSUserDefaults standardUserDefaults] setObject:view.annotation.subtitle forKey:@"stationAddress"];
+
+            if (_changeStationView) {
+                //        _statsView.delegate = nil;
+                _changeStationView = nil;
+            }
+    
+            _changeStationView = [[ChangeViewController alloc] initWithNibName:@"ChangeViewController" bundle:nil];
+            //    _statsView.delegate = self;
+            _changeStationView.parentView = self;
+            _changeStationView.wantsCustomAnimation = YES;
+            [self.revealViewController setFrontViewController:_changeStationView animated:YES];
+    
+            self.searchBar.hidden = YES;
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[NSString stringWithFormat:@"This option is only available for logged-in users"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            alert = nil;
         }
-    
-        _changeStationView = [[ChangeViewController alloc] initWithNibName:@"ChangeViewController" bundle:nil];
-        //    _statsView.delegate = self;
-        _changeStationView.parentView = self;
-        _changeStationView.wantsCustomAnimation = YES;
-        [self.revealViewController setFrontViewController:_changeStationView animated:YES];
-    
-        self.searchBar.hidden = YES;
+
     }
 }
 

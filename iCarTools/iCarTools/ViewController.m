@@ -147,10 +147,13 @@
         [_titleLabel setFrame:CGRectMake(16, 50, 288, 110)];
         [_videoRecorderOpenButton setFrame:CGRectMake(100, 201, 250, 38)];
         [_videoRecorderOpenImageButton setFrame:CGRectMake(20, 190, 60, 60)];
+        [_videoImage setFrame:CGRectMake(20, 190, 60, 60)];
         [_statsOpenButton setFrame:CGRectMake(100, 281, 250, 38)];
         [_statsOpenImageButton setFrame:CGRectMake(20, 270, 60, 60)];
+        [_statsImage setFrame:CGRectMake(20, 270, 60, 60)];
         [_settingsOpenButton setFrame:CGRectMake(100, 361, 250, 38)];
         [_settingsOpenImageButton setFrame:CGRectMake(20, 350, 60, 60)];
+        [_settingsImage setFrame:CGRectMake(20, 350, 60, 60)];
     });
 }
 

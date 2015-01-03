@@ -19,6 +19,17 @@
 @property (weak, nonatomic) IBOutlet UIButton *statsOpenButton;
 @property (weak, nonatomic) IBOutlet UIButton *settingsOpenButton;
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *videoRecorderOpenImageButton;
+@property (weak, nonatomic) IBOutlet UIButton *statsOpenImageButton;
+@property (weak, nonatomic) IBOutlet UIButton *settingsOpenImageButton;
+@property (weak, nonatomic) IBOutlet UIImageView *videoImage;
+@property (weak, nonatomic) IBOutlet UIImageView *statsImage;
+@property (weak, nonatomic) IBOutlet UIImageView *settingsImage;
+
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageview;
+
 @property (strong, nonatomic) RecorderViewController *recorderView;
 @property (strong, nonatomic) StatsViewController *statsView;
 

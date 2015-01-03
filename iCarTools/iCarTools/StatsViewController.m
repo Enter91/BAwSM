@@ -13,6 +13,7 @@
     NSArray *responseArray;
     CLLocationCoordinate2D userCoordinate;
     CLLocationCoordinate2D stationCoordinate;
+    UIGestureRecognizer *tapper;
 }
 
 @end
@@ -130,11 +131,32 @@
     
     self.navigationController.navigationBar.hidden = YES;
     
+    tapper = [[UITapGestureRecognizer alloc]
+              initWithTarget:self action:@selector(handleSingleTap:)];
+    tapper.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tapper];
+    
+    self.searchBar.delegate = self;
+    
     [self updateDataSourceInLeftRevealViewController];
     
     [self setFramesForInterface:self.interfaceOrientation];
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"showAnnotations"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self setFramesForInterface:self.interfaceOrientation];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+- (void)handleSingleTap:(UITapGestureRecognizer *) sender
+{
+    [self.navigationController.navigationBar endEditing:YES];
 }
 
 /**
@@ -192,15 +214,68 @@
 }
 
 - (IBAction)findStationAction:(id)sender {
-    
-    [[AmazingJSON sharedInstance] setDelegate:self];
-    //[[AmazingJSON sharedInstance] getResponseFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bawsm.comlu.com/checkUser.php?login=%@&password=%@", _loginTextField.text, _passwordTextField.text]]];
 
     if (self.searchBar.hidden == YES) {
         self.searchBar.hidden = NO;
     }
     else {
         self.searchBar.hidden = YES;
+    }
+    @try{
+        [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
+    }@catch(id anException){
+    }
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    
+    [self.view endEditing:YES];
+    for (int i = 0; i<[responseArray count]; i++) {
+        
+        NSString *categoryString = nil;
+        categoryString = responseArray[i][@"name"];
+        stationCoordinate.latitude = [responseArray[i][@"latitude"] doubleValue];
+        stationCoordinate.longitude = [responseArray[i][@"longitude"] doubleValue];
+        NSString *subtitle = responseArray[i][@"address"];
+        
+        if ([categoryString containsString:[self.searchBar text]])
+        {
+            MKCoordinateRegion region;
+            region.center.latitude = stationCoordinate.latitude;
+            region.center.longitude = stationCoordinate.longitude;
+            MKCoordinateSpan span;
+            span.latitudeDelta  = 0.01;
+            span.longitudeDelta = 0.01;
+            region.span = span;
+            
+            for (id<MKAnnotation> annotation in _mapView.annotations){
+                if ([[annotation title] containsString:[self.searchBar text]]){
+                    [_mapView selectAnnotation:annotation animated:YES];
+                    
+                }
+            }
+            [self.mapView setRegion:region animated:YES];
+            [self.mapView reloadInputViews];
+        }
+        else if ([subtitle containsString:[self.searchBar text]])
+        {
+            MKCoordinateRegion region;
+            region.center.latitude = stationCoordinate.latitude;
+            region.center.longitude = stationCoordinate.longitude;
+            MKCoordinateSpan span;
+            span.latitudeDelta  = 0.01;
+            span.longitudeDelta = 0.01;
+            region.span = span;
+            
+            for (id<MKAnnotation> annotation in _mapView.annotations){
+                if ([[annotation subtitle] containsString:[self.searchBar text]]){
+                    [_mapView selectAnnotation:annotation animated:YES];
+                    
+                }
+            }
+            [self.mapView setRegion:region animated:YES];
+            [self.mapView reloadInputViews];
+        }
     }
 }
 
@@ -228,11 +303,10 @@
             stationCoordinate.latitude = [responseArray[i][@"latitude"] doubleValue];
             stationCoordinate.longitude = [responseArray[i][@"longitude"] doubleValue];
             NSString *subtitle = responseArray[i][@"address"];
-            //NSString *subtitle = [NSString stringWithFormat:@"Pb95: %@ Pb98: %@ On: %@ Lpg: %@ Comment: %@",pb95_price,pb98_price,on_price,lpg_price,comment];
             annotation = [[MyCustomAnnotation alloc] initWithTitle:categoryString Subtitle:subtitle Location:stationCoordinate];
             [self.mapView addAnnotation:annotation];
         }
-        responseArray = nil;
+        //responseArray = nil;
     }
 }
 
@@ -245,32 +319,6 @@
     calloutAccessoryControlTapped:(UIControl *)control {
     
     if (control == view.leftCalloutAccessoryView) {
-        
-        /*if ([[responseDict objectForKey:@"code"] intValue] == 401) {
-         
-         if (responseArray) {
-         responseArray = nil;
-         }
-         responseArray = [responseDict objectForKey:@"response"];
-         
-         for (int i = 0; i<[responseArray count]; i++) {
-         
-         MyCustomAnnotation *annotation = nil;
-         NSString *categoryString = nil;
-         categoryString = responseArray[i][@"name"];
-         stationCoordinate.latitude = [responseArray[i][@"latitude"] doubleValue];
-         stationCoordinate.longitude = [responseArray[i][@"longitude"] doubleValue];
-         NSString *pb95 = responseArray[i][@"pb95_price"];
-         NSString *pb98 = responseArray[i][@"pb98_price"];
-         NSString *on = responseArray[i][@"on_price"];
-         NSString *lpg = responseArray[i][@"lpg_price"];
-         NSString *comment = responseArray[i][@"comment"];
-         NSString *subtitle = [NSString stringWithFormat:@"Pb95: %@ Pb98: %@ On: %@ Lpg: %@ Comment: %@",pb95,pb98,on,lpg,comment];
-         annotation = [[MyCustomAnnotation alloc] initWithTitle:categoryString Subtitle:subtitle Location:stationCoordinate];
-         [self.mapView addAnnotation:annotation];
-         }
-         //responseArray = nil;
-         }*/
         
         if (_pricesView) {
             //        _statsView.delegate = nil;
@@ -340,6 +388,11 @@
             break;
         }
     }
+    
+    if (self.searchBar.hidden == NO) {
+        self.searchBar.hidden = YES;
+    }
+    [self.view endEditing:YES];
 }
 
 - (void)setFramesForInterface:(UIInterfaceOrientation)toInterfaceOrientation {
@@ -485,7 +538,6 @@
     self.gpsUtilities.delegate = nil;
     self.gpsUtilities = nil;
 //    [self.revealViewController pushFrontViewController:_parentView animated:YES];
-    
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
     self.searchBar = nil;

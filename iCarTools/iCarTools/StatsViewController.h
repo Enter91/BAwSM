@@ -22,7 +22,7 @@
 @import AssetsLibrary;
 @import MobileCoreServices;
 
-@interface StatsViewController : UIViewController <GPSUtilitiesDelegate, MKMapViewDelegate, AmazingJSONDelegate>
+@interface StatsViewController : UIViewController <GPSUtilitiesDelegate, MKMapViewDelegate, AmazingJSONDelegate, UISearchBarDelegate, SettingsViewControllerDelegate>
 
 @property (strong, nonatomic) CLGeocoder *geocoder;
 

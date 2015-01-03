@@ -18,6 +18,7 @@
     id gas_station_id;
     int gas_station_id_int;
     NSArray *responseArray;
+    UIGestureRecognizer *tapper;
 }
 
 - (void)viewDidLoad {
@@ -75,8 +76,23 @@
     
     self.navigationController.navigationBar.hidden = YES;
     
+    tapper = [[UITapGestureRecognizer alloc]
+              initWithTarget:self action:@selector(handleSingleTap:)];
+    tapper.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tapper];
+    
     [self setFramesForInterface:self.interfaceOrientation];
    
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+- (void)handleSingleTap:(UITapGestureRecognizer *) sender
+{
+    [self.navigationController.navigationBar endEditing:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -231,10 +247,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         [_lpgLabel setFrame:CGRectMake(140, 260, 80, 30)];
         [_commentLabel setFrame:CGRectMake(368, 20, 105, 30)];
         
-        [_saveButton setFrame:CGRectMake(305, 245, 122, 40)];
-        [_cancelButton setFrame:CGRectMake(455, 245, 90, 40)];
+        [_saveButton setFrame:CGRectMake(305, 145, 122, 40)];
+        [_cancelButton setFrame:CGRectMake(455, 145, 90, 40)];
         
-        [_commentTextView setFrame:CGRectMake(328, 60, 190, 150)];
+        [_commentTextView setFrame:CGRectMake(328, 60, 190, 70)];
         
         [_stationNameTextField setFrame:CGRectMake(35, 44, 250, 30)];
         [_addressTextField setFrame:CGRectMake(35, 122, 250, 30)];

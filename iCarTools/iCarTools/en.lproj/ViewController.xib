@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="DINPro-Light.otf">
@@ -16,26 +15,32 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewController">
             <connections>
+                <outlet property="backgroundImageview" destination="Js3-Wr-aUS" id="Jrw-fC-8cb"/>
+                <outlet property="settingsImage" destination="ngj-6c-IDX" id="3vB-Cg-TwV"/>
                 <outlet property="settingsOpenButton" destination="Oun-hy-Pz8" id="dKV-5f-zV4"/>
+                <outlet property="settingsOpenImageButton" destination="8FX-Wl-e70" id="NMJ-qY-vJl"/>
+                <outlet property="statsImage" destination="bkE-cF-tkn" id="ABS-KL-rNB"/>
                 <outlet property="statsOpenButton" destination="PqT-sa-KAC" id="gsl-BT-FGy"/>
+                <outlet property="statsOpenImageButton" destination="aNE-sv-Tnq" id="cCB-uh-zfr"/>
+                <outlet property="titleLabel" destination="9mD-PE-CXF" id="VH7-YO-bYr"/>
+                <outlet property="videoImage" destination="o0d-e6-bzF" id="ygO-Jm-Jer"/>
                 <outlet property="videoRecorderOpenButton" destination="ick-IT-kE6" id="cds-qe-aV5"/>
+                <outlet property="videoRecorderOpenImageButton" destination="pCL-Bg-1QL" id="hYh-hE-hAh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="PXH-gW-f18"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.png" translatesAutoresizingMaskIntoConstraints="NO" id="Js3-Wr-aUS" userLabel="Image View - background">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.png" id="Js3-Wr-aUS" userLabel="Image View - background">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ick-IT-kE6">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ick-IT-kE6">
                     <rect key="frame" x="100" y="201" width="250" height="38"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="38" id="5Bi-az-3H4"/>
-                        <constraint firstAttribute="width" constant="250" id="vpj-h2-YH9"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="20"/>
                     <state key="normal" title="Open recorder">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -45,12 +50,9 @@
                         <action selector="videoRecorderOpenAction:" destination="-1" eventType="touchUpInside" id="xci-cE-5YH"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PqT-sa-KAC">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="PqT-sa-KAC">
                     <rect key="frame" x="100" y="281" width="250" height="38"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="38" id="UzX-pr-9K6"/>
-                        <constraint firstAttribute="width" constant="250" id="uip-5M-iME"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="20"/>
                     <state key="normal" title="Open gas stats">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -60,43 +62,28 @@
                         <action selector="statsOpenAction:" destination="-1" eventType="touchUpInside" id="fok-05-Zvn"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo-256.png" translatesAutoresizingMaskIntoConstraints="NO" id="o0d-e6-bzF" userLabel="Image View - recorder">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo-256.png" id="o0d-e6-bzF" userLabel="Image View - recorder">
                     <rect key="frame" x="20" y="190" width="60" height="60"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="60" id="N5e-iV-kpC"/>
-                        <constraint firstAttribute="width" secondItem="o0d-e6-bzF" secondAttribute="height" multiplier="1:1" id="WhE-yj-Iia"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speedometer-256.png" translatesAutoresizingMaskIntoConstraints="NO" id="bkE-cF-tkn" userLabel="Image View - stats">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speedometer-256.png" id="bkE-cF-tkn" userLabel="Image View - stats">
                     <rect key="frame" x="20" y="270" width="60" height="60"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="bkE-cF-tkn" secondAttribute="height" multiplier="1:1" id="eyM-4V-eGH"/>
-                        <constraint firstAttribute="width" constant="60" id="xhR-ZZ-0QO"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iCarTools" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mD-PE-CXF">
-                    <rect key="frame" x="156" y="50" width="288" height="110"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="110" id="0Tx-Pq-FDX"/>
-                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="bca-Tg-n38"/>
-                    </constraints>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iCarTools" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9mD-PE-CXF">
+                    <rect key="frame" x="16" y="50" width="288" height="110"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="70"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settings3-256.png" translatesAutoresizingMaskIntoConstraints="NO" id="ngj-6c-IDX" userLabel="Image View - settings">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settings3-256.png" id="ngj-6c-IDX" userLabel="Image View - settings">
                     <rect key="frame" x="20" y="350" width="60" height="60"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="ngj-6c-IDX" secondAttribute="height" multiplier="1:1" id="bI5-Jc-JLF"/>
-                        <constraint firstAttribute="width" constant="60" id="kfJ-0W-8Ha"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oun-hy-Pz8">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Oun-hy-Pz8">
                     <rect key="frame" x="100" y="361" width="250" height="38"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="250" id="PRy-R4-uUy"/>
-                        <constraint firstAttribute="height" constant="38" id="Sc8-7g-o4H"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="20"/>
                     <state key="normal" title="Settings">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -106,8 +93,9 @@
                         <action selector="settingsOpenAction:" destination="-1" eventType="touchUpInside" id="Ot5-Id-1uF"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pCL-Bg-1QL" userLabel="RecorderButton">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pCL-Bg-1QL" userLabel="RecorderButton">
                     <rect key="frame" x="20" y="190" width="60" height="60"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -115,8 +103,9 @@
                         <action selector="videoRecorderOpenAction:" destination="-1" eventType="touchUpInside" id="d6L-NB-PlE"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aNE-sv-Tnq" userLabel="StatsButton">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="aNE-sv-Tnq" userLabel="StatsButton">
                     <rect key="frame" x="20" y="270" width="60" height="60"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -124,8 +113,9 @@
                         <action selector="statsOpenAction:" destination="-1" eventType="touchUpInside" id="DdU-6U-Zcr"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8FX-Wl-e70" userLabel="SettingsButton">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8FX-Wl-e70" userLabel="SettingsButton">
                     <rect key="frame" x="20" y="350" width="60" height="60"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -135,38 +125,7 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="bkE-cF-tkn" firstAttribute="top" secondItem="o0d-e6-bzF" secondAttribute="bottom" constant="20" id="4Jk-1x-kve"/>
-                <constraint firstItem="bkE-cF-tkn" firstAttribute="leading" secondItem="o0d-e6-bzF" secondAttribute="leading" id="4bo-7a-AwB"/>
-                <constraint firstItem="8FX-Wl-e70" firstAttribute="bottom" secondItem="ngj-6c-IDX" secondAttribute="bottom" id="9Na-ck-z93"/>
-                <constraint firstAttribute="centerX" secondItem="9mD-PE-CXF" secondAttribute="centerX" id="9SW-8i-Eqm"/>
-                <constraint firstItem="o0d-e6-bzF" firstAttribute="top" secondItem="9mD-PE-CXF" secondAttribute="bottom" constant="30" id="C8Q-IA-66R"/>
-                <constraint firstItem="o0d-e6-bzF" firstAttribute="top" secondItem="pCL-Bg-1QL" secondAttribute="top" id="DPc-W2-Puk"/>
-                <constraint firstItem="ngj-6c-IDX" firstAttribute="leading" secondItem="o0d-e6-bzF" secondAttribute="leading" id="Ghy-pJ-wGN"/>
-                <constraint firstItem="bkE-cF-tkn" firstAttribute="bottom" secondItem="aNE-sv-Tnq" secondAttribute="bottom" id="ILF-VU-9ww"/>
-                <constraint firstItem="Oun-hy-Pz8" firstAttribute="leading" secondItem="ngj-6c-IDX" secondAttribute="trailing" constant="20" id="KmK-gj-dqU"/>
-                <constraint firstAttribute="trailing" secondItem="Js3-Wr-aUS" secondAttribute="trailing" id="LzE-oc-VRb"/>
-                <constraint firstItem="8FX-Wl-e70" firstAttribute="trailing" secondItem="ngj-6c-IDX" secondAttribute="trailing" id="MGP-M6-uVE"/>
-                <constraint firstItem="o0d-e6-bzF" firstAttribute="bottom" secondItem="pCL-Bg-1QL" secondAttribute="bottom" id="Nvy-XY-1lU"/>
-                <constraint firstItem="PqT-sa-KAC" firstAttribute="leading" secondItem="bkE-cF-tkn" secondAttribute="trailing" constant="20" id="O6S-fg-Q7V"/>
-                <constraint firstItem="o0d-e6-bzF" firstAttribute="leading" secondItem="pCL-Bg-1QL" secondAttribute="leading" id="RL9-db-ohd"/>
-                <constraint firstItem="o0d-e6-bzF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="TZG-ok-cyb"/>
-                <constraint firstItem="8FX-Wl-e70" firstAttribute="leading" secondItem="ngj-6c-IDX" secondAttribute="leading" id="a91-OA-F6K"/>
-                <constraint firstItem="bkE-cF-tkn" firstAttribute="trailing" secondItem="aNE-sv-Tnq" secondAttribute="trailing" id="axH-GW-m9u"/>
-                <constraint firstItem="bkE-cF-tkn" firstAttribute="leading" secondItem="aNE-sv-Tnq" secondAttribute="leading" id="f75-xD-Chz"/>
-                <constraint firstItem="bkE-cF-tkn" firstAttribute="top" secondItem="aNE-sv-Tnq" secondAttribute="top" id="fp2-hf-7rO"/>
-                <constraint firstItem="ick-IT-kE6" firstAttribute="centerY" secondItem="o0d-e6-bzF" secondAttribute="centerY" id="ieP-wk-IIN"/>
-                <constraint firstAttribute="bottom" secondItem="Js3-Wr-aUS" secondAttribute="bottom" id="lTE-fM-Ods"/>
-                <constraint firstItem="Js3-Wr-aUS" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="o3A-32-gMV"/>
-                <constraint firstItem="o0d-e6-bzF" firstAttribute="trailing" secondItem="pCL-Bg-1QL" secondAttribute="trailing" id="ohW-GM-cGg"/>
-                <constraint firstItem="Oun-hy-Pz8" firstAttribute="centerY" secondItem="ngj-6c-IDX" secondAttribute="centerY" id="p5H-MB-CO7"/>
-                <constraint firstItem="bkE-cF-tkn" firstAttribute="centerY" secondItem="PqT-sa-KAC" secondAttribute="centerY" id="pdW-lQ-d1J"/>
-                <constraint firstItem="9mD-PE-CXF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="qE2-Aa-V5Z"/>
-                <constraint firstItem="ick-IT-kE6" firstAttribute="leading" secondItem="o0d-e6-bzF" secondAttribute="trailing" constant="20" id="rHY-WC-KYY"/>
-                <constraint firstItem="ngj-6c-IDX" firstAttribute="top" secondItem="bkE-cF-tkn" secondAttribute="bottom" constant="20" id="tnG-qy-NZL"/>
-                <constraint firstItem="8FX-Wl-e70" firstAttribute="top" secondItem="ngj-6c-IDX" secondAttribute="top" id="tyA-r4-cJF"/>
-                <constraint firstItem="Js3-Wr-aUS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wmM-RF-Nlx"/>
-            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="-122" y="274"/>
         </view>
     </objects>
@@ -176,4 +135,9 @@
         <image name="settings3-256.png" width="256" height="256"/>
         <image name="speedometer-256.png" width="256" height="256"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

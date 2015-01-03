@@ -22,6 +22,9 @@
     
     _wantsCustomAnimation = YES;
     
+    [_backButton setFrame:CGRectMake(115, 528, 90, 40)];
+    [_tableView setFrame:CGRectMake(0, 0, 320, 530)];
+    
     [self.backButton removeTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
     [self.backButton addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
     
@@ -31,6 +34,7 @@
     reveal.panGestureRecognizer.enabled = NO;
     
     self.navigationController.navigationBar.hidden = YES;
+    self.tableView.delegate = self;
     
     [[AmazingJSON sharedInstance] setDelegate:self];
     
@@ -39,6 +43,7 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     self.tableView.backgroundView = imageView;
     self.tableView.allowsSelection = NO;
+    self.tableView.estimatedRowHeight = 100.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     [self setFramesForInterface:self.interfaceOrientation];
@@ -61,7 +66,7 @@
     }
     cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
     cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.font = [UIFont fontWithName:@"DINPro-Light" size:14.0];
+    cell.textLabel.font = [UIFont fontWithName:@"DINPro-Medium" size:14.0];
     cell.textLabel.numberOfLines = 0; //no max
     cell.textLabel.text = [visits objectAtIndex:indexPath.row];
     return cell;
@@ -159,13 +164,15 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 - (void)setFramesForPortrait {
     dispatch_async(dispatch_get_main_queue(), ^{
-
+        [_backButton setFrame:CGRectMake(115, 528, 90, 40)];
+        [_tableView setFrame:CGRectMake(0, 0, 320, 530)];
     });
 }
 
 - (void)setFramesForLandscapeLeft {
     dispatch_async(dispatch_get_main_queue(), ^{
-
+        [_backButton setFrame:CGRectMake(240, 280, 90, 40)];
+        [_tableView setFrame:CGRectMake(0, 0, 568, 280)];
     });
 }
 
@@ -190,6 +197,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     SWRevealViewController *reveal = self.revealViewController;
     reveal.panGestureRecognizer.enabled = YES;
 }
+
 - (IBAction)backButtonAction:(id)sender {
 }
+
 @end

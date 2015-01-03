@@ -17,6 +17,7 @@
     BOOL numericError;
     id gas_station_id;
     int gas_station_id_int;
+    UIGestureRecognizer *tapper;
 }
 
 - (void)viewDidLoad {
@@ -78,9 +79,25 @@
     
     self.navigationController.navigationBar.hidden = YES;
     
+    tapper = [[UITapGestureRecognizer alloc]
+              initWithTarget:self action:@selector(handleSingleTap:)];
+    tapper.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tapper];
+    
     [self setFramesForInterface:self.interfaceOrientation];
    
 }
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+- (void)handleSingleTap:(UITapGestureRecognizer *) sender
+{
+    [self.navigationController.navigationBar endEditing:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -338,10 +355,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         [_lpgLabel setFrame:CGRectMake(140, 260, 80, 30)];
         [_commentLabel setFrame:CGRectMake(368, 20, 105, 30)];
         
-        [_addStationButton setFrame:CGRectMake(305, 245, 120, 40)];
-        [_cancelButton setFrame:CGRectMake(455, 245, 90, 40)];
+        [_addStationButton setFrame:CGRectMake(305, 145, 120, 40)];
+        [_cancelButton setFrame:CGRectMake(455, 145, 90, 40)];
         
-        [_commentTextView setFrame:CGRectMake(328, 60, 190, 150)];
+        [_commentTextView setFrame:CGRectMake(328, 60, 190, 70)];
         
         [_actualPositionSwitch setFrame:CGRectMake(130, 105, 51, 31)];
         

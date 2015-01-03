@@ -28,6 +28,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *folderPath = [documentsDirectory stringByAppendingPathComponent:@"/iCarTools"];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:nil];
+    
     [self orientationUnlock];
     
     _wantsCustomAnimation = YES;
@@ -456,7 +463,7 @@
                             
                             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                             NSString *documentsDirectory = [paths objectAtIndex:0];
-                            NSString *path =[documentsDirectory stringByAppendingPathComponent:[route objectForKey:@"date"]];
+                            NSString *path =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/iCarTools/%@", [route objectForKey:@"date"]]];
                             
                             NSData *data = [NSKeyedArchiver archivedDataWithRootObject:route];
                             NSError *error;

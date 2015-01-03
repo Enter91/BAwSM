@@ -47,6 +47,10 @@
 		1CB4B01C1A2073C800172BA4 /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB4B0191A2073C800172BA4 /* StatsViewController.m */; };
 		1CB4B01E1A2073F400172BA4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB4B01D1A2073F400172BA4 /* MapKit.framework */; };
 		1CBC05621A571D9700ECECC1 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC05611A571D9700ECECC1 /* LoginManager.m */; };
+		1CBC05661A58339900ECECC1 /* RecordedVideosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC05641A58339900ECECC1 /* RecordedVideosViewController.m */; };
+		1CBC05671A58339900ECECC1 /* RecordedVideosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBC05651A58339900ECECC1 /* RecordedVideosViewController.xib */; };
+		1CBC056A1A5835AC00ECECC1 /* RecordedVideosTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC05691A5835AC00ECECC1 /* RecordedVideosTableViewCell.m */; };
+		1CBC056C1A583D0E00ECECC1 /* Maps-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CBC056B1A583D0E00ECECC1 /* Maps-icon.png */; };
 		1CD407291A26919500F6A2E7 /* suszarka.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD407281A26919500F6A2E7 /* suszarka.png */; };
 		1CD4072B1A27AA7A00F6A2E7 /* user_male4-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */; };
 		1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072C1A27AC8000F6A2E7 /* wypadek.png */; };
@@ -147,6 +151,12 @@
 		1CB4B01D1A2073F400172BA4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1CBC05601A571D9700ECECC1 /* LoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginManager.h; sourceTree = "<group>"; };
 		1CBC05611A571D9700ECECC1 /* LoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginManager.m; sourceTree = "<group>"; };
+		1CBC05631A58339900ECECC1 /* RecordedVideosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordedVideosViewController.h; sourceTree = "<group>"; };
+		1CBC05641A58339900ECECC1 /* RecordedVideosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordedVideosViewController.m; sourceTree = "<group>"; };
+		1CBC05651A58339900ECECC1 /* RecordedVideosViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordedVideosViewController.xib; sourceTree = "<group>"; };
+		1CBC05681A5835AC00ECECC1 /* RecordedVideosTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordedVideosTableViewCell.h; sourceTree = "<group>"; };
+		1CBC05691A5835AC00ECECC1 /* RecordedVideosTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordedVideosTableViewCell.m; sourceTree = "<group>"; };
+		1CBC056B1A583D0E00ECECC1 /* Maps-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Maps-icon.png"; sourceTree = "<group>"; };
 		1CD407281A26919500F6A2E7 /* suszarka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suszarka.png; sourceTree = "<group>"; };
 		1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_male4-256.png"; sourceTree = "<group>"; };
 		1CD4072C1A27AC8000F6A2E7 /* wypadek.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wypadek.png; sourceTree = "<group>"; };
@@ -296,6 +306,11 @@
 				1C3047C019FEEA2B00D2EE5E /* RecorderViewController.h */,
 				1C3047C119FEEA2B00D2EE5E /* RecorderViewController.m */,
 				1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */,
+				1CBC05631A58339900ECECC1 /* RecordedVideosViewController.h */,
+				1CBC05641A58339900ECECC1 /* RecordedVideosViewController.m */,
+				1CBC05651A58339900ECECC1 /* RecordedVideosViewController.xib */,
+				1CBC05681A5835AC00ECECC1 /* RecordedVideosTableViewCell.h */,
+				1CBC05691A5835AC00ECECC1 /* RecordedVideosTableViewCell.m */,
 			);
 			name = "Recorder Files";
 			sourceTree = "<group>";
@@ -363,6 +378,7 @@
 				1CF81C4A1A12971800496116 /* white line.png */,
 				1CF81C481A12954800496116 /* record_button.png */,
 				1C3047BA19FEE7B600D2EE5E /* background.png */,
+				1CBC056B1A583D0E00ECECC1 /* Maps-icon.png */,
 				1C30476019FED07300D2EE5E /* Images.xcassets */,
 			);
 			name = Images;
@@ -518,8 +534,10 @@
 				1C3047A419FEE09100D2EE5E /* ViewController.xib in Resources */,
 				1C30479A19FED74C00D2EE5E /* DINPro-Medium.otf in Resources */,
 				1CF81C4B1A12971800496116 /* white line.png in Resources */,
+				1CBC056C1A583D0E00ECECC1 /* Maps-icon.png in Resources */,
 				1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */,
 				F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */,
+				1CBC05671A58339900ECECC1 /* RecordedVideosViewController.xib in Resources */,
 				1CEDCA2C1A2076A100BFADB5 /* speedometer-256.png in Resources */,
 				1CD407311A27AE1100F6A2E7 /* gps_disconnected-256.png in Resources */,
 				1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */,
@@ -592,7 +610,9 @@
 				F06B73211A52399D00C66496 /* ChangeViewController.m in Sources */,
 				1C3047C319FEEA2B00D2EE5E /* RecorderViewController.m in Sources */,
 				1C3047A019FEDDD500D2EE5E /* ViewController.m in Sources */,
+				1CBC05661A58339900ECECC1 /* RecordedVideosViewController.m in Sources */,
 				1CA729981A21458900FEBD51 /* TutorialViewController.m in Sources */,
+				1CBC056A1A5835AC00ECECC1 /* RecordedVideosTableViewCell.m in Sources */,
 				F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */,
 				1C5B89231A55C4FE007BA4CD /* UserInfo.m in Sources */,
 				1C5B892C1A55F2FC007BA4CD /* DejalActivityView.m in Sources */,

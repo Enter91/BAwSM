@@ -7,6 +7,7 @@
 //
 
 #import "TutorialViewController.h"
+#import "AppDelegate.h"
 
 @interface TutorialViewController () {
     int currentState;
@@ -21,6 +22,9 @@
     self = [super init];
     if (self) {
         currentState = 0;
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        appDelegate.orientationIsLocked = YES;
+        appDelegate.lockedOrientation = UIInterfaceOrientationMaskPortrait;
     }
     return self;
 }
@@ -114,7 +118,7 @@
             [self firstStateAskCameraAndMicrophone];
             break;
         case 2:
-            [self askPermissioniPhoneCentered];
+            [self askPermissioniPhoneCenteredWithTextDirectionLeft:NO];
             [self gotCameraPermission];
             break;
         case 3:
@@ -122,7 +126,7 @@
             [self secondStateAskLibrary];
             break;
         case 4:
-            [self askPermissioniPhoneCentered];
+            [self askPermissioniPhoneCenteredWithTextDirectionLeft:YES];
             [self gotLibraryPermission];
             break;
         case 5:
@@ -130,7 +134,7 @@
             [self thirdStateAskGPS];
             break;
         case 6:
-            [self askPermissioniPhoneCentered];
+            [self askPermissioniPhoneCenteredWithTextDirectionLeft:YES];
             [self gotGPSPermission];
         case 7:
             [self finishTutorial];
@@ -345,14 +349,14 @@
     [_delegate didEndTutorialWithRegistration:NO];
 }
 
-- (void)askPermissioniPhoneCentered {
+- (void)askPermissioniPhoneCenteredWithTextDirectionLeft:(BOOL)shouldGoLeft {
     
     NSLog(@"askPermissioniPhoneCentered");
     
     runningAnimation = YES;
     
     [UIView animateWithDuration:0.5 animations:^{
-        [_permissionDescription setFrame:CGRectMake(self.view.frame.size.width, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
+        [_permissionDescription setFrame:CGRectMake(shouldGoLeft ? -_permissionDescription.frame.size.width : self.view.frame.size.width, _permissionDescription.frame.origin.y, _permissionDescription.frame.size.width, _permissionDescription.frame.size.height)];
         [_permissionDescription setAlpha:0.0];
         
         [_permissionTitle setFrame:CGRectMake(_permissionTitle.frame.origin.x, -_permissionTitle.frame.size.height, _permissionTitle.frame.size.width, _permissionTitle.frame.size.height)];
@@ -499,6 +503,15 @@
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+- (NSUInteger) application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (BOOL) shouldAutorotate {
+    return NO;
 }
 
 @end

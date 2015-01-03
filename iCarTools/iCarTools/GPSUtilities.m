@@ -8,6 +8,11 @@
 
 #import "GPSUtilities.h"
 
+#define kDistanceFilter 25
+#define kHeadingFilter 0
+#define kAccuracyFilter 250
+#define kTimeFilter 5
+
 @implementation GPSUtilities
 
 static GPSUtilities *SINGLETON = nil;
@@ -68,6 +73,8 @@ static bool isFirstAccess = YES;
         if (!self.locManager) {
             self.locManager = [[CLLocationManager alloc] init];
         }
+        //self.locManager.distanceFilter = kDistanceFilter;
+        //self.locManager.headingFilter = kHeadingFilter;
         self.locManager.delegate = self;
         _locationCoordinates = CLLocationCoordinate2DMake(0.0f, 0.0f);
         
@@ -150,20 +157,28 @@ static bool isFirstAccess = YES;
 
 #pragma mark- CLLocationManager Delegaty
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    if (self.delegate) {
-        if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
-        {
-            if (_state != 2) {
-                _state = 2;
-                if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
-                    [_delegate gpsDidChangeState:_state];
+    
+    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+    if (locationAge > kTimeFilter) return;
+    if (newLocation.horizontalAccuracy < 0) return;
+    
+    if (newLocation.horizontalAccuracy < kAccuracyFilter) {
+        if (self.delegate) {
+            if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
+            {
+                if (_state != 2) {
+                    _state = 2;
+                    if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
+                        [_delegate gpsDidChangeState:_state];
+                }
+                _locationCoordinates = newLocation.coordinate;
+                [self.delegate locationUpdate:newLocation];
             }
-            _locationCoordinates = newLocation.coordinate;
-            [self.delegate locationUpdate:newLocation];
+        } else {
+            [self stopGPS];
         }
-    } else {
-        [self stopGPS];
     }
+    
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {

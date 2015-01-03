@@ -113,20 +113,37 @@ static bool isFirstAccess = YES;
                 
                 json = nil;
                 
-                [_delegate responseDictionary:dictionary];
+                if (_delegate) {
+                    if ([_delegate respondsToSelector:@selector(responseDictionary:)]) {
+                        [_delegate responseDictionary:dictionary];
+                    }
+                }
+                
             } else {
                  NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
                 
                 json = nil;
                 
-                [_delegate responseDictionary:dictionary];
+                if (_delegate) {
+                    if ([_delegate respondsToSelector:@selector(responseDictionary:)]) {
+                        [_delegate responseDictionary:dictionary];
+                    }
+                }
                 
             }
         } else {
-            [_delegate responseDictionary:nil];
+            if (_delegate) {
+                if ([_delegate respondsToSelector:@selector(responseDictionary:)]) {
+                    [_delegate responseDictionary:nil];
+                }
+            }
         }
     } else {
-        [_delegate responseDictionary:nil];
+        if (_delegate) {
+            if ([_delegate respondsToSelector:@selector(responseDictionary:)]) {
+                [_delegate responseDictionary:nil];
+            }
+        }
     }
 }
 

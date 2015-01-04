@@ -47,6 +47,13 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+    self.revealViewController.panGestureRecognizer.enabled = NO;
+    self.revealViewController.tapGestureRecognizer.enabled = NO;
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

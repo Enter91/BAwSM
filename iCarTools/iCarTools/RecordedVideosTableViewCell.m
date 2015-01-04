@@ -28,13 +28,20 @@ static NSString * const DIN_PRO_BOLD = @"DINPro-Bold";
         
         self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, 80);
         
+        UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [playButton setFrame:CGRectMake(0, 0, 80, 80)];
+        [playButton addTarget:self action:@selector(showVideo) forControlEvents:UIControlEventTouchUpInside];
+        [playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        
         _movieThumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80.0, 80.0)];
         [_movieThumbnail setContentMode:UIViewContentModeScaleAspectFill];
         [_movieThumbnail setClipsToBounds:YES];
         [self addSubview:_movieThumbnail];
+        [self addSubview:playButton];
+        playButton = nil;
         
         _mapsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_mapsButton setFrame:CGRectMake(self.frame.size.width - 45, 5, 40, 40)];
+        [_mapsButton setFrame:CGRectMake(self.frame.size.width - 45, 20, 40, 40)];
         [_mapsButton setImage:[UIImage imageNamed:@"Maps-icon"] forState:UIControlStateNormal];
         [_mapsButton addTarget:self action:@selector(showMapWithRoute) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_mapsButton];
@@ -105,7 +112,11 @@ static NSString * const DIN_PRO_BOLD = @"DINPro-Bold";
 }
 
 - (void)showMapWithRoute {
-    
+    [_delegate wantsShowMapWithRouteArray:[_routeArray copy]];
+}
+
+- (void)showVideo {
+    [_delegate wantsPlayMovieWithAssetURL:_outputFileURL];
 }
 
 @end

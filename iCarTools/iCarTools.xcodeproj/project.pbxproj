@@ -35,6 +35,7 @@
 		1C45E3B31A59500700F4443C /* RouteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C45E3B11A59500700F4443C /* RouteViewController.m */; };
 		1C45E3B41A59500700F4443C /* RouteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C45E3B21A59500700F4443C /* RouteViewController.xib */; };
 		1C45E3B61A59574700F4443C /* BrannbollFet.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C45E3B51A59574700F4443C /* BrannbollFet.ttf */; };
+		1C45E3BD1A59A32A00F4443C /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C45E3BC1A59A32A00F4443C /* play.png */; };
 		1C5B891F1A55A10D007BA4CD /* RegisterUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B891D1A55A10D007BA4CD /* RegisterUserViewController.m */; };
 		1C5B89201A55A10D007BA4CD /* RegisterUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C5B891E1A55A10D007BA4CD /* RegisterUserViewController.xib */; };
 		1C5B89231A55C4FE007BA4CD /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B89221A55C4FE007BA4CD /* UserInfo.m */; };
@@ -146,6 +147,7 @@
 		1C45E3B11A59500700F4443C /* RouteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteViewController.m; sourceTree = "<group>"; };
 		1C45E3B21A59500700F4443C /* RouteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RouteViewController.xib; sourceTree = "<group>"; };
 		1C45E3B51A59574700F4443C /* BrannbollFet.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BrannbollFet.ttf; sourceTree = "<group>"; };
+		1C45E3BC1A59A32A00F4443C /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		1C5B891C1A55A10D007BA4CD /* RegisterUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterUserViewController.h; sourceTree = "<group>"; };
 		1C5B891D1A55A10D007BA4CD /* RegisterUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterUserViewController.m; sourceTree = "<group>"; };
 		1C5B891E1A55A10D007BA4CD /* RegisterUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterUserViewController.xib; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 		1C30478819FED66700D2EE5E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1C45E3BC1A59A32A00F4443C /* play.png */,
 				1CD4072E1A27AE1100F6A2E7 /* gps_disconnected-256.png */,
 				1CD4072F1A27AE1100F6A2E7 /* gps_receiving-256.png */,
 				1CD407301A27AE1100F6A2E7 /* gps_searching-256.png */,
@@ -691,6 +694,7 @@
 				1CBC056C1A583D0E00ECECC1 /* Maps-icon.png in Resources */,
 				1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */,
 				F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */,
+				1C45E3BD1A59A32A00F4443C /* play.png in Resources */,
 				1CBC05671A58339900ECECC1 /* RecordedVideosViewController.xib in Resources */,
 				1CEDCA2C1A2076A100BFADB5 /* speedometer-256.png in Resources */,
 				1CD407311A27AE1100F6A2E7 /* gps_disconnected-256.png in Resources */,

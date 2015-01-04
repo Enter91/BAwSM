@@ -50,6 +50,13 @@
     [_videosTableView reloadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+    self.revealViewController.panGestureRecognizer.enabled = NO;
+    self.revealViewController.tapGestureRecognizer.enabled = NO;
+
+}
+
 - (void) cancelAction:(id)sender {
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
@@ -81,6 +88,8 @@
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     }
     
+    cell.delegate = self;
+    
     [cell setTitleText:[NSString stringWithFormat:@"%@%d", NSLocalizedString(@"Video #", nil), [[NSNumber numberWithInteger:indexPath.row + 1] intValue]]
               dateText:[[_videosArray objectAtIndex:indexPath.row] objectForKey:@"date"]
         movieThumbnail:[UIImage imageWithData:[[_videosArray objectAtIndex:indexPath.row] objectForKey:@"thumbnail"]]
@@ -90,28 +99,25 @@
     return cell;
 }
 
-
-
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _videosArray.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //self.moviePlayer =[[MPMoviePlayerViewController alloc] initWithContentURL:[[_videosArray objectAtIndex:indexPath.row] objectForKey:@"assetURL"]];
-    //[self presentMoviePlayerViewControllerAnimated:self.moviePlayer];
-    
-    RouteViewController *routeView = [[RouteViewController alloc] initWithRoutePointsArray:[[[_videosArray objectAtIndex:indexPath.row] objectForKey:@"route"] copy]];
-    routeView.parentView = self;
-    [self.revealViewController pushFrontViewController:routeView animated:YES];
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
+}
+
+- (void)wantsPlayMovieWithAssetURL:(NSURL *)assetURL {
+    self.moviePlayer =[[MPMoviePlayerViewController alloc] initWithContentURL:assetURL];
+    [self presentMoviePlayerViewControllerAnimated:self.moviePlayer];
+}
+
+- (void)wantsShowMapWithRouteArray:(NSArray *)routeArray {
+    RouteViewController *routeView = [[RouteViewController alloc] initWithRoutePointsArray:routeArray];
+    routeView.parentView = self;
+    [self.revealViewController pushFrontViewController:routeView animated:YES];
 }
 
 -(NSArray *)listFileAtPath

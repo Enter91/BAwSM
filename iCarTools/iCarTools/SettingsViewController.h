@@ -13,7 +13,7 @@
 
 @protocol SettingsViewControllerDelegate <NSObject>
 
-- (void)clickedOption:(int)number;
+- (void)clickedOption:(int)number inMenuType:(int)menuType;
 
 @end
 
@@ -33,9 +33,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property int menuType;
+@property int activeOption;
 
 - (void)updateMenuWithTitlesArray:(NSArray *)titlesArray;
 - (void)updateMenuWithTitlesArray:(NSArray *)titlesArray andMenuType:(int)depth;
+- (void)updateMenuWithTitlesArray:(NSArray *)titlesArray indexOfActiveOption:(int)activeIndex andMenuType:(int)depth;
 
 @property (nonatomic, assign) id delegate;
 

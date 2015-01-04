@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol RecordedVideosTableViewCellDelegate <NSObject>
+
+- (void)wantsPlayMovieWithAssetURL:(NSURL *)assetURL;
+- (void)wantsShowMapWithRouteArray:(NSArray *)routeArray;
+
+@end
+
 @interface RecordedVideosTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) UILabel *title;
@@ -21,5 +28,7 @@
 
 - (void)setTitleText:(NSString *)titleText dateText:(NSString *)dateText movieThumbnail:(UIImage *)movieThumbnail route:(NSArray *)route andAssetURL:(NSURL *)assetURL;
 - (void)updateAllFrames;
+
+@property (weak, nonatomic) id delegate;
 
 @end

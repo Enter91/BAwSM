@@ -18,7 +18,6 @@
     AVCaptureVideoPreviewLayer *mCameraLayer;
     UIView *mCameraView;
     AVCaptureMovieFileOutput *movieFile;
-    int menuType;
     NSString *startRecordingDate;
 }
 
@@ -28,6 +27,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"enableAudio"] == nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"enableAudio"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"speed unit"] == nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"km/h" forKey:@"speed unit"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -78,6 +87,12 @@
     [self exit];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+    self.revealViewController.panGestureRecognizer.enabled = YES;
+    self.revealViewController.tapGestureRecognizer.enabled = YES;
+    
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     
@@ -959,7 +974,7 @@
 }
 
 #pragma mark- SettingsViewController
-- (void)clickedOption:(int)number {
+- (void)clickedOption:(int)number inMenuType:(int)menuType {
     
     /*NSLocalizedString(@"Recorded videos", nil),
      NSLocalizedString(@"Enable sound", nil),
@@ -988,13 +1003,36 @@
             default:
                 break;
         }
+    } else if (menuType == 1) {
+        switch (number) {
+            case 0:
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"enableAudio"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
+                [self updateDataSourceInLeftRevealViewController];
+                break;
+            case 1:
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"enableAudio"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
+                [self updateDataSourceInLeftRevealViewController];
+                break;
+            default:
+                break;
+        }
     } else if (menuType == 4) {
         switch (number) {
             case 0:
                 [[NSUserDefaults standardUserDefaults] setObject:@"km/h" forKey:@"speed unit"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
+                [self updateDataSourceInLeftRevealViewController];
                 break;
             case 1:
                 [[NSUserDefaults standardUserDefaults] setObject:@"mph" forKey:@"speed unit"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
+                [self updateDataSourceInLeftRevealViewController];
                 break;
                 
             default:
@@ -1018,7 +1056,13 @@
 }
 
 - (void)showEnableSoundList {
-    
+    if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
+        [self.revealViewController setFrontViewPosition:FrontViewPositionRightMost animated:YES];
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
+                                                                                                              NSLocalizedString(@"YES", nil),
+                                                                                                              NSLocalizedString(@"NO", nil)]
+                                                                                        indexOfActiveOption:[[NSUserDefaults standardUserDefaults] objectForKey:@"enableAudio"] == [NSNumber numberWithBool:YES] ? 0 : 1 andMenuType:1];
+    }
 }
 
 - (void)showVideoQualityList {
@@ -1031,10 +1075,11 @@
 
 - (void)showSpeedUnitSettings {
     if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
+        [self.revealViewController setFrontViewPosition:FrontViewPositionRightMost animated:YES];
         [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
                                                                                 NSLocalizedString(@"km/h", nil),
                                                                                 NSLocalizedString(@"mph", nil)]
-                                                                                                andMenuType:4];
+                                                                                                indexOfActiveOption:[[[NSUserDefaults standardUserDefaults] objectForKey:@"speed unit"] isEqualToString: @"km/h"] ? 0 : 1 andMenuType:4];
     }
 }
 

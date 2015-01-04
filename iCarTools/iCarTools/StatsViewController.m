@@ -9,11 +9,11 @@
 #import "StatsViewController.h"
 
 @interface StatsViewController () {
-    int menuType;
     NSArray *responseArray;
     CLLocationCoordinate2D userCoordinate;
     CLLocationCoordinate2D stationCoordinate;
     UIGestureRecognizer *tapper;
+    int kompasPosition;
 }
 
 @end
@@ -151,11 +151,21 @@
 }
 
 - (id<UILayoutSupport>)topLayoutGuide {
-    return [[FixedCompassLayout alloc]initWithLength:44];
+    
+    if ((self.interfaceOrientation == UIInterfaceOrientationUnknown) || (self.interfaceOrientation == UIInterfaceOrientationPortrait) || (self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)) {
+        return [[FixedCompassLayout alloc]initWithLength:44 andHeight:0];
+    } else {
+        return [[FixedCompassLayout alloc]initWithLength:0 andHeight:60];
+    }
 }
 
 - (id<UILayoutSupport>)bottomLayoutGuide {
-    return [[FixedCompassLayout alloc]initWithLength:44];
+    
+    if ((self.interfaceOrientation == UIInterfaceOrientationUnknown) || (self.interfaceOrientation == UIInterfaceOrientationPortrait) || (self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)) {
+        return [[FixedCompassLayout alloc]initWithLength:44 andHeight:0];
+    } else {
+        return [[FixedCompassLayout alloc]initWithLength:0 andHeight:60];
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -514,7 +524,7 @@
 }
 
 #pragma mark- StatsViewController
-- (void)clickedOption:(int)number {
+- (void)clickedOption:(int)number inMenuType:(int)menuType {
     
     if (menuType == 0) {
         switch (number) {

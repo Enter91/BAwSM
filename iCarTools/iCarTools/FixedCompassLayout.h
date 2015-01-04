@@ -12,6 +12,7 @@
 @interface FixedCompassLayout : NSObject <UILayoutSupport>
 
 @property (nonatomic) CGFloat pbLength;
-- (id)initWithLength:(CGFloat)length;
+@property (nonatomic) CGFloat pbHeight;
+- (id)initWithLength:(CGFloat)length andHeight:(CGFloat)height;
 
 @end

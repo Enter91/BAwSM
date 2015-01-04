@@ -65,18 +65,21 @@ static NSString * const DIN_PRO_BOLD = @"DINPro-Bold";
 
 - (void)updateAllFrames {
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, 80);
+    
     [_movieThumbnail setFrame:CGRectMake(0, 0, 80.0, 80.0)];
     [_date setFrame:CGRectMake(_movieThumbnail.frame.size.width + 5, self.frame.size.height - 20.0, self.frame.size.width - _movieThumbnail.frame.size.width - _mapsButton.frame.size.width - 15, 15.0)];
     [_title setFrame:CGRectMake(_movieThumbnail.frame.size.width + 5, 5.0, self.frame.size.width - _movieThumbnail.frame.size.width - _mapsButton.frame.size.width - 15, self.frame.size.height - _date.frame.size.height - 10)];
+    [_mapsButton setFrame:CGRectMake(self.frame.size.width - 45, 20, 40, 40)];
     
-    [UIView animateWithDuration:0.3 animations:^{
-        [_mapsButton setFrame:CGRectMake(self.frame.size.width - 45, 5, 40, 40)];
-    }];
+//    [UIView animateWithDuration:0.3 animations:^{
+//        [_mapsButton setFrame:CGRectMake(self.frame.size.width - 45, 20, 40, 40)];
+//    }];
 }
 
 - (void)prepareForReuse {
     //[[NSNotificationCenter defaultCenter] removeObserver:self];
     _movieThumbnail.image = nil;
+    _mapsButton.alpha = 0.0;
     _title.text = @"";
     _date.text = @"";
     _outputFileURL = nil;
@@ -89,6 +92,11 @@ static NSString * const DIN_PRO_BOLD = @"DINPro-Bold";
     [_date setText:dateText];
     
     _routeArray = [NSArray arrayWithArray:route];
+    if (_routeArray.count == 0) {
+        _mapsButton.alpha = 0;
+    } else {
+        _mapsButton.alpha = 1;
+    }
     _outputFileURL = assetURL;
     
     if (movieThumbnail != nil) {

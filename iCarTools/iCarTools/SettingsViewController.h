@@ -13,7 +13,11 @@
 
 @protocol SettingsViewControllerDelegate <NSObject>
 
+@required
 - (void)clickedOption:(int)number inMenuType:(int)menuType;
+
+@optional
+- (void)settingsViewWillDisappear;
 
 @end
 

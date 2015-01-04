@@ -123,6 +123,15 @@
     [_loginInfoView addConstraint:[NSLayoutConstraint constraintWithItem:_logoutButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_loginInfoView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:self.revealViewController.rearViewRevealWidth-100-5]];
     
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    if (_delegate) {
+        if ([_delegate respondsToSelector:@selector(settingsViewWillDisappear)]) {
+            [_delegate settingsViewWillDisappear];
+        }
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

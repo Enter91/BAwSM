@@ -19,6 +19,11 @@
     UIView *mCameraView;
     AVCaptureMovieFileOutput *movieFile;
     NSString *startRecordingDate;
+    
+    int speedCalculator;
+    NSMutableArray *supportedVideoQuality;
+    NSMutableArray *supportedVideoQualityTranslatedNames;
+    BOOL didChangeCameraSettings;
 }
 
 @end
@@ -36,8 +41,16 @@
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"speed unit"] == nil) {
         [[NSUserDefaults standardUserDefaults] setObject:@"km/h" forKey:@"speed unit"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        speedCalculator = 1;
     }
     
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"video quality"] == nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:@0 forKey:@"video quality"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    supportedVideoQuality = [[NSMutableArray alloc] init];
+    supportedVideoQualityTranslatedNames = [[NSMutableArray alloc] init];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *folderPath = [documentsDirectory stringByAppendingPathComponent:@"/iCarTools"];
@@ -57,6 +70,7 @@
     
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
+    [self.gpsUtilities setIsDistanceFilterEnable:YES];
     [self.gpsUtilities setAccuracy:kCLLocationAccuracyBestForNavigation];
     [self.gpsUtilities startGPS];
     
@@ -71,18 +85,6 @@
     [[AmazingJSON sharedInstance] setDelegate:self];
 }
 
-- (void)updateDataSourceInLeftRevealViewController {
-    if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
-        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
-                                                                        NSLocalizedString(@"Recorded videos", nil),
-                                                                        NSLocalizedString(@"Enable sound", nil),
-                                                                        NSLocalizedString(@"Video quality", nil),
-                                                                        NSLocalizedString(@"Max video length", nil),
-                                                                        NSLocalizedString(@"Speed unit", nil)]
-                                                                                                andMenuType:0];
-    }
-}
-
 - (void)dealloc {
     [self exit];
 }
@@ -92,13 +94,14 @@
     self.revealViewController.panGestureRecognizer.enabled = YES;
     self.revealViewController.tapGestureRecognizer.enabled = YES;
     
+    [self initializeInterface];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     
     [self initializeCamera];
     
-    [self initializeInterface];
 }
 
 /**
@@ -191,7 +194,7 @@
         [self.speedUnitsLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10]];
         [self.speedUnitsLabel setTextAlignment:NSTextAlignmentCenter];
         [self.speedUnitsLabel setTextColor:[UIColor whiteColor]];
-        [self.speedUnitsLabel setText:@"km/h"];
+        [self updateSpeedUnitsLabel];
         [self.view addSubview:self.speedUnitsLabel];
     }
     
@@ -554,43 +557,56 @@
     }
     
     if (![mCameraView isDescendantOfView:self.view]) {
-        [self.view addSubview:mCameraView];
+        [self.view insertSubview:mCameraView atIndex:0];
     }
     
     if (session==nil && device==nil && input==nil) {
-    
-    session = [[AVCaptureSession alloc]init];
-    session.sessionPreset = AVCaptureSessionPreset1280x720;
-
-    device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    
-    if (device)
-    {
-        NSError *error;
-        input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
-        if (!error)
+        
+        session = [[AVCaptureSession alloc]init];
+        session.sessionPreset = AVCaptureSessionPreset1280x720;
+        
+        device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        
+        if (device)
         {
-            if ([session canAddInput:input]) {
-                [session addInput:input];
-            } else {
+            NSError *error;
+            input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+            if (!error)
+            {
+                if ([session canAddInput:input]) {
+                    [session addInput:input];
+                } else {
+                    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                                          message:NSLocalizedString(@"Couldn\'t add video input", @"Couldn\'t add video input")
+                                                                         delegate:nil
+                                                                cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                                                otherButtonTitles: nil];
+                    [myAlertView show];
+                    myAlertView = nil;
+                    input = nil;
+                    device = nil;
+                    session = nil;
+                    return;
+                }
+                
+            }
+            else
+            {
                 UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
-                                                                      message:NSLocalizedString(@"Couldn\'t add video input", @"Couldn\'t add video input")
+                                                                      message:NSLocalizedString(@"Couldn\'t create video input", @"Couldn\'t create video input")
                                                                      delegate:nil
                                                             cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
                                                             otherButtonTitles: nil];
                 [myAlertView show];
                 myAlertView = nil;
-                input = nil;
-                device = nil;
-                session = nil;
+                [self teardownAVCapture];
                 return;
             }
-            
         }
         else
         {
             UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
-                                                                  message:NSLocalizedString(@"Couldn\'t create video input", @"Couldn\'t create video input")
+                                                                  message:NSLocalizedString(@"Couldn\'t create video capture device", @"Couldn\'t create video capture device")
                                                                  delegate:nil
                                                         cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
                                                         otherButtonTitles: nil];
@@ -599,46 +615,67 @@
             [self teardownAVCapture];
             return;
         }
-    }
-    else
-    {
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
-                                                              message:NSLocalizedString(@"Couldn\'t create video capture device", @"Couldn\'t create video capture device")
-                                                             delegate:nil
-                                                    cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-                                                    otherButtonTitles: nil];
-        [myAlertView show];
-        myAlertView = nil;
-        [self teardownAVCapture];
-        return;
-    }
-    
-    AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
-    NSError *error = nil;
-    AVCaptureDeviceInput *audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
-    if (audioInput)
-    {
-        [session addInput:audioInput];
-    }
-    
-    movieFile = [[AVCaptureMovieFileOutput alloc] init];
-    Float64 TotalSeconds = 3600;
-    int32_t preferredTimeScale = 24;
-    CMTime maxDuration = CMTimeMakeWithSeconds(TotalSeconds, preferredTimeScale);	//<<SET MAX DURATION
-    movieFile.maxRecordedDuration = maxDuration;
-    
-    movieFile.minFreeDiskSpaceLimit = 1024 * 1024 * 100;
-    if ([session canAddOutput:movieFile])
-        [session addOutput:movieFile];
-    
-    if ([session canSetSessionPreset:AVCaptureSessionPreset1280x720])
-        [session setSessionPreset:AVCaptureSessionPreset1280x720];
-    else if ([session canSetSessionPreset:AVCaptureSessionPreset640x480])
-        [session setSessionPreset:AVCaptureSessionPreset640x480];
-    else
-        [session setSessionPreset:AVCaptureSessionPresetMedium];
-    
-    [self startCamera];
+        
+        AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
+        NSError *error = nil;
+        
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"enableAudio"] == [NSNumber numberWithBool:YES]) {
+            AVCaptureDeviceInput *audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
+            if (audioInput)
+            {
+                [session addInput:audioInput];
+            }
+        }
+        
+        
+        movieFile = [[AVCaptureMovieFileOutput alloc] init];
+        Float64 TotalSeconds = 3600;
+        int32_t preferredTimeScale = 24;
+        CMTime maxDuration = CMTimeMakeWithSeconds(TotalSeconds, preferredTimeScale);	//<<SET MAX DURATION
+        movieFile.maxRecordedDuration = maxDuration;
+        
+        movieFile.minFreeDiskSpaceLimit = 1024 * 1024 * 100;
+        if ([session canAddOutput:movieFile])
+            [session addOutput:movieFile];
+        
+        [supportedVideoQuality removeAllObjects];
+        [supportedVideoQualityTranslatedNames removeAllObjects];
+        if ([session canSetSessionPreset:AVCaptureSessionPreset1920x1080]) {
+            [supportedVideoQuality addObject:AVCaptureSessionPreset1920x1080];
+            [supportedVideoQualityTranslatedNames addObject:[self videoPresetName:AVCaptureSessionPreset1920x1080]];
+        }
+        if ([session canSetSessionPreset:AVCaptureSessionPreset1280x720]) {
+            [supportedVideoQuality addObject:AVCaptureSessionPreset1280x720];
+            [supportedVideoQualityTranslatedNames addObject:[self videoPresetName:AVCaptureSessionPreset1280x720]];
+        }
+        if ([session canSetSessionPreset:AVCaptureSessionPreset640x480]) {
+            [supportedVideoQuality addObject:AVCaptureSessionPreset640x480];
+            [supportedVideoQualityTranslatedNames addObject:[self videoPresetName:AVCaptureSessionPreset640x480]];
+        }
+        if ([session canSetSessionPreset:AVCaptureSessionPreset352x288]) {
+            [supportedVideoQuality addObject:AVCaptureSessionPreset352x288];
+            [supportedVideoQualityTranslatedNames addObject:[self videoPresetName:AVCaptureSessionPreset352x288]];
+        }
+        if ([session canSetSessionPreset:AVCaptureSessionPresetHigh]) {
+            [supportedVideoQuality addObject:AVCaptureSessionPresetHigh];
+            [supportedVideoQualityTranslatedNames addObject:[self videoPresetName:AVCaptureSessionPresetHigh]];
+        }
+        if ([session canSetSessionPreset:AVCaptureSessionPresetMedium]) {
+            [supportedVideoQuality addObject:AVCaptureSessionPresetMedium];
+            [supportedVideoQualityTranslatedNames addObject:[self videoPresetName:AVCaptureSessionPresetMedium]];
+        }
+        if ([session canSetSessionPreset:AVCaptureSessionPresetLow]) {
+            [supportedVideoQuality addObject:AVCaptureSessionPresetLow];
+            [supportedVideoQualityTranslatedNames addObject:[self videoPresetName:AVCaptureSessionPresetLow]];
+        }
+        
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"video quality"]) {
+            [session setSessionPreset:[supportedVideoQuality objectAtIndex:[[[NSUserDefaults standardUserDefaults] objectForKey:@"video quality"] intValue]]];
+        } else {
+            [session setSessionPreset:AVCaptureSessionPresetMedium];
+        }
+        
+        [self startCamera];
     }
 }
 
@@ -742,6 +779,8 @@
     session = nil;
     [mCameraLayer removeFromSuperlayer];
     mCameraLayer = nil;
+    [mCameraView removeFromSuperview];
+    mCameraView = nil;
     
 }
 
@@ -913,7 +952,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if (speedInKilometersPerHour >= 0) {
-            [self.speedLabel setText:[NSString stringWithFormat:@"%d", speedInKilometersPerHour]];
+            [self.speedLabel setText:[NSString stringWithFormat:@"%d", speedInKilometersPerHour*speedCalculator]];
         } else {
             [self.speedLabel setText:@"0"];
         }
@@ -979,7 +1018,6 @@
     /*NSLocalizedString(@"Recorded videos", nil),
      NSLocalizedString(@"Enable sound", nil),
      NSLocalizedString(@"Video quality", nil),
-     NSLocalizedString(@"Max video length", nil),
      NSLocalizedString(@"Speed unit", nil)]]*/
     
     if (menuType == 0) {
@@ -994,9 +1032,6 @@
                 [self showVideoQualityList];
                 break;
             case 3:
-                [self showMaxVideoLengthList];
-                break;
-            case 4:
                 [self showSpeedUnitSettings];
                 break;
                 
@@ -1004,42 +1039,29 @@
                 break;
         }
     } else if (menuType == 1) {
-        switch (number) {
-            case 0:
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"enableAudio"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
-                [self updateDataSourceInLeftRevealViewController];
-                break;
-            case 1:
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"enableAudio"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
-                [self updateDataSourceInLeftRevealViewController];
-                break;
-            default:
-                break;
-        }
-    } else if (menuType == 4) {
-        switch (number) {
-            case 0:
-                [[NSUserDefaults standardUserDefaults] setObject:@"km/h" forKey:@"speed unit"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
-                [self updateDataSourceInLeftRevealViewController];
-                break;
-            case 1:
-                [[NSUserDefaults standardUserDefaults] setObject:@"mph" forKey:@"speed unit"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
-                [self updateDataSourceInLeftRevealViewController];
-                break;
-                
-            default:
-                break;
-        }
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool: number == 0 ? YES : NO] forKey:@"enableAudio"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        didChangeCameraSettings = YES;
+        [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
+        [self updateDataSourceInLeftRevealViewController];
+        
+    } else if (menuType == 2) {
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:number] forKey:@"video quality"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        didChangeCameraSettings = YES;
+        [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
+        [self updateDataSourceInLeftRevealViewController];
+
+    } else if (menuType == 3) {
+        
+        [[NSUserDefaults standardUserDefaults] setObject: number == 0 ? @"km/h" : @"mph" forKey:@"speed unit"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self updateSpeedUnitsLabel];
+        [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
+        [self updateDataSourceInLeftRevealViewController];
     }
-    
     
 }
 
@@ -1066,11 +1088,10 @@
 }
 
 - (void)showVideoQualityList {
-    
-}
-
-- (void)showMaxVideoLengthList {
-    
+    if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
+        [self.revealViewController setFrontViewPosition:FrontViewPositionRightMost animated:YES];
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:supportedVideoQualityTranslatedNames indexOfActiveOption:[[[NSUserDefaults standardUserDefaults] objectForKey:@"video quality"] intValue] andMenuType:2];
+    }
 }
 
 - (void)showSpeedUnitSettings {
@@ -1079,11 +1100,44 @@
         [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
                                                                                 NSLocalizedString(@"km/h", nil),
                                                                                 NSLocalizedString(@"mph", nil)]
-                                                                                                indexOfActiveOption:[[[NSUserDefaults standardUserDefaults] objectForKey:@"speed unit"] isEqualToString: @"km/h"] ? 0 : 1 andMenuType:4];
+                                                                                                indexOfActiveOption:[[[NSUserDefaults standardUserDefaults] objectForKey:@"speed unit"] isEqualToString: @"km/h"] ? 0 : 1 andMenuType:3];
     }
 }
 
 #pragma mark- Update After Settings Changes
+- (void)settingsViewWillDisappear {
+    if (didChangeCameraSettings) {
+        didChangeCameraSettings = NO;
+        [self updateCamera];
+    }
+}
+
+- (void)updateDataSourceInLeftRevealViewController {
+    if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
+                                                                                                              NSLocalizedString(@"Recorded videos", nil),
+                                                                                                              NSLocalizedString(@"Enable sound", nil),
+                                                                                                              NSLocalizedString(@"Video quality", nil),
+                                                                                                              NSLocalizedString(@"Speed unit", nil)]
+                                                                                                andMenuType:0];
+    }
+}
+
+- (void)updateSpeedUnitsLabel {
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"speed unit"] isEqualToString:@"km/h"]) {
+        speedCalculator = 1;
+        [self.speedUnitsLabel setText:@"km/h"];
+    } else {
+        speedCalculator = 0.621371192;
+        [self.speedUnitsLabel setText:@"mph"];
+    }
+}
+
+- (void)updateCamera {
+    didChangeCameraSettings = NO;
+    [self teardownAVCapture];
+    [self initializeCamera];
+}
 
 #pragma mark- Blokowanie obracania na czas nagrywania
 -(void) orientationLock {
@@ -1124,6 +1178,26 @@
         return NO;
     } else {
         return YES;
+    }
+}
+
+- (NSString *)videoPresetName:(NSString *)presetName {
+    if ([presetName isEqualToString:AVCaptureSessionPreset1920x1080]) {
+        return @"1920x1080";
+    } else if ([presetName isEqualToString:AVCaptureSessionPreset1280x720]) {
+        return @"1280x720";
+    } else if ([presetName isEqualToString:AVCaptureSessionPreset640x480]) {
+        return @"640x480";
+    } else if ([presetName isEqualToString:AVCaptureSessionPreset352x288]) {
+        return @"352x288";
+    } else if ([presetName isEqualToString:AVCaptureSessionPresetHigh]) {
+        return NSLocalizedString(@"High preset", nil);
+    } else if ([presetName isEqualToString:AVCaptureSessionPresetMedium]) {
+        return NSLocalizedString(@"Medium preset", nil);
+    } else if ([presetName isEqualToString:AVCaptureSessionPresetLow]) {
+        return NSLocalizedString(@"Low preset", nil);
+    } else {
+        return @"Unknown";
     }
 }
 

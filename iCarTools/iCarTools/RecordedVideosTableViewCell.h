@@ -18,4 +18,7 @@
 @property (strong, nonatomic) NSURL *outputFileURL;
 
 @property (strong, nonatomic) NSArray *routeArray;
+
+- (void)setTitleText:(NSString *)titleText dateText:(NSString *)dateText movieThumbnail:(UIImage *)movieThumbnail route:(NSArray *)route andAssetURL:(NSURL *)assetURL;
+
 @end

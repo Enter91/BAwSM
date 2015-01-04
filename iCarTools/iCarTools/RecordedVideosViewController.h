@@ -8,11 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "RecordedVideosTableViewCell.h"
+#import <SWRevealViewController.h>
+@import AVFoundation;
+@import MediaPlayer;
 @import AssetsLibrary;
 
-@interface RecordedVideosViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface RecordedVideosViewController : UIViewController <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UITableView *videosTableView;
 @property (strong, nonatomic) NSMutableArray *videosArray;
 
+@property (nonatomic) BOOL wantsCustomAnimation;
+@property (nonatomic, weak) UIViewController *parentView;
 @end

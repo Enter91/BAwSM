@@ -56,6 +56,8 @@
     
     [self updateDataSourceInLeftRevealViewController];
 
+    [((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:self];
+    
     [[AmazingJSON sharedInstance] setDelegate:self];
 }
 
@@ -431,6 +433,8 @@
     
     NSLog(@"didFinishRecordingToOutputFileAtURL - enter");
     
+    [DejalBezelActivityView activityViewForView:self.view withLabel:NSLocalizedString(@"Please wait...", nil)];
+    
     BOOL RecordedSuccessfully = YES;
     if ([error code] != noErr)
     {
@@ -448,45 +452,71 @@
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputFileURL])
         {
-            [library saveVideo:outputFileURL toAlbum:@"iCarTools" withCompletionBlock:^(NSError *error) {
-                
-                if (error) {
-                    NSLog(@"Can't save to custom album with error: %@", [error localizedDescription]);
-                } else {
+            [library saveVideo:outputFileURL toAlbum:@"iCarTools" withCompletionBlock:^(ALAsset *asset) {
+                if (_pointsOnTheRouteArray) {
                     
-                    if (_pointsOnTheRouteArray) {
-                        
-                        if (_pointsOnTheRouteArray.count>0) {
-                            NSDictionary *route = @{@"date" : [self getStringDateFromCurrentDate],
-                                                    @"assetURL" : outputFileURL,
-                                                    @"route" : _pointsOnTheRouteArray};
-                            
-                            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                            NSString *documentsDirectory = [paths objectAtIndex:0];
-                            NSString *path =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/iCarTools/%@", [route objectForKey:@"date"]]];
-                            
-                            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:route];
-                            NSError *error;
-                            BOOL success = [data writeToFile:path options:0 error:&error];
-                            
-                            if (!success) {
-                                NSLog(@"writeToFile failed with error %@", error);
-                            } else {
-                                NSLog(@"writeToFile success");
-                            }
-                            
-                            data = nil;
-                            [_pointsOnTheRouteArray removeAllObjects];
-                            _pointsOnTheRouteArray = nil;
-                        }
-                        
-                        _pointsOnTheRouteArray = nil;
+                    AVURLAsset *assetAV = [[AVURLAsset alloc] initWithURL:[asset valueForProperty:ALAssetPropertyAssetURL] options:nil];
+                    AVAssetImageGenerator *generate = [[AVAssetImageGenerator alloc] initWithAsset:assetAV];
+                    generate.appliesPreferredTrackTransform = YES;
+                    float duration = [[asset valueForProperty:ALAssetPropertyDuration] floatValue];
+                    CMTime time = duration>=1 ? CMTimeMake(duration/2.0,1) : CMTimeMake(1, 1000);
+                    CGImageRef thumbImg = [generate copyCGImageAtTime:time actualTime:NULL error:nil];
+                    UIImage *thumbUIImage = [UIImage imageWithCGImage:thumbImg];
+                    
+                    UIImage *resizedThumb = [thumbUIImage scaleToSize:CGSizeMake(160, 160)];
+                    
+                    NSData *thumbData = UIImageJPEGRepresentation(resizedThumb, 0.8);
+                    
+                    NSDictionary *route = @{@"date" : [self getStringDateFromCurrentDate],
+                                            @"assetURL" : [asset valueForProperty:ALAssetPropertyAssetURL],
+                                            @"route" : _pointsOnTheRouteArray,
+                                            @"thumbnail" : thumbData};
+                    
+                    
+                    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                    NSString *documentsDirectory = [paths objectAtIndex:0];
+                    NSString *path =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/iCarTools/%@", [route objectForKey:@"date"]]];
+                    
+                    BOOL success = [NSKeyedArchiver archiveRootObject:route toFile:path];
+                    
+                    if (!success) {
+                        NSLog(@"writeToFile failed with error %@", error);
+                        [self showCantSaveVideoError];
+                    } else {
+                        NSLog(@"writeToFile success");
                     }
                     
+                    [_pointsOnTheRouteArray removeAllObjects];
+                    _pointsOnTheRouteArray = nil;
+                    thumbImg = nil;
+                    thumbUIImage = nil;
+                    thumbData = nil;
+                    resizedThumb = nil;
+                    
+                    
+                    _pointsOnTheRouteArray = nil;
+                    [DejalBezelActivityView removeViewAnimated:YES];
                 }
+            } andErrorBlock:^(NSError *error) {
+                [self showCantSaveVideoError];
             }];
+        } else {
+            [self showCantSaveVideoError];
         }
+    } else {
+        [self showCantSaveVideoError];
     }
+}
+
+- (void)showCantSaveVideoError {
+    [DejalBezelActivityView removeViewAnimated:YES];
+    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                          message:NSLocalizedString(@"Can\'t save video", @"Couldn\'t add video input")
+                                                         delegate:nil
+                                                cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                                otherButtonTitles: nil];
+    [myAlertView show];
+    myAlertView = nil;
 }
 
 - (void) initializeCamera {
@@ -661,6 +691,11 @@
 
 - (void)teardownAVCapture
 {
+    if (_isRecording) {
+        _isRecording = NO;
+        [self stopRecording];
+    }
+    
     output = nil;
     
     [session removeInput:input];
@@ -842,17 +877,14 @@
 }
 
 - (void)exit {
-    if (_isRecording) {
-        _isRecording = NO;
-        [self stopRecording];
-    }
+    [self teardownAVCapture];
     [self.gpsUtilities stopGPS];
     self.gpsUtilities.delegate = nil;
     self.gpsUtilities = nil;
     [_pointsOnTheRouteArray removeAllObjects];
     _pointsOnTheRouteArray = nil;
     [self orientationUnlock];
-    [self teardownAVCapture];
+    [((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:nil];
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
 }
@@ -914,7 +946,14 @@
 
 
 - (void)showRecordedVideosList {
+    RecordedVideosViewController *recordedVideos = [[RecordedVideosViewController alloc] init];
+    recordedVideos.parentView = self;
+    [self.revealViewController pushFrontViewController:recordedVideos animated:YES];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self teardownAVCapture];
+    });
     
+    recordedVideos = nil;
 }
 
 - (void)showEnableSoundList {

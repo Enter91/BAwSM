@@ -19,6 +19,9 @@
 #import "AmazingJSON.h"
 #import "AppDelegate.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
+#import "RecordedVideosViewController.h"
+#import "UIImage+Resizing.h"
+#import "DejalActivityView.h"
 
 @interface RecorderViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate, SettingsViewControllerDelegate, AmazingJSONDelegate>
 

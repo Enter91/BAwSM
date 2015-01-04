@@ -10,21 +10,16 @@
 
 @implementation FixedCompassLayout
 
-- (id)initWithLength:(CGFloat)length andHeight:(CGFloat)height {
+- (id)initWithLength:(CGFloat)length {
     self = [super init];
     if (self) {
         _pbLength = length;
-        _pbHeight = height;
     }
     return self;
 }
 
 - (CGFloat)length {
     return _pbLength;
-}
-
-- (CGFloat)height {
-    return _pbHeight;
 }
 
 @end

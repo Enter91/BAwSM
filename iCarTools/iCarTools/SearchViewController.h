@@ -23,6 +23,8 @@
 
 @property (nonatomic, strong) NSMutableArray *tableData;
 
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBarOutlet;
+
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (nonatomic) BOOL wantsCustomAnimation;

@@ -29,9 +29,21 @@
     self.gpsUtilities.delegate = self;
     [self.gpsUtilities startGPS];
     
-    self.mapView.mapType = 3;
     [self.mapView setShowsUserLocation:YES];
     [self.mapView.userLocation setTitle:NSLocalizedString(@"currentLocation", nil)];
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"mapType"] == nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"MKMapTypeStandard" forKey:@"mapType"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"mapType"]  isEqual: @"MKMapTypeSatellite"]) {
+        [self satelliteMap];
+    } else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"mapType"]  isEqual: @"MKMapTypeHybrid"]) {
+        [self hybridMap];
+    } else {
+        [self standardMap];
+    }
     
     SWRevealViewController *revealController = [self revealViewController];
     [revealController panGestureRecognizer];
@@ -118,6 +130,7 @@
         [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-8, self.gpsStatusImageView.center.y+4)];
         [self.view addSubview:self.gpsStatusImageView];
     }
+    [self.mapView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
     self.navigationController.navigationBar.hidden = YES;
     
@@ -133,18 +146,18 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"showAnnotations"];
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    
+    [((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self setFramesForInterface:self.interfaceOrientation];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"zoom"] == YES) {
-        
         @try{
             [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
         }@catch(id anException){
         }
-        
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"zoom"];
         [self zoomStation];
     }
@@ -153,18 +166,18 @@
 - (id<UILayoutSupport>)topLayoutGuide {
     
     if ((self.interfaceOrientation == UIInterfaceOrientationUnknown) || (self.interfaceOrientation == UIInterfaceOrientationPortrait) || (self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)) {
-        return [[FixedCompassLayout alloc]initWithLength:44 andHeight:0];
+        return [[FixedCompassLayout alloc]initWithLength:44];
     } else {
-        return [[FixedCompassLayout alloc]initWithLength:0 andHeight:60];
+        return [[FixedCompassLayout alloc]initWithLength:0];
     }
 }
 
 - (id<UILayoutSupport>)bottomLayoutGuide {
     
     if ((self.interfaceOrientation == UIInterfaceOrientationUnknown) || (self.interfaceOrientation == UIInterfaceOrientationPortrait) || (self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)) {
-        return [[FixedCompassLayout alloc]initWithLength:44 andHeight:0];
+        return [[FixedCompassLayout alloc]initWithLength:44];
     } else {
-        return [[FixedCompassLayout alloc]initWithLength:0 andHeight:60];
+        return [[FixedCompassLayout alloc]initWithLength:0];
     }
 }
 
@@ -204,7 +217,26 @@
     if([annotation isKindOfClass:[MyCustomAnnotation class]]) {
         
         MyCustomAnnotation *myLocation = (MyCustomAnnotation *)annotation;
-        MKAnnotationView *annotationView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:@"MyCustomAnnotation"];
+        
+        NSString *companyOfStation;
+        
+        if ([annotation.title rangeOfString:@"shell" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            companyOfStation = @"shell";
+        } else if ([annotation.title rangeOfString:@"bp" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            companyOfStation = @"bp";
+        } else if ([annotation.title rangeOfString:@"lotos" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            companyOfStation = @"lotos";
+        } else if ([annotation.title rangeOfString:@"orlen" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            companyOfStation = @"orlen";
+        } else if ([annotation.title rangeOfString:@"statoil" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            companyOfStation = @"statoil";
+        } else if ([annotation.title rangeOfString:@"lukoil" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            companyOfStation = @"lukoil";
+        } else {
+            companyOfStation = @"gas";
+        }
+
+        MKAnnotationView *annotationView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:companyOfStation];
         
         if(annotationView == nil)
             annotationView = myLocation.annotationView;
@@ -278,7 +310,7 @@
                     [_mapView selectAnnotation:annotation animated:YES];
                 }
             }
-            //[self.mapView reloadInputViews];
+            [self.view reloadInputViews];
         }
     }
 }
@@ -443,32 +475,34 @@
 
 - (void)setFramesForPortrait {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self.mapView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         [self.upperBackgroundView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-        [self.lowerBackgroundView setFrame:CGRectMake(0, self.view.frame.size.height-95, self.view.frame.size.width, 95)];
+        [self.lowerBackgroundView setFrame:CGRectMake(0, self.view.frame.size.height-55, self.view.frame.size.width, 55)];
         [self.menuButton setFrame:CGRectMake(10, 5, 30, self.upperBackgroundView.frame.size.height-10)];
         [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
-        [self.findStationButton setFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-75, 75, 75)];
+        [self.findStationButton setFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-35, 50, 50)];
         [self.findStationButton setCenter:self.lowerBackgroundView.center];
-        [self.addStationButton setFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+15, 50, 50)];
+        [self.addStationButton setFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+3, 35, 35)];
         [self.addStationButton setCenter:CGPointMake(self.findStationButton.center.x*1.5+8, self.addStationButton.center.y+4)];
-        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y+15, 47, 47)];
+        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y+5, 32, 32)];
         [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-8, self.gpsStatusImageView.center.y+4)];
     });
 }
 
 - (void)setFramesForLandscapeLeft {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self.mapView setFrame:CGRectMake(44, 0, self.view.frame.size.width-99, self.view.frame.size.height)];
         [self.upperBackgroundView setFrame:CGRectMake(0, 0, 44, self.view.frame.size.height)];
-        [self.lowerBackgroundView setFrame:CGRectMake(self.view.frame.size.width-95, 0, 95, self.view.frame.size.height)];
+        [self.lowerBackgroundView setFrame:CGRectMake(self.view.frame.size.width-55, 0, 55, self.view.frame.size.height)];
         [self.menuButton setFrame:CGRectMake(5, 10, 34, 34)];
         [self.exitButton setFrame:CGRectMake(5, self.view.frame.size.height-55, 34, 34)];
-        [self.findStationButton setFrame:CGRectMake(self.view.frame.size.width-10-75, (self.view.frame.size.height-75)/2, 75, 75)];
+        [self.findStationButton setFrame:CGRectMake(self.view.frame.size.width-10-35, (self.view.frame.size.height-75)/2, 50, 50)];
         [self.findStationButton setCenter:self.lowerBackgroundView.center];
         
-        [self.addStationButton setFrame:CGRectMake(0, 0, 50, 50)];
+        [self.addStationButton setFrame:CGRectMake(0, 0, 35, 35)];
         [self.addStationButton setCenter:CGPointMake(self.lowerBackgroundView.center.x, self.findStationButton.frame.origin.y + self.findStationButton.frame.size.height + (self.lowerBackgroundView.frame.origin.y - self.findStationButton.frame.origin.y - self.findStationButton.frame.size.height)/2.0-20)];
         
-        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0, 47, 47)];
+        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0, 32, 32)];
         [self.gpsStatusImageView setCenter:CGPointMake(self.lowerBackgroundView.center.x, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0+20)];
     });
 }
@@ -496,11 +530,11 @@
     userCoordinate.longitude = location.coordinate.longitude;
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"showAnnotations"]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"showAnnotations"];
         for (id<MKAnnotation> annotation in _mapView.annotations) {
             [self.mapView removeAnnotation:annotation];
         }
         [self addAnnotation];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"showAnnotations"];
     }
     
     NSLog(@"New Location: %@", location);
@@ -529,13 +563,13 @@
     if (menuType == 0) {
         switch (number) {
             case 0:
-                self.mapView.mapType = MKMapTypeStandard;
+                [self standardMap];
                 break;
             case 1:
-                self.mapView.mapType = MKMapTypeHybrid;
+                [self hybridMap];
                 break;
             case 2:
-                self.mapView.mapType = MKMapTypeSatellite;
+                [self satelliteMap];
                 break;
                 
             default:
@@ -544,6 +578,22 @@
         [self.mapView reloadInputViews];
     }
 }
+
+- (void)standardMap {
+    [[NSUserDefaults standardUserDefaults] setObject:@"MKMapTypeStandard" forKey:@"mapType"];
+    self.mapView.mapType = MKMapTypeStandard;
+}
+
+- (void)hybridMap {
+    [[NSUserDefaults standardUserDefaults] setObject:@"MKMapTypeHybrid" forKey:@"mapType"];
+    self.mapView.mapType = MKMapTypeHybrid;
+}
+
+- (void)satelliteMap {
+    [[NSUserDefaults standardUserDefaults] setObject:@"MKMapTypeSatellite" forKey:@"mapType"];
+    self.mapView.mapType = MKMapTypeSatellite;
+}
+
 #pragma mark- Update After Settings Changes
 
 - (void)dealloc {
@@ -563,6 +613,7 @@
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    [((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:nil];
 }
 
 @end

@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchViewController">
             <connections>
                 <outlet property="backButton" destination="5Tv-9t-ve2" id="f4y-Av-QIN"/>
+                <outlet property="searchBarOutlet" destination="jS4-h2-27A" id="uwE-yH-1XE"/>
                 <outlet property="searchDisplayController" destination="jYI-KC-S4j" id="58a-YB-NX9"/>
                 <outlet property="tableView" destination="6q8-9j-s78" id="syP-dt-6W4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

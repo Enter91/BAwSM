@@ -36,6 +36,7 @@
     
     self.navigationController.navigationBar.hidden = YES;
     self.tableView.delegate = self;
+    [_searchBarOutlet setBackgroundImage:[UIImage new]];
     
     [[AmazingJSON sharedInstance] setDelegate:self];
     
@@ -124,7 +125,26 @@
         cell.textLabel.text = self.tableData[indexPath.row];
     }
     
+    NSString *companyOfStation;
+    if ([cell.textLabel.text rangeOfString:@"shell" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        companyOfStation = @"shell";
+    } else if ([cell.textLabel.text rangeOfString:@"bp" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        companyOfStation = @"bp";
+    } else if ([cell.textLabel.text rangeOfString:@"lotos" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        companyOfStation = @"lotos";
+    } else if ([cell.textLabel.text rangeOfString:@"orlen" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        companyOfStation = @"orlen";
+    } else if ([cell.textLabel.text rangeOfString:@"statoil" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        companyOfStation = @"statoil";
+    } else if ([cell.textLabel.text rangeOfString:@"lukoil" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        companyOfStation = @"lukoil";
+    } else {
+        companyOfStation = @"gas";
+    }
+    
+    cell.imageView.image = [UIImage imageNamed:companyOfStation];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    companyOfStation = nil;
     return cell;
 }
 

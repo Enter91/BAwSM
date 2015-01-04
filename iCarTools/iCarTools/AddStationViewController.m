@@ -86,6 +86,7 @@
     [self.view addGestureRecognizer:tapper];
     
     nameError = NO;
+    numericError = NO;
     [self setFramesForInterface:self.interfaceOrientation];
    
 }

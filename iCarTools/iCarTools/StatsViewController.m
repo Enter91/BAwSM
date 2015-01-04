@@ -119,24 +119,12 @@
         [self.view addSubview:self.gpsStatusImageView];
     }
     
-    if (!self.searchBar) {
-        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-9, 44, self.mapView.frame.size.width+20, 25)];
-        [self.searchBar setBackgroundImage:[UIImage new]];
-    }
-    
-    if (![self.searchBar isDescendantOfView:self.view]) {
-        [self.view addSubview:self.searchBar];
-        self.searchBar.hidden = YES;
-    }
-    
     self.navigationController.navigationBar.hidden = YES;
     
     tapper = [[UITapGestureRecognizer alloc]
               initWithTarget:self action:@selector(handleSingleTap:)];
     tapper.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapper];
-    
-    self.searchBar.delegate = self;
     
     [self updateDataSourceInLeftRevealViewController];
     
@@ -147,6 +135,17 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self setFramesForInterface:self.interfaceOrientation];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"zoom"] == YES) {
+        
+        @try{
+            [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
+        }@catch(id anException){
+        }
+        
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"zoom"];
+        [self zoomStation];
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -212,8 +211,6 @@
         _addStationView.parentView = self;
         _addStationView.wantsCustomAnimation = YES;
         [self.revealViewController setFrontViewController:_addStationView animated:YES];
-    
-        self.searchBar.hidden = YES;
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[NSString stringWithFormat:@"This option is only available for logged-in users"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
@@ -222,31 +219,31 @@
 }
 
 - (IBAction)findStationAction:(id)sender {
-
-    if (self.searchBar.hidden == YES) {
-        self.searchBar.hidden = NO;
+    [[NSUserDefaults standardUserDefaults] setDouble:userCoordinate.latitude forKey:@"userLat"];
+    [[NSUserDefaults standardUserDefaults] setDouble:userCoordinate.longitude forKey:@"userLong"];
+    
+    if (_searchView) {
+        //        _statsView.delegate = nil;
+        _searchView = nil;
     }
-    else {
-        self.searchBar.hidden = YES;
-    }
-    @try{
-        [self.mapView.userLocation removeObserver:self forKeyPath:@"location"];
-    }@catch(id anException){
-    }
+    
+    _searchView = [[SearchViewController alloc] initWithNibName:@"SearchViewController" bundle:nil];
+    //    _statsView.delegate = self;
+    _searchView.parentView = self;
+    _searchView.wantsCustomAnimation = YES;
+    [self.revealViewController setFrontViewController:_searchView animated:YES];
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+- (void)zoomStation {
     
-    [self.view endEditing:YES];
     for (int i = 0; i<[responseArray count]; i++) {
         
         NSString *categoryString = nil;
         categoryString = responseArray[i][@"name"];
         stationCoordinate.latitude = [responseArray[i][@"latitude"] doubleValue];
         stationCoordinate.longitude = [responseArray[i][@"longitude"] doubleValue];
-        NSString *subtitle = responseArray[i][@"address"];
         
-        if ([categoryString containsString:[self.searchBar text]])
+        if ([categoryString isEqual:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedRow"]])
         {
             MKCoordinateRegion region;
             region.center.latitude = stationCoordinate.latitude;
@@ -257,34 +254,12 @@
             region.span = span;
             
             for (id<MKAnnotation> annotation in _mapView.annotations){
-                if ([[annotation title] containsString:[self.searchBar text]]){
+                if ([[annotation title] isEqual:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedRow"]]){
                     [_mapView selectAnnotation:annotation animated:YES];
-                    
                 }
             }
             [self.mapView setRegion:region animated:YES];
             [self.mapView reloadInputViews];
-            break;
-        }
-        else if ([subtitle containsString:[self.searchBar text]])
-        {
-            MKCoordinateRegion region;
-            region.center.latitude = stationCoordinate.latitude;
-            region.center.longitude = stationCoordinate.longitude;
-            MKCoordinateSpan span;
-            span.latitudeDelta  = 0.01;
-            span.longitudeDelta = 0.01;
-            region.span = span;
-            
-            for (id<MKAnnotation> annotation in _mapView.annotations){
-                if ([[annotation subtitle] containsString:[self.searchBar text]]){
-                    [_mapView selectAnnotation:annotation animated:YES];
-                    
-                }
-            }
-            [self.mapView setRegion:region animated:YES];
-            [self.mapView reloadInputViews];
-            break;
         }
     }
 }
@@ -342,7 +317,6 @@
         _pricesView.parentView = self;
         _pricesView.wantsCustomAnimation = YES;
         [self.revealViewController setFrontViewController:_pricesView animated:YES];
-        self.searchBar.hidden = YES;
 
     } else if (control == view.rightCalloutAccessoryView) {
 
@@ -361,8 +335,6 @@
             _changeStationView.parentView = self;
             _changeStationView.wantsCustomAnimation = YES;
             [self.revealViewController setFrontViewController:_changeStationView animated:YES];
-    
-            self.searchBar.hidden = YES;
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[NSString stringWithFormat:@"This option is only available for logged-in users"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
@@ -406,10 +378,6 @@
             break;
         }
     }
-    
-    if (self.searchBar.hidden == NO) {
-        self.searchBar.hidden = YES;
-    }
     [self.view endEditing:YES];
 }
 
@@ -449,7 +417,6 @@
         [self.addStationButton setCenter:CGPointMake(self.findStationButton.center.x*1.5+8, self.addStationButton.center.y+4)];
         [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y+15, 47, 47)];
         [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-8, self.gpsStatusImageView.center.y+4)];
-        [self.searchBar setFrame:CGRectMake(-9, 44, self.mapView.frame.size.width+20, 25)];
     });
 }
 
@@ -467,8 +434,6 @@
         
         [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0, 47, 47)];
         [self.gpsStatusImageView setCenter:CGPointMake(self.lowerBackgroundView.center.x, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0+20)];
-        
-        [self.searchBar setFrame:CGRectMake(36, 0, self.mapView.frame.size.width-44-79, 25)];
     });
 }
 
@@ -558,7 +523,6 @@
 //    [self.revealViewController pushFrontViewController:_parentView animated:YES];
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
-    self.searchBar = nil;
 }
 
 @end

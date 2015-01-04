@@ -37,18 +37,13 @@
     annotationView.image = [UIImage imageNamed:@"gas"];
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
-    [rightButton addTarget:self action:@selector(stationView) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     annotationView.rightCalloutAccessoryView = rightButton;
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    [leftButton addTarget:self action:@selector(stationView) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     annotationView.leftCalloutAccessoryView = leftButton;
     
-    
     return annotationView;
-}
-
-- (void)stationView {
-   
 }
 
 @end

@@ -65,6 +65,8 @@
 		1CF81C491A12954800496116 /* record_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C481A12954800496116 /* record_button.png */; };
 		1CF81C4B1A12971800496116 /* white line.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4A1A12971800496116 /* white line.png */; };
 		1CF81C4D1A129A6B00496116 /* smallDotImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF81C4C1A129A6B00496116 /* smallDotImage.png */; };
+		F0166E751A588993000CE241 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0166E731A588993000CE241 /* SearchViewController.m */; };
+		F0166E761A588993000CE241 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0166E741A588993000CE241 /* SearchViewController.xib */; };
 		F02351871A287F240077C1A2 /* exit-50.png in Resources */ = {isa = PBXBuildFile; fileRef = F02351861A287F240077C1A2 /* exit-50.png */; };
 		F02351891A28874A0077C1A2 /* search-256.png in Resources */ = {isa = PBXBuildFile; fileRef = F02351881A28874A0077C1A2 /* search-256.png */; };
 		F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518C1A288FDB0077C1A2 /* plus-128.png */; };
@@ -186,6 +188,9 @@
 		1CF81C4C1A129A6B00496116 /* smallDotImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallDotImage.png; sourceTree = "<group>"; };
 		45CD27C558CF0F1030656D4F /* Pods-iCarTools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCarTools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iCarTools/Pods-iCarTools.debug.xcconfig"; sourceTree = "<group>"; };
 		BE45EDF14A5B125379C8472B /* Pods-iCarTools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCarTools.release.xcconfig"; path = "Pods/Target Support Files/Pods-iCarTools/Pods-iCarTools.release.xcconfig"; sourceTree = "<group>"; };
+		F0166E721A588993000CE241 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		F0166E731A588993000CE241 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		F0166E741A588993000CE241 /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
 		F02351861A287F240077C1A2 /* exit-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exit-50.png"; sourceTree = "<group>"; };
 		F02351881A28874A0077C1A2 /* search-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-256.png"; sourceTree = "<group>"; };
 		F023518C1A288FDB0077C1A2 /* plus-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-128.png"; sourceTree = "<group>"; };
@@ -373,6 +378,9 @@
 				F06B73221A5309FF00C66496 /* PricesViewController.h */,
 				F06B73231A5309FF00C66496 /* PricesViewController.m */,
 				F06B73241A5309FF00C66496 /* PricesViewController.xib */,
+				F0166E721A588993000CE241 /* SearchViewController.h */,
+				F0166E731A588993000CE241 /* SearchViewController.m */,
+				F0166E741A588993000CE241 /* SearchViewController.xib */,
 			);
 			name = "Stats Files";
 			sourceTree = "<group>";
@@ -657,6 +665,7 @@
 				1CBC056C1A583D0E00ECECC1 /* Maps-icon.png in Resources */,
 				1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */,
 				F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */,
+				F0166E761A588993000CE241 /* SearchViewController.xib in Resources */,
 				1CBC05671A58339900ECECC1 /* RecordedVideosViewController.xib in Resources */,
 				1CEDCA2C1A2076A100BFADB5 /* speedometer-256.png in Resources */,
 				1CD407311A27AE1100F6A2E7 /* gps_disconnected-256.png in Resources */,
@@ -750,6 +759,7 @@
 				1C6EC4881A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				F08E8D921A5763F6003A1F0C /* IQTitleBarButtonItem.m in Sources */,
 				1C5B891F1A55A10D007BA4CD /* RegisterUserViewController.m in Sources */,
+				F0166E751A588993000CE241 /* SearchViewController.m in Sources */,
 				F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */,
 				1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */,
 				F08E8D8E1A5763F6003A1F0C /* IQKeyboardReturnKeyHandler.m in Sources */,

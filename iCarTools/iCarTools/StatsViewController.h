@@ -17,12 +17,13 @@
 #import "AddStationViewController.h"
 #import "ChangeViewController.h"
 #import "PricesViewController.h"
+#import "SearchViewController.h"
 
 @import AVFoundation;
 @import AssetsLibrary;
 @import MobileCoreServices;
 
-@interface StatsViewController : UIViewController <GPSUtilitiesDelegate, MKMapViewDelegate, AmazingJSONDelegate, UISearchBarDelegate, SettingsViewControllerDelegate>
+@interface StatsViewController : UIViewController <GPSUtilitiesDelegate, MKMapViewDelegate, AmazingJSONDelegate, SettingsViewControllerDelegate>
 
 @property (strong, nonatomic) CLGeocoder *geocoder;
 
@@ -34,8 +35,6 @@
 @property (strong, nonatomic) UIButton *exitButton;
 @property (strong, nonatomic) UIButton *menuButton;
 
-@property (strong, nonatomic) UISearchBar *searchBar;
-
 - (IBAction)addStationAction:(id)sender;
 - (IBAction)findStationAction:(id)sender;
 
@@ -43,13 +42,13 @@
 
 @property (strong, nonatomic) UIView *upperBackgroundView;
 @property (strong, nonatomic) UIView *lowerBackgroundView;
-@property (strong, nonatomic) UIView *searchBarView;
 
 @property (strong, nonatomic) UIImageView *gpsStatusImageView;
 
 @property (strong, nonatomic) AddStationViewController *addStationView;
 @property (strong, nonatomic) ChangeViewController *changeStationView;
 @property (strong, nonatomic) PricesViewController *pricesView;
+@property (strong, nonatomic) SearchViewController *searchView;
 //@property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) UIViewController *parentView;

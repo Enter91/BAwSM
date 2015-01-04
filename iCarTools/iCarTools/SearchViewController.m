@@ -1,20 +1,21 @@
 //
-//  PricesViewController.m
+//  SearchViewController.m
 //  iCarTools
 //
-//  Created by Damian Klimaszewski on 30.12.2014.
-//  Copyright (c) 2014 Michał Czwarnowski. All rights reserved.
+//  Created by Damian Klimaszewski on 03.01.2015.
+//  Copyright (c) 2015 Michał Czwarnowski. All rights reserved.
 //
 
-#import "PricesViewController.h"
+#import "SearchViewController.h"
 
-@interface PricesViewController ()
+@interface SearchViewController ()
 
 @end
 
-@implementation PricesViewController {
+@implementation SearchViewController {
     NSArray *responseArray;
-    NSMutableArray *visits;
+    NSMutableArray *stations;
+    CLLocationCoordinate2D stationCoordinate;
 }
 
 - (void)viewDidLoad {
@@ -23,7 +24,7 @@
     _wantsCustomAnimation = YES;
     
     [_backButton setFrame:CGRectMake(115, 528, 90, 40)];
-    [_tableView setFrame:CGRectMake(0, 0, 320, 530)];
+    [_tableView setFrame:CGRectMake(0, 44, 320, 486)];
     
     [self.backButton removeTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
     [self.backButton addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
@@ -38,11 +39,11 @@
     
     [[AmazingJSON sharedInstance] setDelegate:self];
     
-    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getList.php?name=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"stationName"]]];
+    [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getStationList.php?latitude=%@&longitude=%@&diff=%f",[[NSUserDefaults standardUserDefaults] objectForKey:@"userLat"],[[NSUserDefaults standardUserDefaults] objectForKey:@"userLong"],0.5]];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     self.tableView.backgroundView = imageView;
-    self.tableView.allowsSelection = NO;
+    //self.tableView.allowsSelection = NO;
     self.tableView.estimatedRowHeight = 100.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
@@ -50,15 +51,53 @@
     
 }
 
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    [self tableView:tableView didSelectRowAtIndexPath:indexPath];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:[stations objectAtIndex:indexPath.row] forKey:@"selectedRow"];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:self.tableData[indexPath.row] forKey:@"selectedRow"];
+    }
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"zoom"];
+   [self exit];
+}
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    [stations removeAllObjects];
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@", searchText];
+    
+    stations = [NSMutableArray arrayWithArray: [self.tableData filteredArrayUsingPredicate:resultPredicate]];
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    
+    return YES;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [visits count];
-}
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        return [stations count];
+    }
+    else
+    {
+        return [self.tableData count];
+    }}
 
 /**
  *  @Author Damian Klimaszewski
  *
- *  Table view with visits
+ *  Table view with stations
  */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -70,10 +109,22 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
     cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
+    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
     cell.textLabel.textColor = [UIColor whiteColor];
+    //tableView.allowsSelection = NO;
     cell.textLabel.font = [UIFont fontWithName:@"DINPro-Medium" size:14.0];
     cell.textLabel.numberOfLines = 0; //no max
-    cell.textLabel.text = [visits objectAtIndex:indexPath.row];
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        cell.textLabel.text = [stations objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        cell.textLabel.text = self.tableData[indexPath.row];
+    }
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
@@ -91,46 +142,28 @@
         alert = nil;
     }
     
-    if ([[responseDict objectForKey:@"code"] intValue] == 405) {
-        
+    if ([[responseDict objectForKey:@"code"] intValue] == 400) {
         if (responseArray) {
             responseArray = nil;
         }
         responseArray = [responseDict objectForKey:@"response"];
-        visits=[[NSMutableArray alloc] init];
+        self.tableData = [[NSMutableArray alloc] init];
         
         for (int i = 0; i<[responseArray count]; i++) {
             
             NSString *categoryString = nil;
             categoryString = responseArray[i][@"name"];
-            NSString *first_name = responseArray[i][@"first_name"];
-            NSString *last_name = responseArray[i][@"last_name"];
-            NSString *pb95 = responseArray[i][@"pb95_price"];
-            if ([pb95 isEqual:@"0"]) {
-                pb95 = @"-";
-            }
-            NSString *pb98 = responseArray[i][@"pb98_price"];
-            if ([pb98 isEqual:@"0"]) {
-                pb98 = @"-";
-            }
-            NSString *on = responseArray[i][@"on_price"];
-            if ([on isEqual:@"0"]) {
-                on = @"-";
-            }
-            NSString *lpg = responseArray[i][@"lpg_price"];
-            if ([lpg isEqual:@"0"]) {
-                lpg = @"-";
-            }
-            NSString *comment = responseArray[i][@"comment"];
-            if ([comment isEqual:@""]) {
-                comment = @"-";
-            }
-            NSString *visitdate = responseArray[i][@"visit_date"];
-            NSString *subtitle;
-            subtitle = [NSString stringWithFormat:@"%@    %@ %@ \r\rPb95: %@   Pb98: %@   On: %@   Lpg: %@ \r\rComment: %@",visitdate,first_name,last_name,pb95,pb98,on,lpg,comment];
-            [visits addObject:subtitle];
+            stationCoordinate.latitude = [responseArray[i][@"latitude"] doubleValue];
+            stationCoordinate.longitude = [responseArray[i][@"longitude"] doubleValue];
+            //NSString *subtitle = responseArray[i][@"address"];
+            
+            NSString *station;
+            station = [NSString stringWithFormat:@"%@",categoryString];
+            [self.tableData addObject:station];
         }
+        stations = [NSMutableArray arrayWithCapacity:[self.tableData count]];
         [self.tableView reloadData];
+
         //responseArray = nil;
     }
 }
@@ -170,14 +203,14 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 - (void)setFramesForPortrait {
     dispatch_async(dispatch_get_main_queue(), ^{
         [_backButton setFrame:CGRectMake(115, 528, 90, 40)];
-        [_tableView setFrame:CGRectMake(0, 0, 320, 530)];
+        [_tableView setFrame:CGRectMake(0, 44, 320, 486)];
     });
 }
 
 - (void)setFramesForLandscapeLeft {
     dispatch_async(dispatch_get_main_queue(), ^{
         [_backButton setFrame:CGRectMake(240, 280, 90, 40)];
-        [_tableView setFrame:CGRectMake(0, 0, 568, 280)];
+        [_tableView setFrame:CGRectMake(0, 44, 568, 236)];
     });
 }
 
@@ -201,9 +234,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     _parentView = nil;
     SWRevealViewController *reveal = self.revealViewController;
     reveal.panGestureRecognizer.enabled = YES;
-}
-
-- (IBAction)backButtonAction:(id)sender {
 }
 
 @end

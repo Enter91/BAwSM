@@ -15,6 +15,7 @@
 @implementation AddStationViewController{
     CLLocation *userLocation;
     BOOL numericError;
+    BOOL nameError;
     id gas_station_id;
     int gas_station_id_int;
     UIGestureRecognizer *tapper;
@@ -84,6 +85,7 @@
     tapper.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapper];
     
+    nameError = NO;
     [self setFramesForInterface:self.interfaceOrientation];
    
 }
@@ -108,6 +110,7 @@
     
     NSLog(@"response: %@", responseDict);
     if ([[responseDict objectForKey:@"code"] intValue] == 200) {
+        nameError = YES;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         alert = nil;
@@ -134,6 +137,8 @@
     
     if ([[responseDict objectForKey:@"code"] intValue] == 401) {
         
+        nameError = NO;
+        
         gas_station_id = [responseDict objectForKey:@"gas_station_id"];
         gas_station_id_int = [gas_station_id integerValue];
         
@@ -146,16 +151,7 @@
     }
     
     if ([[responseDict objectForKey:@"code"] intValue] == 402) {
-        
-        if ([_pb95TextField.text isEqual:@""] && [_pb98TextField.text isEqual:@""] && [_onTextField.text isEqual:@""] && [_lpgTextField.text isEqual:@""] && [_commentTextView.text isEqual:@""]) {
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-            alert = nil;
-        }
     }
-
-
 }
 
 - (void)alertView:(UIAlertView *)alertView
@@ -204,6 +200,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/removeStation.php?name=%@", _stationNameTextField.text]];
 }
 
+/**
+ *  @Author Damian Klimaszewski
+ *
+ *  Add station into database
+ */
 - (IBAction)addStationAction:(id)sender {
  
     if(![_stationNameTextField.text isEqual:@""]) {
@@ -259,19 +260,21 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
              dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
              dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                  
-                 [self addVisitDatabaseConnect];
+                 if(nameError == NO) {
+                     [self addVisitDatabaseConnect];
                  
-                 double delayInSeconds = 1.0;
-                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                     double delayInSeconds = 2.0;
+                     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                      
-                     if (numericError == YES) {
+                         if (numericError == YES) {
                          
-                         [self removeStation];
-                     } else {
-                         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"showAnnotations"];
-                     }
-                 });
+                             [self removeStation];
+                         } else {
+                             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"showAnnotations"];
+                         }
+                     });
+                 }
              });
          
          } else {

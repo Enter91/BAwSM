@@ -32,6 +32,10 @@
 		1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */; };
 		1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4135441A20AB7200D3F1CC /* SettingsViewController.m */; };
 		1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */; };
+		1C45E3B31A59500700F4443C /* RouteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C45E3B11A59500700F4443C /* RouteViewController.m */; };
+		1C45E3B41A59500700F4443C /* RouteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C45E3B21A59500700F4443C /* RouteViewController.xib */; };
+		1C45E3B61A59574700F4443C /* BrannbollFet.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C45E3B51A59574700F4443C /* BrannbollFet.ttf */; };
+		1C45E3BD1A59A32A00F4443C /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C45E3BC1A59A32A00F4443C /* play.png */; };
 		1C5B891F1A55A10D007BA4CD /* RegisterUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B891D1A55A10D007BA4CD /* RegisterUserViewController.m */; };
 		1C5B89201A55A10D007BA4CD /* RegisterUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C5B891E1A55A10D007BA4CD /* RegisterUserViewController.xib */; };
 		1C5B89231A55C4FE007BA4CD /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B89221A55C4FE007BA4CD /* UserInfo.m */; };
@@ -51,6 +55,7 @@
 		1CBC05671A58339900ECECC1 /* RecordedVideosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBC05651A58339900ECECC1 /* RecordedVideosViewController.xib */; };
 		1CBC056A1A5835AC00ECECC1 /* RecordedVideosTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC05691A5835AC00ECECC1 /* RecordedVideosTableViewCell.m */; };
 		1CBC056C1A583D0E00ECECC1 /* Maps-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CBC056B1A583D0E00ECECC1 /* Maps-icon.png */; };
+		1CBC05711A58B38300ECECC1 /* UIImage+Resizing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC05701A58B38300ECECC1 /* UIImage+Resizing.m */; };
 		1CD407291A26919500F6A2E7 /* suszarka.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD407281A26919500F6A2E7 /* suszarka.png */; };
 		1CD4072B1A27AA7A00F6A2E7 /* user_male4-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */; };
 		1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072C1A27AC8000F6A2E7 /* wypadek.png */; };
@@ -146,6 +151,11 @@
 		1C4135431A20AB7200D3F1CC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1C4135441A20AB7200D3F1CC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		1C45E3B01A59500700F4443C /* RouteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteViewController.h; sourceTree = "<group>"; };
+		1C45E3B11A59500700F4443C /* RouteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteViewController.m; sourceTree = "<group>"; };
+		1C45E3B21A59500700F4443C /* RouteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RouteViewController.xib; sourceTree = "<group>"; };
+		1C45E3B51A59574700F4443C /* BrannbollFet.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BrannbollFet.ttf; sourceTree = "<group>"; };
+		1C45E3BC1A59A32A00F4443C /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		1C5B891C1A55A10D007BA4CD /* RegisterUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterUserViewController.h; sourceTree = "<group>"; };
 		1C5B891D1A55A10D007BA4CD /* RegisterUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterUserViewController.m; sourceTree = "<group>"; };
 		1C5B891E1A55A10D007BA4CD /* RegisterUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterUserViewController.xib; sourceTree = "<group>"; };
@@ -177,6 +187,8 @@
 		1CBC05681A5835AC00ECECC1 /* RecordedVideosTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordedVideosTableViewCell.h; sourceTree = "<group>"; };
 		1CBC05691A5835AC00ECECC1 /* RecordedVideosTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordedVideosTableViewCell.m; sourceTree = "<group>"; };
 		1CBC056B1A583D0E00ECECC1 /* Maps-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Maps-icon.png"; sourceTree = "<group>"; };
+		1CBC056F1A58B38300ECECC1 /* UIImage+Resizing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resizing.h"; sourceTree = "<group>"; };
+		1CBC05701A58B38300ECECC1 /* UIImage+Resizing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resizing.m"; sourceTree = "<group>"; };
 		1CD407281A26919500F6A2E7 /* suszarka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suszarka.png; sourceTree = "<group>"; };
 		1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_male4-256.png"; sourceTree = "<group>"; };
 		1CD4072C1A27AC8000F6A2E7 /* wypadek.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wypadek.png; sourceTree = "<group>"; };
@@ -293,6 +305,8 @@
 		1C30475219FED07300D2EE5E /* iCarTools */ = {
 			isa = PBXGroup;
 			children = (
+				1CBC056E1A58B32E00ECECC1 /* Login/Register */,
+				1CBC056D1A58B32300ECECC1 /* Helpers */,
 				1C5B89241A55EFDE007BA4CD /* iCarTools.entitlements */,
 				1C3047BC19FEE9AA00D2EE5E /* Singletons */,
 				1C30478619FED65200D2EE5E /* Stats Files */,
@@ -303,22 +317,12 @@
 				1C30478019FED5A100D2EE5E /* ViewController.h */,
 				1C30478119FED5A100D2EE5E /* ViewController.m */,
 				1C3047A619FEE09100D2EE5E /* ViewController.xib */,
-				1CEDCA231A2074E000BFADB5 /* LoginViewController.h */,
-				1CEDCA241A2074E000BFADB5 /* LoginViewController.m */,
-				1CEDCA251A2074E000BFADB5 /* LoginViewController.xib */,
-				1C5B891C1A55A10D007BA4CD /* RegisterUserViewController.h */,
-				1C5B891D1A55A10D007BA4CD /* RegisterUserViewController.m */,
-				1C5B891E1A55A10D007BA4CD /* RegisterUserViewController.xib */,
 				1C4135431A20AB7200D3F1CC /* SettingsViewController.h */,
 				1C4135441A20AB7200D3F1CC /* SettingsViewController.m */,
 				1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */,
 				1CA729951A21458900FEBD51 /* TutorialViewController.h */,
 				1CA729961A21458900FEBD51 /* TutorialViewController.m */,
-				1C1849191A3D77A200E14DAE /* CustomAnimationController.h */,
-				1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */,
 				1C30479D19FED76000D2EE5E /* Resources */,
-				1CBC05601A571D9700ECECC1 /* LoginManager.h */,
-				1CBC05611A571D9700ECECC1 /* LoginManager.m */,
 			);
 			path = iCarTools;
 			sourceTree = "<group>";
@@ -366,6 +370,9 @@
 				1CBC05651A58339900ECECC1 /* RecordedVideosViewController.xib */,
 				1CBC05681A5835AC00ECECC1 /* RecordedVideosTableViewCell.h */,
 				1CBC05691A5835AC00ECECC1 /* RecordedVideosTableViewCell.m */,
+				1C45E3B01A59500700F4443C /* RouteViewController.h */,
+				1C45E3B11A59500700F4443C /* RouteViewController.m */,
+				1C45E3B21A59500700F4443C /* RouteViewController.xib */,
 			);
 			name = "Recorder Files";
 			sourceTree = "<group>";
@@ -400,6 +407,7 @@
 		1C30478719FED65B00D2EE5E /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				1C45E3B51A59574700F4443C /* BrannbollFet.ttf */,
 				1C30478919FED74C00D2EE5E /* DINPro-Black.otf */,
 				1C30478A19FED74C00D2EE5E /* DINPro-BlackItalic.otf */,
 				1C30478B19FED74C00D2EE5E /* DINPro-Bold.otf */,
@@ -417,6 +425,7 @@
 		1C30478819FED66700D2EE5E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1C45E3BC1A59A32A00F4443C /* play.png */,
 				1CD4072E1A27AE1100F6A2E7 /* gps_disconnected-256.png */,
 				1CD4072F1A27AE1100F6A2E7 /* gps_receiving-256.png */,
 				1CD407301A27AE1100F6A2E7 /* gps_searching-256.png */,
@@ -470,6 +479,32 @@
 				1C5B89221A55C4FE007BA4CD /* UserInfo.m */,
 			);
 			name = Singletons;
+			sourceTree = "<group>";
+		};
+		1CBC056D1A58B32300ECECC1 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1C1849191A3D77A200E14DAE /* CustomAnimationController.h */,
+				1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */,
+				1CBC056F1A58B38300ECECC1 /* UIImage+Resizing.h */,
+				1CBC05701A58B38300ECECC1 /* UIImage+Resizing.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		1CBC056E1A58B32E00ECECC1 /* Login/Register */ = {
+			isa = PBXGroup;
+			children = (
+				1CEDCA231A2074E000BFADB5 /* LoginViewController.h */,
+				1CEDCA241A2074E000BFADB5 /* LoginViewController.m */,
+				1CEDCA251A2074E000BFADB5 /* LoginViewController.xib */,
+				1C5B891C1A55A10D007BA4CD /* RegisterUserViewController.h */,
+				1C5B891D1A55A10D007BA4CD /* RegisterUserViewController.m */,
+				1C5B891E1A55A10D007BA4CD /* RegisterUserViewController.xib */,
+				1CBC05601A571D9700ECECC1 /* LoginManager.h */,
+				1CBC05611A571D9700ECECC1 /* LoginManager.m */,
+			);
+			name = Login/Register;
 			sourceTree = "<group>";
 		};
 		376440F35061682691655F99 /* Pods */ = {
@@ -661,6 +696,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CEDCA271A2074E000BFADB5 /* LoginViewController.xib in Resources */,
+				1C45E3B41A59500700F4443C /* RouteViewController.xib in Resources */,
 				1CB4B01B1A2073C800172BA4 /* StatsViewController.xib in Resources */,
 				1CEDCA2D1A2076A100BFADB5 /* settings3-256.png in Resources */,
 				1CD407331A27AE1100F6A2E7 /* gps_searching-256.png in Resources */,
@@ -679,6 +715,7 @@
 				1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */,
 				1CF81C4D1A129A6B00496116 /* smallDotImage.png in Resources */,
 				1C3047A419FEE09100D2EE5E /* ViewController.xib in Resources */,
+				1C45E3B61A59574700F4443C /* BrannbollFet.ttf in Resources */,
 				1C30479A19FED74C00D2EE5E /* DINPro-Medium.otf in Resources */,
 				1CF81C4B1A12971800496116 /* white line.png in Resources */,
 				1CBC056C1A583D0E00ECECC1 /* Maps-icon.png in Resources */,
@@ -686,6 +723,7 @@
 				F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */,
 				F0166E761A588993000CE241 /* SearchViewController.xib in Resources */,
 				F0EEDC861A596EE2004B4EC8 /* lukoil.png in Resources */,
+				1C45E3BD1A59A32A00F4443C /* play.png in Resources */,
 				1CBC05671A58339900ECECC1 /* RecordedVideosViewController.xib in Resources */,
 				1CEDCA2C1A2076A100BFADB5 /* speedometer-256.png in Resources */,
 				1CD407311A27AE1100F6A2E7 /* gps_disconnected-256.png in Resources */,
@@ -780,12 +818,14 @@
 				F08E8D8A1A5763F6003A1F0C /* IQNSArray+Sort.m in Sources */,
 				F06B73251A5309FF00C66496 /* PricesViewController.m in Sources */,
 				1C5B89291A55F031007BA4CD /* KeychainItemWrapper.m in Sources */,
+				1C45E3B31A59500700F4443C /* RouteViewController.m in Sources */,
 				1C6EC4881A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				F08E8D921A5763F6003A1F0C /* IQTitleBarButtonItem.m in Sources */,
 				1C5B891F1A55A10D007BA4CD /* RegisterUserViewController.m in Sources */,
 				F0166E751A588993000CE241 /* SearchViewController.m in Sources */,
 				F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */,
 				1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */,
+				1CBC05711A58B38300ECECC1 /* UIImage+Resizing.m in Sources */,
 				F08E8D8E1A5763F6003A1F0C /* IQKeyboardReturnKeyHandler.m in Sources */,
 				1C30475919FED07300D2EE5E /* AppDelegate.m in Sources */,
 				1C86508A1A2DEA9A009B02AA /* AmazingJSON.m in Sources */,

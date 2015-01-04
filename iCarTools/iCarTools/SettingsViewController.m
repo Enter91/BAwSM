@@ -52,6 +52,8 @@
     _cellsTitles = nil;
     _cellsTitles = [[NSArray alloc] initWithArray:titlesArray];
     
+    _menuType = 0;
+    _activeOption = -1;
     [_settingsTableView reloadData];
 }
 
@@ -60,6 +62,17 @@
     _cellsTitles = [[NSArray alloc] initWithArray:titlesArray];
     
     _menuType = depth;
+    _activeOption = -1;
+    [_settingsTableView reloadData];
+}
+
+- (void)updateMenuWithTitlesArray:(NSArray *)titlesArray indexOfActiveOption:(int)activeIndex andMenuType:(int)depth {
+    _cellsTitles = nil;
+    _cellsTitles = [[NSArray alloc] initWithArray:titlesArray];
+    
+    _menuType = depth;
+    
+    _activeOption = activeIndex;
     
     [_settingsTableView reloadData];
 }
@@ -203,7 +216,11 @@
     }
     
     cell.textLabel.text = [_cellsTitles objectAtIndex:row];
-    
+    if (_activeOption == indexPath.row) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     return cell;
 }
 
@@ -212,10 +229,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (_delegate) {
+        if ([_delegate respondsToSelector:@selector(clickedOption:inMenuType:)]) {
+            [_delegate clickedOption:(int)indexPath.row inMenuType:_menuType];
+        }
+    }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [_delegate clickedOption:(int)indexPath.row];
+    
     
 }
 

@@ -9,7 +9,7 @@
 
 @implementation ALAssetsLibrary(CustomPhotoAlbum)
 
--(void)saveImage:(UIImage*)image toAlbum:(NSString*)albumName withCompletionBlock:(SaveImageCompletion)completionBlock
+-(void)saveImage:(UIImage*)image toAlbum:(NSString*)albumName withCompletionBlock:(SaveImageCompletion)completionBlock andErrorBlock:(SaveImageError)completionBlockError
 {
     //write the image data to the assets library (camera roll)
     [self writeImageToSavedPhotosAlbum:image.CGImage orientation:(ALAssetOrientation)image.imageOrientation 
@@ -17,19 +17,20 @@
                               
                           //error handling
                           if (error!=nil) {
-                              completionBlock(error);
+                              completionBlockError(error);
                               return;
                           }
 
                           //add the asset to the custom photo album
                           [self addAssetURL: assetURL 
                                     toAlbum:albumName 
-                        withCompletionBlock:completionBlock];
+                        withCompletionBlock:completionBlock
+                           andErrorBlock:completionBlockError];
                           
                       }];
 }
 
--(void)addAssetURL:(NSURL*)assetURL toAlbum:(NSString*)albumName withCompletionBlock:(SaveImageCompletion)completionBlock
+-(void)addAssetURL:(NSURL*)assetURL toAlbum:(NSString*)albumName withCompletionBlock:(SaveImageCompletion)completionBlock andErrorBlock:(SaveImageError)completionBlockError
 {
     __block BOOL albumWasFound = NO;
     
@@ -51,9 +52,9 @@
                                           [group addAsset: asset];
                                           
                                           //run the completion block
-                                          completionBlock(nil);
+                                          completionBlock(asset);
                                           
-                                      } failureBlock: completionBlock];
+                                      } failureBlock: completionBlockError];
 
                                 //album was found, bail out of the method
                                 return;
@@ -76,21 +77,21 @@
                                                                             [group addAsset: asset];
                                                                             
                                                                             //call the completion block
-                                                                            completionBlock(nil);
+                                                                            completionBlock(asset);
 
-                                                                        } failureBlock: completionBlock];
+                                                                        } failureBlock: completionBlockError];
                                                           
-                                                      } failureBlock: completionBlock];
+                                                      } failureBlock: completionBlockError];
 
                                 //should be the last iteration anyway, but just in case
                                 return;
                             }
                             
-                        } failureBlock: completionBlock];
+                        } failureBlock: completionBlockError];
     
 }
 
--(void)saveVideo:(NSURL*)assetURL toAlbum:(NSString*)albumName withCompletionBlock:(SaveImageCompletion)completionBlock
+-(void)saveVideo:(NSURL*)assetURL toAlbum:(NSString*)albumName withCompletionBlock:(SaveImageCompletion)completionBlock andErrorBlock:(SaveImageError)completionBlockError
 {
     //add the asset to the custom photo album
     [self writeVideoAtPathToSavedPhotosAlbum:assetURL completionBlock:^(NSURL *assetURL, NSError *error)    {
@@ -98,7 +99,8 @@
         
         [self addAssetURL: assetURL
                   toAlbum:albumName
-      withCompletionBlock:completionBlock];
+      withCompletionBlock:completionBlock
+         andErrorBlock:completionBlockError];
     }];
 }
 

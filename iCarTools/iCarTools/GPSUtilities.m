@@ -8,7 +8,7 @@
 
 #import "GPSUtilities.h"
 
-#define kDistanceFilter 25
+#define kDistanceFilter 50
 #define kHeadingFilter 0
 #define kAccuracyFilter 250
 #define kTimeFilter 5
@@ -73,7 +73,7 @@ static bool isFirstAccess = YES;
         if (!self.locManager) {
             self.locManager = [[CLLocationManager alloc] init];
         }
-        //self.locManager.distanceFilter = kDistanceFilter;
+        self.locManager.distanceFilter = kDistanceFilter;
         //self.locManager.headingFilter = kHeadingFilter;
         self.locManager.delegate = self;
         _locationCoordinates = CLLocationCoordinate2DMake(0.0f, 0.0f);

@@ -18,7 +18,7 @@
     AVCaptureVideoPreviewLayer *mCameraLayer;
     UIView *mCameraView;
     AVCaptureMovieFileOutput *movieFile;
-    int menuType;
+    NSString *startRecordingDate;
 }
 
 @end
@@ -27,6 +27,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"enableAudio"] == nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"enableAudio"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"speed unit"] == nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"km/h" forKey:@"speed unit"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -56,6 +66,8 @@
     
     [self updateDataSourceInLeftRevealViewController];
 
+    [((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:self];
+    
     [[AmazingJSON sharedInstance] setDelegate:self];
 }
 
@@ -75,6 +87,12 @@
     [self exit];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+    self.revealViewController.panGestureRecognizer.enabled = YES;
+    self.revealViewController.tapGestureRecognizer.enabled = YES;
+    
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     
@@ -304,6 +322,12 @@
     if (!_isRecording) {
         _isRecording = YES;
         
+        if (startRecordingDate) {
+            startRecordingDate = nil;
+        }
+        
+        startRecordingDate = [self getStringDateFromCurrentDate];
+        
         if (_pointsOnTheRouteArray) {
             if (_pointsOnTheRouteArray.count > 0) {
                 [_pointsOnTheRouteArray removeAllObjects];
@@ -332,6 +356,8 @@
  *  Starts recording showing small rotating white dot at button
  */
 - (void)startRecording {
+    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     if ([self.smallDotImageView isDescendantOfView:self.cameraRecordingButton]) {
         [self.smallDotImageView removeFromSuperview];
@@ -425,11 +451,15 @@
     }];
     
     [movieFile stopRecording];
+    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error {
     
     NSLog(@"didFinishRecordingToOutputFileAtURL - enter");
+    
+    [DejalBezelActivityView activityViewForView:self.view withLabel:NSLocalizedString(@"Please wait...", nil)];
     
     BOOL RecordedSuccessfully = YES;
     if ([error code] != noErr)
@@ -448,45 +478,72 @@
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputFileURL])
         {
-            [library saveVideo:outputFileURL toAlbum:@"iCarTools" withCompletionBlock:^(NSError *error) {
-                
-                if (error) {
-                    NSLog(@"Can't save to custom album with error: %@", [error localizedDescription]);
-                } else {
+            [library saveVideo:outputFileURL toAlbum:@"iCarTools" withCompletionBlock:^(ALAsset *asset) {
+                if (_pointsOnTheRouteArray) {
                     
-                    if (_pointsOnTheRouteArray) {
-                        
-                        if (_pointsOnTheRouteArray.count>0) {
-                            NSDictionary *route = @{@"date" : [self getStringDateFromCurrentDate],
-                                                    @"assetURL" : outputFileURL,
-                                                    @"route" : _pointsOnTheRouteArray};
-                            
-                            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                            NSString *documentsDirectory = [paths objectAtIndex:0];
-                            NSString *path =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/iCarTools/%@", [route objectForKey:@"date"]]];
-                            
-                            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:route];
-                            NSError *error;
-                            BOOL success = [data writeToFile:path options:0 error:&error];
-                            
-                            if (!success) {
-                                NSLog(@"writeToFile failed with error %@", error);
-                            } else {
-                                NSLog(@"writeToFile success");
-                            }
-                            
-                            data = nil;
-                            [_pointsOnTheRouteArray removeAllObjects];
-                            _pointsOnTheRouteArray = nil;
-                        }
-                        
-                        _pointsOnTheRouteArray = nil;
+                    AVURLAsset *assetAV = [[AVURLAsset alloc] initWithURL:[asset valueForProperty:ALAssetPropertyAssetURL] options:nil];
+                    AVAssetImageGenerator *generate = [[AVAssetImageGenerator alloc] initWithAsset:assetAV];
+                    generate.appliesPreferredTrackTransform = YES;
+                    float duration = [[asset valueForProperty:ALAssetPropertyDuration] floatValue];
+                    CMTime time = duration>=1 ? CMTimeMake(duration/2.0,1) : CMTimeMake(1, 1000);
+                    CGImageRef thumbImg = [generate copyCGImageAtTime:time actualTime:NULL error:nil];
+                    UIImage *thumbUIImage = [UIImage imageWithCGImage:thumbImg];
+                    
+                    UIImage *resizedThumb = [thumbUIImage scaleToSize:CGSizeMake(160, 160)];
+                    
+                    NSData *thumbData = UIImageJPEGRepresentation(resizedThumb, 0.8);
+                    
+                    NSDictionary *route = @{@"date" : startRecordingDate ? startRecordingDate : [self getStringDateFromCurrentDate],
+                                            @"assetURL" : [asset valueForProperty:ALAssetPropertyAssetURL],
+                                            @"route" : _pointsOnTheRouteArray,
+                                            @"thumbnail" : thumbData};
+                    
+                    
+                    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                    NSString *documentsDirectory = [paths objectAtIndex:0];
+                    NSString *path =[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/iCarTools/%@", [route objectForKey:@"date"]]];
+                    
+                    BOOL success = [NSKeyedArchiver archiveRootObject:route toFile:path];
+                    
+                    if (!success) {
+                        NSLog(@"writeToFile failed with error %@", error);
+                        [self showCantSaveVideoError];
+                    } else {
+                        NSLog(@"writeToFile success");
                     }
                     
+                    startRecordingDate = nil;
+                    [_pointsOnTheRouteArray removeAllObjects];
+                    _pointsOnTheRouteArray = nil;
+                    thumbImg = nil;
+                    thumbUIImage = nil;
+                    thumbData = nil;
+                    resizedThumb = nil;
+                    
+                    
+                    _pointsOnTheRouteArray = nil;
+                    [DejalBezelActivityView removeViewAnimated:YES];
                 }
+            } andErrorBlock:^(NSError *error) {
+                [self showCantSaveVideoError];
             }];
+        } else {
+            [self showCantSaveVideoError];
         }
+    } else {
+        [self showCantSaveVideoError];
     }
+}
+
+- (void)showCantSaveVideoError {
+    [DejalBezelActivityView removeViewAnimated:YES];
+    UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                          message:NSLocalizedString(@"Can\'t save video", @"Couldn\'t add video input")
+                                                         delegate:nil
+                                                cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                                otherButtonTitles: nil];
+    [myAlertView show];
+    myAlertView = nil;
 }
 
 - (void) initializeCamera {
@@ -661,6 +718,17 @@
 
 - (void)teardownAVCapture
 {
+    if (_isRecording) {
+        _isRecording = NO;
+        [self stopRecording];
+    }
+    
+    if (movieFile) {
+        [movieFile stopRecording];
+    }
+    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    
     output = nil;
     
     [session removeInput:input];
@@ -681,35 +749,70 @@
 - (void)submitAccidentPosition {
     //accident_type_id 2
     
-    CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
-    
-    if (location.latitude != 0.0f && location.longitude != 0.0f) {
-        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=2&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, [self getStringDateFromCurrentDate]]];
-
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"isLogged"] == [NSNumber numberWithBool:YES] && [[UserInfo sharedInstance] login].length > 0) {
+        CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
+        
+        if (location.latitude != 0.0f && location.longitude != 0.0f) {
+            
+            [_crashNotificationButton setUserInteractionEnabled:NO];
+            
+            [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=%d&accident_type_id=2&latitude=%f&longitude=%f&date=%@", [[UserInfo sharedInstance] user_id], location.latitude, location.longitude, [self getStringDateFromCurrentDate]]];
+            
+        } else {
+            [self showFloatingAlertViewWithType:0];
+        }
     } else {
-        [self showFloatingAlertViewWithType:0];
+        [self showFloatingAlertViewWithType:3];
     }
+    
     
 }
 
 - (void)submitSpeedCameraPosition {
     //accident_type_id 1
     
-    CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
-    
-    if (location.latitude != 0.0f && location.longitude != 0.0f) {
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"isLogged"] == [NSNumber numberWithBool:YES] && [[UserInfo sharedInstance] login].length > 0) {
+        CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
         
-        NSDateFormatter *df=[[NSDateFormatter alloc]init];
-        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString *dateString = [df stringFromDate:[NSDate date]];
-        
-        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=1&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, dateString]];
-        
-        df = nil;
+        if (location.latitude != 0.0f && location.longitude != 0.0f) {
+            
+            NSDateFormatter *df=[[NSDateFormatter alloc]init];
+            [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            NSString *dateString = [df stringFromDate:[NSDate date]];
+            
+            [_speedNotificationButton setUserInteractionEnabled:NO];
+            
+            [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=%d&accident_type_id=1&latitude=%f&longitude=%f&date=%@", [[UserInfo sharedInstance] user_id], location.latitude, location.longitude, dateString]];
+            
+            df = nil;
+        } else {
+            [self showFloatingAlertViewWithType:0];
+        }
     } else {
-        [self showFloatingAlertViewWithType:0];
+        [self showFloatingAlertViewWithType:3];
     }
     
+}
+
+- (void)lockTrafficAccidentsButtons {
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockTrafficAccidentsButtons) object:nil];
+    [self performSelector:@selector(unlockTrafficAccidentsButtons) withObject:nil afterDelay:5.0];
+    [_speedNotificationButton setUserInteractionEnabled:NO];
+    [_crashNotificationButton setUserInteractionEnabled:NO];
+    [UIView animateWithDuration:0.3 animations:^{
+        [_speedNotificationButton setAlpha:0.5];
+        [_crashNotificationButton setAlpha:0.5];
+    }];
+}
+
+- (void)unlockTrafficAccidentsButtons {
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockTrafficAccidentsButtons) object:nil];
+    [_speedNotificationButton setUserInteractionEnabled:YES];
+    [_crashNotificationButton setUserInteractionEnabled:YES];
+    [UIView animateWithDuration:0.3 animations:^{
+        [_speedNotificationButton setAlpha:1.0];
+        [_crashNotificationButton setAlpha:1.0];
+    }];
 }
 
 - (void)responseDictionary:(NSDictionary *)responseDict {
@@ -717,6 +820,10 @@
     
     if (responseDict == nil || [[responseDict objectForKey:@"code"] intValue] == 200) {
         [self showFloatingAlertViewWithType:0];
+        [self unlockTrafficAccidentsButtons];
+    } else {
+        [self lockTrafficAccidentsButtons];
+        [self showFloatingAlertViewWithType:1];
     }
 }
 
@@ -725,7 +832,7 @@
  *
  *  Wyświetla pięciosekundowy alert
  *
- *  @param type 0 - błąd, 1 - poprawne dodanie zdarzenia, 2 - odświeżenie info z bazy
+ *  @param type 0 - błąd, 1 - poprawne dodanie zdarzenia, 2 - odświeżenie info z bazy, 3 - niezalogowany
  */
 - (void)showFloatingAlertViewWithType:(int)type {
     
@@ -758,6 +865,10 @@
         case 2:
             [floatingViewLabel setText:NSLocalizedString(@"Database refreshed.", nil)];
             [_floatingAlertView setBackgroundColor:[UIColor greenColor]];
+            break;
+        case 3:
+            [floatingViewLabel setText:NSLocalizedString(@"You must be logged in to send traffic info.", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor redColor]];
             break;
             
         default:
@@ -842,17 +953,14 @@
 }
 
 - (void)exit {
-    if (_isRecording) {
-        _isRecording = NO;
-        [self stopRecording];
-    }
+    [self teardownAVCapture];
     [self.gpsUtilities stopGPS];
     self.gpsUtilities.delegate = nil;
     self.gpsUtilities = nil;
     [_pointsOnTheRouteArray removeAllObjects];
     _pointsOnTheRouteArray = nil;
     [self orientationUnlock];
-    [self teardownAVCapture];
+    [((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:nil];
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
 }
@@ -866,7 +974,7 @@
 }
 
 #pragma mark- SettingsViewController
-- (void)clickedOption:(int)number {
+- (void)clickedOption:(int)number inMenuType:(int)menuType {
     
     /*NSLocalizedString(@"Recorded videos", nil),
      NSLocalizedString(@"Enable sound", nil),
@@ -895,13 +1003,36 @@
             default:
                 break;
         }
+    } else if (menuType == 1) {
+        switch (number) {
+            case 0:
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"enableAudio"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
+                [self updateDataSourceInLeftRevealViewController];
+                break;
+            case 1:
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"enableAudio"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
+                [self updateDataSourceInLeftRevealViewController];
+                break;
+            default:
+                break;
+        }
     } else if (menuType == 4) {
         switch (number) {
             case 0:
                 [[NSUserDefaults standardUserDefaults] setObject:@"km/h" forKey:@"speed unit"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
+                [self updateDataSourceInLeftRevealViewController];
                 break;
             case 1:
                 [[NSUserDefaults standardUserDefaults] setObject:@"mph" forKey:@"speed unit"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self.revealViewController setFrontViewPosition:FrontViewPositionRight animated:YES];
+                [self updateDataSourceInLeftRevealViewController];
                 break;
                 
             default:
@@ -914,11 +1045,24 @@
 
 
 - (void)showRecordedVideosList {
+    RecordedVideosViewController *recordedVideos = [[RecordedVideosViewController alloc] init];
+    recordedVideos.parentView = self;
+    [self.revealViewController pushFrontViewController:recordedVideos animated:YES];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self teardownAVCapture];
+    });
     
+    recordedVideos = nil;
 }
 
 - (void)showEnableSoundList {
-    
+    if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
+        [self.revealViewController setFrontViewPosition:FrontViewPositionRightMost animated:YES];
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
+                                                                                                              NSLocalizedString(@"YES", nil),
+                                                                                                              NSLocalizedString(@"NO", nil)]
+                                                                                        indexOfActiveOption:[[NSUserDefaults standardUserDefaults] objectForKey:@"enableAudio"] == [NSNumber numberWithBool:YES] ? 0 : 1 andMenuType:1];
+    }
 }
 
 - (void)showVideoQualityList {
@@ -931,10 +1075,11 @@
 
 - (void)showSpeedUnitSettings {
     if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
+        [self.revealViewController setFrontViewPosition:FrontViewPositionRightMost animated:YES];
         [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
                                                                                 NSLocalizedString(@"km/h", nil),
                                                                                 NSLocalizedString(@"mph", nil)]
-                                                                                                andMenuType:4];
+                                                                                                indexOfActiveOption:[[[NSUserDefaults standardUserDefaults] objectForKey:@"speed unit"] isEqualToString: @"km/h"] ? 0 : 1 andMenuType:4];
     }
 }
 

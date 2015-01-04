@@ -5,8 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="BrannbollFet.ttf">
+            <string>BrannbollFet</string>
+        </mutableArray>
         <mutableArray key="DINPro-Light.otf">
-            <string>DINPro-Light</string>
             <string>DINPro-Light</string>
             <string>DINPro-Light</string>
             <string>DINPro-Light</string>
@@ -70,10 +72,10 @@
                     <rect key="frame" x="20" y="270" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iCarTools" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9mD-PE-CXF">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iCarTools0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9mD-PE-CXF">
                     <rect key="frame" x="16" y="50" width="288" height="110"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="70"/>
+                    <fontDescription key="fontDescription" name="BrannbollFet" family="Brannboll Fet" pointSize="45"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>

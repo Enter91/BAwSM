@@ -10,7 +10,7 @@
 
 @implementation MyCustomAnnotation
 
-- (id)initWithTitle:(NSString *)newTitle Subtitle:(NSString *)newSubtitle Location:(CLLocationCoordinate2D)location {
+- (id)initWithTitle:(NSString *)newTitle Subtitle:(NSString *)newSubtitle Location:(CLLocationCoordinate2D)location Company:(NSString *)newCompany {
     
     self = [super init];
     
@@ -18,6 +18,7 @@
         _title = newTitle;
         _subtitle = newSubtitle;
         _coordinate = location;
+        _company = newCompany;
     }
     
     return self;
@@ -30,11 +31,12 @@
  */
 - (MKAnnotationView *)annotationView {
     
-    MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:self reuseIdentifier:@"MyCustomAnnotation"];
+    MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:self reuseIdentifier:_company];
                                     
     annotationView.enabled = YES;
     annotationView.canShowCallout = YES;
-    annotationView.image = [UIImage imageNamed:@"gas"];
+    NSString *name = _company;
+    annotationView.image = [UIImage imageNamed:name];
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
     [rightButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];

@@ -90,6 +90,12 @@
 		F08E8D951A5763F6003A1F0C /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F08E8D891A5763F6003A1F0C /* IQKeyboardManager.bundle */; };
 		F0C3700F1A246C48000C5A82 /* FixedCompassLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */; };
 		F0EDA5861A50CB74006D7A73 /* ChangeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EDA5851A50CB74006D7A73 /* ChangeViewController.xib */; };
+		F0EEDC801A596B34004B4EC8 /* shell.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEDC7F1A596B34004B4EC8 /* shell.png */; };
+		F0EEDC821A596C0C004B4EC8 /* bp.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEDC811A596C0C004B4EC8 /* bp.png */; };
+		F0EEDC841A596E72004B4EC8 /* orlen.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEDC831A596E72004B4EC8 /* orlen.png */; };
+		F0EEDC861A596EE2004B4EC8 /* lukoil.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEDC851A596EE2004B4EC8 /* lukoil.png */; };
+		F0EEDC881A597150004B4EC8 /* lotos.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEDC871A597150004B4EC8 /* lotos.png */; };
+		F0EEDC8A1A597261004B4EC8 /* statoil.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEDC891A597261004B4EC8 /* statoil.png */; };
 		F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EEF6801A41995200157AA8 /* AddStationViewController.m */; };
 		F0EEF6831A41995200157AA8 /* AddStationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EEF6811A41995200157AA8 /* AddStationViewController.xib */; };
 /* End PBXBuildFile section */
@@ -232,6 +238,12 @@
 		F0EDA5821A50CB45006D7A73 /* ChangeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeViewController.h; sourceTree = "<group>"; };
 		F0EDA5831A50CB61006D7A73 /* ChangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeViewController.m; sourceTree = "<group>"; };
 		F0EDA5851A50CB74006D7A73 /* ChangeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeViewController.xib; sourceTree = "<group>"; };
+		F0EEDC7F1A596B34004B4EC8 /* shell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shell.png; sourceTree = "<group>"; };
+		F0EEDC811A596C0C004B4EC8 /* bp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bp.png; sourceTree = "<group>"; };
+		F0EEDC831A596E72004B4EC8 /* orlen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orlen.png; sourceTree = "<group>"; };
+		F0EEDC851A596EE2004B4EC8 /* lukoil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lukoil.png; sourceTree = "<group>"; };
+		F0EEDC871A597150004B4EC8 /* lotos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lotos.png; sourceTree = "<group>"; };
+		F0EEDC891A597261004B4EC8 /* statoil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statoil.png; sourceTree = "<group>"; };
 		F0EEF67F1A41995200157AA8 /* AddStationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStationViewController.h; sourceTree = "<group>"; };
 		F0EEF6801A41995200157AA8 /* AddStationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddStationViewController.m; sourceTree = "<group>"; };
 		F0EEF6811A41995200157AA8 /* AddStationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddStationViewController.xib; sourceTree = "<group>"; };
@@ -418,10 +430,16 @@
 				1CD407281A26919500F6A2E7 /* suszarka.png */,
 				1CA7299A1A21466800FEBD51 /* Tutorial-Background.png */,
 				1CA7299C1A21466F00FEBD51 /* Tutorial-iPhone.png */,
+				F0EEDC871A597150004B4EC8 /* lotos.png */,
+				F0EEDC891A597261004B4EC8 /* statoil.png */,
 				1CEDCA281A2076A100BFADB5 /* photo-256.png */,
+				F0EEDC851A596EE2004B4EC8 /* lukoil.png */,
+				F0EEDC831A596E72004B4EC8 /* orlen.png */,
 				1CEDCA291A2076A100BFADB5 /* speedometer-256.png */,
 				1CEDCA2A1A2076A100BFADB5 /* settings3-256.png */,
 				1CF81C4C1A129A6B00496116 /* smallDotImage.png */,
+				F0EEDC811A596C0C004B4EC8 /* bp.png */,
+				F0EEDC7F1A596B34004B4EC8 /* shell.png */,
 				1CF81C4A1A12971800496116 /* white line.png */,
 				1CF81C481A12954800496116 /* record_button.png */,
 				1C3047BA19FEE7B600D2EE5E /* background.png */,
@@ -653,6 +671,7 @@
 				F0EEF6831A41995200157AA8 /* AddStationViewController.xib in Resources */,
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
 				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
+				F0EEDC881A597150004B4EC8 /* lotos.png in Resources */,
 				F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */,
 				F05F03841A49DF0D003928C5 /* gas.png in Resources */,
 				1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */,
@@ -666,18 +685,23 @@
 				1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */,
 				F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */,
 				F0166E761A588993000CE241 /* SearchViewController.xib in Resources */,
+				F0EEDC861A596EE2004B4EC8 /* lukoil.png in Resources */,
 				1CBC05671A58339900ECECC1 /* RecordedVideosViewController.xib in Resources */,
 				1CEDCA2C1A2076A100BFADB5 /* speedometer-256.png in Resources */,
 				1CD407311A27AE1100F6A2E7 /* gps_disconnected-256.png in Resources */,
 				1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */,
+				F0EEDC841A596E72004B4EC8 /* orlen.png in Resources */,
 				F02351871A287F240077C1A2 /* exit-50.png in Resources */,
 				1C30476119FED07300D2EE5E /* Images.xcassets in Resources */,
 				1CD4072B1A27AA7A00F6A2E7 /* user_male4-256.png in Resources */,
 				1C5B89201A55A10D007BA4CD /* RegisterUserViewController.xib in Resources */,
+				F0EEDC801A596B34004B4EC8 /* shell.png in Resources */,
 				1C30479319FED74C00D2EE5E /* DINPro-Black.otf in Resources */,
 				1C30479B19FED74C00D2EE5E /* DINPro-MediumItalic.otf in Resources */,
 				F02351891A28874A0077C1A2 /* search-256.png in Resources */,
 				1C3047BB19FEE7B600D2EE5E /* background.png in Resources */,
+				F0EEDC821A596C0C004B4EC8 /* bp.png in Resources */,
+				F0EEDC8A1A597261004B4EC8 /* statoil.png in Resources */,
 				1C3047AA19FEE11D00D2EE5E /* Localizable.strings in Resources */,
 				F08E8D951A5763F6003A1F0C /* IQKeyboardManager.bundle in Resources */,
 				1C30479C19FED74C00D2EE5E /* DINPro.otf in Resources */,

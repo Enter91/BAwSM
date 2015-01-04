@@ -18,6 +18,7 @@
 #import "ChangeViewController.h"
 #import "PricesViewController.h"
 #import "SearchViewController.h"
+#import "FixedCompassLayout.h"
 
 @import AVFoundation;
 @import AssetsLibrary;

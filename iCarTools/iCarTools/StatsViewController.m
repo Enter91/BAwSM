@@ -131,6 +131,8 @@
     [self setFramesForInterface:self.interfaceOrientation];
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"showAnnotations"];
+    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -146,6 +148,14 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"zoom"];
         [self zoomStation];
     }
+}
+
+- (id<UILayoutSupport>)topLayoutGuide {
+    return [[FixedCompassLayout alloc]initWithLength:44];
+}
+
+- (id<UILayoutSupport>)bottomLayoutGuide {
+    return [[FixedCompassLayout alloc]initWithLength:44];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -252,14 +262,13 @@
             span.latitudeDelta  = 0.01;
             span.longitudeDelta = 0.01;
             region.span = span;
-            
+            [self.mapView setRegion:region animated:NO];
             for (id<MKAnnotation> annotation in _mapView.annotations){
                 if ([[annotation title] isEqual:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedRow"]]){
                     [_mapView selectAnnotation:annotation animated:YES];
                 }
             }
-            [self.mapView setRegion:region animated:YES];
-            [self.mapView reloadInputViews];
+            //[self.mapView reloadInputViews];
         }
     }
 }
@@ -288,7 +297,24 @@
             stationCoordinate.latitude = [responseArray[i][@"latitude"] doubleValue];
             stationCoordinate.longitude = [responseArray[i][@"longitude"] doubleValue];
             NSString *subtitle = responseArray[i][@"address"];
-            annotation = [[MyCustomAnnotation alloc] initWithTitle:categoryString Subtitle:subtitle Location:stationCoordinate];
+            NSString *companyOfStation;
+            
+            if ([categoryString rangeOfString:@"shell" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                companyOfStation = @"shell";
+            } else if ([categoryString rangeOfString:@"bp" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                companyOfStation = @"bp";
+            } else if ([categoryString rangeOfString:@"lotos" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                companyOfStation = @"lotos";
+            } else if ([categoryString rangeOfString:@"orlen" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                companyOfStation = @"orlen";
+            } else if ([categoryString rangeOfString:@"statoil" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                companyOfStation = @"statoil";
+            } else if ([categoryString rangeOfString:@"lukoil" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                companyOfStation = @"lukoil";
+            } else {
+                companyOfStation = @"gas";
+            }
+            annotation = [[MyCustomAnnotation alloc] initWithTitle:categoryString Subtitle:subtitle Location:stationCoordinate Company:companyOfStation];
             [self.mapView addAnnotation:annotation];
         }
         //responseArray = nil;
@@ -460,8 +486,11 @@
     userCoordinate.longitude = location.coordinate.longitude;
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"showAnnotations"]) {
-        [self addAnnotation];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"showAnnotations"];
+        for (id<MKAnnotation> annotation in _mapView.annotations) {
+            [self.mapView removeAnnotation:annotation];
+        }
+        [self addAnnotation];
     }
     
     NSLog(@"New Location: %@", location);
@@ -523,6 +552,7 @@
 //    [self.revealViewController pushFrontViewController:_parentView animated:YES];
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 @end

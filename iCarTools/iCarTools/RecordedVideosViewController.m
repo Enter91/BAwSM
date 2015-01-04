@@ -48,12 +48,16 @@
     _videosArray = [[NSMutableArray alloc] initWithArray:[self listFileAtPath]];
     
     [_videosTableView reloadData];
+    
+    self.revealViewController.panGestureRecognizer.enabled = NO;
+    self.revealViewController.tapGestureRecognizer.enabled = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
-    self.revealViewController.panGestureRecognizer.enabled = NO;
-    self.revealViewController.tapGestureRecognizer.enabled = NO;
+    for (RecordedVideosTableViewCell *cell in _videosTableView.visibleCells) {
+        [cell updateAllFrames];
+    }
 
 }
 
@@ -68,10 +72,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     
-    for (RecordedVideosTableViewCell *cell in [_videosTableView visibleCells]) {
-        
-        CGRect myframe = CGRectMake(0, 0, self.view.frame.size.width, 80);
-        cell.frame = myframe;
+    for (RecordedVideosTableViewCell *cell in _videosTableView.visibleCells) {
         [cell updateAllFrames];
     }
 }
@@ -90,11 +91,15 @@
     
     cell.delegate = self;
     
+    [cell updateAllFrames];
+    
     [cell setTitleText:[NSString stringWithFormat:@"%@%d", NSLocalizedString(@"Video #", nil), [[NSNumber numberWithInteger:indexPath.row + 1] intValue]]
               dateText:[[_videosArray objectAtIndex:indexPath.row] objectForKey:@"date"]
         movieThumbnail:[UIImage imageWithData:[[_videosArray objectAtIndex:indexPath.row] objectForKey:@"thumbnail"]]
                  route:[[[_videosArray objectAtIndex:indexPath.row] objectForKey:@"route"] copy]
            andAssetURL:[[_videosArray objectAtIndex:indexPath.row] objectForKey:@"assetURL"]];
+    
+    
     
     return cell;
 }

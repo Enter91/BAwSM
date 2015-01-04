@@ -39,13 +39,13 @@ static NSString * const DIN_PRO_BOLD = @"DINPro-Bold";
         [_mapsButton addTarget:self action:@selector(showMapWithRoute) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_mapsButton];
         
-        _date = [[UILabel alloc] initWithFrame:CGRectMake(_movieThumbnail.frame.size.width + 5, self.frame.size.height - 20.0, self.frame.size.width - _movieThumbnail.frame.size.width - 10, 15.0)];
+        _date = [[UILabel alloc] initWithFrame:CGRectMake(_movieThumbnail.frame.size.width + 5, self.frame.size.height - 20.0, self.frame.size.width - _movieThumbnail.frame.size.width - _mapsButton.frame.size.width - 15, 15.0)];
         [_date setFont:[UIFont fontWithName:DIN_PRO_LIGHT size:12.0]];
         [_date setLineBreakMode:NSLineBreakByTruncatingTail];
         [_date setNumberOfLines:1];
         [self addSubview:_date];
         
-        _title = [[UILabel alloc] initWithFrame:CGRectMake(_movieThumbnail.frame.size.width + 5, 5.0, self.frame.size.width - _movieThumbnail.frame.size.width - 10, self.frame.size.height - _date.frame.size.height - 10)];
+        _title = [[UILabel alloc] initWithFrame:CGRectMake(_movieThumbnail.frame.size.width + 5, 5.0, self.frame.size.width - _movieThumbnail.frame.size.width - _mapsButton.frame.size.width - 15, self.frame.size.height - _date.frame.size.height - 10)];
         [_title setFont:[UIFont fontWithName:DIN_PRO_BOLD size:20.0]];
         [_title setLineBreakMode:NSLineBreakByTruncatingTail];
         [_title setNumberOfLines:1];
@@ -54,6 +54,17 @@ static NSString * const DIN_PRO_BOLD = @"DINPro-Bold";
     
     return self;
     
+}
+
+- (void)updateAllFrames {
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, 80);
+    [_movieThumbnail setFrame:CGRectMake(0, 0, 80.0, 80.0)];
+    [_date setFrame:CGRectMake(_movieThumbnail.frame.size.width + 5, self.frame.size.height - 20.0, self.frame.size.width - _movieThumbnail.frame.size.width - _mapsButton.frame.size.width - 15, 15.0)];
+    [_title setFrame:CGRectMake(_movieThumbnail.frame.size.width + 5, 5.0, self.frame.size.width - _movieThumbnail.frame.size.width - _mapsButton.frame.size.width - 15, self.frame.size.height - _date.frame.size.height - 10)];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [_mapsButton setFrame:CGRectMake(self.frame.size.width - 45, 5, 40, 40)];
+    }];
 }
 
 - (void)prepareForReuse {

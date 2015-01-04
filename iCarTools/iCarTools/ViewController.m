@@ -17,16 +17,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _wantsCustomAnimation = YES;
+    __block UIImageView *launch = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CustomLaunch"]];
+    [launch setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.view addSubview:launch];
     
-    [_backgroundImageview setFrame:CGRectMake(0, 0, 320, 568)];
-    [_titleLabel setFrame:CGRectMake(16, 50, 288, 110)];
-    [_videoRecorderOpenButton setFrame:CGRectMake(100, 201, 250, 38)];
-    [_videoRecorderOpenImageButton setFrame:CGRectMake(20, 190, 60, 60)];
-    [_statsOpenButton setFrame:CGRectMake(100, 281, 250, 38)];
-    [_statsOpenImageButton setFrame:CGRectMake(20, 270, 60, 60)];
-    [_settingsOpenButton setFrame:CGRectMake(100, 361, 250, 38)];
-    [_settingsOpenImageButton setFrame:CGRectMake(20, 350, 60, 60)];
+    [UIView animateWithDuration:0.5 animations:^{
+        launch.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+        launch.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [launch removeFromSuperview];
+        launch = nil;
+    }];
+    
+    
+    
+    _wantsCustomAnimation = YES;
+    [self.view setBackgroundColor:[UIColor blackColor]];
     
     SWRevealViewController *revealController = [self revealViewController];
     [revealController setDelegate:self];
@@ -35,6 +41,8 @@
     
     [self.statsOpenButton setTitle:NSLocalizedString(@"stats", nil) forState:UIControlStateNormal];
     [self.videoRecorderOpenButton setTitle:NSLocalizedString(@"recorder", nil) forState:UIControlStateNormal];
+    
+    [self setFramesForInterface:self.interfaceOrientation];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -143,33 +151,41 @@
 
 - (void)setFramesForPortrait {
     dispatch_async(dispatch_get_main_queue(), ^{
+        @autoreleasepool {
+            [_titleLabel setFont:[UIFont fontWithName:@"BrannbollFet" size:45]];
+        }
+        
+        float offsetY = 30;
         [_backgroundImageview setFrame:CGRectMake(0, 0, 320, 568)];
         [_titleLabel setFrame:CGRectMake(16, 50, 288, 110)];
-        [_videoRecorderOpenButton setFrame:CGRectMake(100, 201, 250, 38)];
-        [_videoRecorderOpenImageButton setFrame:CGRectMake(20, 190, 60, 60)];
-        [_videoImage setFrame:CGRectMake(20, 190, 60, 60)];
-        [_statsOpenButton setFrame:CGRectMake(100, 281, 250, 38)];
-        [_statsOpenImageButton setFrame:CGRectMake(20, 270, 60, 60)];
-        [_statsImage setFrame:CGRectMake(20, 270, 60, 60)];
-        [_settingsOpenButton setFrame:CGRectMake(100, 361, 250, 38)];
-        [_settingsOpenImageButton setFrame:CGRectMake(20, 350, 60, 60)];
-        [_settingsImage setFrame:CGRectMake(20, 350, 60, 60)];
+        [_videoRecorderOpenButton setFrame:CGRectMake(100, 201+offsetY, 250, 38)];
+        [_videoRecorderOpenImageButton setFrame:CGRectMake(20, 190+offsetY, 60, 60)];
+        [_videoImage setFrame:CGRectMake(20, 190+offsetY, 60, 60)];
+        [_statsOpenButton setFrame:CGRectMake(100, 281+offsetY, 250, 38)];
+        [_statsOpenImageButton setFrame:CGRectMake(20, 270+offsetY, 60, 60)];
+        [_statsImage setFrame:CGRectMake(20, 270+offsetY, 60, 60)];
+        [_settingsOpenButton setFrame:CGRectMake(100, 361+offsetY, 250, 38)];
+        [_settingsOpenImageButton setFrame:CGRectMake(20, 350+offsetY, 60, 60)];
+        [_settingsImage setFrame:CGRectMake(20, 350+offsetY, 60, 60)];
     });
 }
 
 - (void)setFramesForLandscapeLeft {
     dispatch_async(dispatch_get_main_queue(), ^{
-         [_backgroundImageview setFrame:CGRectMake(0, 0, 568, 320)];
-         [_titleLabel setFrame:CGRectMake(150, 10, 288, 60)];
-         [_videoRecorderOpenButton setFrame:CGRectMake(240, 101, 250, 38)];
-         [_videoRecorderOpenImageButton setFrame:CGRectMake(160, 90, 60, 60)];
-         [_videoImage setFrame:CGRectMake(160, 90, 60, 60)];
-         [_statsOpenButton setFrame:CGRectMake(240, 181, 250, 38)];
-         [_statsOpenImageButton setFrame:CGRectMake(160, 170, 60, 60)];
-         [_statsImage setFrame:CGRectMake(160, 170, 60, 60)];
-         [_settingsOpenButton setFrame:CGRectMake(240, 261, 250, 38)];
-         [_settingsOpenImageButton setFrame:CGRectMake(160, 250, 60, 60)];
-         [_settingsImage setFrame:CGRectMake(160, 250, 60, 60)];
+        @autoreleasepool {
+            [_titleLabel setFont:[UIFont fontWithName:@"BrannbollFet" size:25]];
+        }
+        [_backgroundImageview setFrame:CGRectMake(0, 0, 568, 320)];
+        [_titleLabel setFrame:CGRectMake(150, 10, 288, 60)];
+        [_videoRecorderOpenButton setFrame:CGRectMake(240, 101, 250, 38)];
+        [_videoRecorderOpenImageButton setFrame:CGRectMake(160, 90, 60, 60)];
+        [_videoImage setFrame:CGRectMake(160, 90, 60, 60)];
+        [_statsOpenButton setFrame:CGRectMake(240, 181, 250, 38)];
+        [_statsOpenImageButton setFrame:CGRectMake(160, 170, 60, 60)];
+        [_statsImage setFrame:CGRectMake(160, 170, 60, 60)];
+        [_settingsOpenButton setFrame:CGRectMake(240, 261, 250, 38)];
+        [_settingsOpenImageButton setFrame:CGRectMake(160, 250, 60, 60)];
+        [_settingsImage setFrame:CGRectMake(160, 250, 60, 60)];
     });
 }
 

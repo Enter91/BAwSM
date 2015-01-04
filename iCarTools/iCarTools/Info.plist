@@ -36,6 +36,7 @@
 		<string>DINPro-Italic.otf</string>
 		<string>DINPro-BoldItalic.otf</string>
 		<string>DINPro-Bold.otf</string>
+		<string>BrannbollFet.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

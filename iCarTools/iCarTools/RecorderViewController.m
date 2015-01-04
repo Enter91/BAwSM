@@ -19,6 +19,7 @@
     UIView *mCameraView;
     AVCaptureMovieFileOutput *movieFile;
     int menuType;
+    NSString *startRecordingDate;
 }
 
 @end
@@ -306,6 +307,12 @@
     if (!_isRecording) {
         _isRecording = YES;
         
+        if (startRecordingDate) {
+            startRecordingDate = nil;
+        }
+        
+        startRecordingDate = [self getStringDateFromCurrentDate];
+        
         if (_pointsOnTheRouteArray) {
             if (_pointsOnTheRouteArray.count > 0) {
                 [_pointsOnTheRouteArray removeAllObjects];
@@ -334,6 +341,8 @@
  *  Starts recording showing small rotating white dot at button
  */
 - (void)startRecording {
+    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     if ([self.smallDotImageView isDescendantOfView:self.cameraRecordingButton]) {
         [self.smallDotImageView removeFromSuperview];
@@ -427,6 +436,8 @@
     }];
     
     [movieFile stopRecording];
+    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error {
@@ -467,7 +478,7 @@
                     
                     NSData *thumbData = UIImageJPEGRepresentation(resizedThumb, 0.8);
                     
-                    NSDictionary *route = @{@"date" : [self getStringDateFromCurrentDate],
+                    NSDictionary *route = @{@"date" : startRecordingDate ? startRecordingDate : [self getStringDateFromCurrentDate],
                                             @"assetURL" : [asset valueForProperty:ALAssetPropertyAssetURL],
                                             @"route" : _pointsOnTheRouteArray,
                                             @"thumbnail" : thumbData};
@@ -486,6 +497,7 @@
                         NSLog(@"writeToFile success");
                     }
                     
+                    startRecordingDate = nil;
                     [_pointsOnTheRouteArray removeAllObjects];
                     _pointsOnTheRouteArray = nil;
                     thumbImg = nil;
@@ -696,6 +708,12 @@
         [self stopRecording];
     }
     
+    if (movieFile) {
+        [movieFile stopRecording];
+    }
+    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    
     output = nil;
     
     [session removeInput:input];
@@ -716,35 +734,70 @@
 - (void)submitAccidentPosition {
     //accident_type_id 2
     
-    CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
-    
-    if (location.latitude != 0.0f && location.longitude != 0.0f) {
-        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=2&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, [self getStringDateFromCurrentDate]]];
-
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"isLogged"] == [NSNumber numberWithBool:YES] && [[UserInfo sharedInstance] login].length > 0) {
+        CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
+        
+        if (location.latitude != 0.0f && location.longitude != 0.0f) {
+            
+            [_crashNotificationButton setUserInteractionEnabled:NO];
+            
+            [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=%d&accident_type_id=2&latitude=%f&longitude=%f&date=%@", [[UserInfo sharedInstance] user_id], location.latitude, location.longitude, [self getStringDateFromCurrentDate]]];
+            
+        } else {
+            [self showFloatingAlertViewWithType:0];
+        }
     } else {
-        [self showFloatingAlertViewWithType:0];
+        [self showFloatingAlertViewWithType:3];
     }
+    
     
 }
 
 - (void)submitSpeedCameraPosition {
     //accident_type_id 1
     
-    CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
-    
-    if (location.latitude != 0.0f && location.longitude != 0.0f) {
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"isLogged"] == [NSNumber numberWithBool:YES] && [[UserInfo sharedInstance] login].length > 0) {
+        CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
         
-        NSDateFormatter *df=[[NSDateFormatter alloc]init];
-        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString *dateString = [df stringFromDate:[NSDate date]];
-        
-        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=10&accident_type_id=1&latitude=%f&longitude=%f&date=%@", location.latitude, location.longitude, dateString]];
-        
-        df = nil;
+        if (location.latitude != 0.0f && location.longitude != 0.0f) {
+            
+            NSDateFormatter *df=[[NSDateFormatter alloc]init];
+            [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            NSString *dateString = [df stringFromDate:[NSDate date]];
+            
+            [_speedNotificationButton setUserInteractionEnabled:NO];
+            
+            [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addNewAccident.php?user_id=%d&accident_type_id=1&latitude=%f&longitude=%f&date=%@", [[UserInfo sharedInstance] user_id], location.latitude, location.longitude, dateString]];
+            
+            df = nil;
+        } else {
+            [self showFloatingAlertViewWithType:0];
+        }
     } else {
-        [self showFloatingAlertViewWithType:0];
+        [self showFloatingAlertViewWithType:3];
     }
     
+}
+
+- (void)lockTrafficAccidentsButtons {
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockTrafficAccidentsButtons) object:nil];
+    [self performSelector:@selector(unlockTrafficAccidentsButtons) withObject:nil afterDelay:5.0];
+    [_speedNotificationButton setUserInteractionEnabled:NO];
+    [_crashNotificationButton setUserInteractionEnabled:NO];
+    [UIView animateWithDuration:0.3 animations:^{
+        [_speedNotificationButton setAlpha:0.5];
+        [_crashNotificationButton setAlpha:0.5];
+    }];
+}
+
+- (void)unlockTrafficAccidentsButtons {
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockTrafficAccidentsButtons) object:nil];
+    [_speedNotificationButton setUserInteractionEnabled:YES];
+    [_crashNotificationButton setUserInteractionEnabled:YES];
+    [UIView animateWithDuration:0.3 animations:^{
+        [_speedNotificationButton setAlpha:1.0];
+        [_crashNotificationButton setAlpha:1.0];
+    }];
 }
 
 - (void)responseDictionary:(NSDictionary *)responseDict {
@@ -752,6 +805,10 @@
     
     if (responseDict == nil || [[responseDict objectForKey:@"code"] intValue] == 200) {
         [self showFloatingAlertViewWithType:0];
+        [self unlockTrafficAccidentsButtons];
+    } else {
+        [self lockTrafficAccidentsButtons];
+        [self showFloatingAlertViewWithType:1];
     }
 }
 
@@ -760,7 +817,7 @@
  *
  *  Wyświetla pięciosekundowy alert
  *
- *  @param type 0 - błąd, 1 - poprawne dodanie zdarzenia, 2 - odświeżenie info z bazy
+ *  @param type 0 - błąd, 1 - poprawne dodanie zdarzenia, 2 - odświeżenie info z bazy, 3 - niezalogowany
  */
 - (void)showFloatingAlertViewWithType:(int)type {
     
@@ -793,6 +850,10 @@
         case 2:
             [floatingViewLabel setText:NSLocalizedString(@"Database refreshed.", nil)];
             [_floatingAlertView setBackgroundColor:[UIColor greenColor]];
+            break;
+        case 3:
+            [floatingViewLabel setText:NSLocalizedString(@"You must be logged in to send traffic info.", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor redColor]];
             break;
             
         default:

@@ -32,6 +32,9 @@
 		1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3047C219FEEA2B00D2EE5E /* RecorderViewController.xib */; };
 		1C4135461A20AB7200D3F1CC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4135441A20AB7200D3F1CC /* SettingsViewController.m */; };
 		1C4135471A20AB7200D3F1CC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */; };
+		1C45E3B31A59500700F4443C /* RouteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C45E3B11A59500700F4443C /* RouteViewController.m */; };
+		1C45E3B41A59500700F4443C /* RouteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C45E3B21A59500700F4443C /* RouteViewController.xib */; };
+		1C45E3B61A59574700F4443C /* BrannbollFet.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C45E3B51A59574700F4443C /* BrannbollFet.ttf */; };
 		1C5B891F1A55A10D007BA4CD /* RegisterUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B891D1A55A10D007BA4CD /* RegisterUserViewController.m */; };
 		1C5B89201A55A10D007BA4CD /* RegisterUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C5B891E1A55A10D007BA4CD /* RegisterUserViewController.xib */; };
 		1C5B89231A55C4FE007BA4CD /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B89221A55C4FE007BA4CD /* UserInfo.m */; };
@@ -139,6 +142,10 @@
 		1C4135431A20AB7200D3F1CC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1C4135441A20AB7200D3F1CC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1C4135451A20AB7200D3F1CC /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		1C45E3B01A59500700F4443C /* RouteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteViewController.h; sourceTree = "<group>"; };
+		1C45E3B11A59500700F4443C /* RouteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteViewController.m; sourceTree = "<group>"; };
+		1C45E3B21A59500700F4443C /* RouteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RouteViewController.xib; sourceTree = "<group>"; };
+		1C45E3B51A59574700F4443C /* BrannbollFet.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BrannbollFet.ttf; sourceTree = "<group>"; };
 		1C5B891C1A55A10D007BA4CD /* RegisterUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterUserViewController.h; sourceTree = "<group>"; };
 		1C5B891D1A55A10D007BA4CD /* RegisterUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterUserViewController.m; sourceTree = "<group>"; };
 		1C5B891E1A55A10D007BA4CD /* RegisterUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterUserViewController.xib; sourceTree = "<group>"; };
@@ -344,6 +351,9 @@
 				1CBC05651A58339900ECECC1 /* RecordedVideosViewController.xib */,
 				1CBC05681A5835AC00ECECC1 /* RecordedVideosTableViewCell.h */,
 				1CBC05691A5835AC00ECECC1 /* RecordedVideosTableViewCell.m */,
+				1C45E3B01A59500700F4443C /* RouteViewController.h */,
+				1C45E3B11A59500700F4443C /* RouteViewController.m */,
+				1C45E3B21A59500700F4443C /* RouteViewController.xib */,
 			);
 			name = "Recorder Files";
 			sourceTree = "<group>";
@@ -375,6 +385,7 @@
 		1C30478719FED65B00D2EE5E /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				1C45E3B51A59574700F4443C /* BrannbollFet.ttf */,
 				1C30478919FED74C00D2EE5E /* DINPro-Black.otf */,
 				1C30478A19FED74C00D2EE5E /* DINPro-BlackItalic.otf */,
 				1C30478B19FED74C00D2EE5E /* DINPro-Bold.otf */,
@@ -656,6 +667,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CEDCA271A2074E000BFADB5 /* LoginViewController.xib in Resources */,
+				1C45E3B41A59500700F4443C /* RouteViewController.xib in Resources */,
 				1CB4B01B1A2073C800172BA4 /* StatsViewController.xib in Resources */,
 				1CEDCA2D1A2076A100BFADB5 /* settings3-256.png in Resources */,
 				1CD407331A27AE1100F6A2E7 /* gps_searching-256.png in Resources */,
@@ -673,6 +685,7 @@
 				1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */,
 				1CF81C4D1A129A6B00496116 /* smallDotImage.png in Resources */,
 				1C3047A419FEE09100D2EE5E /* ViewController.xib in Resources */,
+				1C45E3B61A59574700F4443C /* BrannbollFet.ttf in Resources */,
 				1C30479A19FED74C00D2EE5E /* DINPro-Medium.otf in Resources */,
 				1CF81C4B1A12971800496116 /* white line.png in Resources */,
 				1CBC056C1A583D0E00ECECC1 /* Maps-icon.png in Resources */,
@@ -768,6 +781,7 @@
 				F08E8D8A1A5763F6003A1F0C /* IQNSArray+Sort.m in Sources */,
 				F06B73251A5309FF00C66496 /* PricesViewController.m in Sources */,
 				1C5B89291A55F031007BA4CD /* KeychainItemWrapper.m in Sources */,
+				1C45E3B31A59500700F4443C /* RouteViewController.m in Sources */,
 				1C6EC4881A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				F08E8D921A5763F6003A1F0C /* IQTitleBarButtonItem.m in Sources */,
 				1C5B891F1A55A10D007BA4CD /* RegisterUserViewController.m in Sources */,

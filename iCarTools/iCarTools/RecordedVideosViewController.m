@@ -7,6 +7,7 @@
 //
 
 #import "RecordedVideosViewController.h"
+#import "AppDelegate.h"
 
 @interface RecordedVideosViewController ()
 
@@ -26,6 +27,9 @@
         _path =[documentsDirectory stringByAppendingPathComponent:@"/iCarTools"];
         _wantsCustomAnimation = YES;
         _videosArray = [[NSMutableArray alloc] initWithCapacity:0];
+        
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        appDelegate.orientationIsLocked = NO;
     }
     return self;
 }
@@ -53,8 +57,19 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
 }
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    
+    for (RecordedVideosTableViewCell *cell in [_videosTableView visibleCells]) {
+        
+        CGRect myframe = CGRectMake(0, 0, self.view.frame.size.width, 80);
+        cell.frame = myframe;
+        [cell updateAllFrames];
+    }
+}
+
+#pragma mark- UITableView Delegates
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -87,8 +102,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    self.moviePlayer =[[MPMoviePlayerViewController alloc] initWithContentURL:[[_videosArray objectAtIndex:indexPath.row] objectForKey:@"assetURL"]];
-    [self presentMoviePlayerViewControllerAnimated:self.moviePlayer];
+    //self.moviePlayer =[[MPMoviePlayerViewController alloc] initWithContentURL:[[_videosArray objectAtIndex:indexPath.row] objectForKey:@"assetURL"]];
+    //[self presentMoviePlayerViewControllerAnimated:self.moviePlayer];
+    
+    RouteViewController *routeView = [[RouteViewController alloc] initWithRoutePointsArray:[[[_videosArray objectAtIndex:indexPath.row] objectForKey:@"route"] copy]];
+    routeView.parentView = self;
+    [self.revealViewController pushFrontViewController:routeView animated:YES];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     

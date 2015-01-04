@@ -12,6 +12,7 @@
 @import AVFoundation;
 @import MediaPlayer;
 @import AssetsLibrary;
+#import "RouteViewController.h"
 
 @interface RecordedVideosViewController : UIViewController <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 

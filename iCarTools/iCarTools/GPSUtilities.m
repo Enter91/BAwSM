@@ -73,10 +73,12 @@ static bool isFirstAccess = YES;
         if (!self.locManager) {
             self.locManager = [[CLLocationManager alloc] init];
         }
-        self.locManager.distanceFilter = kDistanceFilter;
+        //self.locManager.distanceFilter = kDistanceFilter;
         //self.locManager.headingFilter = kHeadingFilter;
         self.locManager.delegate = self;
         _locationCoordinates = CLLocationCoordinate2DMake(0.0f, 0.0f);
+        
+        _isDistanceFilterEnable = NO;
         
         _state = 0;
         if([self.delegate conformsToProtocol:@protocol(GPSUtilitiesDelegate)])
@@ -109,6 +111,10 @@ static bool isFirstAccess = YES;
         self.locManager = [[CLLocationManager alloc] init];
     }
     self.locManager.delegate = self;
+    
+    if (_isDistanceFilterEnable == YES) {
+        self.locManager.distanceFilter = kDistanceFilter;
+    }
     
     if( [CLLocationManager locationServicesEnabled] &&  [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied)
     {

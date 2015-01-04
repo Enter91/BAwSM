@@ -70,6 +70,7 @@
     
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
+    [self.gpsUtilities setIsDistanceFilterEnable:YES];
     [self.gpsUtilities setAccuracy:kCLLocationAccuracyBestForNavigation];
     [self.gpsUtilities startGPS];
     

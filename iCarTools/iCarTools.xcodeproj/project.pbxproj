@@ -382,8 +382,8 @@
 			children = (
 				F08E8D691A5763F6003A1F0C /* IQKeyBoardManager */,
 				1CB4B0181A2073C800172BA4 /* StatsViewController.xib */,
-				1CB4B0191A2073C800172BA4 /* StatsViewController.m */,
 				1CB4B01A1A2073C800172BA4 /* StatsViewController.h */,
+				1CB4B0191A2073C800172BA4 /* StatsViewController.m */,
 				F0C3700D1A246C48000C5A82 /* FixedCompassLayout.h */,
 				F0C3700E1A246C48000C5A82 /* FixedCompassLayout.m */,
 				F07994CF1A3EC3990087419C /* MyCustomAnnotation.h */,

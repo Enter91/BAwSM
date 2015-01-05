@@ -57,14 +57,10 @@
     [_onLabel setFrame:CGRectMake(140, 225, 80, 30)];
     [_lpgLabel setFrame:CGRectMake(140, 280, 80, 30)];
     [_commentLabel setFrame:CGRectMake(108, 340, 105, 30)];
-    
     [_addStationButton setFrame:CGRectMake(35, 490, 120, 40)];
     [_cancelButton setFrame:CGRectMake(190, 490, 90, 40)];
-    
     [_commentTextView setFrame:CGRectMake(10, 380, 300, 60)];
-    
     [_actualPositionSwitch setFrame:CGRectMake(130, 125, 51, 31)];
-    
     [_stationNameTextField setFrame:CGRectMake(130, 40, 150, 30)];
     [_addressTextField setFrame:CGRectMake(130, 85, 150, 30)];
     [_pb95TextField setFrame:CGRectMake(75, 225, 80, 30)];
@@ -91,16 +87,13 @@
    
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
 
-- (void)handleSingleTap:(UITapGestureRecognizer *) sender
-{
+- (void)handleSingleTap:(UITapGestureRecognizer *) sender {
     [self.navigationController.navigationBar endEditing:YES];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -149,7 +142,6 @@
         [self unlockStationsButtons];
     }
 
-    
     if ([[responseDict objectForKey:@"code"] intValue] == 400) {
         
         numericError = NO;
@@ -196,7 +188,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 - (void)addStationDatabaseConnect:(CLLocationCoordinate2D )coordinate {
     
     [[AmazingJSON sharedInstance] setDelegate:self];
-
     [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/addStation.php?name=%@&address=%@&latitude=%f&longitude=%f", _stationNameTextField.text, _addressTextField.text,coordinate.latitude,coordinate.longitude]];
 }
 
@@ -222,7 +213,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 - (void)removeStation {
 
     [[AmazingJSON sharedInstance] setDelegate:self];
-    
     [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/removeStation.php?name=%@", _stationNameTextField.text]];
 }
 
@@ -266,7 +256,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                               
                               if (error == nil) {
                                   CLLocationCoordinate2D coordinate;
-                                  // Process the placemark.
                                   CLPlacemark *placemark = [placemarks lastObject];
                                   CLLocation *location = placemark.location;
                                   coordinate = location.coordinate;
@@ -295,7 +284,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                      dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                      
                          if (numericError == YES) {
-                         
                              [self removeStation];
                          } else {
                              [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"showAnnotations"];
@@ -361,14 +349,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         [_onLabel setFrame:CGRectMake(140, 225, 80, 30)];
         [_lpgLabel setFrame:CGRectMake(140, 280, 80, 30)];
         [_commentLabel setFrame:CGRectMake(108, 340, 105, 30)];
-        
         [_addStationButton setFrame:CGRectMake(35, 490, 120, 40)];
         [_cancelButton setFrame:CGRectMake(190, 490, 90, 40)];
-        
         [_commentTextView setFrame:CGRectMake(10, 380, 300, 60)];
-        
         [_actualPositionSwitch setFrame:CGRectMake(130, 125, 51, 31)];
-        
         [_stationNameTextField setFrame:CGRectMake(130, 40, 150, 30)];
         [_addressTextField setFrame:CGRectMake(130, 85, 150, 30)];
         [_pb95TextField setFrame:CGRectMake(75, 225, 80, 30)];
@@ -389,14 +373,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         [_onLabel setFrame:CGRectMake(140, 205, 80, 30)];
         [_lpgLabel setFrame:CGRectMake(140, 260, 80, 30)];
         [_commentLabel setFrame:CGRectMake(368, 20, 105, 30)];
-        
         [_addStationButton setFrame:CGRectMake(305, 145, 120, 40)];
         [_cancelButton setFrame:CGRectMake(455, 145, 90, 40)];
-        
         [_commentTextView setFrame:CGRectMake(328, 60, 190, 70)];
-        
         [_actualPositionSwitch setFrame:CGRectMake(130, 105, 51, 31)];
-        
         [_stationNameTextField setFrame:CGRectMake(130, 20, 150, 30)];
         [_addressTextField setFrame:CGRectMake(130, 65, 150, 30)];
         [_pb95TextField setFrame:CGRectMake(75, 205, 80, 30)];

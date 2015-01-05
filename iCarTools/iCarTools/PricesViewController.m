@@ -47,7 +47,6 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     [self setFramesForInterface:self.interfaceOrientation];
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -76,7 +75,7 @@
     } else {
         cell.textLabel.font = [UIFont fontWithName:@"DINPro-Medium" size:14.0];
     }
-    cell.textLabel.numberOfLines = 0; //no max
+    cell.textLabel.numberOfLines = 0;
     cell.textLabel.text = [visits objectAtIndex:indexPath.row];
     return cell;
 }
@@ -154,7 +153,6 @@
             [visits addObject:subtitle];
         }
         [self.tableView reloadData];
-        //responseArray = nil;
     }
 }
 
@@ -219,7 +217,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 - (void)exit {
-    
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
     SWRevealViewController *reveal = self.revealViewController;

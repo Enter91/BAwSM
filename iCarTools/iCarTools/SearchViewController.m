@@ -44,7 +44,6 @@
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     self.tableView.backgroundView = imageView;
-    //self.tableView.allowsSelection = NO;
     self.tableView.estimatedRowHeight = 100.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
@@ -112,9 +111,8 @@
     cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
     tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
     cell.textLabel.textColor = [UIColor whiteColor];
-    //tableView.allowsSelection = NO;
     cell.textLabel.font = [UIFont fontWithName:@"DINPro-Medium" size:14.0];
-    cell.textLabel.numberOfLines = 0; //no max
+    cell.textLabel.numberOfLines = 0;
     
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
@@ -175,7 +173,6 @@
             categoryString = responseArray[i][@"name"];
             stationCoordinate.latitude = [responseArray[i][@"latitude"] doubleValue];
             stationCoordinate.longitude = [responseArray[i][@"longitude"] doubleValue];
-            //NSString *subtitle = responseArray[i][@"address"];
             
             NSString *station;
             station = [NSString stringWithFormat:@"%@",categoryString];
@@ -183,8 +180,6 @@
         }
         stations = [NSMutableArray arrayWithCapacity:[self.tableData count]];
         [self.tableView reloadData];
-
-        //responseArray = nil;
     }
 }
 

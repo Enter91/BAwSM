@@ -201,13 +201,11 @@
     }
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
 
-- (void)handleSingleTap:(UITapGestureRecognizer *) sender
-{
+- (void)handleSingleTap:(UITapGestureRecognizer *) sender {
     [self.navigationController.navigationBar endEditing:YES];
 }
 
@@ -223,7 +221,6 @@
 
 -(void)addAnnotation {
     [[AmazingJSON sharedInstance] setDelegate:self];
-    
     [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getStationList.php?latitude=%f&longitude=%f&diff=%f",userCoordinate.latitude,userCoordinate.longitude,0.5]];
 }
 
@@ -234,7 +231,6 @@
         MyCustomAnnotation *myLocation = (MyCustomAnnotation *)annotation;
         
         NSString *companyOfStation;
-        
         if ([annotation.title rangeOfString:@"shell" options:NSCaseInsensitiveSearch].location != NSNotFound) {
             companyOfStation = @"shell";
         } else if ([annotation.title rangeOfString:@"bp" options:NSCaseInsensitiveSearch].location != NSNotFound) {
@@ -269,12 +265,10 @@
     if ([[NSUserDefaults standardUserDefaults] valueForKey:@"isLogged"] == [NSNumber numberWithBool:YES] && [[UserInfo sharedInstance] login].length > 0) {
         
         if (_addStationView) {
-            //        _statsView.delegate = nil;
             _addStationView = nil;
         }
     
         _addStationView = [[AddStationViewController alloc] initWithNibName:@"AddStationViewController" bundle:nil];
-        //    _statsView.delegate = self;
         _addStationView.parentView = self;
         _addStationView.wantsCustomAnimation = YES;
         [self.revealViewController setFrontViewController:_addStationView animated:YES];
@@ -288,12 +282,9 @@
     [[NSUserDefaults standardUserDefaults] setDouble:userCoordinate.longitude forKey:@"userLong"];
     
     if (_searchView) {
-        //        _statsView.delegate = nil;
         _searchView = nil;
     }
-    
     _searchView = [[SearchViewController alloc] initWithNibName:@"SearchViewController" bundle:nil];
-    //    _statsView.delegate = self;
     _searchView.parentView = self;
     _searchView.wantsCustomAnimation = YES;
     [self.revealViewController setFrontViewController:_searchView animated:YES];
@@ -307,7 +298,6 @@
 - (void)zoomStation {
     
     for (int i = 0; i<[responseArray count]; i++) {
-        
         NSString *categoryString = nil;
         categoryString = responseArray[i][@"name"];
         stationCoordinate.latitude = [responseArray[i][@"latitude"] doubleValue];
@@ -376,7 +366,6 @@
             annotation = [[MyCustomAnnotation alloc] initWithTitle:categoryString Subtitle:subtitle Location:stationCoordinate Company:companyOfStation];
             [self.mapView addAnnotation:annotation];
         }
-        //responseArray = nil;
     }
 }
 
@@ -386,14 +375,12 @@
     if (control == view.leftCalloutAccessoryView) {
         
         if (_pricesView) {
-            //        _statsView.delegate = nil;
             _pricesView = nil;
         }
         
         [[NSUserDefaults standardUserDefaults] setObject:view.annotation.title forKey:@"stationName"];
         
         _pricesView = [[PricesViewController alloc] initWithNibName:@"PricesViewController" bundle:nil];
-        //    _statsView.delegate = self;
         _pricesView.parentView = self;
         _pricesView.wantsCustomAnimation = YES;
         [self.revealViewController setFrontViewController:_pricesView animated:YES];
@@ -406,12 +393,10 @@
             [[NSUserDefaults standardUserDefaults] setObject:view.annotation.subtitle forKey:@"stationAddress"];
 
             if (_changeStationView) {
-                //        _statsView.delegate = nil;
                 _changeStationView = nil;
             }
     
             _changeStationView = [[ChangeViewController alloc] initWithNibName:@"ChangeViewController" bundle:nil];
-            //    _statsView.delegate = self;
             _changeStationView.parentView = self;
             _changeStationView.wantsCustomAnimation = YES;
             [self.revealViewController setFrontViewController:_changeStationView animated:YES];
@@ -559,7 +544,7 @@
     
     float height = 30.0f;
     
-    _floatingAlertView = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height)];
+    _floatingAlertView = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-280.0)/2, ([[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeLeft && [[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeRight) ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height)];
     _floatingAlertView.alpha = 0.0f;
     [_floatingAlertView.layer setCornerRadius:5.0f];
     UILabel *floatingViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(5.0, 0.0, 270.0, height)];
@@ -599,7 +584,7 @@
     
     [UIView animateWithDuration:0.5 animations:^{
         _floatingAlertView.alpha = 1.0f;
-        [_floatingAlertView setFrame:CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height + 5.0 : 5.0, 280.0, height)];
+        [_floatingAlertView setFrame:CGRectMake((self.view.frame.size.width-280.0)/2, ([[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeLeft && [[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeRight) ? _upperBackgroundView.frame.size.height + 5.0 : 5.0, 280.0, height)];
     } completion:^(BOOL finished) {
         [self performSelector:@selector(hideFloatingAlertView) withObject:nil afterDelay:4.0];
     }];
@@ -614,7 +599,7 @@
             _floatingAlertView.alpha = 0.0f;
             _floatingAlertView.frame = CGRectMake(_floatingAlertView.frame.origin.x, _floatingAlertView.frame.origin.y - height, _floatingAlertView.frame.size.width, _floatingAlertView.frame.size.height);
         } completion:^(BOOL finished) {
-            _floatingAlertView.frame = CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height);
+            _floatingAlertView.frame = CGRectMake((self.view.frame.size.width-280.0)/2, ([[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeLeft && [[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeRight) ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height);
             
             [_floatingAlertView removeFromSuperview];
             _floatingAlertView = nil;
@@ -706,7 +691,6 @@
     [self.gpsUtilities stopGPS];
     self.gpsUtilities.delegate = nil;
     self.gpsUtilities = nil;
-//    [self.revealViewController pushFrontViewController:_parentView animated:YES];
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     _parentView = nil;
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];

@@ -32,12 +32,10 @@
 - (MKAnnotationView *)annotationView {
     
     MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:self reuseIdentifier:_company];
-                                    
     annotationView.enabled = YES;
     annotationView.canShowCallout = YES;
     NSString *name = _company;
     annotationView.image = [UIImage imageNamed:name];
-    
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
     [rightButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     annotationView.rightCalloutAccessoryView = rightButton;

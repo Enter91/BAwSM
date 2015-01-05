@@ -82,7 +82,6 @@
     [self.view addGestureRecognizer:tapper];
     
     [self setFramesForInterface:self.interfaceOrientation];
-   
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -169,9 +168,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 - (void) getStationIdDatabaseConnect {
-    
     [[AmazingJSON sharedInstance] setDelegate:self];
-    
     [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getStationId.php?name=%@", _stationNameTextField.text]];
 }
 
@@ -282,12 +279,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         [_onLabel setFrame:CGRectMake(140, 205, 80, 30)];
         [_lpgLabel setFrame:CGRectMake(140, 260, 80, 30)];
         [_commentLabel setFrame:CGRectMake(368, 20, 105, 30)];
-        
         [_saveButton setFrame:CGRectMake(305, 145, 122, 40)];
         [_cancelButton setFrame:CGRectMake(455, 145, 90, 40)];
-        
         [_commentTextView setFrame:CGRectMake(328, 60, 190, 70)];
-        
         [_stationNameTextField setFrame:CGRectMake(35, 44, 250, 30)];
         [_addressTextField setFrame:CGRectMake(35, 122, 250, 30)];
         [_pb95TextField setFrame:CGRectMake(75, 205, 80, 30)];
@@ -324,7 +318,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 - (void)exit {
-
     [self.revealViewController setFrontViewController:_parentView animated:YES];
     self.gpsUtilities.delegate = _parentView;
     _parentView = nil;

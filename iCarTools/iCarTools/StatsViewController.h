@@ -51,7 +51,6 @@
 @property (strong, nonatomic) ChangeViewController *changeStationView;
 @property (strong, nonatomic) PricesViewController *pricesView;
 @property (strong, nonatomic) SearchViewController *searchView;
-//@property (nonatomic, assign) id delegate;
 
 @property (nonatomic, strong) UIViewController *parentView;
 

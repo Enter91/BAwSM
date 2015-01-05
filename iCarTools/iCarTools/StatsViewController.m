@@ -68,7 +68,7 @@
     }
     
     if (!self.lowerBackgroundView) {
-        self.lowerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-95, self.view.frame.size.width, 95)];
+        self.lowerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-55, self.view.frame.size.width, 55)];
         [self.lowerBackgroundView setBackgroundColor:[UIColor colorWithRed:52.0/255.0 green:59.0/255.0 blue:65.0/255.0 alpha:1.0]];
         [self.lowerBackgroundView setAlpha:0.9];
     }
@@ -78,7 +78,7 @@
     }
     
     if (!self.menuButton) {
-        self.menuButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 5, 30, self.menuButton.frame.size.height-10)];
+        self.menuButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 5, 30, self.upperBackgroundView.frame.size.height-10)];
         [self.menuButton setImage:[UIImage imageNamed:@"menu-128"] forState:UIControlStateNormal];  }
     
     if (![self.menuButton isDescendantOfView:self.view]) {
@@ -100,7 +100,8 @@
     [self.exitButton addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
     
     if (!self.findStationButton) {
-        self.findStationButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-75, 75, 75)];
+        self.findStationButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-35, 50, 50)];
+        [self.findStationButton setCenter:self.lowerBackgroundView.center];
         [self.findStationButton setBackgroundColor:[UIColor clearColor]];
         [self.findStationButton setImage:[UIImage imageNamed:@"search-256"] forState:UIControlStateNormal];
         [self.findStationButton setUserInteractionEnabled:YES];
@@ -115,7 +116,7 @@
     [self.findStationButton addTarget:self action:@selector(findStationAction:) forControlEvents:UIControlEventTouchUpInside];
   
     if (!self.addStationButton) {
-        self.addStationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+15, 50, 50)];
+        self.addStationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+3, 35, 35)];
         [self.addStationButton setCenter:CGPointMake(self.findStationButton.center.x*1.5+8, self.addStationButton.center.y+4)];
         [self.addStationButton setImage:[UIImage imageNamed:@"plus-128"] forState:UIControlStateNormal];
         [self.view addSubview:self.addStationButton];
@@ -126,7 +127,7 @@
     
     if (!self.gpsStatusImageView) {
         self.gpsStatusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps_searching-256"]];
-        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y+15, 47, 47)];
+        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y+5, 32, 32)];
         [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-8, self.gpsStatusImageView.center.y+4)];
         [self.view addSubview:self.gpsStatusImageView];
     }
@@ -144,6 +145,7 @@
     [self setFramesForInterface:self.interfaceOrientation];
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"showAnnotations"];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstAppear"];
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
@@ -151,7 +153,15 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self setFramesForInterface:self.interfaceOrientation];
+    
+    self.revealViewController.panGestureRecognizer.enabled = YES;
+    self.revealViewController.tapGestureRecognizer.enabled = YES;
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstAppear"] == NO) {
+        [self setFramesForInterface:self.interfaceOrientation];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstAppear"];
+    }
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"zoom"] == YES) {
         @try{
@@ -511,6 +521,9 @@
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     if (_floatingAlertView) {
         [self hideFloatingAlertView];
+    }
+    if (_floatingAlertView) {
+        _floatingAlertView.alpha = 0.0;
     }
     [self setFramesForInterface:toInterfaceOrientation];
 }

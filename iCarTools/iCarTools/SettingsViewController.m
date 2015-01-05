@@ -176,6 +176,8 @@
         }
     }
     
+    [self showLogInOutButtons];
+    
 }
 
 - (void)loginAction {

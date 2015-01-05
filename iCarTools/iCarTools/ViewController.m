@@ -41,12 +41,14 @@
     
     [self.statsOpenButton setTitle:NSLocalizedString(@"stats", nil) forState:UIControlStateNormal];
     [self.videoRecorderOpenButton setTitle:NSLocalizedString(@"recorder", nil) forState:UIControlStateNormal];
-    
-    [self setFramesForInterface:self.interfaceOrientation];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"view will appear");
+    
+    [self setFramesForInterface:self.interfaceOrientation];
+    self.revealViewController.tapGestureRecognizer.enabled = YES;
+    self.revealViewController.panGestureRecognizer.enabled = YES;
     
     [self.settingsOpenButton setTitle:NSLocalizedString(@"about", nil) forState:UIControlStateNormal];
     
@@ -55,12 +57,10 @@
     }
     
     if (_recorderView) {
-//        [_recorderView setDelegate:nil];
         _recorderView = nil;
     }
     
     if (_statsView) {
-//        [_statsView setDelegate:nil];
         _statsView = nil;
     }
 }
@@ -230,4 +230,14 @@
     
     return nil;
 }
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (NSUInteger) application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationLandscapeLeft | UIInterfaceOrientationLandscapeRight);
+}
+
 @end

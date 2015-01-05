@@ -70,7 +70,7 @@
     
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
-    [self.gpsUtilities setIsDistanceFilterEnable:YES];
+    //[self.gpsUtilities setIsDistanceFilterEnable:YES];
     [self.gpsUtilities setAccuracy:kCLLocationAccuracyBestForNavigation];
     [self.gpsUtilities startGPS];
     
@@ -83,6 +83,9 @@
     [((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:self];
     
     [[AmazingJSON sharedInstance] setDelegate:self];
+    
+    self.revealViewController.panGestureRecognizer.enabled = YES;
+    self.revealViewController.tapGestureRecognizer.enabled = YES;
 }
 
 - (void)dealloc {
@@ -96,6 +99,10 @@
     
     [self initializeInterface];
     
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [self teardownAVCapture];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -681,6 +688,9 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     mCameraView.alpha = 0.0;
+    if (_floatingAlertView) {
+        _floatingAlertView.alpha = 0.0;
+    }
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self setFramesForInterface:toInterfaceOrientation];
 }

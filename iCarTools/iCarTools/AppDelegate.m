@@ -11,6 +11,8 @@
 
 @interface AppDelegate ()
 
+@property (assign, nonatomic) UIViewController *returnView;
+
 @end
 
 @implementation AppDelegate
@@ -23,17 +25,20 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"isLogged"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [self setRevealViewController];
+    
+    if (!_loginManager) {
+        _loginManager = [[LoginManager alloc] init];
+    }
+    [_loginManager setDelegate:self];
+    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:NO] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
         _tutorial = [[TutorialViewController alloc] init];
         _tutorial.delegate = self;
-        self.window.rootViewController = _tutorial;
-    } else {
-        [self setRevealViewController];
         
-        if (!_loginManager) {
-            _loginManager = [[LoginManager alloc] init];
-        }
-        [_loginManager setDelegate:self];
+        [self.viewController setFrontViewController:_tutorial animated:NO];
+        
+    } else {
         [_loginManager loginUser];
     }
     [self.window makeKeyAndVisible];
@@ -50,7 +55,12 @@
         SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:settingsViewController frontViewController:frontViewController];
         revealController.delegate = self;
         
+        frontViewController = nil;
+        settingsViewController = nil;
+        
         [self updateSettingsViewControllerLoginInfo];
+        
+        _orientationIsLocked = NO;
         
         if (_tutorial) {
             [_tutorial presentViewController:revealController animated:YES completion:^{
@@ -79,12 +89,36 @@
         
         frontViewController = nil;
         settingsViewController = nil;
+    } else if ([self.window.rootViewController isKindOfClass:NSClassFromString(@"SWRevealViewController")] && ![self.viewController.frontViewController isKindOfClass:NSClassFromString(@"TutorialViewController")]) {
+        [self showMainMenuScreen];
+    }
+}
+
+- (void)showMainMenuScreen {
+    _returnView = nil;
+    ViewController *frontViewController = [[ViewController alloc] init];
+    [self.viewController setFrontViewController:frontViewController animated:YES];
+    frontViewController = nil;
+}
+
+- (void)showReturnViewScreen {
+    if (_returnView) {
+        [self.viewController setFrontViewController:_returnView animated:YES];
+        _returnView = nil;
+    } else {
+        [self showMainMenuScreen];
     }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+    if ([self.viewController.frontViewController isKindOfClass:NSClassFromString(@"RecorderViewController")]) {
+        if ([self.viewController.frontViewController respondsToSelector:@selector(stopCamera)]) {
+            [(RecorderViewController *)self.viewController.frontViewController stopCamera];
+        }
+    }
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -127,32 +161,47 @@
         _registerUserViewController = [[RegisterUserViewController alloc] init];
         _registerUserViewController.delegate = self;
         
-        [self.window.rootViewController presentViewController:_registerUserViewController animated:YES completion:^{
-            self.window.rootViewController = _registerUserViewController;
-            _tutorial = nil;
-        }];
+        [self.viewController pushFrontViewController:_registerUserViewController animated:YES];
+        _tutorial = nil;
+//        [self.window.rootViewController presentViewController:_registerUserViewController animated:YES completion:^{
+//            self.window.rootViewController = _registerUserViewController;
+//            _tutorial = nil;
+//        }];
     } else {
-        [self setRevealViewController];
+        [self showMainMenuScreen];
     }
 }
 
 - (void)showLoginViewScreen {
     
-    __block UIViewController *current = self.window.rootViewController;
+    if (_returnView) {
+        _returnView = nil;
+    }
+    
+    if ([self.viewController.frontViewController isKindOfClass:NSClassFromString(@"ViewController")]) {
+        _returnView = nil;
+    } else {
+        _returnView = self.viewController.frontViewController;
+    }
+    
     if (!_loginViewController) {
         _loginViewController = [[LoginViewController alloc] init];
     }
     [_loginViewController setDelegate:self];
-    [self.window.rootViewController presentViewController:_loginViewController animated:YES completion:^{
-        self.window.rootViewController = _loginViewController;
-        current = nil;
-    }];
+    //_loginViewController.parentView = nil;
+    //_loginViewController.parentView = self.viewController.frontViewController;
+    [self.viewController pushFrontViewController:_loginViewController animated:YES];
     
 }
 
 #pragma mark- Delegaty RegisterView, LoginView i LoginManager
-
 - (void)registerUserSuccess {
+    if (!_returnView) {
+        [self showMainMenuScreen];
+    } else {
+        [self showReturnViewScreen];
+    }
+    
     [self setRevealViewController];
     
     [self updateSettingsViewControllerLoginInfo];
@@ -162,33 +211,28 @@
     _loginViewController = [[LoginViewController alloc] init];
     _loginViewController.delegate = self;
     
-    [self.window.rootViewController presentViewController:_loginViewController animated:YES completion:^{
-        self.window.rootViewController = _loginViewController;
-        if (_registerUserViewController) {
-            _registerUserViewController.delegate = nil;
-            _registerUserViewController = nil;
-        }
-    }];
+    [self.viewController pushFrontViewController:_loginViewController animated:YES];
+    if (_registerUserViewController) {
+        _registerUserViewController.delegate = nil;
+        _registerUserViewController = nil;
+    }
 }
 
 - (void)registerUserCancel {
-    [self setRevealViewController];
+    if (!_returnView) {
+        [self showMainMenuScreen];
+    } else {
+        [self showReturnViewScreen];
+    }
+    
 }
 
 - (void)loginWantsRegisterUser {
     _registerUserViewController = [[RegisterUserViewController alloc] init];
     _registerUserViewController.delegate = self;
     
-    if ([self.window.rootViewController isKindOfClass:NSClassFromString(@"LoginViewController")]) {
-        [_loginViewController presentViewController:_registerUserViewController animated:YES completion:^{
-            self.window.rootViewController = _registerUserViewController;
-            if (_loginViewController) {
-                _loginViewController.delegate = nil;
-                _loginViewController = nil;
-            }
-        }];
-    } else if ([self.window.rootViewController isKindOfClass:NSClassFromString(@"SWRevealViewController")]) {
-        [self.viewController setFrontViewController:_registerUserViewController animated:YES];
+    if ([self.window.rootViewController isKindOfClass:NSClassFromString(@"SWRevealViewController")]) {
+        [self.viewController pushFrontViewController:_registerUserViewController animated:YES];
         if (_loginViewController) {
             _loginViewController.delegate = nil;
             _loginViewController = nil;
@@ -202,11 +246,14 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"isLogged"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    if (![self.window.rootViewController isKindOfClass:NSClassFromString(@"SWRevealViewController")]) {
-        [self setRevealViewController];
-        
-        [self updateSettingsViewControllerLoginInfo];
+    if (!_returnView) {
+        [self showMainMenuScreen];
+    } else {
+        [self showReturnViewScreen];
     }
+    
+    [self updateSettingsViewControllerLoginInfo];
+
 }
 
 - (void)loginManagerSuccess {
@@ -220,6 +267,8 @@
     NSLog(@"login error message: %@", errorMessage);
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"isLogged"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self updateSettingsViewControllerLoginInfo];
 }
 
 - (void)updateSettingsViewControllerLoginInfo {
@@ -241,7 +290,8 @@
     }
     else {
         if (self.window.rootViewController) {
-            orientations = [[((SWRevealViewController *)self.window.rootViewController) revealViewController] supportedInterfaceOrientations];
+            orientations = (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight);
+            //orientations = [[((SWRevealViewController *)self.window.rootViewController) revealViewController] supportedInterfaceOrientations];
         }
         return orientations;
     }

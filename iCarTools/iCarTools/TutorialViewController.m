@@ -34,6 +34,9 @@
     
     currentState = 0;
     
+    self.revealViewController.tapGestureRecognizer.enabled = NO;
+    self.revealViewController.panGestureRecognizer.enabled = NO;
+    
     _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Tutorial-Background"]];
     [_backgroundImageView setFrame:CGRectMake(0, 0, self.view.frame.size.height*(256.0/160.0), self.view.frame.size.height)];
     [_backgroundImageView setCenter:CGPointMake(self.view.center.x, self.view.center.y)];
@@ -99,6 +102,11 @@
         [_permissionButton setUserInteractionEnabled:YES];
     }];
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    self.revealViewController.tapGestureRecognizer.enabled = YES;
+    self.revealViewController.panGestureRecognizer.enabled = YES;
 }
 
 - (void)didReceiveMemoryWarning {

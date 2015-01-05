@@ -436,25 +436,40 @@
 
 - (BOOL)gotMicrophonePermission {
     
-    NSLog(@"gotMicrofonePermission");
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(gotMicrophonePermission) object:nil];
     
     __block BOOL gotPermission = NO;
     
+    /*if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        if ([AVAudioSession sharedInstance].recordPermission == AVAudioSessionRecordPermissionGranted) {
+            gotPermission = YES;
+            [self goToNextState];
+            NSLog(@"gotMicrofonePermission");
+            
+        } else if ([AVAudioSession sharedInstance].recordPermission == AVAudioSessionRecordPermissionDenied) {
+            gotPermission = NO;
+            [self noPermissionScreen];
+        } else {
+            NSLog(@"Again and again microphone");
+            [self performSelector:@selector(gotMicrophonePermission) withObject:nil afterDelay:0.5];
+            
+        }
+    } else {*/
     
-    
-    if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])
-    {
-        [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-            if (granted) {
-                gotPermission = YES;
-                [self goToNextState];
-            } else {
-                gotPermission = NO;
-                [self noPermissionScreen];
-            }
-        }];
-    }
-
+        if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])
+        {
+            [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+                if (granted) {
+                    gotPermission = YES;
+                    [self goToNextState];
+                } else {
+                    gotPermission = NO;
+                    [self noPermissionScreen];
+                }
+            }];
+        }
+        
+    //}
     
     return gotPermission;
 }

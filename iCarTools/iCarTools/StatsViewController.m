@@ -161,6 +161,16 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"zoom"];
         [self zoomStation];
     }
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"addStationAlert"] == YES) {
+        [self showFloatingAlertViewWithType:1];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"addStationAlert"];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"addVisitAlert"] == YES) {
+        [self showFloatingAlertViewWithType:2];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"addVisitAlert"];
+    }
 }
 
 - (id<UILayoutSupport>)topLayoutGuide {
@@ -191,11 +201,6 @@
     [self.navigationController.navigationBar endEditing:YES];
 }
 
-/**
- *  @Author Damian Klimaszewski
- *
- *  Left menu
- */
 - (void)updateDataSourceInLeftRevealViewController {
     if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
         [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[
@@ -264,9 +269,7 @@
         _addStationView.wantsCustomAnimation = YES;
         [self.revealViewController setFrontViewController:_addStationView animated:YES];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[NSString stringWithFormat:@"This option is only available for logged-in users"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        alert = nil;
+       [self showFloatingAlertViewWithType:4];
     }
 }
 
@@ -286,6 +289,11 @@
     [self.revealViewController setFrontViewController:_searchView animated:YES];
 }
 
+/**
+ *  @Author Damian Klimaszewski
+ *
+ *  Zoom to choosen station
+ */
 - (void)zoomStation {
     
     for (int i = 0; i<[responseArray count]; i++) {
@@ -362,11 +370,6 @@
     }
 }
 
-/**
- *  @Author Damian Klimaszewski
- *
- *  Actions in annotations
- */
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view
     calloutAccessoryControlTapped:(UIControl *)control {
     
@@ -403,9 +406,7 @@
             _changeStationView.wantsCustomAnimation = YES;
             [self.revealViewController setFrontViewController:_changeStationView animated:YES];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[NSString stringWithFormat:@"This option is only available for logged-in users"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-            alert = nil;
+            [self showFloatingAlertViewWithType:3];
         }
 
     }
@@ -508,6 +509,9 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    if (_floatingAlertView) {
+        [self hideFloatingAlertView];
+    }
     [self setFramesForInterface:toInterfaceOrientation];
 }
 
@@ -522,6 +526,87 @@
         self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_disconnected-256"];
     }
     
+}
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Wyświetla pięciosekundowy alert
+ */
+- (void)showFloatingAlertViewWithType:(int)type {
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideFloatingAlertView) object:nil];
+    
+    if (_floatingAlertView) {
+        if ([_floatingAlertView isDescendantOfView:self.view]) {
+            [_floatingAlertView removeFromSuperview];
+        }
+        _floatingAlertView = nil;
+    }
+    
+    float height = 30.0f;
+    
+    _floatingAlertView = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height)];
+    _floatingAlertView.alpha = 0.0f;
+    [_floatingAlertView.layer setCornerRadius:5.0f];
+    UILabel *floatingViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(5.0, 0.0, 270.0, height)];
+    [floatingViewLabel setTextAlignment:NSTextAlignmentCenter];
+    
+    switch (type) {
+        case 0:
+            [floatingViewLabel setText:NSLocalizedString(@"Error occured. Please try again", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor redColor]];
+            break;
+        case 1:
+            [floatingViewLabel setText:NSLocalizedString(@"Station added successfully.", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor greenColor]];
+            break;
+        case 2:
+            [floatingViewLabel setText:NSLocalizedString(@"Database refreshed.", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor greenColor]];
+            break;
+        case 3:
+            [floatingViewLabel setText:NSLocalizedString(@"You must be logged in to add visit.", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor redColor]];
+            break;
+        case 4:
+            [floatingViewLabel setText:NSLocalizedString(@"You must be logged in to add station.", nil)];
+            [_floatingAlertView setBackgroundColor:[UIColor redColor]];
+            break;
+            
+        default:
+            break;
+    }
+    
+    [floatingViewLabel setTextColor:[UIColor whiteColor]];
+    [_floatingAlertView addSubview:floatingViewLabel];
+    
+    [self.view insertSubview:_floatingAlertView belowSubview:_upperBackgroundView];
+    floatingViewLabel = nil;
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        _floatingAlertView.alpha = 1.0f;
+        [_floatingAlertView setFrame:CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height + 5.0 : 5.0, 280.0, height)];
+    } completion:^(BOOL finished) {
+        [self performSelector:@selector(hideFloatingAlertView) withObject:nil afterDelay:4.0];
+    }];
+    
+}
+
+- (void)hideFloatingAlertView {
+    if (_floatingAlertView) {
+        float height = 30.0f;
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            _floatingAlertView.alpha = 0.0f;
+            _floatingAlertView.frame = CGRectMake(_floatingAlertView.frame.origin.x, _floatingAlertView.frame.origin.y - height, _floatingAlertView.frame.size.width, _floatingAlertView.frame.size.height);
+        } completion:^(BOOL finished) {
+            _floatingAlertView.frame = CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height);
+            
+            [_floatingAlertView removeFromSuperview];
+            _floatingAlertView = nil;
+        }];
+    }
 }
 
 - (void)locationUpdate:(CLLocation *)location {

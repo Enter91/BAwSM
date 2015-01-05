@@ -158,6 +158,7 @@
         [alert show];
         alert = nil;
         [self unlockStationsButtons];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"addStationAlert"];
     }
     
     if ([[responseDict objectForKey:@"code"] intValue] == 401) {

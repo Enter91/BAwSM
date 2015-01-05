@@ -146,6 +146,7 @@
         [alert show];
         alert = nil;
         [self unlockStationsButtons];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"addVisitAlert"];
     }
     
     if ([[responseDict objectForKey:@"code"] intValue] == 403) {

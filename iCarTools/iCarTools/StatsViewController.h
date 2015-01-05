@@ -43,6 +43,7 @@
 
 @property (strong, nonatomic) UIView *upperBackgroundView;
 @property (strong, nonatomic) UIView *lowerBackgroundView;
+@property (strong, nonatomic) UIView *floatingAlertView;
 
 @property (strong, nonatomic) UIImageView *gpsStatusImageView;
 

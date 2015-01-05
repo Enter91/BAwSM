@@ -251,7 +251,7 @@
 
 - (IBAction)addStationAction:(id)sender {
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isLogged"] == [NSNumber numberWithBool:YES]) {
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"isLogged"] == [NSNumber numberWithBool:YES] && [[UserInfo sharedInstance] login].length > 0) {
         
         if (_addStationView) {
             //        _statsView.delegate = nil;
@@ -310,7 +310,6 @@
                     [_mapView selectAnnotation:annotation animated:YES];
                 }
             }
-            [self.view reloadInputViews];
         }
     }
 }
@@ -388,7 +387,7 @@
 
     } else if (control == view.rightCalloutAccessoryView) {
 
-        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isLogged"] == [NSNumber numberWithBool:YES]) {
+        if ([[NSUserDefaults standardUserDefaults] valueForKey:@"isLogged"] == [NSNumber numberWithBool:YES] && [[UserInfo sharedInstance] login].length > 0) {
 
             [[NSUserDefaults standardUserDefaults] setObject:view.annotation.title forKey:@"stationName"];
             [[NSUserDefaults standardUserDefaults] setObject:view.annotation.subtitle forKey:@"stationAddress"];

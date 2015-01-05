@@ -71,7 +71,11 @@
     }
     cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
     cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.font = [UIFont fontWithName:@"DINPro-Medium" size:14.0];
+    if (indexPath.row == 0) {
+        cell.textLabel.font = [UIFont fontWithName:@"DINPro-Bold" size:14.0];
+    } else {
+        cell.textLabel.font = [UIFont fontWithName:@"DINPro-Medium" size:14.0];
+    }
     cell.textLabel.numberOfLines = 0; //no max
     cell.textLabel.text = [visits objectAtIndex:indexPath.row];
     return cell;
@@ -109,17 +113,29 @@
             if ([pb95 isEqual:@"0"]) {
                 pb95 = @"-";
             }
+            if ([pb95 length]>4) {
+                pb95 = [pb95 substringToIndex: 4];
+            }
             NSString *pb98 = responseArray[i][@"pb98_price"];
             if ([pb98 isEqual:@"0"]) {
                 pb98 = @"-";
+            }
+            if ([pb98 length]>4) {
+                pb98 = [pb98 substringToIndex: 4];
             }
             NSString *on = responseArray[i][@"on_price"];
             if ([on isEqual:@"0"]) {
                 on = @"-";
             }
+            if ([on length]>4) {
+                on = [on substringToIndex: 4];
+            }
             NSString *lpg = responseArray[i][@"lpg_price"];
             if ([lpg isEqual:@"0"]) {
                 lpg = @"-";
+            }
+            if ([lpg length]>4) {
+                lpg = [lpg substringToIndex: 4];
             }
             NSString *comment = responseArray[i][@"comment"];
             if ([comment isEqual:@""]) {
@@ -128,6 +144,13 @@
             NSString *visitdate = responseArray[i][@"visit_date"];
             NSString *subtitle;
             subtitle = [NSString stringWithFormat:@"%@    %@ %@ \r\rPb95: %@   Pb98: %@   On: %@   Lpg: %@ \r\rComment: %@",visitdate,first_name,last_name,pb95,pb98,on,lpg,comment];
+            
+            if (i == 0) {
+                NSString *lastPrice;
+                lastPrice = [NSString stringWithFormat:@"Last Price\r\rPb95: %@   Pb98: %@   On: %@   Lpg: %@",pb95,pb98,on,lpg];
+                [visits addObject:lastPrice];
+            }
+            
             [visits addObject:subtitle];
         }
         [self.tableView reloadData];

@@ -100,6 +100,27 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)lockStationsButtons {
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockStationsButtons) object:nil];
+    [self performSelector:@selector(unlockStationsButtons) withObject:nil afterDelay:5.0];
+    [_saveButton setUserInteractionEnabled:NO];
+    [_cancelButton setUserInteractionEnabled:NO];
+    [UIView animateWithDuration:0.3 animations:^{
+        [_saveButton setAlpha:0.5];
+        [_cancelButton setAlpha:0.5];
+    }];
+}
+
+- (void)unlockStationsButtons {
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockStationsButtons) object:nil];
+    [_saveButton setUserInteractionEnabled:YES];
+    [_cancelButton setUserInteractionEnabled:YES];
+    [UIView animateWithDuration:0.3 animations:^{
+        [_saveButton setAlpha:1.0];
+        [_cancelButton setAlpha:1.0];
+    }];
+}
+
 - (void)responseDictionary:(NSDictionary *)responseDict {
     
     NSLog(@"response: %@", responseDict);
@@ -107,6 +128,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         alert = nil;
+        [self unlockStationsButtons];
     }
     
     if ([[responseDict objectForKey:@"code"] intValue] == 202) {
@@ -114,6 +136,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         alert = nil;
+        [self unlockStationsButtons];
     }
 
     
@@ -122,6 +145,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done" message:[NSString stringWithFormat:@"%@", [responseDict objectForKey:@"response"]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         alert = nil;
+        [self unlockStationsButtons];
     }
     
     if ([[responseDict objectForKey:@"code"] intValue] == 403) {
@@ -178,6 +202,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     
          if (![_pb95TextField.text isEqual:@""] || ![_pb98TextField.text isEqual:@""] || ![_onTextField.text isEqual:@""] || ![_lpgTextField.text isEqual:@""] || ![_commentTextView.text isEqual:@""]) {
              
+             [self lockStationsButtons];
              [self getStationIdDatabaseConnect];
              
              double delayInSeconds = 1.0;

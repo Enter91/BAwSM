@@ -51,7 +51,7 @@
     [self.settingsOpenButton setTitle:NSLocalizedString(@"about", nil) forState:UIControlStateNormal];
     
     if ([self.revealViewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
-        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[NSLocalizedString(@"about", nil)] andMenuType:0];
+        [((SettingsViewController *)self.revealViewController.rearViewController) updateMenuWithTitlesArray:@[NSLocalizedString(@"copyright", nil),NSLocalizedString(@"authors", nil),NSLocalizedString(@"reserved", nil)] andMenuType:0];
     }
     
     if (_recorderView) {

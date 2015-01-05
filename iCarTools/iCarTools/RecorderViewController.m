@@ -854,15 +854,33 @@
     }];
 }
 
+- (void)refreshDatabaseOfAccidents {
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshDatabaseOfAccidents) object:nil];
+    
+    CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
+    
+    if (location.latitude != 0.0f && location.longitude != 0.0f) {
+        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getAccidentList.php?latitude=%f&longitude=%f&diff=0.01", location.latitude, location.longitude]];
+    } else {
+        [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:10];
+        return;
+    }
+    
+    [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:15*60];
+}
+
 - (void)responseDictionary:(NSDictionary *)responseDict {
     NSLog(@"%@", responseDict);
     
     if (responseDict == nil || [[responseDict objectForKey:@"code"] intValue] == 200) {
         [self showFloatingAlertViewWithType:0];
         [self unlockTrafficAccidentsButtons];
-    } else {
+    } else if ([[responseDict objectForKey:@"code"] intValue] == 400) {
         [self lockTrafficAccidentsButtons];
         [self showFloatingAlertViewWithType:1];
+    } else if ([[responseDict objectForKey:@"code"] intValue] == 401) {
+        NSLog(@"%@", responseDict);
+        [self showFloatingAlertViewWithType:2];
     }
 }
 
@@ -973,6 +991,9 @@
     self.gpsStatusImageView.image = nil;
     if (state == 2) {
         self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_receiving-256"];
+        
+        [self refreshDatabaseOfAccidents];
+        
     } else if (state == 1) {
         self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_searching-256"];
     } else {
@@ -992,6 +1013,10 @@
 }
 
 - (void)exit {
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshDatabaseOfAccidents) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideFloatingAlertView) object:nil];
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockTrafficAccidentsButtons) object:nil];
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockTrafficAccidentsButtons) object:nil];
     [self teardownAVCapture];
     [self.gpsUtilities stopGPS];
     self.gpsUtilities.delegate = nil;

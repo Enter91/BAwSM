@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "EasterEggViewController.h"
 
 @interface ViewController ()
 
@@ -63,7 +64,25 @@
     if (_statsView) {
         _statsView = nil;
     }
+    
+    //[((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:self];
 }
+
+/*- (void)settingsViewWillDisappear {
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:nil];
+    [super viewDidDisappear:animated];
+}
+
+- (void)clickedOption:(int)number inMenuType:(int)menuType {
+    if (number == 2) {
+        EasterEggViewController *easterEgg = [[EasterEggViewController alloc] init];
+        [self.revealViewController pushFrontViewController:easterEgg animated:YES];
+    }
+}*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -11,13 +11,9 @@
 #import "DejalActivityView.h"
 #import "UserInfo.h"
 #import "KeychainItemWrapper.h"
+#import <SWRevealViewController.h>
 
 @interface LoginViewController ()
-
-@property (strong, nonatomic) NSDictionary *textViewInfoDict;
-@property (strong, nonatomic) UITextField *firstResponderAfterInterfaceOrientationChange;
-@property (nonatomic) BOOL keepActualViewFrame;
-@property (nonatomic) CGRect keyboardFrameBeginRect;
 
 @end
 
@@ -44,13 +40,16 @@
     tapper.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapper];
     
+    self.revealViewController.panGestureRecognizer.enabled = NO;
+    self.revealViewController.tapGestureRecognizer.enabled = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     if (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
         [self setFramesForLandscape];
     } else {
         [self setFramesForPortrait];
     }
-    
-    _keepActualViewFrame = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,9 +63,9 @@
         _loginManager = nil;
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (_parentView) {
+    /*if (_parentView) {
         _parentView = nil;
-    }
+    }*/
 }
 
 - (IBAction)loginAction:(id)sender {
@@ -83,9 +82,9 @@
 
 - (IBAction)registerAction:(id)sender {
     
-    if (_parentView) {
+    /*if (_parentView) {
         _parentView = nil;
-    }
+    }*/
     if (_delegate) {
         if ([_delegate respondsToSelector:@selector(loginWantsRegisterUser)]) {
             [_delegate loginWantsRegisterUser];
@@ -102,13 +101,15 @@
     [DejalBezelActivityView removeViewAnimated:YES];
     if (_delegate) {
         if ([_delegate respondsToSelector:@selector(loginSuccess)]) {
+            _loginTextField.text = @"";
+            _passwordTextField.text = @"";
             [_delegate loginSuccess];
         }
     }
-    if (_parentView) {
+    /*if (_parentView) {
         [self.revealViewController setFrontViewController:_parentView animated:YES];
         _parentView = nil;
-    }
+    }*/
 }
 
 - (void)loginManagerFailWithErrorMessage:(NSString *)errorMessage {
@@ -158,6 +159,8 @@
         CGRect f = self.view.frame;
         f.origin.y = 0.0f;
         self.view.frame = f;
+        
+        
         
         [_titleLabel setFrame:CGRectMake(8, 8, self.view.frame.size.width-16, 50)];
         [_titleLabel adjustsFontSizeToFitWidth];
@@ -210,26 +213,6 @@
         default:
             break;
     }
-    
-    if (_firstResponderAfterInterfaceOrientationChange) {
-        _firstResponderAfterInterfaceOrientationChange = nil;
-    }
-    
-    if ([_loginTextField isFirstResponder]) {
-        _firstResponderAfterInterfaceOrientationChange = _loginTextField;
-        [_loginTextField resignFirstResponder];
-    } else if ([_passwordTextField isFirstResponder]) {
-        _firstResponderAfterInterfaceOrientationChange = _passwordTextField;
-        [_passwordTextField resignFirstResponder];
-    }
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    if (_firstResponderAfterInterfaceOrientationChange) {
-        [_firstResponderAfterInterfaceOrientationChange becomeFirstResponder];
-        _firstResponderAfterInterfaceOrientationChange = nil;
-    }
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
@@ -242,80 +225,14 @@
 }
 
 #pragma mark- TextField Delegates
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    
-    _textViewInfoDict = @{               @"tag": [NSNumber numberWithInt:(int)textField.tag],
-                                         @"textField frame" : [NSValue valueWithCGRect:textField.frame]};
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
-    
-    if (!CGRectIsNull(_keyboardFrameBeginRect)) {
-        [self setViewMovement];
-    }
-    
-    return YES;
-}
-
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    [textField resignFirstResponder];
-    [self.view endEditing:YES];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
-    
-    return YES;
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    _keepActualViewFrame = NO;
-}
-
-- (void)keyboardDidShow:(NSNotification *)notification
-{
-    _keyboardFrameBeginRect = [[[notification userInfo] valueForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-    
-    [self setViewMovement];
-}
-
-- (void)setViewMovement {
-    CGRect textFieldFrame = [[_textViewInfoDict objectForKey:@"textField frame"] CGRectValue];
-    int textFieldCenter = textFieldFrame.origin.y + textFieldFrame.size.height/2;
-    
-    int visibleViewSize = self.view.frame.size.height - _keyboardFrameBeginRect.size.height;
-    int heightCenter = visibleViewSize / 2;
-    
-    int diff = textFieldCenter - heightCenter;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        CGRect f = self.view.frame;
-        f.origin.y = -1 * diff;
-        self.view.frame = f;
-    }];
-}
-
--(void)keyboardDidHide:(NSNotification *)notification
-{
-    if (!_keepActualViewFrame) {
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect f = self.view.frame;
-            f.origin.y = 0.0f;
-            self.view.frame = f;
-        } completion:^(BOOL finished) {
-            _keepActualViewFrame = NO;
-        }];
-    }
-}
-
 -(BOOL)textFieldShouldReturn:(UITextField*)textField;
 {
     NSInteger nextTag = textField.tag + 1;
     UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
     if (nextResponder) {
-        _keepActualViewFrame = YES;
         [textField resignFirstResponder];
         [nextResponder becomeFirstResponder];
     } else {
-        _keepActualViewFrame = NO;
         [textField resignFirstResponder];
     }
     return NO;
@@ -329,7 +246,6 @@
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
-    _keepActualViewFrame = NO;
     [self.navigationController.navigationBar endEditing:YES];
 }
 

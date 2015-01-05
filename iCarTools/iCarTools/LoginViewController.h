@@ -16,7 +16,7 @@
 
 @end
 
-@interface LoginViewController : UIViewController <UITextFieldDelegate, LoginManagerDelegate>
+@interface LoginViewController : UIViewController <UITextFieldDelegate, LoginManagerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *loginTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
@@ -29,7 +29,7 @@
 
 @property (nonatomic, assign) id delegate;
 
-@property (nonatomic, strong) UIViewController *parentView;
+//@property (nonatomic, strong) UIViewController *parentView;
 
 @property (strong, nonatomic) LoginManager *loginManager;
 

@@ -120,7 +120,7 @@ static NSString * const DIN_PRO_BOLD = @"DINPro-Bold";
 }
 
 - (void)showMapWithRoute {
-    [_delegate wantsShowMapWithRouteArray:[_routeArray copy]];
+    [_delegate wantsShowMapWithRouteArray:[_routeArray copy] andDateString:[NSString stringWithString:_date.text]];
 }
 
 - (void)showVideo {

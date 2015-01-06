@@ -26,6 +26,14 @@
     BOOL didChangeCameraSettings;
 }
 
+@property (strong, nonatomic) NSBag *speedCameraBag;
+@property (strong, nonatomic) NSBag *crashAccidentBag;
+@property (strong, nonatomic) NSMutableArray *speedCameraSortedArray;
+@property (strong, nonatomic) NSMutableArray *crashAccidentSortedArray;
+
+@property CLLocationDegrees minDBLat, minDBLong, maxDBLat, maxDBLong;
+@property BOOL shouldForceStopNotification;
+
 @end
 
 @implementation RecorderViewController
@@ -48,6 +56,8 @@
         [[NSUserDefaults standardUserDefaults] setObject:@0 forKey:@"video quality"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    
+    _shouldForceStopNotification = NO;
     
     supportedVideoQuality = [[NSMutableArray alloc] init];
     supportedVideoQualityTranslatedNames = [[NSMutableArray alloc] init];
@@ -94,18 +104,40 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
+    _minDBLat = HUGE_VALF;
+    _minDBLong = HUGE_VALF;
+    _maxDBLat = -HUGE_VALF;
+    _maxDBLong = -HUGE_VALF;
+    
+    _shouldForceStopNotification = NO;
+    
     self.revealViewController.panGestureRecognizer.enabled = YES;
     self.revealViewController.tapGestureRecognizer.enabled = YES;
     
     [self initializeInterface];
     
+    [super viewWillAppear:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [self teardownAVCapture];
+- (void)viewWillDisappear:(BOOL)animated {
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(notifyUserAboutNearestAccident) object:nil];
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshDatabaseOfAccidents) object:nil];
+    
+    _shouldForceStopNotification = YES;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self teardownAVCapture];
+    });
+    
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    
+    _shouldForceStopNotification = NO;
+    
+    [super viewDidAppear:animated];
     
     [self initializeCamera];
     
@@ -273,6 +305,10 @@
         [self.crashNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.crashNotificationButton.center.y)];
         [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.whiteLine1.frame.origin.y+6, 37, 37)];
         [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.gpsStatusImageView.center.y)];
+        
+        if (_trafficAlertView) {
+            [_trafficAlertView setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)];
+        }
     });
 }
 
@@ -296,30 +332,10 @@
         
         [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height + (self.cameraRecordingButton.frame.origin.y - (self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height))/2.0, 37, 37)];
         [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height + (self.cameraRecordingButton.frame.origin.y - (self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height))/2.0)];
-    });
-}
-
-- (void)setFramesForLandscapeRight {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.upperBackgroundView setFrame:CGRectMake(self.view.frame.size.width-44, 0, 44, self.view.frame.size.height)];
-        [self.lowerBackgroundView setFrame:CGRectMake(0, 0, 95, self.view.frame.size.height)];
-        [self.menuButton setFrame:CGRectMake(0, 10, 44, 44)];
-        [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.center.x, 0, 44, 44)];
-        [self.cameraRecordingButton setFrame:CGRectMake(10, (self.view.frame.size.height-75)/2, 75, 75)];
-        [self.cameraRecordingButton setCenter:self.lowerBackgroundView.center];
-        [self.whiteLine1 setFrame:CGRectMake(5, (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
-        [self.whiteLine2 setFrame:CGRectMake(5, self.view.frame.size.height - (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
-        [self.speedLabel setFrame:CGRectMake(10, 0, 60, self.whiteLine1.frame.origin.y)];
-        [self.speedUnitsLabel setFrame:CGRectMake(70, 0, 25, 27)];
         
-        [self.speedNotificationButton setFrame:CGRectMake(0, 0, 79, 37)];
-        [self.speedNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.cameraRecordingButton.frame.origin.y + self.cameraRecordingButton.frame.size.height + (self.whiteLine2.frame.origin.y - self.cameraRecordingButton.frame.origin.y - self.cameraRecordingButton.frame.size.height)/2.0)];
-        
-        [self.crashNotificationButton setFrame:CGRectMake(0, 0, 79, 37)];
-        [self.crashNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.whiteLine2.frame.origin.y + self.whiteLine2.frame.size.height + (self.view.frame.size.height - (self.whiteLine2.frame.origin.y+self.whiteLine2.frame.size.height))/2.0)];
-        
-        [self.gpsStatusImageView setFrame:CGRectMake(0.0, 0.0, 37, 37)];
-        [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height + (self.cameraRecordingButton.frame.origin.y - (self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height))/2.0)];
+        if (_trafficAlertView) {
+            [_trafficAlertView setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)];
+        }
     });
 }
 
@@ -870,17 +886,23 @@
     CLLocationCoordinate2D location = [GPSUtilities sharedInstance].locationCoordinates;
     
     if (location.latitude != 0.0f && location.longitude != 0.0f) {
-        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getAccidentList.php?latitude=%f&longitude=%f&diff=0.01", location.latitude, location.longitude]];
+        [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getAccidentList.php?latitude=%f&longitude=%f&diff=0.1", location.latitude, location.longitude]];
+        
+        _minDBLat = location.latitude - 0.1;
+        _maxDBLat = location.latitude + 0.1;
+        _minDBLong = location.longitude - 0.1;
+        _maxDBLong = location.longitude + 0.1;
+        
     } else {
-        [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:10];
+        [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:5];
         return;
     }
     
-    [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:15*60];
+    [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:5*60];
 }
 
 - (void)responseDictionary:(NSDictionary *)responseDict {
-    NSLog(@"%@", responseDict);
+    //NSLog(@"%@", responseDict);
     
     if (responseDict == nil || [[responseDict objectForKey:@"code"] intValue] == 200) {
         [self showFloatingAlertViewWithType:0];
@@ -889,8 +911,267 @@
         [self lockTrafficAccidentsButtons];
         [self showFloatingAlertViewWithType:1];
     } else if ([[responseDict objectForKey:@"code"] intValue] == 401) {
-        NSLog(@"%@", responseDict);
-        [self showFloatingAlertViewWithType:2];
+        
+        if (_shouldForceStopNotification == NO) {
+            [self generateTrafficBagWithArray:[[responseDict objectForKey:@"response"] copy]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self showFloatingAlertViewWithType:2];
+            });
+        } else {
+            _minDBLat = HUGE_VALF;
+            _minDBLong = HUGE_VALF;
+            _maxDBLat = -HUGE_VALF;
+            _maxDBLong = -HUGE_VALF;
+        }
+    }
+}
+
+- (void)generateTrafficBagWithArray:(NSArray *)arrOfTrafficAccidents {
+    
+    if (_shouldForceStopNotification) {
+        _minDBLat = HUGE_VALF;
+        _minDBLong = HUGE_VALF;
+        _maxDBLat = -HUGE_VALF;
+        _maxDBLong = -HUGE_VALF;
+        
+        return;
+    }
+    
+    if (_speedCameraBag) {
+        _speedCameraBag = nil;
+    }
+    if (_crashAccidentBag) {
+        _crashAccidentBag = nil;
+    }
+    
+    _speedCameraBag = [NSBag bag];
+    _crashAccidentBag = [NSBag bag];
+    
+    for (NSDictionary *dict in arrOfTrafficAccidents) {
+        
+        NSArray *loc = @[ [NSString stringWithFormat:@"%.3f", [[dict objectForKey:@"latitude"] floatValue]], [NSString stringWithFormat:@"%.3f", [[dict objectForKey:@"longitude"] floatValue]]];
+        
+        if ([[dict objectForKey:@"accident_type_id"] intValue] == 1) {
+            //fotoradar
+            [_speedCameraBag add:loc];
+        } else if ([[dict objectForKey:@"accident_type_id"] intValue] == 2) {
+            //wypadek
+            [_crashAccidentBag add:loc];
+        }
+        
+        loc = nil;
+    }
+    
+    //NSLog(@"speed: %@", _speedCameraBag);
+    //NSLog(@"acc: %@", _crashAccidentBag);
+    
+    [self generateDistanceToBagArray];
+}
+
+- (void)generateDistanceToBagArray {
+    
+    if (_shouldForceStopNotification) {
+        _minDBLat = HUGE_VALF;
+        _minDBLong = HUGE_VALF;
+        _maxDBLat = -HUGE_VALF;
+        _maxDBLong = -HUGE_VALF;
+        
+        return;
+    }
+    
+    NSMutableArray *distanceToSpeedBagArray = [[NSMutableArray alloc] init];
+    
+    CLLocation *currentLocation = [[CLLocation alloc] initWithLatitude:[[GPSUtilities sharedInstance] locationCoordinates].latitude longitude:[[GPSUtilities sharedInstance] locationCoordinates].longitude];
+    
+    for (int i=0; i<[[_speedCameraBag objects] count]; i++) {
+        NSArray *locArr = [[_speedCameraBag objects] objectAtIndex:i];
+        
+        CLLocation *newLocation = [[CLLocation alloc] initWithLatitude:[[locArr objectAtIndex:0] floatValue] longitude:[[locArr objectAtIndex:1] floatValue]];
+        CLLocationDistance meters = [newLocation distanceFromLocation:currentLocation];
+        
+        [distanceToSpeedBagArray addObject:@[[NSNumber numberWithDouble:meters], locArr]];
+    }
+    
+    NSMutableArray *distanceToAccidentBagArray = [[NSMutableArray alloc] init];
+    
+    for (int i=0; i<[[_crashAccidentBag objects] count]; i++) {
+        NSArray *locArr = [[_crashAccidentBag objects] objectAtIndex:i];
+        
+        CLLocation *newLocation = [[CLLocation alloc] initWithLatitude:[[locArr objectAtIndex:0] floatValue] longitude:[[locArr objectAtIndex:1] floatValue]];
+        CLLocationDistance meters = [newLocation distanceFromLocation:currentLocation];
+        
+        [distanceToAccidentBagArray addObject:@[[NSNumber numberWithDouble:meters], locArr]];
+    }
+    
+    //find minimum index
+    if (_speedCameraSortedArray) {
+        _speedCameraSortedArray = nil;
+    }
+    _speedCameraSortedArray = [NSMutableArray arrayWithArray:[distanceToSpeedBagArray sortedArrayUsingComparator:^(NSArray *obj1,NSArray *obj2) {
+        NSString *num1 =[NSString stringWithFormat:@"%f", [[obj1 objectAtIndex:0] floatValue]];
+        NSString *num2 =[NSString stringWithFormat:@"%f", [[obj2 objectAtIndex:0] floatValue]];
+        return (NSComparisonResult) [num1 compare:num2 options:(NSNumericSearch)];
+    }]];
+    
+    if (_crashAccidentSortedArray) {
+        _crashAccidentSortedArray = nil;
+    }
+    _crashAccidentSortedArray = [NSMutableArray arrayWithArray:[distanceToAccidentBagArray sortedArrayUsingComparator:^(NSArray *obj1,NSArray *obj2) {
+        NSString *num1 =[NSString stringWithFormat:@"%f", [[obj1 objectAtIndex:0] floatValue]];
+        NSString *num2 =[NSString stringWithFormat:@"%f", [[obj2 objectAtIndex:0] floatValue]];
+        return (NSComparisonResult) [num1 compare:num2 options:(NSNumericSearch)];
+    }]];
+    
+    [self notifyUserAboutNearestAccident];
+}
+
+- (void)notifyUserAboutNearestAccident {
+    
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(notifyUserAboutNearestAccident) object:nil];
+    
+    if (_shouldForceStopNotification) {
+        _minDBLat = HUGE_VALF;
+        _minDBLong = HUGE_VALF;
+        _maxDBLat = -HUGE_VALF;
+        _maxDBLong = -HUGE_VALF;
+        
+        return;
+    }
+    
+    NSLog(@"%@", _speedCameraSortedArray);
+    NSLog(@"%@", _crashAccidentSortedArray);
+    
+    if (_speedCameraSortedArray.count == 0 && _crashAccidentSortedArray.count == 0) {
+        return;
+    }
+    
+    if (_speedCameraSortedArray && _crashAccidentSortedArray) {
+        if (_speedCameraSortedArray.count > 0 || _crashAccidentSortedArray.count > 0) {
+            CLLocationDistance nearestPointDistance = HUGE_VALF;
+            NSArray *finalLoc = nil;
+            int whichArray = -1;
+            if (_speedCameraSortedArray.count > 0) {
+                
+                whichArray = 10;
+                
+                NSArray *tmpArray = [_speedCameraSortedArray firstObject];
+                
+                nearestPointDistance = [[tmpArray objectAtIndex:0] doubleValue];
+                finalLoc = [tmpArray objectAtIndex:1];
+                
+            }
+            
+            if (_crashAccidentSortedArray.count > 0) {
+                if ([[[_crashAccidentSortedArray firstObject] objectAtIndex:0] doubleValue] < nearestPointDistance || finalLoc == nil) {
+                    
+                    whichArray = 20;
+                    
+                    NSArray *tmpArray = [_crashAccidentSortedArray firstObject];
+                    
+                    nearestPointDistance = [[tmpArray objectAtIndex:0] doubleValue];
+                    if (finalLoc) {
+                        finalLoc = nil;
+                    }
+                    finalLoc = [tmpArray objectAtIndex:1];
+                }
+            }
+            
+            if (nearestPointDistance < 500) {
+                
+                if (_shouldForceStopNotification) {
+                    _minDBLat = HUGE_VALF;
+                    _minDBLong = HUGE_VALF;
+                    _maxDBLat = -HUGE_VALF;
+                    _maxDBLong = -HUGE_VALF;
+                    
+                    return;
+                }
+                
+                if (whichArray == 10) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showTrafficAlertWithDistance:nearestPointDistance mode:0 andArrayOfCoordinates:finalLoc];
+                    });
+                    [_speedCameraSortedArray removeObjectAtIndex:0];
+                } else if (whichArray == 20) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showTrafficAlertWithDistance:nearestPointDistance mode:1 andArrayOfCoordinates:finalLoc];
+                    });
+                    [_crashAccidentSortedArray removeObjectAtIndex:0];
+                }
+            }
+            
+        }
+    }
+    
+    [self performSelector:@selector(notifyUserAboutNearestAccident) withObject:nil afterDelay:10.0];
+}
+
+- (void)showTrafficAlertWithDistance:(CLLocationDistance)distance mode:(int)mode andArrayOfCoordinates:(NSArray *)coordinates {
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideTrafficAlert) object:nil];
+    
+    if (_shouldForceStopNotification) {
+        _minDBLat = HUGE_VALF;
+        _minDBLong = HUGE_VALF;
+        _maxDBLat = -HUGE_VALF;
+        _maxDBLong = -HUGE_VALF;
+        
+        return;
+    }
+    
+    if (_trafficAlertView) {
+        if ([_trafficAlertView isDescendantOfView:self.view]) {
+            [_trafficAlertView removeFromSuperview];
+        }
+        _trafficAlertView = nil;
+    }
+    
+    _trafficAlertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    [_trafficAlertView setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)];
+    [_trafficAlertView.layer setCornerRadius:10.0];
+    [_trafficAlertView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.75]];
+    UIImageView *alertImageView = [[UIImageView alloc] initWithFrame:CGRectMake(50, 40, 100, 100)];
+    [alertImageView setContentMode:UIViewContentModeScaleAspectFit];
+    
+    if (mode == 0) {
+        [alertImageView setImage:[UIImage imageNamed:@"suszarka"]];
+    } else if (mode == 1) {
+        [alertImageView setImage:[UIImage imageNamed:@"wypadek"]];
+    }
+    
+    UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 155, 180, 30)];
+    [distanceLabel setFont:[UIFont fontWithName:@"DINPro-Light" size:20]];
+    [distanceLabel setTextColor:[UIColor whiteColor]];
+    [distanceLabel setTextAlignment:NSTextAlignmentCenter];
+    [distanceLabel setBackgroundColor:[UIColor clearColor]];
+    [distanceLabel setText:[NSString stringWithFormat:@"%@%.2fm", NSLocalizedString(@"Distance: ", nil), distance]];
+    
+    _trafficAlertView.alpha = 0.0;
+    [self.view addSubview:_trafficAlertView];
+    [_trafficAlertView addSubview:alertImageView];
+    [_trafficAlertView addSubview:distanceLabel];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        _trafficAlertView.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        [self performSelector:@selector(hideTrafficAlert) withObject:nil afterDelay:4.0];
+    }];
+    
+    distanceLabel = nil;
+    alertImageView = nil;
+    
+}
+
+- (void)hideTrafficAlert {
+    if (_trafficAlertView) {
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            _trafficAlertView.alpha = 0.0f;
+        } completion:^(BOOL finished) {
+            [_trafficAlertView removeFromSuperview];
+            _trafficAlertView = nil;
+        }];
     }
 }
 
@@ -914,7 +1195,7 @@
     
     float height = 30.0f;
     
-    _floatingAlertView = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height)];
+    _floatingAlertView = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-280.0)/2, ([[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeLeft && [[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeRight) ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height)];
     _floatingAlertView.alpha = 0.0f;
     [_floatingAlertView.layer setCornerRadius:5.0f];
     UILabel *floatingViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(5.0, 0.0, 270.0, height)];
@@ -950,7 +1231,7 @@
     
     [UIView animateWithDuration:0.5 animations:^{
         _floatingAlertView.alpha = 1.0f;
-        [_floatingAlertView setFrame:CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height + 5.0 : 5.0, 280.0, height)];
+        [_floatingAlertView setFrame:CGRectMake((self.view.frame.size.width-280.0)/2, ([[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeLeft && [[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeRight) ? _upperBackgroundView.frame.size.height + 5.0 : 5.0, 280.0, height)];
     } completion:^(BOOL finished) {
         [self performSelector:@selector(hideFloatingAlertView) withObject:nil afterDelay:4.0];
     }];
@@ -965,7 +1246,7 @@
             _floatingAlertView.alpha = 0.0f;
             _floatingAlertView.frame = CGRectMake(_floatingAlertView.frame.origin.x, _floatingAlertView.frame.origin.y - height, _floatingAlertView.frame.size.width, _floatingAlertView.frame.size.height);
         } completion:^(BOOL finished) {
-            _floatingAlertView.frame = CGRectMake((self.view.frame.size.width-280.0)/2, [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height);
+            _floatingAlertView.frame = CGRectMake((self.view.frame.size.width-280.0)/2, ([[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeLeft && [[UIDevice currentDevice] orientation] != UIDeviceOrientationLandscapeRight) ? _upperBackgroundView.frame.size.height - height : -height, 280.0, height);
             
             [_floatingAlertView removeFromSuperview];
             _floatingAlertView = nil;
@@ -986,6 +1267,12 @@
         }
     });
     
+    if (location.coordinate.latitude >= _minDBLat && location.coordinate.latitude <= _maxDBLat && location.coordinate.longitude >= _minDBLong && location.coordinate.longitude <= _maxDBLat) {
+        //jesteśmy w kwadracie, no update
+    } else {
+         [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:5.0];
+    }
+    
     if (_isRecording && _pointsOnTheRouteArray) {
         NSLog(@"Dodano lokalizację: %@", location);
         [_pointsOnTheRouteArray addObject:location];
@@ -1002,7 +1289,7 @@
     if (state == 2) {
         self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_receiving-256"];
         
-        [self refreshDatabaseOfAccidents];
+        [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:5.0];
         
     } else if (state == 1) {
         self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_searching-256"];
@@ -1023,6 +1310,8 @@
 }
 
 - (void)exit {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideTrafficAlert) object:nil];
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(notifyUserAboutNearestAccident) object:nil];
     [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshDatabaseOfAccidents) object:nil];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideFloatingAlertView) object:nil];
     [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockTrafficAccidentsButtons) object:nil];
@@ -1105,10 +1394,10 @@
     RecordedVideosViewController *recordedVideos = [[RecordedVideosViewController alloc] init];
     recordedVideos.parentView = self;
     [self.revealViewController pushFrontViewController:recordedVideos animated:YES];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self teardownAVCapture];
     });
-    
+    */
     recordedVideos = nil;
 }
 

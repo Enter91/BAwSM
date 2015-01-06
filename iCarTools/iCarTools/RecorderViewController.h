@@ -22,6 +22,7 @@
 #import "RecordedVideosViewController.h"
 #import "UIImage+Resizing.h"
 #import "DejalActivityView.h"
+#import "NSBag.h"
 
 @interface RecorderViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate, SettingsViewControllerDelegate, AmazingJSONDelegate>
 
@@ -63,6 +64,7 @@
 @property (nonatomic) BOOL wantsCustomAnimation;
 
 @property (strong, nonatomic) UIView *floatingAlertView;
+@property (strong, nonatomic) UIView *trafficAlertView;
 
 @property (strong, nonatomic) NSMutableArray *pointsOnTheRouteArray;
 

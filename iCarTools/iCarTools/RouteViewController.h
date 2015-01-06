@@ -13,6 +13,7 @@
 @interface RouteViewController : UIViewController <UINavigationControllerDelegate, MKMapViewDelegate>
 
 - (instancetype)initWithRoutePointsArray:(NSArray *)points;
+- (instancetype)initWithRoutePointsArray:(NSArray *)points andDateString:(NSString *)dateString;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;

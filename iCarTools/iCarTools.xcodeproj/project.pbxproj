@@ -56,6 +56,10 @@
 		1CBC056A1A5835AC00ECECC1 /* RecordedVideosTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC05691A5835AC00ECECC1 /* RecordedVideosTableViewCell.m */; };
 		1CBC056C1A583D0E00ECECC1 /* Maps-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CBC056B1A583D0E00ECECC1 /* Maps-icon.png */; };
 		1CBC05711A58B38300ECECC1 /* UIImage+Resizing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC05701A58B38300ECECC1 /* UIImage+Resizing.m */; };
+		1CC805EB1A5B16FA00754783 /* NSBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC805EA1A5B16FA00754783 /* NSBag.m */; };
+		1CC805ED1A5B468D00754783 /* best-app-ever.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC805EC1A5B468D00754783 /* best-app-ever.png */; };
+		1CC805F11A5B470600754783 /* EasterEggViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC805EF1A5B470600754783 /* EasterEggViewController.m */; };
+		1CC805F21A5B470600754783 /* EasterEggViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC805F01A5B470600754783 /* EasterEggViewController.xib */; };
 		1CD407291A26919500F6A2E7 /* suszarka.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD407281A26919500F6A2E7 /* suszarka.png */; };
 		1CD4072B1A27AA7A00F6A2E7 /* user_male4-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */; };
 		1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072C1A27AC8000F6A2E7 /* wypadek.png */; };
@@ -190,6 +194,12 @@
 		1CBC056B1A583D0E00ECECC1 /* Maps-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Maps-icon.png"; sourceTree = "<group>"; };
 		1CBC056F1A58B38300ECECC1 /* UIImage+Resizing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resizing.h"; sourceTree = "<group>"; };
 		1CBC05701A58B38300ECECC1 /* UIImage+Resizing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resizing.m"; sourceTree = "<group>"; };
+		1CC805E91A5B16FA00754783 /* NSBag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBag.h; sourceTree = "<group>"; };
+		1CC805EA1A5B16FA00754783 /* NSBag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBag.m; sourceTree = "<group>"; };
+		1CC805EC1A5B468D00754783 /* best-app-ever.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "best-app-ever.png"; sourceTree = "<group>"; };
+		1CC805EE1A5B470600754783 /* EasterEggViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasterEggViewController.h; sourceTree = "<group>"; };
+		1CC805EF1A5B470600754783 /* EasterEggViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasterEggViewController.m; sourceTree = "<group>"; };
+		1CC805F01A5B470600754783 /* EasterEggViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EasterEggViewController.xib; sourceTree = "<group>"; };
 		1CD407281A26919500F6A2E7 /* suszarka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suszarka.png; sourceTree = "<group>"; };
 		1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_male4-256.png"; sourceTree = "<group>"; };
 		1CD4072C1A27AC8000F6A2E7 /* wypadek.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wypadek.png; sourceTree = "<group>"; };
@@ -332,14 +342,11 @@
 		1C30475319FED07300D2EE5E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1C5B892A1A55F2FC007BA4CD /* DejalActivityView.h */,
-				1C5B892B1A55F2FC007BA4CD /* DejalActivityView.m */,
-				1C5B89271A55F031007BA4CD /* KeychainItemWrapper.h */,
-				1C5B89281A55F031007BA4CD /* KeychainItemWrapper.m */,
 				1C30475419FED07300D2EE5E /* Info.plist */,
 				1C30475519FED07300D2EE5E /* main.m */,
-				1C6EC4861A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.h */,
-				1C6EC4871A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m */,
+				1CC805EE1A5B470600754783 /* EasterEggViewController.h */,
+				1CC805EF1A5B470600754783 /* EasterEggViewController.m */,
+				1CC805F01A5B470600754783 /* EasterEggViewController.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -427,6 +434,7 @@
 		1C30478819FED66700D2EE5E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1CC805EC1A5B468D00754783 /* best-app-ever.png */,
 				1C45E3BC1A59A32A00F4443C /* play.png */,
 				1CD4072E1A27AE1100F6A2E7 /* gps_disconnected-256.png */,
 				1CD4072F1A27AE1100F6A2E7 /* gps_receiving-256.png */,
@@ -487,10 +495,18 @@
 		1CBC056D1A58B32300ECECC1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				1CC805E91A5B16FA00754783 /* NSBag.h */,
+				1CC805EA1A5B16FA00754783 /* NSBag.m */,
 				1C1849191A3D77A200E14DAE /* CustomAnimationController.h */,
 				1C18491A1A3D77A200E14DAE /* CustomAnimationController.m */,
 				1CBC056F1A58B38300ECECC1 /* UIImage+Resizing.h */,
 				1CBC05701A58B38300ECECC1 /* UIImage+Resizing.m */,
+				1C5B892A1A55F2FC007BA4CD /* DejalActivityView.h */,
+				1C5B892B1A55F2FC007BA4CD /* DejalActivityView.m */,
+				1C5B89271A55F031007BA4CD /* KeychainItemWrapper.h */,
+				1C5B89281A55F031007BA4CD /* KeychainItemWrapper.m */,
+				1C6EC4861A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.h */,
+				1C6EC4871A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -708,6 +724,7 @@
 				F06B73261A5309FF00C66496 /* PricesViewController.xib in Resources */,
 				1CA7299B1A21466800FEBD51 /* Tutorial-Background.png in Resources */,
 				F0EEF6831A41995200157AA8 /* AddStationViewController.xib in Resources */,
+				1CC805F21A5B470600754783 /* EasterEggViewController.xib in Resources */,
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
 				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
 				F0EEDC881A597150004B4EC8 /* lotos.png in Resources */,
@@ -723,6 +740,7 @@
 				1CF81C4B1A12971800496116 /* white line.png in Resources */,
 				1CBC056C1A583D0E00ECECC1 /* Maps-icon.png in Resources */,
 				1C30479419FED74C00D2EE5E /* DINPro-BlackItalic.otf in Resources */,
+				1CC805ED1A5B468D00754783 /* best-app-ever.png in Resources */,
 				F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */,
 				F0166E761A588993000CE241 /* SearchViewController.xib in Resources */,
 				F0EEDC861A596EE2004B4EC8 /* lukoil.png in Resources */,
@@ -821,6 +839,8 @@
 				F08E8D8C1A5763F6003A1F0C /* IQUIWindow+Hierarchy.m in Sources */,
 				F08E8D8A1A5763F6003A1F0C /* IQNSArray+Sort.m in Sources */,
 				F06B73251A5309FF00C66496 /* PricesViewController.m in Sources */,
+				1CC805F11A5B470600754783 /* EasterEggViewController.m in Sources */,
+				1CC805EB1A5B16FA00754783 /* NSBag.m in Sources */,
 				1C5B89291A55F031007BA4CD /* KeychainItemWrapper.m in Sources */,
 				1C45E3B31A59500700F4443C /* RouteViewController.m in Sources */,
 				1C6EC4881A4AF31A00E25C06 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,

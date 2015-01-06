@@ -117,7 +117,7 @@
   
     if (!self.addStationButton) {
         self.addStationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+3, 35, 35)];
-        [self.addStationButton setCenter:CGPointMake(self.findStationButton.center.x*1.5+8, self.addStationButton.center.y+4)];
+        [self.addStationButton setCenter:CGPointMake(self.findStationButton.center.x*1.5+28, self.addStationButton.center.y+4)];
         [self.addStationButton setImage:[UIImage imageNamed:@"plus-128"] forState:UIControlStateNormal];
         [self.view addSubview:self.addStationButton];
     }
@@ -128,7 +128,7 @@
     if (!self.gpsStatusImageView) {
         self.gpsStatusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps_searching-256"]];
         [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y+5, 32, 32)];
-        [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-8, self.gpsStatusImageView.center.y+4)];
+        [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-28, self.gpsStatusImageView.center.y+4)];
         [self.view addSubview:self.gpsStatusImageView];
     }
     [self.mapView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
@@ -478,9 +478,9 @@
         [self.findStationButton setFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-35, 50, 50)];
         [self.findStationButton setCenter:self.lowerBackgroundView.center];
         [self.addStationButton setFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+3, 35, 35)];
-        [self.addStationButton setCenter:CGPointMake(self.findStationButton.center.x*1.5+8, self.addStationButton.center.y+4)];
+        [self.addStationButton setCenter:CGPointMake(self.findStationButton.center.x*1.5+28, self.addStationButton.center.y+4)];
         [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y+5, 32, 32)];
-        [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-8, self.gpsStatusImageView.center.y+4)];
+        [self.gpsStatusImageView setCenter:CGPointMake(self.findStationButton.center.x/2-28, self.gpsStatusImageView.center.y+4)];
     });
 }
 
@@ -495,10 +495,10 @@
         [self.findStationButton setCenter:self.lowerBackgroundView.center];
         
         [self.addStationButton setFrame:CGRectMake(0, 0, 35, 35)];
-        [self.addStationButton setCenter:CGPointMake(self.lowerBackgroundView.center.x, self.findStationButton.frame.origin.y + self.findStationButton.frame.size.height + (self.lowerBackgroundView.frame.origin.y - self.findStationButton.frame.origin.y - self.findStationButton.frame.size.height)/2.0-20)];
+        [self.addStationButton setCenter:CGPointMake(self.lowerBackgroundView.center.x, self.findStationButton.frame.origin.y + self.findStationButton.frame.size.height + (self.lowerBackgroundView.frame.origin.y - self.findStationButton.frame.origin.y - self.findStationButton.frame.size.height)/2.0-40)];
         
         [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0, 32, 32)];
-        [self.gpsStatusImageView setCenter:CGPointMake(self.lowerBackgroundView.center.x, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0+20)];
+        [self.gpsStatusImageView setCenter:CGPointMake(self.lowerBackgroundView.center.x, self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height + (self.findStationButton.frame.origin.y - (self.lowerBackgroundView.frame.origin.y + self.lowerBackgroundView.frame.size.height))/2.0+40)];
     });
 }
 

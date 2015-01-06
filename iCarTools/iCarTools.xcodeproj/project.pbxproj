@@ -77,6 +77,7 @@
 		F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518C1A288FDB0077C1A2 /* plus-128.png */; };
 		F023518F1A28A03E0077C1A2 /* menu-128.png in Resources */ = {isa = PBXBuildFile; fileRef = F023518E1A28A03E0077C1A2 /* menu-128.png */; };
 		F05F03841A49DF0D003928C5 /* gas.png in Resources */ = {isa = PBXBuildFile; fileRef = F05F03831A49DF0D003928C5 /* gas.png */; };
+		F06AE9FB1A5B6B560057554E /* upload-50.png in Resources */ = {isa = PBXBuildFile; fileRef = F06AE9FA1A5B6B560057554E /* upload-50.png */; };
 		F06B73211A52399D00C66496 /* ChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EDA5831A50CB61006D7A73 /* ChangeViewController.m */; };
 		F06B73251A5309FF00C66496 /* PricesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F06B73231A5309FF00C66496 /* PricesViewController.m */; };
 		F06B73261A5309FF00C66496 /* PricesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F06B73241A5309FF00C66496 /* PricesViewController.xib */; };
@@ -103,7 +104,6 @@
 		F0EEDC8A1A597261004B4EC8 /* statoil.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEDC891A597261004B4EC8 /* statoil.png */; };
 		F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EEF6801A41995200157AA8 /* AddStationViewController.m */; };
 		F0EEF6831A41995200157AA8 /* AddStationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EEF6811A41995200157AA8 /* AddStationViewController.xib */; };
-		F0F0EC9A1A5B651400DBC72A /* share-25.png in Resources */ = {isa = PBXBuildFile; fileRef = F0F0EC991A5B651400DBC72A /* share-25.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -215,6 +215,7 @@
 		F023518C1A288FDB0077C1A2 /* plus-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-128.png"; sourceTree = "<group>"; };
 		F023518E1A28A03E0077C1A2 /* menu-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-128.png"; sourceTree = "<group>"; };
 		F05F03831A49DF0D003928C5 /* gas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gas.png; sourceTree = "<group>"; };
+		F06AE9FA1A5B6B560057554E /* upload-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upload-50.png"; sourceTree = "<group>"; };
 		F06B73221A5309FF00C66496 /* PricesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PricesViewController.h; sourceTree = "<group>"; };
 		F06B73231A5309FF00C66496 /* PricesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PricesViewController.m; sourceTree = "<group>"; };
 		F06B73241A5309FF00C66496 /* PricesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PricesViewController.xib; sourceTree = "<group>"; };
@@ -260,7 +261,6 @@
 		F0EEF67F1A41995200157AA8 /* AddStationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStationViewController.h; sourceTree = "<group>"; };
 		F0EEF6801A41995200157AA8 /* AddStationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddStationViewController.m; sourceTree = "<group>"; };
 		F0EEF6811A41995200157AA8 /* AddStationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddStationViewController.xib; sourceTree = "<group>"; };
-		F0F0EC991A5B651400DBC72A /* share-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-25.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -440,9 +440,9 @@
 				1CD4072C1A27AC8000F6A2E7 /* wypadek.png */,
 				1CD407281A26919500F6A2E7 /* suszarka.png */,
 				1CA7299A1A21466800FEBD51 /* Tutorial-Background.png */,
-				F0F0EC991A5B651400DBC72A /* share-25.png */,
 				1CA7299C1A21466F00FEBD51 /* Tutorial-iPhone.png */,
 				F0EEDC871A597150004B4EC8 /* lotos.png */,
+				F06AE9FA1A5B6B560057554E /* upload-50.png */,
 				F0EEDC891A597261004B4EC8 /* statoil.png */,
 				1CEDCA281A2076A100BFADB5 /* photo-256.png */,
 				F0EEDC851A596EE2004B4EC8 /* lukoil.png */,
@@ -713,6 +713,7 @@
 				F0EEDC881A597150004B4EC8 /* lotos.png in Resources */,
 				F023518D1A288FDB0077C1A2 /* plus-128.png in Resources */,
 				F05F03841A49DF0D003928C5 /* gas.png in Resources */,
+				F06AE9FB1A5B6B560057554E /* upload-50.png in Resources */,
 				1C3047C419FEEA2B00D2EE5E /* RecorderViewController.xib in Resources */,
 				1CA7299D1A21466F00FEBD51 /* Tutorial-iPhone.png in Resources */,
 				1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */,
@@ -748,7 +749,6 @@
 				1C30479C19FED74C00D2EE5E /* DINPro.otf in Resources */,
 				1C30479519FED74C00D2EE5E /* DINPro-Bold.otf in Resources */,
 				1CF81C491A12954800496116 /* record_button.png in Resources */,
-				F0F0EC9A1A5B651400DBC72A /* share-25.png in Resources */,
 				1CD407291A26919500F6A2E7 /* suszarka.png in Resources */,
 				F0EDA5861A50CB74006D7A73 /* ChangeViewController.xib in Resources */,
 				1CEDCA2B1A2076A100BFADB5 /* photo-256.png in Resources */,

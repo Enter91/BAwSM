@@ -16,6 +16,7 @@
     NSArray *responseArray;
     NSMutableArray *visits;
     NSString *shareText;
+    UIButton *button;
 }
 
 - (void)viewDidLoad {
@@ -79,11 +80,10 @@
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.text = [visits objectAtIndex:indexPath.row];
     shareText = cell.textLabel.text;
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *btnImage = [UIImage imageNamed:@"share-25"];
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *btnImage = [UIImage imageNamed:@"upload-50"];
     [button setImage:btnImage forState:UIControlStateNormal];
-    button.frame = CGRectMake(cell.frame.origin.x + 290, cell.frame.origin.y + 10, 20, 20);
-    //[button setTitle:@"Share" forState:UIControlStateNormal];
+    button.frame = CGRectMake(cell.frame.origin.x + 250, cell.frame.origin.y + 5, 35, 35);
     [button addTarget:self action:@selector(shareForSelector) forControlEvents:UIControlEventTouchUpInside];
     button.backgroundColor= [UIColor clearColor];
     [cell.contentView addSubview:button];
@@ -175,7 +175,7 @@
             }
             NSString *visitdate = responseArray[i][@"visit_date"];
             NSString *subtitle;
-            subtitle = [NSString stringWithFormat:@"%@    %@ %@ \r\rPb95: %@   Pb98: %@   On: %@   Lpg: %@ \r\rComment: %@",visitdate,first_name,last_name,pb95,pb98,on,lpg,comment];
+            subtitle = [NSString stringWithFormat:@"%@\r%@ %@ \r\rPb95: %@   Pb98: %@   On: %@   Lpg: %@ \r\rComment: %@",visitdate,first_name,last_name,pb95,pb98,on,lpg,comment];
             
             if (i == 0) {
                 NSString *lastPrice;

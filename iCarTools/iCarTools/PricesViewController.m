@@ -15,6 +15,7 @@
 @implementation PricesViewController {
     NSArray *responseArray;
     NSMutableArray *visits;
+    NSString *shareText;
 }
 
 - (void)viewDidLoad {
@@ -77,7 +78,39 @@
     }
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.text = [visits objectAtIndex:indexPath.row];
+    shareText = cell.textLabel.text;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *btnImage = [UIImage imageNamed:@"share-25"];
+    [button setImage:btnImage forState:UIControlStateNormal];
+    button.frame = CGRectMake(cell.frame.origin.x + 290, cell.frame.origin.y + 10, 20, 20);
+    //[button setTitle:@"Share" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(shareForSelector) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor= [UIColor clearColor];
+    [cell.contentView addSubview:button];
     return cell;
+}
+
+- (void)shareForSelector {
+    [self shareText:shareText andImage:nil andUrl:nil];
+}
+
+- (void)shareText:(NSString *)text andImage:(UIImage *)image andUrl:(NSURL *)url
+{
+    NSMutableArray *sharingItems = [NSMutableArray new];
+    
+    if (text) {
+        [sharingItems addObject:text];
+    }
+    if (image) {
+        [sharingItems addObject:image];
+    }
+    if (url) {
+        [sharingItems addObject:url];
+    }
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
+    activityController.excludedActivityTypes = @[UIActivityTypeAirDrop];
+    [self presentViewController:activityController animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

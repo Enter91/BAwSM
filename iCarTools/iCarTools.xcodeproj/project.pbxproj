@@ -103,6 +103,7 @@
 		F0EEDC8A1A597261004B4EC8 /* statoil.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEDC891A597261004B4EC8 /* statoil.png */; };
 		F0EEF6821A41995200157AA8 /* AddStationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EEF6801A41995200157AA8 /* AddStationViewController.m */; };
 		F0EEF6831A41995200157AA8 /* AddStationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EEF6811A41995200157AA8 /* AddStationViewController.xib */; };
+		F0F0EC9A1A5B651400DBC72A /* share-25.png in Resources */ = {isa = PBXBuildFile; fileRef = F0F0EC991A5B651400DBC72A /* share-25.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -259,6 +260,7 @@
 		F0EEF67F1A41995200157AA8 /* AddStationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStationViewController.h; sourceTree = "<group>"; };
 		F0EEF6801A41995200157AA8 /* AddStationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddStationViewController.m; sourceTree = "<group>"; };
 		F0EEF6811A41995200157AA8 /* AddStationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddStationViewController.xib; sourceTree = "<group>"; };
+		F0F0EC991A5B651400DBC72A /* share-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-25.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -438,6 +440,7 @@
 				1CD4072C1A27AC8000F6A2E7 /* wypadek.png */,
 				1CD407281A26919500F6A2E7 /* suszarka.png */,
 				1CA7299A1A21466800FEBD51 /* Tutorial-Background.png */,
+				F0F0EC991A5B651400DBC72A /* share-25.png */,
 				1CA7299C1A21466F00FEBD51 /* Tutorial-iPhone.png */,
 				F0EEDC871A597150004B4EC8 /* lotos.png */,
 				F0EEDC891A597261004B4EC8 /* statoil.png */,
@@ -745,6 +748,7 @@
 				1C30479C19FED74C00D2EE5E /* DINPro.otf in Resources */,
 				1C30479519FED74C00D2EE5E /* DINPro-Bold.otf in Resources */,
 				1CF81C491A12954800496116 /* record_button.png in Resources */,
+				F0F0EC9A1A5B651400DBC72A /* share-25.png in Resources */,
 				1CD407291A26919500F6A2E7 /* suszarka.png in Resources */,
 				F0EDA5861A50CB74006D7A73 /* ChangeViewController.xib in Resources */,
 				1CEDCA2B1A2076A100BFADB5 /* photo-256.png in Resources */,

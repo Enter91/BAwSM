@@ -110,6 +110,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    RecordedVideosTableViewCell *cell = (RecordedVideosTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
+    [self shareText:[NSString stringWithFormat:@"%@%@", NSLocalizedString(@"This is my route recorded in iCarTools app on ", nil), cell.date.text] andImage:nil andUrl:cell.outputFileURL];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
@@ -119,8 +123,8 @@
     [self presentMoviePlayerViewControllerAnimated:self.moviePlayer];
 }
 
-- (void)wantsShowMapWithRouteArray:(NSArray *)routeArray {
-    RouteViewController *routeView = [[RouteViewController alloc] initWithRoutePointsArray:routeArray];
+- (void)wantsShowMapWithRouteArray:(NSArray *)routeArray andDateString:(NSString *)date {
+    RouteViewController *routeView = [[RouteViewController alloc] initWithRoutePointsArray:routeArray andDateString:date];
     routeView.parentView = self;
     [self.revealViewController pushFrontViewController:routeView animated:YES];
 }
@@ -167,6 +171,25 @@
     }
     
     return filteredVideos;
+}
+
+- (void)shareText:(NSString *)text andImage:(UIImage *)image andUrl:(NSURL *)url
+{
+    NSMutableArray *sharingItems = [NSMutableArray new];
+    
+    if (text) {
+        [sharingItems addObject:text];
+    }
+    if (image) {
+        [sharingItems addObject:image];
+    }
+    if (url) {
+        [sharingItems addObject:url];
+    }
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
+    activityController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll];
+    [self presentViewController:activityController animated:YES completion:nil];
 }
 
 #pragma mark- UINavigationController Delegates

@@ -12,6 +12,7 @@
 @interface RouteViewController ()
 
 @property (strong, nonatomic) NSArray *arrayOfPoints;
+@property (strong, nonatomic) NSString *dateString;
 
 @end
 
@@ -28,17 +29,31 @@
     return self;
 }
 
+- (instancetype)initWithRoutePointsArray:(NSArray *)points andDateString:(NSString *)dateString {
+    self = [super init];
+    if (self) {
+        _wantsCustomAnimation = YES;
+        
+        _arrayOfPoints = [NSArray arrayWithArray:points];
+        _dateString = [NSString stringWithString:dateString];
+        
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(showShareActionSheet)];
     UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Route", nil)];
     navigationItem.leftBarButtonItem = barButton;
+    navigationItem.rightBarButtonItem = rightBarButton;
     [_navigationBar pushNavigationItem:navigationItem animated:NO];
     
     _mapView.delegate = self;
     
-    [self zoomMapToRouteRegion];
+    [_mapView setRegion:MKCoordinateRegionForMapRect([self getZoomMapToRouteRegion:_mapView]) animated:YES];
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.orientationIsLocked = NO;
@@ -91,7 +106,7 @@
 
 }
 
-- (void)zoomMapToRouteRegion {
+- (MKMapRect)getZoomMapToRouteRegion:(MKMapView *)map {
     
     CLLocationDegrees minLatitude = HUGE_VALF;
     CLLocationDegrees minLongitude = HUGE_VALF;
@@ -127,7 +142,65 @@
                                          height
                                          );
     
-    [_mapView setRegion:MKCoordinateRegionForMapRect(newMapRect) animated:TRUE];
+    return newMapRect;
+}
+
+- (void)showShareActionSheet {
+    
+    [_mapView setRegion:MKCoordinateRegionForMapRect([self getZoomMapToRouteRegion:_mapView]) animated:NO];
+    UIImage *mapImage = [self captureView:_mapView];
+
+    [self shareText:[NSString stringWithFormat:@"%@%@", NSLocalizedString(@"This is my route recorded in iCarTools app on ", nil), _dateString] andImage:mapImage andUrl:nil];
+}
+
+- (void)shareText:(NSString *)text andImage:(UIImage *)image andUrl:(NSURL *)url
+{
+    NSMutableArray *sharingItems = [NSMutableArray new];
+    
+    if (text) {
+        [sharingItems addObject:text];
+    }
+    if (image) {
+        [sharingItems addObject:image];
+    }
+    if (url) {
+        [sharingItems addObject:url];
+    }
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
+    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeAddToReadingList];
+    [self presentViewController:activityController animated:YES completion:nil];
+}
+
+- (UIImage *)captureView:(UIView *)view {
+    CGRect screenRect = view.frame;
+    
+    UILabel *iCarToolsLogoLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 200, 60)];
+    [iCarToolsLogoLabel setText:@"iCarTools0"];
+    [iCarToolsLogoLabel setFont:[UIFont fontWithName:@"Brannboll Fet" size:25]];
+    [iCarToolsLogoLabel setTextColor:[UIColor whiteColor]];
+    iCarToolsLogoLabel.layer.shadowColor = [[UIColor blackColor] CGColor];
+    iCarToolsLogoLabel.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    iCarToolsLogoLabel.layer.shadowOpacity = 1.0f;
+    iCarToolsLogoLabel.layer.shadowRadius = 1.0f;
+    [view addSubview:iCarToolsLogoLabel];
+    
+    UIGraphicsBeginImageContext(screenRect.size);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [[UIColor blackColor] set];
+    CGContextFillRect(ctx, screenRect);
+    
+    [view.layer renderInContext:ctx];
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    [iCarToolsLogoLabel removeFromSuperview];
+    iCarToolsLogoLabel = nil;
+    
+    return newImage;
 }
 
 #pragma mark- UINavigationController Delegates

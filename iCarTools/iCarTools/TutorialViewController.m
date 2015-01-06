@@ -417,7 +417,7 @@
     if (status == AVAuthorizationStatusAuthorized) {
         //authorized
         NSLog(@"Mamy kamerę!");
-        [self gotMicrophonePermission];
+        [self performSelector:@selector(gotMicrophonePermission) withObject:nil afterDelay:0.5];
         return YES;
     } else if (status == AVAuthorizationStatusDenied) {
         //denied
@@ -440,36 +440,66 @@
     
     __block BOOL gotPermission = NO;
     
-    /*if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-        if ([AVAudioSession sharedInstance].recordPermission == AVAudioSessionRecordPermissionGranted) {
-            gotPermission = YES;
-            [self goToNextState];
-            NSLog(@"gotMicrofonePermission");
-            
-        } else if ([AVAudioSession sharedInstance].recordPermission == AVAudioSessionRecordPermissionDenied) {
-            gotPermission = NO;
-            [self noPermissionScreen];
-        } else {
-            NSLog(@"Again and again microphone");
-            [self performSelector:@selector(gotMicrophonePermission) withObject:nil afterDelay:0.5];
-            
-        }
-    } else {*/
-    
-        if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])
-        {
-            [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-                if (granted) {
-                    gotPermission = YES;
-                    [self goToNextState];
-                } else {
-                    gotPermission = NO;
-                    [self noPermissionScreen];
-                }
-            }];
-        }
+    int currentPermissionState = [self microphonePermission];
+    if (currentPermissionState == 0) {
+        gotPermission = NO;
+        [self noPermissionScreen];
         
-    //}
+        return gotPermission;
+    }
+    
+    [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (granted) {
+                gotPermission = YES;
+                [self goToNextState];
+            } else {
+                gotPermission = NO;
+                [self noPermissionScreen];
+            }
+        });
+    }];
+    
+    return gotPermission;
+}
+
+- (int)microphonePermission {
+#ifdef __IPHONE_8_0 // only for builds with base sdk of iOS8 and higher
+    AVAudioSession * audioSession = [AVAudioSession sharedInstance];
+    if (![audioSession respondsToSelector:@selector(recordPermission)]) {
+        // iOS7 fallback
+        return [self microphoneNext];
+    }
+    
+    AVAudioSessionRecordPermission systemState = [audioSession recordPermission];
+    switch (systemState) {
+        case AVAudioSessionRecordPermissionDenied:
+            return 0;
+        case AVAudioSessionRecordPermissionGranted:
+            return 1;
+        case AVAudioSessionRecordPermissionUndetermined:
+            return -1;
+    }
+#else
+    return [self microphoneNext];
+#endif
+}
+
+- (int)microphoneNext {
+    
+    __block int gotPermission;
+    
+    [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (granted) {
+                gotPermission = 1;
+                [self goToNextState];
+            } else {
+                gotPermission = 0;
+                [self noPermissionScreen];
+            }
+        });
+    }];
     
     return gotPermission;
 }

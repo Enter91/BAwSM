@@ -20,7 +20,7 @@
     AVCaptureMovieFileOutput *movieFile;
     NSString *startRecordingDate;
     
-    int speedCalculator;
+    float speedCalculator;
     NSMutableArray *supportedVideoQuality;
     NSMutableArray *supportedVideoQualityTranslatedNames;
     BOOL didChangeCameraSettings;
@@ -1291,7 +1291,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if (speedInKilometersPerHour >= 0) {
-            [self.speedLabel setText:[NSString stringWithFormat:@"%d", speedInKilometersPerHour*speedCalculator]];
+            [self.speedLabel setText:[NSString stringWithFormat:@"%.0f", speedInKilometersPerHour*speedCalculator]];
         } else {
             [self.speedLabel setText:@"0"];
         }

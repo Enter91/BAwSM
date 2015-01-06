@@ -11,7 +11,7 @@
 @protocol RecordedVideosTableViewCellDelegate <NSObject>
 
 - (void)wantsPlayMovieWithAssetURL:(NSURL *)assetURL;
-- (void)wantsShowMapWithRouteArray:(NSArray *)routeArray;
+- (void)wantsShowMapWithRouteArray:(NSArray *)routeArray andDateString:(NSString *)date;
 
 @end
 

@@ -32,7 +32,7 @@
 @property (strong, nonatomic) NSMutableArray *crashAccidentSortedArray;
 
 @property CLLocationDegrees minDBLat, minDBLong, maxDBLat, maxDBLong;
-//@property BOOL dbForceUpdate;
+@property BOOL shouldForceStopNotification;
 
 @end
 
@@ -56,6 +56,8 @@
         [[NSUserDefaults standardUserDefaults] setObject:@0 forKey:@"video quality"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    
+    _shouldForceStopNotification = NO;
     
     supportedVideoQuality = [[NSMutableArray alloc] init];
     supportedVideoQualityTranslatedNames = [[NSMutableArray alloc] init];
@@ -107,18 +109,35 @@
     _maxDBLat = -HUGE_VALF;
     _maxDBLong = -HUGE_VALF;
     
+    _shouldForceStopNotification = NO;
+    
     self.revealViewController.panGestureRecognizer.enabled = YES;
     self.revealViewController.tapGestureRecognizer.enabled = YES;
     
     [self initializeInterface];
     
+    [super viewWillAppear:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [self teardownAVCapture];
+- (void)viewWillDisappear:(BOOL)animated {
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(notifyUserAboutNearestAccident) object:nil];
+    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshDatabaseOfAccidents) object:nil];
+    
+    _shouldForceStopNotification = YES;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self teardownAVCapture];
+    });
+    
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    
+    _shouldForceStopNotification = NO;
+    
+    [super viewDidAppear:animated];
     
     [self initializeCamera];
     
@@ -892,15 +911,32 @@
         [self lockTrafficAccidentsButtons];
         [self showFloatingAlertViewWithType:1];
     } else if ([[responseDict objectForKey:@"code"] intValue] == 401) {
-        //NSLog(@"%@", responseDict);
-        [self generateTrafficBagWithArray:[responseDict objectForKey:@"response"]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self showFloatingAlertViewWithType:2];
-        });
+        
+        if (_shouldForceStopNotification == NO) {
+            [self generateTrafficBagWithArray:[[responseDict objectForKey:@"response"] copy]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self showFloatingAlertViewWithType:2];
+            });
+        } else {
+            _minDBLat = HUGE_VALF;
+            _minDBLong = HUGE_VALF;
+            _maxDBLat = -HUGE_VALF;
+            _maxDBLong = -HUGE_VALF;
+        }
     }
 }
 
 - (void)generateTrafficBagWithArray:(NSArray *)arrOfTrafficAccidents {
+    
+    if (_shouldForceStopNotification) {
+        _minDBLat = HUGE_VALF;
+        _minDBLong = HUGE_VALF;
+        _maxDBLat = -HUGE_VALF;
+        _maxDBLong = -HUGE_VALF;
+        
+        return;
+    }
     
     if (_speedCameraBag) {
         _speedCameraBag = nil;
@@ -934,6 +970,15 @@
 }
 
 - (void)generateDistanceToBagArray {
+    
+    if (_shouldForceStopNotification) {
+        _minDBLat = HUGE_VALF;
+        _minDBLong = HUGE_VALF;
+        _maxDBLat = -HUGE_VALF;
+        _maxDBLong = -HUGE_VALF;
+        
+        return;
+    }
     
     NSMutableArray *distanceToSpeedBagArray = [[NSMutableArray alloc] init];
     
@@ -985,6 +1030,15 @@
     
     [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(notifyUserAboutNearestAccident) object:nil];
     
+    if (_shouldForceStopNotification) {
+        _minDBLat = HUGE_VALF;
+        _minDBLong = HUGE_VALF;
+        _maxDBLat = -HUGE_VALF;
+        _maxDBLong = -HUGE_VALF;
+        
+        return;
+    }
+    
     NSLog(@"%@", _speedCameraSortedArray);
     NSLog(@"%@", _crashAccidentSortedArray);
     
@@ -1024,11 +1078,25 @@
             }
             
             if (nearestPointDistance < 500) {
+                
+                if (_shouldForceStopNotification) {
+                    _minDBLat = HUGE_VALF;
+                    _minDBLong = HUGE_VALF;
+                    _maxDBLat = -HUGE_VALF;
+                    _maxDBLong = -HUGE_VALF;
+                    
+                    return;
+                }
+                
                 if (whichArray == 10) {
-                    [self showTrafficAlertWithDistance:nearestPointDistance mode:0 andArrayOfCoordinates:finalLoc];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showTrafficAlertWithDistance:nearestPointDistance mode:0 andArrayOfCoordinates:finalLoc];
+                    });
                     [_speedCameraSortedArray removeObjectAtIndex:0];
                 } else if (whichArray == 20) {
-                    [self showTrafficAlertWithDistance:nearestPointDistance mode:1 andArrayOfCoordinates:finalLoc];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showTrafficAlertWithDistance:nearestPointDistance mode:1 andArrayOfCoordinates:finalLoc];
+                    });
                     [_crashAccidentSortedArray removeObjectAtIndex:0];
                 }
             }
@@ -1042,6 +1110,15 @@
 - (void)showTrafficAlertWithDistance:(CLLocationDistance)distance mode:(int)mode andArrayOfCoordinates:(NSArray *)coordinates {
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideTrafficAlert) object:nil];
+    
+    if (_shouldForceStopNotification) {
+        _minDBLat = HUGE_VALF;
+        _minDBLong = HUGE_VALF;
+        _maxDBLat = -HUGE_VALF;
+        _maxDBLong = -HUGE_VALF;
+        
+        return;
+    }
     
     if (_trafficAlertView) {
         if ([_trafficAlertView isDescendantOfView:self.view]) {
@@ -1068,7 +1145,7 @@
     [distanceLabel setTextColor:[UIColor whiteColor]];
     [distanceLabel setTextAlignment:NSTextAlignmentCenter];
     [distanceLabel setBackgroundColor:[UIColor clearColor]];
-    [distanceLabel setText:[NSString stringWithFormat:@"%@: %.2fm", NSLocalizedString(@"Distance: ", nil), distance]];
+    [distanceLabel setText:[NSString stringWithFormat:@"%@%.2fm", NSLocalizedString(@"Distance: ", nil), distance]];
     
     _trafficAlertView.alpha = 0.0;
     [self.view addSubview:_trafficAlertView];
@@ -1317,10 +1394,10 @@
     RecordedVideosViewController *recordedVideos = [[RecordedVideosViewController alloc] init];
     recordedVideos.parentView = self;
     [self.revealViewController pushFrontViewController:recordedVideos animated:YES];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self teardownAVCapture];
     });
-    
+    */
     recordedVideos = nil;
 }
 

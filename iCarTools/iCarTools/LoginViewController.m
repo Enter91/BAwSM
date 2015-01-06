@@ -131,7 +131,7 @@
         f.origin.y = 0.0f;
         self.view.frame = f;
         
-        [_titleLabel setFrame:CGRectMake(8, 50, self.view.frame.size.width-16, 100)];
+        [_titleLabel setFrame:CGRectMake(8, 50, self.view.frame.size.width-16, 110)];
         [_titleLabel adjustsFontSizeToFitWidth];
         
         [_passwordLabel setFrame:CGRectMake(30, self.view.frame.size.height/2 + 8, 90, 30)];
@@ -162,10 +162,10 @@
         
         
         
-        [_titleLabel setFrame:CGRectMake(8, 8, self.view.frame.size.width-16, 50)];
+        [_titleLabel setFrame:CGRectMake(8, 0, self.view.frame.size.width-16, 110)];
         [_titleLabel adjustsFontSizeToFitWidth];
         
-        [_passwordLabel setFrame:CGRectMake(30, self.view.frame.size.height/2.0 -15, 90, 30)];
+        [_passwordLabel setFrame:CGRectMake(30, 155, 90, 30)];
         [_loginLabel setFrame:CGRectMake(30, _passwordLabel.frame.origin.y - 45, 90, 30)];
         
         

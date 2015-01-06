@@ -22,7 +22,7 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.orientationIsLocked = NO;
     
-    [_registrationLabel setText:NSLocalizedString(@"Registration", nil)];
+    [_registrationLabel setText:NSLocalizedString(@"Registration2", nil)];
     [_loginLabel setText:NSLocalizedString(@"Login", nil)];
     [_passwordLabel setText:NSLocalizedString(@"Password", nil)];
     [_registerButton setTitle:NSLocalizedString(@"Register", nil) forState:UIControlStateNormal];
@@ -162,7 +162,7 @@
         f.origin.y = 0.0f;
         self.view.frame = f;
         
-        [_registrationLabel setFrame:CGRectMake(8, 50, self.view.frame.size.width-16, 100)];
+        [_registrationLabel setFrame:CGRectMake(8, 50, self.view.frame.size.width-16, 110)];
         [_registrationLabel adjustsFontSizeToFitWidth];
         
         [_firstNameLabel setFrame:CGRectMake(30, self.view.frame.size.height/2.0 - 15, 90, 30)];
@@ -202,10 +202,10 @@
         f.origin.y = 0.0f;
         self.view.frame = f;
         
-        [_registrationLabel setFrame:CGRectMake(8, 8, self.view.frame.size.width-16, 50)];
+        [_registrationLabel setFrame:CGRectMake(8, 0, self.view.frame.size.width-16, 110)];
         [_registrationLabel adjustsFontSizeToFitWidth];
         
-        [_passwordLabel setFrame:CGRectMake(8, self.view.frame.size.height/2.0 -15, 90, 30)];
+        [_passwordLabel setFrame:CGRectMake(8, 110+50, 90, 30)];
         [_loginLabel setFrame:CGRectMake(8, _passwordLabel.frame.origin.y - 45, 90, 30)];
         [_firstNameLabel setFrame:CGRectMake(8, _passwordLabel.frame.origin.y + 45, 90, 30)];
         [_lastNameLabel setFrame:CGRectMake(self.view.frame.size.width/2.0, _loginLabel.frame.origin.y, 90, 30)];
@@ -225,7 +225,7 @@
         [_registerButton sizeToFit];
         [_registerButton setCenter:tmpPoint];
         
-        [_alreadyRegisteredButton setFrame:CGRectMake(30, self.view.frame.size.height-45, self.view.frame.size.width/2.0 - 45, 30)];
+        [_alreadyRegisteredButton setFrame:CGRectMake(30, self.view.frame.size.height-35, self.view.frame.size.width/2.0 - 45, 30)];
         tmpPoint = _alreadyRegisteredButton.center;
         [_alreadyRegisteredButton sizeToFit];
         [_alreadyRegisteredButton setCenter:tmpPoint];

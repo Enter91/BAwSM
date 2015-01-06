@@ -3,8 +3,6 @@
     <dependencies>
         <deployment version="2048" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="DINPro-Light.otf">
@@ -14,7 +12,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsViewController">
             <connections>
-                <outlet property="avatarImageView" destination="bnr-ow-MIe" id="jJv-W0-LCt"/>
                 <outlet property="loginInfoView" destination="eE2-6n-OxQ" id="Gqa-Rd-d2r"/>
                 <outlet property="settingsTableView" destination="0oA-w5-nDQ" id="Ot5-nE-0sE"/>
                 <outlet property="usernameLabel" destination="wyL-PY-VyM" id="lrz-H8-sW7"/>
@@ -32,17 +29,11 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eE2-6n-OxQ" userLabel="Login Info">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_male4-256.png" translatesAutoresizingMaskIntoConstraints="NO" id="bnr-ow-MIe">
-                            <rect key="frame" x="20" y="25" width="50" height="50"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="bnr-ow-MIe" secondAttribute="height" id="Nh9-NP-4Ul"/>
-                            </constraints>
-                        </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="wyL-PY-VyM" userLabel="User Name">
-                            <rect key="frame" x="90" y="20" width="170" height="60"/>
+                            <rect key="frame" x="20" y="20" width="220" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="glo-nE-0Gr"/>
-                                <constraint firstAttribute="width" constant="170" id="hDH-30-fjz"/>
+                                <constraint firstAttribute="width" constant="220" id="hDH-30-fjz"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="DINPro-Light" family="DIN Pro" pointSize="20"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -50,12 +41,9 @@
                         </label>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="bnr-ow-MIe" firstAttribute="height" secondItem="eE2-6n-OxQ" secondAttribute="height" multiplier="1:2" id="2P2-CF-hrh"/>
-                        <constraint firstItem="bnr-ow-MIe" firstAttribute="leading" secondItem="eE2-6n-OxQ" secondAttribute="leading" constant="20" id="3AK-Td-2mA"/>
-                        <constraint firstItem="bnr-ow-MIe" firstAttribute="centerY" secondItem="wyL-PY-VyM" secondAttribute="centerY" id="74A-oO-aCF"/>
                         <constraint firstAttribute="height" constant="100" id="S8j-hg-YUL"/>
-                        <constraint firstItem="wyL-PY-VyM" firstAttribute="leading" secondItem="bnr-ow-MIe" secondAttribute="trailing" constant="20" id="Xka-HB-FgP"/>
-                        <constraint firstAttribute="centerY" secondItem="bnr-ow-MIe" secondAttribute="centerY" id="pOz-4e-G7w"/>
+                        <constraint firstItem="wyL-PY-VyM" firstAttribute="leading" secondItem="eE2-6n-OxQ" secondAttribute="leading" constant="20" id="b41-aT-aAy"/>
+                        <constraint firstAttribute="centerY" secondItem="wyL-PY-VyM" secondAttribute="centerY" id="kBo-3W-xk2"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="0oA-w5-nDQ">
@@ -88,6 +76,5 @@
     </objects>
     <resources>
         <image name="background.png" width="1242" height="2208"/>
-        <image name="user_male4-256.png" width="256" height="256"/>
     </resources>
 </document>

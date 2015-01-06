@@ -274,7 +274,7 @@
 - (void)updateSettingsViewControllerLoginInfo {
     if ([self.viewController.rearViewController isKindOfClass:NSClassFromString(@"SettingsViewController")]) {
         NSLog(@"%@", [NSString stringWithFormat:@"%@ %@", [[UserInfo sharedInstance] first_name], [[UserInfo sharedInstance] last_name]]);
-        [(SettingsViewController *)self.viewController.rearViewController setUserInfoWithName:[NSString stringWithFormat:@"%@ %@", [[UserInfo sharedInstance] first_name], [[UserInfo sharedInstance] last_name]] andAvatar:nil];
+        [(SettingsViewController *)self.viewController.rearViewController setUserInfoWithName:[NSString stringWithFormat:@"%@ %@", [[UserInfo sharedInstance] first_name], [[UserInfo sharedInstance] last_name]]];
     }
 }
 

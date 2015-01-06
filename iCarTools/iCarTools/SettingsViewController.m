@@ -89,17 +89,6 @@
         [_usernameLabel setText:NSLocalizedString(@"Click here to login", nil)];
     }
     
-    if (_tmpAvatarImage) {
-        _avatarImageView.image = nil;
-        _avatarImageView.image = _tmpAvatarImage;
-        _tmpAvatarImage = nil;
-        [_avatarImageView.layer setCornerRadius:25.0];
-    } else {
-        _avatarImageView.image = nil;
-        _avatarImageView.image = [UIImage imageNamed:@"user_male4-256"];
-        [_avatarImageView.layer setCornerRadius:0.0];
-    }
-    
     NSLog(@"login info view: %@", NSStringFromCGRect(_loginInfoView.frame));
     
     _loginButton = [[UIButton alloc] initWithFrame:CGRectMake(90.0, 20.0, 170.0, 60.0)];
@@ -139,7 +128,7 @@
 }
 
 
-- (void)setUserInfoWithName:(NSString *)labelText andAvatar:(UIImage *)avatar {
+- (void)setUserInfoWithName:(NSString *)labelText {
     
     if (labelText.length > 0 && [[NSUserDefaults standardUserDefaults] objectForKey:@"isLogged"] == [NSNumber numberWithBool:YES]) {
         if (_usernameLabel != nil) {
@@ -149,30 +138,6 @@
         if (_usernameLabel != nil) {
             [_usernameLabel setText:NSLocalizedString(@"Click here to login", nil)];
             _tmpUsernameLabelString = nil;
-        }
-    }
-    
-    if (avatar != nil && [[NSUserDefaults standardUserDefaults] objectForKey:@"isLogged"] == [NSNumber numberWithBool:YES]) {
-        if (_avatarImageView) {
-            _avatarImageView.image = nil;
-            _avatarImageView.image = avatar;
-            [_avatarImageView.layer setCornerRadius:25.0];
-            _tmpAvatarImage = nil;
-            _tmpAvatarImage = avatar;
-        } else {
-            _tmpAvatarImage = nil;
-            _tmpAvatarImage = avatar;
-        }
-        
-    } else {
-        if (_avatarImageView) {
-            _avatarImageView.image = nil;
-            _avatarImageView.image = [UIImage imageNamed:@"user_male4-256"];
-            [_avatarImageView.layer setCornerRadius:0.0];
-            _tmpAvatarImage = nil;
-        } else {
-            _tmpAvatarImage = nil;
-            _tmpAvatarImage = [UIImage imageNamed:@"user_male4-256"];
         }
     }
     
@@ -194,7 +159,7 @@
     LoginManager *loginMan = [[LoginManager alloc] init];
     [loginMan logoutUser];
     
-    [self setUserInfoWithName:@"" andAvatar:nil];
+    [self setUserInfoWithName:@""];
     
     [self showLogInOutButtons];
 }

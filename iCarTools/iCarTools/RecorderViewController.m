@@ -24,6 +24,9 @@
     NSMutableArray *supportedVideoQuality;
     NSMutableArray *supportedVideoQualityTranslatedNames;
     BOOL didChangeCameraSettings;
+    
+    UILabel *titleLabel;
+    UILabel *gpsStatusLabel;
 }
 
 @property (strong, nonatomic) NSBag *speedCameraBag;
@@ -200,6 +203,17 @@
         
     }
     
+    if (!titleLabel) {
+        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, -4, self.upperBackgroundView.frame.size.width-100, self.upperBackgroundView.frame.size.height+4)];
+        [titleLabel setFont:[UIFont fontWithName:@"Brannboll Fet" size:18.0]];
+        [titleLabel setTextColor:[UIColor whiteColor]];
+        [titleLabel setText:@"iCarTools0"];
+        [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    }
+    
+    [titleLabel setAlpha:0.0];
+    [self.upperBackgroundView addSubview:titleLabel];
+    
     if (![self.cameraRecordingButton isDescendantOfView:self.view]) {
         [self.view addSubview:self.cameraRecordingButton];
     }
@@ -221,7 +235,7 @@
     
     if (!self.speedLabel) {
         self.speedLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height-47-48, 73, 48)];
-        [self.speedLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:40]];
+        [self.speedLabel setFont:[UIFont fontWithName:@"DINPro-Light" size:40]];
         [self.speedLabel setTextAlignment:NSTextAlignmentRight];
         [self.speedLabel setTextColor:[UIColor whiteColor]];
         [self.speedLabel setText:@"0"];
@@ -230,7 +244,7 @@
     
     if (!self.speedUnitsLabel) {
         self.speedUnitsLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, self.view.frame.size.height-68-27, 25, 27)];
-        [self.speedUnitsLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10]];
+        [self.speedUnitsLabel setFont:[UIFont fontWithName:@"DINPro-Light" size:10]];
         [self.speedUnitsLabel setTextAlignment:NSTextAlignmentCenter];
         [self.speedUnitsLabel setTextColor:[UIColor whiteColor]];
         [self updateSpeedUnitsLabel];
@@ -259,6 +273,18 @@
         [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.gpsStatusImageView.center.y)];
         [self.view addSubview:self.gpsStatusImageView];
     }
+    
+    if (!gpsStatusLabel) {
+        gpsStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(37+_whiteLine1.frame.origin.x, _whiteLine1.frame.origin.y+_whiteLine1.frame.size.height, _whiteLine1.frame.size.width-37, 46)];
+        [gpsStatusLabel setFont:[UIFont fontWithName:@"DINPro-Light" size:15.0]];
+        [gpsStatusLabel setTextColor:[UIColor whiteColor]];
+        [gpsStatusLabel setText:NSLocalizedString(@"Waiting", nil)];
+        [gpsStatusLabel setTextAlignment:NSTextAlignmentCenter];
+        [gpsStatusLabel setMinimumScaleFactor:0.7];
+    }
+    
+    [gpsStatusLabel setAlpha:0.0];
+    [self.view addSubview:gpsStatusLabel];
     
     [self setFramesForInterface:self.interfaceOrientation];
 }
@@ -291,6 +317,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.upperBackgroundView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
         [self.lowerBackgroundView setFrame:CGRectMake(0, self.view.frame.size.height-95, self.view.frame.size.width, 95)];
+        titleLabel.alpha = 1.0;
         [self.menuButton setFrame:CGRectMake(10, 5, 30, self.upperBackgroundView.frame.size.height-10)];
         [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
         [self.cameraRecordingButton setFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-75, 75, 75)];
@@ -303,9 +330,10 @@
         [self.speedNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.speedNotificationButton.center.y)];
         [self.crashNotificationButton setFrame:CGRectMake(0, self.whiteLine2.frame.origin.y+6, 79, 37)];
         [self.crashNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.crashNotificationButton.center.y)];
-        [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.whiteLine1.frame.origin.y+6, 37, 37)];
-        [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.gpsStatusImageView.center.y)];
-        
+        [self.gpsStatusImageView setFrame:CGRectMake(_whiteLine1.frame.origin.x, self.whiteLine1.frame.origin.y+6, 37, 37)];
+        //[self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.gpsStatusImageView.center.y)];
+        [gpsStatusLabel setFrame:CGRectMake(37+_whiteLine1.frame.origin.x, _whiteLine1.frame.origin.y+_whiteLine1.frame.size.height, _whiteLine1.frame.size.width-37, 46)];
+        gpsStatusLabel.alpha = 1.0;
         if (_trafficAlertView) {
             [_trafficAlertView setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)];
         }
@@ -314,6 +342,8 @@
 
 - (void)setFramesForLandscapeLeft {
     dispatch_async(dispatch_get_main_queue(), ^{
+        titleLabel.alpha = 0.0;
+        gpsStatusLabel.alpha = 0.0;
         [self.upperBackgroundView setFrame:CGRectMake(0, 0, 44, self.view.frame.size.height)];
         [self.lowerBackgroundView setFrame:CGRectMake(self.view.frame.size.width-95, 0, 95, self.view.frame.size.height)];
         [self.menuButton setFrame:CGRectMake(5, 10, 34, 34)];
@@ -1288,13 +1318,15 @@
     self.gpsStatusImageView.image = nil;
     if (state == 2) {
         self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_receiving-256"];
-        
+        [gpsStatusLabel setText:NSLocalizedString(@"GPS OK", nil)];
         [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:5.0];
         
     } else if (state == 1) {
         self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_searching-256"];
+        [gpsStatusLabel setText:NSLocalizedString(@"Waiting", nil)];
     } else {
         self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_disconnected-256"];
+        [gpsStatusLabel setText:NSLocalizedString(@"Disconnected", nil)];
     }
     
 }

@@ -29,13 +29,11 @@
 
 @property (strong, nonatomic) NSArray *cellsTitles;
 @property (strong, nonatomic) NSString *tmpUsernameLabelString;
-@property (strong, nonatomic) UIImage *tmpAvatarImage;
 @property (strong, nonatomic) UIButton *loginButton;
 @property (strong, nonatomic) UIButton *logoutButton;
 
 @property (weak, nonatomic) IBOutlet UIView *loginInfoView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property int menuType;
 @property int activeOption;
 
@@ -45,6 +43,6 @@
 
 @property (nonatomic, assign) id delegate;
 
-- (void)setUserInfoWithName:(NSString *)labelText andAvatar:(UIImage *)avatar;
+- (void)setUserInfoWithName:(NSString *)labelText;
 
 @end

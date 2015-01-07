@@ -22,13 +22,6 @@
 /**
  *  @Author Michał Czwarnowski
  *
- *  Flaga określająca, czy kontroler żąda customowej animacji uruchamianej z SWRevealController
- */
-@property (nonatomic) BOOL wantsCustomAnimation;
-
-/**
- *  @Author Michał Czwarnowski
- *
  *  Widok, z którego został uruchomiony RecorderViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
  */
 @property (nonatomic, weak) UIViewController *parentView;

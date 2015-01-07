@@ -1313,7 +1313,7 @@
 #pragma mark- GPSUtilities Delegates
 - (void)locationUpdate:(CLLocation *)location {
     float speedInMetersPerSecond = location.speed;
-    int speedInKilometersPerHour = speedInMetersPerSecond * 3600 / 1000;
+    float speedInKilometersPerHour = speedInMetersPerSecond * 3600 / 1000;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if (speedInKilometersPerHour >= 0) {

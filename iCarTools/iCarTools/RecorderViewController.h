@@ -52,7 +52,7 @@
 /**
  *  @Author Michał Czwarnowski
  *
- *  Inicjuje kamerę oraz uruchamia jej podgląd
+ *  Inicjalizuje kamerę oraz uruchamia jej podgląd
  */
 - (void)initializeCamera;
 

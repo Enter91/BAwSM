@@ -16,6 +16,7 @@ static NSString * const DIN_PRO_BOLD = @"DINPro-Bold";
 @interface RecordedVideosTableViewCell ()
 
 @property (strong, nonatomic) MPMoviePlayerController *player;
+@property (strong, nonatomic) NSArray *routeArray;
 
 @end
 

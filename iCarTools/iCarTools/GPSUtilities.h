@@ -11,7 +11,22 @@
 
 @protocol GPSUtilitiesDelegate <NSObject>
 
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Przesyła w parametrze najnowszą odebraną lokalizację
+ *
+ *  @param location Ostatnio odebrana lokalizacja
+ */
 - (void)locationUpdate:(CLLocation *)location;
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Przesyła w parametrze błąd odczytu GPSa
+ *
+ *  @param error Błąd odczytu nowej lokalizacji
+ */
 - (void)locationError:(NSError *)error;
 
 /**
@@ -38,7 +53,7 @@
  *
  *  Sprawdza dostęp do GPSa i wyświetla systemowy komunikat z prośbą o dostęp, jeżeli status inny niż Authorized i Denied
  *
- *  @return Dostęp do GPSa
+ *  @return Flaga określająca pozwolenie na korzystanie z GPSa
  */
 - (BOOL)askPermission;
 
@@ -74,10 +89,20 @@
  */
 - (void)setAccuracy:(CLLocationAccuracy)accuracy;
 
-@property (nonatomic, retain) CLLocationManager *locManager;
 @property (nonatomic, assign) id delegate;
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Ostatnie odebrane współrzędne
+ */
 @property CLLocationCoordinate2D locationCoordinates;
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Włącza lub wyłącza filtrowanie wyników GPS. Jeżeli włączony, GPS nie będzie generował nowych komunikatów jeżeli kolejny odczyt nastąpi w promieniu 50 metrów.
+ */
 @property (nonatomic) BOOL isDistanceFilterEnable;
-@property (nonatomic) int state;
+
 
 @end

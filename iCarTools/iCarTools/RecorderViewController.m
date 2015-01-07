@@ -20,7 +20,7 @@
     AVCaptureMovieFileOutput *movieFile;
     NSString *startRecordingDate;
     
-    int speedCalculator;
+    float speedCalculator;
     NSMutableArray *supportedVideoQuality;
     NSMutableArray *supportedVideoQualityTranslatedNames;
     BOOL didChangeCameraSettings;
@@ -36,6 +36,31 @@
 
 @property CLLocationDegrees minDBLat, minDBLong, maxDBLat, maxDBLong;
 @property BOOL shouldForceStopNotification;
+
+@property (strong, nonatomic) GPSUtilities *gpsUtilities;
+
+@property (strong, nonatomic) NSMutableArray *pointsOnTheRouteArray;
+
+//ELEMENTY INTERFEJSU
+@property (strong, nonatomic) UIButton *cameraRecordingButton;
+@property (strong, nonatomic) UIButton *speedNotificationButton;
+@property (strong, nonatomic) UIButton *crashNotificationButton;
+@property (strong, nonatomic) UIButton *menuButton;
+@property (strong, nonatomic) UIButton *exitButton;
+
+@property (strong, nonatomic) UILabel *speedLabel;
+@property (strong, nonatomic) UILabel *speedUnitsLabel;
+@property (strong, nonatomic) UILabel *distanceLabel;
+@property (strong, nonatomic) UILabel *recordedTimeLabel;
+
+@property (strong, nonatomic) UIView *lowerBackgroundView;
+@property (strong, nonatomic) UIView *upperBackgroundView;
+@property (strong, nonatomic) UIImageView *whiteLine1;
+@property (strong, nonatomic) UIImageView *whiteLine2;
+@property (strong, nonatomic) UIImageView *smallDotImageView;
+@property (strong, nonatomic) UIImageView *gpsStatusImageView;
+@property (strong, nonatomic) UIView *floatingAlertView;
+@property (strong, nonatomic) UIView *trafficAlertView;
 
 @end
 
@@ -571,6 +596,7 @@
                     startRecordingDate = nil;
                     [_pointsOnTheRouteArray removeAllObjects];
                     _pointsOnTheRouteArray = nil;
+                    CGImageRelease(thumbImg);
                     thumbImg = nil;
                     thumbUIImage = nil;
                     thumbData = nil;
@@ -1287,11 +1313,11 @@
 #pragma mark- GPSUtilities Delegates
 - (void)locationUpdate:(CLLocation *)location {
     float speedInMetersPerSecond = location.speed;
-    int speedInKilometersPerHour = speedInMetersPerSecond * 3600 / 1000;
+    float speedInKilometersPerHour = speedInMetersPerSecond * 3600 / 1000;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if (speedInKilometersPerHour >= 0) {
-            [self.speedLabel setText:[NSString stringWithFormat:@"%d", speedInKilometersPerHour*speedCalculator]];
+            [self.speedLabel setText:[NSString stringWithFormat:@"%.0f", speedInKilometersPerHour*speedCalculator]];
         } else {
             [self.speedLabel setText:@"0"];
         }

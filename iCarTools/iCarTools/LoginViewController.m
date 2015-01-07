@@ -15,6 +15,8 @@
 
 @interface LoginViewController ()
 
+@property (strong, nonatomic) LoginManager *loginManager;
+
 @end
 
 @implementation LoginViewController
@@ -50,6 +52,8 @@
     } else {
         [self setFramesForPortrait];
     }
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {

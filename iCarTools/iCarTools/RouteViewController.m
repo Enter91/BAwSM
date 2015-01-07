@@ -18,22 +18,9 @@
 
 @implementation RouteViewController
 
-- (instancetype)initWithRoutePointsArray:(NSArray *)points {
-    self = [super init];
-    if (self) {
-        _wantsCustomAnimation = YES;
-        
-        _arrayOfPoints = [NSArray arrayWithArray:points];
-        
-    }
-    return self;
-}
-
 - (instancetype)initWithRoutePointsArray:(NSArray *)points andDateString:(NSString *)dateString {
     self = [super init];
     if (self) {
-        _wantsCustomAnimation = YES;
-        
         _arrayOfPoints = [NSArray arrayWithArray:points];
         _dateString = [NSString stringWithString:dateString];
         
@@ -67,6 +54,7 @@
     self.revealViewController.panGestureRecognizer.enabled = NO;
     self.revealViewController.tapGestureRecognizer.enabled = NO;
     
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -39,8 +39,28 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Akcja wywołuje połączenie z bazą danych w celu zarejestrowania użytkownika
+ *
+ */
 - (IBAction)registerAction:(id)sender;
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Akcja otwarcia widoku logowania
+ *
+ */
 - (IBAction)alreadyRegisteredAction:(id)sender;
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Akcja zamknięcia okna rejestracji
+ *
+ */
 - (IBAction)cancelAction:(id)sender;
 
 @property (nonatomic, assign) id delegate;

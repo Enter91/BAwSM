@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) NSString *path;
 @property (strong, nonatomic) MPMoviePlayerViewController *moviePlayer;
+@property (strong, nonatomic) NSMutableArray *videosArray;
 
 @end
 
@@ -25,7 +26,6 @@
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
         _path =[documentsDirectory stringByAppendingPathComponent:@"/iCarTools"];
-        _wantsCustomAnimation = YES;
         _videosArray = [[NSMutableArray alloc] initWithCapacity:0];
         
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -59,6 +59,7 @@
         [cell updateAllFrames];
     }
 
+    [super viewWillAppear:animated];
 }
 
 - (void) cancelAction:(id)sender {

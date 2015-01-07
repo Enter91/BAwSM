@@ -17,8 +17,8 @@
 "Tutorial1Title"="Welcome in iCarTools";
 "Tutorial1"="Welcome in iCarTools - the ultimate car app.\n\nThis tutorial will show you different options of iCarTools and will ask about some permissions needed such as camera or GPS.\n\nTo start please click green button below.";
 
-"Tutorial2Title"="Camera and microphone";
-"Tutorial2"="Recorder needs camera and microphone permissions to work properly. After tapping green button below iOS will ask you whether you agree or not to give iCarTools this permissions. Please select OK";
+"Tutorial2Title"="Camera";
+"Tutorial2"="Recorder needs camera permission to record video. After tapping green button below iOS will ask you whether you agree or not to give iCarTools this permission. Please select OK";
 
 "Tutorial3Title"="Camera roll";
 "Tutorial3"="To save or watch recorded videos we also need access to camera roll.";

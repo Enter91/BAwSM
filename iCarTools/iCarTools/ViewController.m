@@ -65,7 +65,7 @@
         _statsView = nil;
     }
     
-    //[((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:self];
+    [super viewWillAppear:animated];
 }
 
 /*- (void)settingsViewWillDisappear {

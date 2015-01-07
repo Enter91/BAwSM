@@ -26,6 +26,8 @@
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.orientationIsLocked = NO;
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {

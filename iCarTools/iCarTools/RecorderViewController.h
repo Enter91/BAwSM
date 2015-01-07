@@ -24,51 +24,43 @@
 #import "DejalActivityView.h"
 #import "NSBag.h"
 
-@interface RecorderViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate, SettingsViewControllerDelegate, AmazingJSONDelegate>
+@interface RecorderViewController : UIViewController <UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate, SettingsViewControllerDelegate, AmazingJSONDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *view;
-@property (strong, nonatomic) UIImagePickerController *pickerController;
 
-@property (strong, nonatomic) UIButton *cameraRecordingButton;
-@property (strong, nonatomic) UIButton *speedNotificationButton;
-@property (strong, nonatomic) UIButton *crashNotificationButton;
-@property (strong, nonatomic) UIButton *menuButton;
-@property (strong, nonatomic) UIButton *exitButton;
-
-@property (strong, nonatomic) UILabel *speedLabel;
-@property (strong, nonatomic) UILabel *speedUnitsLabel;
-@property (strong, nonatomic) UILabel *distanceLabel;
-@property (strong, nonatomic) UILabel *recordedTimeLabel;
-
-@property (strong, nonatomic) UIView *lowerBackgroundView;
-@property (strong, nonatomic) UIView *upperBackgroundView;
-@property (strong, nonatomic) UIImageView *whiteLine1;
-@property (strong, nonatomic) UIImageView *whiteLine2;
-
-@property (strong, nonatomic) UIImageView *smallDotImageView;
-
-@property (strong, nonatomic) UIImageView *gpsStatusImageView;
-
-@property (strong, nonatomic) GPSUtilities *gpsUtilities;
-
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Określa stan nagrywania
+ */
 @property BOOL isRecording;
 
-//@property (nonatomic, assign) id delegate;
-
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Widok, z którego został uruchomiony RecorderViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
+ */
 @property (nonatomic, strong) UIViewController *parentView;
 
-@property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
-@property BOOL haveImage;
-@property (strong, nonatomic) UIImageView *captureImage;
-
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Flaga określająca, czy kontroler żąda customowej animacji uruchamianej z SWRevealController
+ */
 @property (nonatomic) BOOL wantsCustomAnimation;
 
-@property (strong, nonatomic) UIView *floatingAlertView;
-@property (strong, nonatomic) UIView *trafficAlertView;
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Inicjalizuje kamerę oraz uruchamia jej podgląd
+ */
+- (void)initializeCamera;
 
-@property (strong, nonatomic) NSMutableArray *pointsOnTheRouteArray;
-
-- (void) initializeCamera;
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Zatrzymuje nagranie (jeżeli kamera aktualnie nagrywa), sesję kamery oraz usuwa widok
+ */
 - (void)stopCamera;
 
 @end

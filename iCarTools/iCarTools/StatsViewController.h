@@ -24,64 +24,69 @@
 @import AssetsLibrary;
 @import MobileCoreServices;
 
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Główna klasa mapy cen paliw
+ */
 @interface StatsViewController : UIViewController <GPSUtilitiesDelegate, MKMapViewDelegate, AmazingJSONDelegate, SettingsViewControllerDelegate>
 
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Główny widok
+ */
 @property (strong, nonatomic) IBOutlet UIView *view;
+
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Widok mapy
+ */
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Przycisk przenosi użytkownika do widoku dodania stacji
+ *  @discussion Przycisk przenosi użytkownika do widoku dodania stacji
  */
 - (IBAction)addStationAction:(id)sender;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Przycisk wyszukiwania stacji na mapie
+ *  @discussion Przycisk wyszukiwania stacji na mapie
  */
 - (IBAction)findStationAction:(id)sender;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Widok dodawania stacji
+ *  @discussion Widok dodawania stacji
  */
 @property (strong, nonatomic) AddStationViewController *addStationView;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Widok modyfikacji wizyt w bazie
+ *  @discussion Widok modyfikacji wizyt w bazie
  */
 @property (strong, nonatomic) ChangeViewController *changeStationView;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Widok cen paliw z bazy
+ *  @discussion Widok cen paliw z bazy
  */
 @property (strong, nonatomic) PricesViewController *pricesView;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Widok wyszukiwania stacji 
+ *  @discussion Widok wyszukiwania stacji
  */
 @property (strong, nonatomic) SearchViewController *searchView;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Widok, z którego został uruchomiony StatsViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
+ *  @discussion Widok, z którego został uruchomiony StatsViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
  */
 @property (nonatomic, strong) UIViewController *parentView;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Flaga określająca, czy kontroler żąda customowej animacji uruchamianej z SWRevealController
+ *  @discussion Flaga określająca, czy kontroler żąda customowej animacji uruchamianej z SWRevealController
  */
 @property (nonatomic) BOOL wantsCustomAnimation;
 

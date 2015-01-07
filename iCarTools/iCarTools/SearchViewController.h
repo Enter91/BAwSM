@@ -15,24 +15,40 @@
 @import AssetsLibrary;
 @import MobileCoreServices;
 
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Klasa wyszukiwania stacji
+ */
 @interface SearchViewController : UIViewController <MKMapViewDelegate, AmazingJSONDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate>
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Widok, z którego został uruchomiony SearchViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
+ *  @discussion Widok, z którego został uruchomiony SearchViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
  */
 @property (nonatomic, strong) UIViewController *parentView;
 
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Widok tabeli
+ */
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 /*!
- *  Tablica stacji
+ * @author Damian Klimaszewski
+ * @discussion Tabela stacji
  */
 @property (nonatomic, strong) NSMutableArray *tableData;
 
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Pasek wyszukiwania
+ */
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarOutlet;
 
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Przycisk powrotu
+ */
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @end

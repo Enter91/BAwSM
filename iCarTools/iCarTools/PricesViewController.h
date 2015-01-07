@@ -16,24 +16,33 @@
 @import AssetsLibrary;
 @import MobileCoreServices;
 
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Klasa widoku cen w bazie
+ */
 @interface PricesViewController : UIViewController <UITextFieldDelegate, AmazingJSONDelegate, AmazingJSONDelegate, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Widok tabeli
+ */
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Przycisk powrotu
+ */
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Przycisk powrotu do poprzedniego widoku
- *
+ *  @discussion Przycisk powrotu do poprzedniego widoku
  */
 - (IBAction)backButtonAction:(id)sender;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *   Widok, z którego został uruchomiony PricesViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
+ *  @discussion Widok, z którego został uruchomiony PricesViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
  */
 @property (nonatomic, strong) UIViewController *parentView;
 

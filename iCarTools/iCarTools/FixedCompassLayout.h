@@ -9,19 +9,21 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Klasa poprawki położenia kompasu
+ */
 @interface FixedCompassLayout : NSObject <UILayoutSupport>
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Zmienia pozycję kompasu na mapie
+ * @discussion Zmienia pozycję kompasu na mapie
  */
 @property (nonatomic) CGFloat pbLength;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  inicjacja kompasu ze zmianą położenia 
+ *  @discussion inicjacja kompasu ze zmianą położenia
  */
 - (id)initWithLength:(CGFloat)length;
 

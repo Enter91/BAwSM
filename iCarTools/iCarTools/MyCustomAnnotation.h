@@ -11,41 +11,40 @@
 #import <MapKit/MapKit.h>
 #import "GPSUtilities.h"
 
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Klasa własnych annotacji
+ */
 @interface MyCustomAnnotation : MKAnnotationView <MKAnnotation>
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Współrzędne stacji
+ *  @discussion Współrzędne stacji
  */
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Własna annotacja z danymi z bazy
+ *  @discussion Własna annotacja z danymi z bazy
  */
 - (id)initWithTitle:(NSString *)newTitle Subtitle:(NSString *)newSubtitle Location:(CLLocationCoordinate2D)location Company:(NSString *)newCompany;
 - (MKAnnotationView *) annotationView;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Tytuł annotacji
+ *  @discussion Tytuł annotacji
  */
 @property (nonatomic, copy) NSString *title;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Podtytuł annotacji
+ *  @discussion Podtytuł annotacji
  */
 @property (nonatomic, copy) NSString *subtitle;
 
 /*!
  *  @author Damian Klimaszewski
- *
- *  Nazwa koncernu paliwowego
+ *  @discussion Nazwa koncernu paliwowego
  */
 @property (nonatomic, copy) NSString *company;
 

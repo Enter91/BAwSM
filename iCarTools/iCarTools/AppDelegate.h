@@ -18,18 +18,74 @@
 
 @class SWRevealViewController;
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Główny delegat aplikacji. Jest to pierwsza klasa wywoływana z main.m po starcie aplikacji
+ */
 @interface AppDelegate : UIResponder <UIApplicationDelegate, SWRevealViewControllerDelegate, TutorialViewControllerDelegate, RegisterUserViewControllerDelegate, LoginViewControllerDelegate, LoginManagerDelegate>
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Główne okno aplikacji
+ */
 @property (strong, nonatomic) UIWindow *window;
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Kontroler wyświetlający boczne menu oraz główny kontroler
+ */
 @property (strong, nonatomic) SWRevealViewController *viewController;
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Kontroler widoku tutoriala uruchamianego przy pierwszym uruchomieniu aplikacji.
+ */
 @property (strong, nonatomic) TutorialViewController *tutorial;
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Kontroler widoku logowania
+ */
 @property (strong, nonatomic) LoginViewController *loginViewController;
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Kontroler widoku rejestracji
+ */
 @property (strong, nonatomic) RegisterUserViewController *registerUserViewController;
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Klasa zarządzająca danymi zalogowanego użytkownika
+ */
 @property (strong, nonatomic) LoginManager *loginManager;
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Flaga określająca, czy orientacja ekranu ma być zablokowana. Umożliwia blokadę w dowolnym momencie z innego kontrolera.
+ */
 @property (nonatomic) BOOL orientationIsLocked;
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Orientacja, w jakiej flaga orientationIsLocked została ustawiona na wartość YES.
+ */
 @property (nonatomic) NSUInteger lockedOrientation;
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Wyświetla ekran logowania jako główny kontroler.
+ */
 - (void)showLoginViewScreen;
 
 @end

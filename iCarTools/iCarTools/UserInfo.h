@@ -2,22 +2,27 @@
 //  UserInfo.h
 //  iCarTools
 //
-//  Created by Michał Czwarnowski on 01.01.2015.
-//  Copyright (c) 2015 Michał Czwarnowski. All rights reserved.
+//  Created by Damian Klimaszewski on 01.01.2015.
+//  Copyright (c) 2015 Damian Klimaszewski. All rights reserved.
 //
 
 @import Foundation;
 
+/*!
+ *  @Author Damian Klimaszewski
+ *
+ *  @brief  Klasa zarządzająca danymi o zalogowanym użytkowniku
+ */
 @interface UserInfo : NSObject
 
-/**
+/*!
  * gets singleton object.
  * @return singleton
  */
 + (UserInfo*)sharedInstance;
 
-/**
- *  @Author Michał Czwarnowski
+/*!
+ *  @Author Damian Klimaszewski
  *
  *  Ustawia dane logowanego użytkownika
  *
@@ -29,43 +34,43 @@
  */
 - (void)setUserInfoWithLogin:(int)user_id login:(NSString *)login firstName:(NSString *)firstName lastName:(NSString *)lastName andEmail:(NSString *)email;
 
-/**
- *  @Author Michał Czwarnowski
+/*!
+ *  @Author Damian Klimaszewski
  *
  *  Czyści zapisane dane użytkownika
  */
 - (void)clearAllData;
 
-/**
- *  @Author Michał Czwarnowski
+/*!
+ *  @Author Damian Klimaszewski
  *
  *  ID użytkownika w bazie
  */
 @property (nonatomic) int user_id;
 
-/**
- *  @Author Michał Czwarnowski
+/*!
+ *  @Author Damian Klimaszewski
  *
  *  Login użytkownika
  */
 @property (strong, nonatomic) NSString *login;
 
-/**
- *  @Author Michał Czwarnowski
+/*!
+ *  @Author Damian Klimaszewski
  *
  *  Imię użytkownika
  */
 @property (strong, nonatomic) NSString *first_name;
 
-/**
- *  @Author Michał Czwarnowski
+/*!
+ *  @Author Damian Klimaszewski
  *
  *  Nazwisko użytkownika
  */
 @property (strong, nonatomic) NSString *last_name;
 
-/**
- *  @Author Michał Czwarnowski
+/*!
+ *  @Author Damian Klimaszewski
  *
  *  Adres e-mail użytkownika
  */

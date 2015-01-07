@@ -10,7 +10,7 @@
 
 @protocol RecordedVideosTableViewCellDelegate <NSObject>
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Uruchamia żądanie odtwarzania filmu przypisanego komórce
@@ -19,7 +19,7 @@
  */
 - (void)wantsPlayMovieWithAssetURL:(NSURL *)assetURL;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Uruchamia żądanie wyświetlenia mapy z trasą nagrania
@@ -33,42 +33,42 @@
 
 @interface RecordedVideosTableViewCell : UITableViewCell
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Tytuł wyświetlany w pojedynczej komórce tabeli
  */
 @property (strong, nonatomic) UILabel *title;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Data nagrania wyświetlana w komórce tabeli
  */
 @property (strong, nonatomic) UILabel *date;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Miniaturka nagranego filmu wyświetlana w komórce tabeli
  */
 @property (strong, nonatomic) UIImageView *movieThumbnail;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Przycisk mapy otwierający widok trasy zapisanej dla danego nagrania
  */
 @property (strong, nonatomic) UIButton *mapsButton;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Asset URL nagranego filmu
  */
 @property (strong, nonatomic) NSURL *outputFileURL;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Ustawia wszystkie zmienne w komórce
@@ -81,13 +81,17 @@
  */
 - (void)setTitleText:(NSString *)titleText dateText:(NSString *)dateText movieThumbnail:(UIImage *)movieThumbnail route:(NSArray *)route andAssetURL:(NSURL *)assetURL;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Aktualizuje położenie wszystkich elementów w komórce dla trybu landscape i portrait
  */
 - (void)updateAllFrames;
 
+/*!
+ * @author Michał Czwarnowski
+ * @discussion Delegat klasy RecordedVideosTableViewCell
+ */
 @property (weak, nonatomic) id delegate;
 
 @end

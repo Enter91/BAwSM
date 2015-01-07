@@ -57,7 +57,7 @@
     return [visits count];
 }
 
-/**
+/*!
  *  @Author Damian Klimaszewski
  *
  *  Table view with visits

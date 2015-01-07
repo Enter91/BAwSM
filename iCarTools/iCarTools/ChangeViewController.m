@@ -173,7 +173,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/getStationId.php?name=%@", _stationNameTextField.text]];
 }
 
-/**
+/*!
  *  @Author Damian Klimaszewski
  *
  *  Save visit in database

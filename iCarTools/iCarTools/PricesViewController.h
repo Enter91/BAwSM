@@ -22,7 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
-/**
+/*!
  *  @author Damian Klimaszewski
  *
  *  Przycisk powrotu do poprzedniego widoku
@@ -30,7 +30,7 @@
  */
 - (IBAction)backButtonAction:(id)sender;
 
-/**
+/*!
  *  @author Damian Klimaszewski
  *
  *   Widok, z którego został uruchomiony PricesViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.

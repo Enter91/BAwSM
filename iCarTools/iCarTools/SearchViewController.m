@@ -92,7 +92,7 @@
         return [self.tableData count];
     }}
 
-/**
+/*!
  *  @Author Damian Klimaszewski
  *
  *  Table view with stations

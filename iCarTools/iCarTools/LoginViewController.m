@@ -2,8 +2,8 @@
 //  LoginViewController.m
 //  iCarTools
 //
-//  Created by Michał Czwarnowski on 22.11.2014.
-//  Copyright (c) 2014 Michał Czwarnowski. All rights reserved.
+//  Created by Damian Klimaszewski on 22.11.2014.
+//  Copyright (c) 2014 Damian Klimaszewski. All rights reserved.
 //
 
 #import "LoginViewController.h"

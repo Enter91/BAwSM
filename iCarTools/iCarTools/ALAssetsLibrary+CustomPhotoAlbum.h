@@ -16,5 +16,17 @@ typedef void(^SaveImageError)(NSError* error);
 
 -(void)saveImage:(UIImage*)image toAlbum:(NSString*)albumName withCompletionBlock:(SaveImageCompletion)completionBlock andErrorBlock:(SaveImageError)completionBlockError;;
 -(void)addAssetURL:(NSURL*)assetURL toAlbum:(NSString*)albumName withCompletionBlock:(SaveImageCompletion)completionBlock andErrorBlock:(SaveImageError)completionBlockError;
+
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Metoda umożliwia zapis pliku wideo do Rolki oraz do dowolnego folderu
+ *
+ *  @param assetURL             URL assetu
+ *  @param albumName            Nazwa customowego katalogu
+ *  @param completionBlock      Blok uruchamiany po udanym zapisie
+ *  @param completionBlockError Blok uruchamiany w przypadku błędu
+ */
 -(void)saveVideo:(NSURL*)assetURL toAlbum:(NSString*)albumName withCompletionBlock:(SaveImageCompletion)completionBlock andErrorBlock:(SaveImageError)completionBlockError;;
 @end

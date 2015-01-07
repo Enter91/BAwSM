@@ -39,21 +39,21 @@
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
-/**
+/*!
  *  @author Damian Klimaszewski
  *
  *  Zapis wizyty na stacji do bazy
  */
 - (IBAction)saveAction:(id)sender;
 
-/**
+/*!
  *  @author Damian Klimaszewski
  *
  *  Anulowanie dodania wizyty
  */
 - (IBAction)cancelAction:(id)sender;
 
-/**
+/*!
  *  @author Damian Klimaszewski
  *
  *  Widok, z którego został uruchomiony ChangeViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.

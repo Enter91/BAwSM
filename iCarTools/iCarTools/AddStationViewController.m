@@ -217,7 +217,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [[AmazingJSON sharedInstance] getResponseFromStringURL:[NSString stringWithFormat:@"http://bawsm.comlu.com/removeStation.php?name=%@", _stationNameTextField.text]];
 }
 
-/**
+/*!
  *  @Author Damian Klimaszewski
  *
  *  Add station into database

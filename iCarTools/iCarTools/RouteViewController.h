@@ -10,9 +10,14 @@
 #import <MapKit/MapKit.h>
 #import <SWRevealViewController.h>
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Kontroler widoku mapy.
+ */
 @interface RouteViewController : UIViewController <UINavigationControllerDelegate, MKMapViewDelegate>
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Funkcja inicjalizująca kontroler widoku Route.
@@ -24,10 +29,21 @@
  */
 - (instancetype)initWithRoutePointsArray:(NSArray *)points andDateString:(NSString *)dateString;
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Widok mapy
+ */
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Pasek nawigacyjny
+ */
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Widok, z którego został uruchomiony RecorderViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.

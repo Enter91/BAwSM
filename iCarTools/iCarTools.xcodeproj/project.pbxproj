@@ -58,8 +58,6 @@
 		1CBC05711A58B38300ECECC1 /* UIImage+Resizing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBC05701A58B38300ECECC1 /* UIImage+Resizing.m */; };
 		1CC805EB1A5B16FA00754783 /* NSBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC805EA1A5B16FA00754783 /* NSBag.m */; };
 		1CC805ED1A5B468D00754783 /* best-app-ever.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC805EC1A5B468D00754783 /* best-app-ever.png */; };
-		1CC805F11A5B470600754783 /* EasterEggViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC805EF1A5B470600754783 /* EasterEggViewController.m */; };
-		1CC805F21A5B470600754783 /* EasterEggViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC805F01A5B470600754783 /* EasterEggViewController.xib */; };
 		1CD407291A26919500F6A2E7 /* suszarka.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD407281A26919500F6A2E7 /* suszarka.png */; };
 		1CD4072B1A27AA7A00F6A2E7 /* user_male4-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */; };
 		1CD4072D1A27AC8000F6A2E7 /* wypadek.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD4072C1A27AC8000F6A2E7 /* wypadek.png */; };
@@ -197,9 +195,6 @@
 		1CC805E91A5B16FA00754783 /* NSBag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBag.h; sourceTree = "<group>"; };
 		1CC805EA1A5B16FA00754783 /* NSBag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBag.m; sourceTree = "<group>"; };
 		1CC805EC1A5B468D00754783 /* best-app-ever.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "best-app-ever.png"; sourceTree = "<group>"; };
-		1CC805EE1A5B470600754783 /* EasterEggViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasterEggViewController.h; sourceTree = "<group>"; };
-		1CC805EF1A5B470600754783 /* EasterEggViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasterEggViewController.m; sourceTree = "<group>"; };
-		1CC805F01A5B470600754783 /* EasterEggViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EasterEggViewController.xib; sourceTree = "<group>"; };
 		1CD407281A26919500F6A2E7 /* suszarka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suszarka.png; sourceTree = "<group>"; };
 		1CD4072A1A27AA7A00F6A2E7 /* user_male4-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_male4-256.png"; sourceTree = "<group>"; };
 		1CD4072C1A27AC8000F6A2E7 /* wypadek.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wypadek.png; sourceTree = "<group>"; };
@@ -344,9 +339,6 @@
 			children = (
 				1C30475419FED07300D2EE5E /* Info.plist */,
 				1C30475519FED07300D2EE5E /* main.m */,
-				1CC805EE1A5B470600754783 /* EasterEggViewController.h */,
-				1CC805EF1A5B470600754783 /* EasterEggViewController.m */,
-				1CC805F01A5B470600754783 /* EasterEggViewController.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -724,7 +716,6 @@
 				F06B73261A5309FF00C66496 /* PricesViewController.xib in Resources */,
 				1CA7299B1A21466800FEBD51 /* Tutorial-Background.png in Resources */,
 				F0EEF6831A41995200157AA8 /* AddStationViewController.xib in Resources */,
-				1CC805F21A5B470600754783 /* EasterEggViewController.xib in Resources */,
 				1C30479719FED74C00D2EE5E /* DINPro-Italic.otf in Resources */,
 				1C30479619FED74C00D2EE5E /* DINPro-BoldItalic.otf in Resources */,
 				F0EEDC881A597150004B4EC8 /* lotos.png in Resources */,
@@ -839,7 +830,6 @@
 				F08E8D8C1A5763F6003A1F0C /* IQUIWindow+Hierarchy.m in Sources */,
 				F08E8D8A1A5763F6003A1F0C /* IQNSArray+Sort.m in Sources */,
 				F06B73251A5309FF00C66496 /* PricesViewController.m in Sources */,
-				1CC805F11A5B470600754783 /* EasterEggViewController.m in Sources */,
 				1CC805EB1A5B16FA00754783 /* NSBag.m in Sources */,
 				1C5B89291A55F031007BA4CD /* KeychainItemWrapper.m in Sources */,
 				1C45E3B31A59500700F4443C /* RouteViewController.m in Sources */,

@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "EasterEggViewController.h"
 
 @interface ViewController ()
 
@@ -68,22 +67,6 @@
     [super viewWillAppear:animated];
 }
 
-/*- (void)settingsViewWillDisappear {
-    
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:nil];
-    [super viewDidDisappear:animated];
-}
-
-- (void)clickedOption:(int)number inMenuType:(int)menuType {
-    if (number == 2) {
-        EasterEggViewController *easterEgg = [[EasterEggViewController alloc] init];
-        [self.revealViewController pushFrontViewController:easterEgg animated:YES];
-    }
-}*/
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -92,12 +75,10 @@
 #pragma mark- Obsługa RecorderViewController
 - (IBAction)videoRecorderOpenAction:(id)sender {
     if (_recorderView) {
-//        _recorderView.delegate = nil;
         _recorderView = nil;
     }
     
     _recorderView = [[RecorderViewController alloc] initWithNibName:@"RecorderViewController" bundle:nil];
-//    _recorderView.delegate = self;
     _recorderView.parentView = self;
     _recorderView.wantsCustomAnimation = YES;
     [self.revealViewController setFrontViewController:_recorderView animated:YES];
@@ -106,12 +87,10 @@
 #pragma mark- Obsługa StatsViewController
 - (IBAction)statsOpenAction:(id)sender {
     if (_statsView) {
-//        _statsView.delegate = nil;
         _statsView = nil;
     }
     
     _statsView = [[StatsViewController alloc] initWithNibName:@"StatsViewController" bundle:nil];
-//    _statsView.delegate = self;
     _statsView.parentView = self;
     _statsView.wantsCustomAnimation = YES;
     [self.revealViewController setFrontViewController:_statsView animated:YES];

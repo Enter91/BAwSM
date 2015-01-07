@@ -138,13 +138,9 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
-    if ([self.window.rootViewController isKindOfClass:NSClassFromString(@"TutorialViewController")]) {
-        [((TutorialViewController *)self.window.rootViewController) recoverCurrentState];
-    } else {
-        if ([self.viewController.frontViewController isKindOfClass:NSClassFromString(@"RecorderViewController")]) {
-            if ([self.viewController.frontViewController respondsToSelector:@selector(initializeCamera)]) {
-                [(RecorderViewController *)self.viewController.frontViewController initializeCamera];
-            }
+    if ([self.viewController.frontViewController isKindOfClass:NSClassFromString(@"RecorderViewController")]) {
+        if ([self.viewController.frontViewController respondsToSelector:@selector(initializeCamera)]) {
+            [(RecorderViewController *)self.viewController.frontViewController initializeCamera];
         }
     }
 }

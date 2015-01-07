@@ -18,17 +18,16 @@
 
 @end
 
+/*!
+ * @author Michał Czwarnowski
+ * @brief  Klasa wyświetlająca ekran powitalny oraz sprawdzająca dostęp do poszczególnych sensorów i uprawnień.
+ */
 @interface TutorialViewController : UIViewController <UINavigationControllerDelegate>
 
-@property (strong, nonatomic) UIImageView *backgroundImageView;
-@property (strong, nonatomic) UIImageView *iPhoneImageView;
-
-@property (strong, nonatomic) UILabel *permissionTitle;
-@property (strong, nonatomic) UILabel *permissionDescription;
-@property (strong, nonatomic) UIButton *permissionButton;
-
+/*!
+ * @author Michał Czwarnowski
+ * @brief  Delegat klasy TutorialViewController
+ */
 @property (nonatomic, assign) id delegate;
-
-- (void)recoverCurrentState;
 
 @end

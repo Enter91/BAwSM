@@ -11,6 +11,13 @@
 
 @interface SettingsViewController ()
 
+@property (strong, nonatomic) NSArray *cellsTitles;
+@property (strong, nonatomic) NSString *tmpUsernameLabelString;
+@property (strong, nonatomic) UIButton *loginButton;
+@property (strong, nonatomic) UIButton *logoutButton;
+@property int menuType;
+@property int activeOption;
+
 @end
 
 @implementation SettingsViewController

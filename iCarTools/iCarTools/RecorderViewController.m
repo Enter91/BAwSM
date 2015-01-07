@@ -171,7 +171,7 @@
     
 }
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Initializes all subviews
@@ -394,7 +394,7 @@
     });
 }
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Starts or ends recording depenging on camera state
@@ -431,7 +431,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Starts recording showing small rotating white dot at button
@@ -1231,7 +1231,7 @@
     }
 }
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Wyświetla pięciosekundowy alert

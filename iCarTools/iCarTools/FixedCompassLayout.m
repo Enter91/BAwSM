@@ -3,7 +3,7 @@
 //  iCarTools
 //
 //  Created by Damian Klimaszewski on 25.11.2014.
-//  Copyright (c) 2014 Michał Czwarnowski. All rights reserved.
+//  Copyright (c) 2014 Damian Klimaszewski. All rights reserved.
 //
 
 #import "FixedCompassLayout.h"

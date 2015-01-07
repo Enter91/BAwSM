@@ -18,32 +18,41 @@
 
 @end
 
-@interface LoginManager : NSObject <AmazingJSONDelegate>
-
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
- *  Loguje użytkownika danymi zapisanymi w Keychain
+ *  @discussion Klasa umożliwiająca logowanie oraz wylogowanie użytkownika. Logowanie możliwe jest na dwa sposoby - automatycznie z danych zapisanych w Keychain lub poprzez podanie loginu i hasła.
+ */
+@interface LoginManager : NSObject <AmazingJSONDelegate>
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @discussion Loguje użytkownika danymi zapisanymi w Keychain
  */
 - (void)loginUser;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
- *  Loguje użytkownika podanym loginem i hasłem
+ *  @discussion Loguje użytkownika podanym loginem i hasłem
  *
  *  @param login    login wpisany w pole tekstowe
  *  @param password hasło wpisane w pole tekstowe
  */
 - (void)loginUserWithLogin:(NSString *)login andPassword:(NSString *)password;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
- *  Wylogowanie użytkownika wraz z usunięciem danych z Keychain
+ *  @discussion Wylogowanie użytkownika wraz z usunięciem danych z Keychain
  */
 - (void)logoutUser;
 
+/*!
+ * @author Michał Czwarnowski
+ * @discussion Delegat klasy LoginManager
+ */
 @property (nonatomic, assign) id delegate;
 
 @end

@@ -14,6 +14,13 @@
     __block BOOL runningAnimation;
 }
 
+@property (strong, nonatomic) UIImageView *backgroundImageView;
+@property (strong, nonatomic) UIImageView *iPhoneImageView;
+
+@property (strong, nonatomic) UILabel *permissionTitle;
+@property (strong, nonatomic) UILabel *permissionDescription;
+@property (strong, nonatomic) UIButton *permissionButton;
+
 @end
 
 @implementation TutorialViewController
@@ -157,10 +164,10 @@
     }
 }
 
-- (void)recoverCurrentState {
-    //currentState = currentState - 1;
-    //[self goToNextState];
-}
+/*- (void)recoverCurrentState {
+    currentState = currentState - 1;
+    [self goToNextState];
+}*/
 
 - (void)firstStateAskCameraAndMicrophone {
     

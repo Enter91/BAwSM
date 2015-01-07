@@ -2,8 +2,8 @@
 //  RegisterUserViewController.m
 //  iCarTools
 //
-//  Created by Michał Czwarnowski on 01.01.2015.
-//  Copyright (c) 2015 Michał Czwarnowski. All rights reserved.
+//  Created by Damian Klimaszewski on 01.01.2015.
+//  Copyright (c) 2015 Damian Klimaszewski. All rights reserved.
 //
 
 #import "RegisterUserViewController.h"

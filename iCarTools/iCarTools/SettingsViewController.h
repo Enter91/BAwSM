@@ -21,28 +21,88 @@
 
 @end
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  SettingsViewController prezentuje listę opcji wykorzystując UITableView a także wyświetla informacje o aktualnie zalogowanym użytkowniku.
+ */
 @interface SettingsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Inicjalizuje obiekt klasy SettingsViewController z podaną tablicą opcji, które mają być wyświetlone
+ *
+ *  @param titlesArray Tablica zawierająca obiekty typu NSString, które mają być wyświetlone na liście
+ *
+ *  @return Zainicjalizowany obiekt klasy SettingsView Controller
+ */
 - (id)initWithCellsTitlesArray:(NSArray *)titlesArray;
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  TableView wyświetlający opcje w kolejnych komórkach tabeli
+ */
 @property (weak, nonatomic) IBOutlet UITableView *settingsTableView;
 
-@property (strong, nonatomic) NSArray *cellsTitles;
-@property (strong, nonatomic) NSString *tmpUsernameLabelString;
-@property (strong, nonatomic) UIButton *loginButton;
-@property (strong, nonatomic) UIButton *logoutButton;
-
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Widok prezentujący informacje o aktualnie zalogowanym użytkowniku oraz przycisk wylogowania. W przypadku, gdy użytkownik nie jest zalogowany wyświetlony jest przycisk umożliwiający zalogowanie.
+ */
 @property (weak, nonatomic) IBOutlet UIView *loginInfoView;
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property int menuType;
-@property int activeOption;
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Labelka wyświetlająca imię i nazwisko użytkownika
+ */
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Aktualizuje widoczne menu
+ *
+ *  @param titlesArray Tablica zawierająca obiekty typu NSString, które mają być wyświetlone na liście
+ */
 - (void)updateMenuWithTitlesArray:(NSArray *)titlesArray;
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Aktualizuje widoczne menu pozwalając wybrać aktualny poziom wielopoziomowego menu
+ *
+ *  @param titlesArray Tablica zawierająca obiekty typu NSString, które mają być wyświetlone na liście
+ *  @param depth       Poziom menu
+ */
 - (void)updateMenuWithTitlesArray:(NSArray *)titlesArray andMenuType:(int)depth;
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Aktualizuje widoczne menu pozwalając wybrać aktualny poziom wielopoziomowego menu. Umożliwia zaznaczenie aktywnej opcji
+ *
+ *  @param titlesArray Tablica zawierająca obiekty typu NSString, które mają być wyświetlone na liście
+ *  @param activeIndex Index opcji, która ma być oznaczona jako aktywna
+ *  @param depth       Poziom menu
+ */
 - (void)updateMenuWithTitlesArray:(NSArray *)titlesArray indexOfActiveOption:(int)activeIndex andMenuType:(int)depth;
 
+/*!
+ * @author Michał Czwarnowski
+ * @discussion Delegat klasy SettingsViewController
+ */
 @property (nonatomic, assign) id delegate;
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Ustawia tekst prezentujący informacje o aktualnie zalogowanym użytkowniku
+ *
+ *  @param labelText Tekst wyświetlany jako informacje o aktualnie zalogowanym użytkowniku
+ */
 - (void)setUserInfoWithName:(NSString *)labelText;
 
 @end

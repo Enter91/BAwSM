@@ -303,7 +303,7 @@
     [self.revealViewController setFrontViewController:_searchView animated:YES];
 }
 
-/**
+/*!
  *  @Author Damian Klimaszewski
  *
  *  Zoom to choosen station
@@ -418,7 +418,7 @@
     }
 }
 
-/**
+/*!
  *  @Author Damian Klimaszewski
  *
  *  Set observer for user location
@@ -537,7 +537,7 @@
     
 }
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Wyświetla pięciosekundowy alert

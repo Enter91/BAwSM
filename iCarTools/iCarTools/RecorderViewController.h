@@ -24,39 +24,49 @@
 #import "DejalActivityView.h"
 #import "NSBag.h"
 
-@interface RecorderViewController : UIViewController <UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate, SettingsViewControllerDelegate, AmazingJSONDelegate>
-
-@property (strong, nonatomic) IBOutlet UIView *view;
-
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
- *  Określa stan nagrywania
+ *  @brief  Główny kontroler modułu nagrywającego. Pozwala na nagrywanie obrazu z kamery i zgłaszanie zdarzeń drogowych.
+ */
+@interface RecorderViewController : UIViewController <UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate, SettingsViewControllerDelegate, AmazingJSONDelegate>
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Główny widok kontrolera
+ */
+@property (strong, nonatomic) IBOutlet UIView *view;
+
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Określa stan nagrywania.
  */
 @property BOOL isRecording;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Widok, z którego został uruchomiony RecorderViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
  */
 @property (nonatomic, strong) UIViewController *parentView;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Flaga określająca, czy kontroler żąda customowej animacji uruchamianej z SWRevealController
  */
 @property (nonatomic) BOOL wantsCustomAnimation;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Inicjalizuje kamerę oraz uruchamia jej podgląd
  */
 - (void)initializeCamera;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Zatrzymuje nagranie (jeżeli kamera aktualnie nagrywa), sesję kamery oraz usuwa widok

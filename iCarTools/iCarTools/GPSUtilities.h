@@ -11,7 +11,7 @@
 
 @protocol GPSUtilitiesDelegate <NSObject>
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Przesyła w parametrze najnowszą odebraną lokalizację
@@ -20,7 +20,7 @@
  */
 - (void)locationUpdate:(CLLocation *)location;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Przesyła w parametrze błąd odczytu GPSa
@@ -29,7 +29,7 @@
  */
 - (void)locationError:(NSError *)error;
 
-/**
+/*!
  *  @author Michał Czwarnowski
  *
  *  Określa stan w jakim jest aktualnie GPS
@@ -40,15 +40,20 @@
 
 @end
 
+/*!
+ *  @Author Michał Czwarnowski
+ *
+ *  @brief  Klasa obsługująca GPS. Umożliwia uruchamianie i zatrzymywanie sprawdzania lokalizacji, zmianę parametrów.
+ */
 @interface GPSUtilities : NSObject <CLLocationManagerDelegate>
 
-/**
+/*!
  * gets singleton object.
  * @return singleton
  */
 + (GPSUtilities*)sharedInstance;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Sprawdza dostęp do GPSa i wyświetla systemowy komunikat z prośbą o dostęp, jeżeli status inny niż Authorized i Denied
@@ -57,14 +62,14 @@
  */
 - (BOOL)askPermission;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Uruchamia GPS
  */
 - (void)startGPS;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Uruchamia GPS z zadaną dokładnością pomiaru
@@ -73,14 +78,14 @@
  */
 - (void)startGPSWithAccuracy:(CLLocationAccuracy)accuracy;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Zatrzymuje GPS
  */
 - (void)stopGPS;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Pozwala na zmianę precyzji w trakcie działania GPSa
@@ -89,15 +94,19 @@
  */
 - (void)setAccuracy:(CLLocationAccuracy)accuracy;
 
+/*!
+ * @author Michał Czwarnowski
+ * @discussion Delegat klasy GPSUtilities
+ */
 @property (nonatomic, assign) id delegate;
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Ostatnie odebrane współrzędne
  */
 @property CLLocationCoordinate2D locationCoordinates;
 
-/**
+/*!
  *  @Author Michał Czwarnowski
  *
  *  Włącza lub wyłącza filtrowanie wyników GPS. Jeżeli włączony, GPS nie będzie generował nowych komunikatów jeżeli kolejny odczyt nastąpi w promieniu 50 metrów.

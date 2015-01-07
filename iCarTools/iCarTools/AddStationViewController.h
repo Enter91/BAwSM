@@ -41,14 +41,14 @@
 @property (weak, nonatomic) IBOutlet UIButton *addStationButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
-/**
+/*!
  *  @author Damian Klimaszewski
  *
  *  Dodanie stacji do bazy
  */
 - (IBAction)addStationAction:(id)sender;
 
-/**
+/*!
  *  @author Damian Klimaszewski
  *
  *  Anulowanie dodawania stacji
@@ -57,7 +57,7 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *actualPositionSwitch;
 
-/**
+/*!
  *  @author Damian Klimaszewski
  *
  *   Widok, z którego został uruchomiony AddStationViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.

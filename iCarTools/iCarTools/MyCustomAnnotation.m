@@ -24,7 +24,7 @@
     return self;
 }
 
-/**
+/*!
  *  @Author Damian Klimaszewski
  *
  *  Set custom annotation view

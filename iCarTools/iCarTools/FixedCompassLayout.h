@@ -3,7 +3,7 @@
 //  iCarTools
 //
 //  Created by Damian Klimaszewski on 25.11.2014.
-//  Copyright (c) 2014 Michał Czwarnowski. All rights reserved.
+//  Copyright (c) 2014 Damian Klimaszewski. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -11,14 +11,14 @@
 
 @interface FixedCompassLayout : NSObject <UILayoutSupport>
 
-/**
+/*!
  *  @author Damian Klimaszewski
  *
  *  Zmienia pozycję kompasu na mapie
  */
 @property (nonatomic) CGFloat pbLength;
 
-/**
+/*!
  *  @author Damian Klimaszewski
  *
  *  inicjacja kompasu ze zmianą położenia 

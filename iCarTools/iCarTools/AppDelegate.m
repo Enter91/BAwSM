@@ -188,8 +188,6 @@
         _loginViewController = [[LoginViewController alloc] init];
     }
     [_loginViewController setDelegate:self];
-    //_loginViewController.parentView = nil;
-    //_loginViewController.parentView = self.viewController.frontViewController;
     [self.viewController pushFrontViewController:_loginViewController animated:YES];
     
 }

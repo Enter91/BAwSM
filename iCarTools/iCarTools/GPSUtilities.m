@@ -13,6 +13,13 @@
 #define kAccuracyFilter 250
 #define kTimeFilter 5
 
+@interface GPSUtilities ()
+
+@property (nonatomic, retain) CLLocationManager *locManager;
+@property (nonatomic) int state;
+
+@end
+
 @implementation GPSUtilities
 
 static GPSUtilities *SINGLETON = nil;

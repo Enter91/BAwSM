@@ -67,6 +67,7 @@
     self.revealViewController.panGestureRecognizer.enabled = NO;
     self.revealViewController.tapGestureRecognizer.enabled = NO;
     
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {

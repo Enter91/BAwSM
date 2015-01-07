@@ -17,11 +17,39 @@
 
 @interface RecordedVideosTableViewCell : UITableViewCell
 
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Tytuł wyświetlany w pojedynczej komórce tabeli
+ */
 @property (strong, nonatomic) UILabel *title;
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Data nagrania wyświetlana w komórce tabeli
+ */
 @property (strong, nonatomic) UILabel *date;
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Miniaturka nagranego filmu wyświetlana w komórce tabeli
+ */
 @property (strong, nonatomic) UIImageView *movieThumbnail;
+
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Przycisk mapy otwierający widok trasy zapisanej dla danego nagrania
+ */
 @property (strong, nonatomic) UIButton *mapsButton;
 
+/**
+ *  @Author Michał Czwarnowski
+ *
+ *  Asset URL nagranego filmu
+ */
 @property (strong, nonatomic) NSURL *outputFileURL;
 
 @property (strong, nonatomic) NSArray *routeArray;

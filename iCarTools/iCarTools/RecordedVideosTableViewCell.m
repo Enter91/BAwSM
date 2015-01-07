@@ -109,6 +109,7 @@ static NSString * const DIN_PRO_BOLD = @"DINPro-Bold";
         CMTime time = CMTimeMake(1, 120);
         CGImageRef thumbImg = [generate copyCGImageAtTime:time actualTime:NULL error:nil];
         _movieThumbnail.image = [UIImage imageWithCGImage:thumbImg];
+        CGImageRelease(thumbImg);
         thumbImg = nil;
         
     }

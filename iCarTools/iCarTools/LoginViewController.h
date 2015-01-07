@@ -29,8 +29,4 @@
 
 @property (nonatomic, assign) id delegate;
 
-//@property (nonatomic, strong) UIViewController *parentView;
-
-@property (strong, nonatomic) LoginManager *loginManager;
-
 @end

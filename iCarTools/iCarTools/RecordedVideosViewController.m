@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) NSString *path;
 @property (strong, nonatomic) MPMoviePlayerViewController *moviePlayer;
+@property (strong, nonatomic) NSMutableArray *videosArray;
 
 @end
 
@@ -59,6 +60,7 @@
         [cell updateAllFrames];
     }
 
+    [super viewWillAppear:animated];
 }
 
 - (void) cancelAction:(id)sender {

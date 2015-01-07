@@ -107,6 +107,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     self.revealViewController.tapGestureRecognizer.enabled = YES;
     self.revealViewController.panGestureRecognizer.enabled = YES;
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning {

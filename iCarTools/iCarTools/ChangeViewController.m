@@ -10,6 +10,9 @@
 
 @interface ChangeViewController ()
 
+@property (strong, nonatomic) CLGeocoder *geocoder;
+@property (strong, nonatomic) GPSUtilities *gpsUtilities;
+
 @end
 
 @implementation ChangeViewController{
@@ -27,8 +30,6 @@
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
     [self.gpsUtilities startGPS];
-    
-    _wantsCustomAnimation = YES;
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     

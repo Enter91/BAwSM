@@ -21,8 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _wantsCustomAnimation = YES;
-    
     [_backButton setFrame:CGRectMake(115, 528, 90, 40)];
     [_tableView setFrame:CGRectMake(0, 44, 320, 486)];
     

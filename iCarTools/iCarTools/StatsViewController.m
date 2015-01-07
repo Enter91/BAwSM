@@ -15,6 +15,20 @@
     UIGestureRecognizer *tapper;
     int kompasPosition;
 }
+@property (strong, nonatomic) UIButton *findStationButton;
+@property (strong, nonatomic) UIButton *addStationButton;
+@property (strong, nonatomic) UIButton *exitButton;
+@property (strong, nonatomic) UIButton *menuButton;
+
+@property (strong, nonatomic) CLGeocoder *geocoder;
+
+@property (strong, nonatomic) GPSUtilities *gpsUtilities;
+
+@property (strong, nonatomic) UIView *upperBackgroundView;
+@property (strong, nonatomic) UIView *lowerBackgroundView;
+@property (strong, nonatomic) UIView *floatingAlertView;
+
+@property (strong, nonatomic) UIImageView *gpsStatusImageView;
 
 @end
 
@@ -181,6 +195,7 @@
         [self showFloatingAlertViewWithType:2];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"addVisitAlert"];
     }
+    [super viewWillAppear:animated];
 }
 
 - (id<UILayoutSupport>)topLayoutGuide {
@@ -270,7 +285,6 @@
     
         _addStationView = [[AddStationViewController alloc] initWithNibName:@"AddStationViewController" bundle:nil];
         _addStationView.parentView = self;
-        _addStationView.wantsCustomAnimation = YES;
         [self.revealViewController setFrontViewController:_addStationView animated:YES];
     } else {
        [self showFloatingAlertViewWithType:4];
@@ -286,7 +300,6 @@
     }
     _searchView = [[SearchViewController alloc] initWithNibName:@"SearchViewController" bundle:nil];
     _searchView.parentView = self;
-    _searchView.wantsCustomAnimation = YES;
     [self.revealViewController setFrontViewController:_searchView animated:YES];
 }
 
@@ -382,7 +395,6 @@
         
         _pricesView = [[PricesViewController alloc] initWithNibName:@"PricesViewController" bundle:nil];
         _pricesView.parentView = self;
-        _pricesView.wantsCustomAnimation = YES;
         [self.revealViewController setFrontViewController:_pricesView animated:YES];
 
     } else if (control == view.rightCalloutAccessoryView) {
@@ -398,7 +410,6 @@
     
             _changeStationView = [[ChangeViewController alloc] initWithNibName:@"ChangeViewController" bundle:nil];
             _changeStationView.parentView = self;
-            _changeStationView.wantsCustomAnimation = YES;
             [self.revealViewController setFrontViewController:_changeStationView animated:YES];
         } else {
             [self showFloatingAlertViewWithType:3];

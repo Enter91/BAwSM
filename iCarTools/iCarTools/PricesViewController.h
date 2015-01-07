@@ -22,13 +22,19 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Przycisk powrotu do poprzedniego widoku
+ *
+ */
 - (IBAction)backButtonAction:(id)sender;
 
-@property (strong, nonatomic) CLGeocoder *geocoder;
-@property (strong, nonatomic) GPSUtilities *gpsUtilities;
-
+/**
+ *  @author Damian Klimaszewski
+ *
+ *   Widok, z którego został uruchomiony PricesViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
+ */
 @property (nonatomic, strong) UIViewController *parentView;
-
-@property (nonatomic) BOOL wantsCustomAnimation;
 
 @end

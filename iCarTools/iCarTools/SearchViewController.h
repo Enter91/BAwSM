@@ -17,16 +17,22 @@
 
 @interface SearchViewController : UIViewController <MKMapViewDelegate, AmazingJSONDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate>
 
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Widok, z którego został uruchomiony SearchViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
+ */
 @property (nonatomic, strong) UIViewController *parentView;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+/**
+ *  Tablica stacji
+ */
 @property (nonatomic, strong) NSMutableArray *tableData;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarOutlet;
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
-
-@property (nonatomic) BOOL wantsCustomAnimation;
 
 @end

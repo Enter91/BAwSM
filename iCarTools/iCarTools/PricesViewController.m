@@ -10,6 +10,9 @@
 
 @interface PricesViewController ()
 
+@property (strong, nonatomic) CLGeocoder *geocoder;
+@property (strong, nonatomic) GPSUtilities *gpsUtilities;
+
 @end
 
 @implementation PricesViewController {
@@ -21,8 +24,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _wantsCustomAnimation = YES;
     
     [_backButton setFrame:CGRectMake(115, 528, 90, 40)];
     [_tableView setFrame:CGRectMake(0, 0, 320, 530)];
@@ -137,8 +138,6 @@
         
         for (int i = 0; i<[responseArray count]; i++) {
             
-            NSString *categoryString = nil;
-            categoryString = responseArray[i][@"name"];
             NSString *first_name = responseArray[i][@"first_name"];
             NSString *last_name = responseArray[i][@"last_name"];
             NSString *pb95 = responseArray[i][@"pb95_price"];

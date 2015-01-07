@@ -26,34 +26,63 @@
 
 @interface StatsViewController : UIViewController <GPSUtilitiesDelegate, MKMapViewDelegate, AmazingJSONDelegate, SettingsViewControllerDelegate>
 
-@property (strong, nonatomic) CLGeocoder *geocoder;
-
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 
-@property (strong, nonatomic) UIButton *findStationButton;
-@property (strong, nonatomic) UIButton *addStationButton;
-@property (strong, nonatomic) UIButton *exitButton;
-@property (strong, nonatomic) UIButton *menuButton;
-
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Przycisk przenosi użytkownika do widoku dodania stacji
+ */
 - (IBAction)addStationAction:(id)sender;
+
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Przycisk wyszukiwania stacji na mapie
+ */
 - (IBAction)findStationAction:(id)sender;
 
-@property (strong, nonatomic) GPSUtilities *gpsUtilities;
-
-@property (strong, nonatomic) UIView *upperBackgroundView;
-@property (strong, nonatomic) UIView *lowerBackgroundView;
-@property (strong, nonatomic) UIView *floatingAlertView;
-
-@property (strong, nonatomic) UIImageView *gpsStatusImageView;
-
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Widok dodawania stacji
+ */
 @property (strong, nonatomic) AddStationViewController *addStationView;
+
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Widok modyfikacji wizyt w bazie
+ */
 @property (strong, nonatomic) ChangeViewController *changeStationView;
+
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Widok cen paliw z bazy
+ */
 @property (strong, nonatomic) PricesViewController *pricesView;
+
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Widok wyszukiwania stacji 
+ */
 @property (strong, nonatomic) SearchViewController *searchView;
 
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Widok, z którego został uruchomiony StatsViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
+ */
 @property (nonatomic, strong) UIViewController *parentView;
 
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Flaga określająca, czy kontroler żąda customowej animacji uruchamianej z SWRevealController
+ */
 @property (nonatomic) BOOL wantsCustomAnimation;
 
 @end

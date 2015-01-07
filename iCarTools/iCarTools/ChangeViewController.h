@@ -18,9 +18,6 @@
 
 @interface ChangeViewController : UIViewController <UITextFieldDelegate, AmazingJSONDelegate, GPSUtilitiesDelegate, AmazingJSONDelegate, UIAlertViewDelegate>
 
-@property (strong, nonatomic) CLGeocoder *geocoder;
-@property (strong, nonatomic) GPSUtilities *gpsUtilities;
-
 @property (weak, nonatomic) IBOutlet UILabel *stationNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addresLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pricesLabel;
@@ -42,11 +39,25 @@
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Zapis wizyty na stacji do bazy
+ */
 - (IBAction)saveAction:(id)sender;
+
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Anulowanie dodania wizyty
+ */
 - (IBAction)cancelAction:(id)sender;
 
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Widok, z którego został uruchomiony ChangeViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
+ */
 @property (nonatomic, strong) UIViewController *parentView;
-
-@property (nonatomic) BOOL wantsCustomAnimation;
 
 @end

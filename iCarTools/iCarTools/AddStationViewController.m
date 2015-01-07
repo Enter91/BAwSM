@@ -10,6 +10,9 @@
 
 @interface AddStationViewController ()
 
+@property (strong, nonatomic) CLGeocoder *geocoder;
+@property (strong, nonatomic) GPSUtilities *gpsUtilities;
+
 @end
 
 @implementation AddStationViewController{
@@ -27,8 +30,6 @@
     self.gpsUtilities = [GPSUtilities sharedInstance];
     self.gpsUtilities.delegate = self;
     [self.gpsUtilities startGPS];
-    
-    _wantsCustomAnimation = YES;
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
@@ -158,7 +159,7 @@
         nameError = NO;
         
         gas_station_id = [responseDict objectForKey:@"gas_station_id"];
-        gas_station_id_int = [gas_station_id integerValue];
+        gas_station_id_int = [gas_station_id intValue];
         
         if ([_pb95TextField.text isEqual:@""] && [_pb98TextField.text isEqual:@""] && [_onTextField.text isEqual:@""] && [_lpgTextField.text isEqual:@""] && [_commentTextView.text isEqual:@""]) {
 

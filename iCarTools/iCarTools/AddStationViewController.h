@@ -18,9 +18,6 @@
 
 @interface AddStationViewController : UIViewController <UITextFieldDelegate, AmazingJSONDelegate, GPSUtilitiesDelegate, AmazingJSONDelegate, UIAlertViewDelegate>
 
-@property (strong, nonatomic) CLGeocoder *geocoder;
-@property (strong, nonatomic) GPSUtilities *gpsUtilities;
-
 @property (weak, nonatomic) IBOutlet UILabel *stationNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addresLabel;
 @property (weak, nonatomic) IBOutlet UILabel *actualPositionLabel;
@@ -44,13 +41,27 @@
 @property (weak, nonatomic) IBOutlet UIButton *addStationButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Dodanie stacji do bazy
+ */
 - (IBAction)addStationAction:(id)sender;
+
+/**
+ *  @author Damian Klimaszewski
+ *
+ *  Anulowanie dodawania stacji
+ */
 - (IBAction)cancelAction:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UISwitch *actualPositionSwitch;
 
+/**
+ *  @author Damian Klimaszewski
+ *
+ *   Widok, z którego został uruchomiony AddStationViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
+ */
 @property (nonatomic, strong) UIViewController *parentView;
-
-@property (nonatomic) BOOL wantsCustomAnimation;
 
 @end

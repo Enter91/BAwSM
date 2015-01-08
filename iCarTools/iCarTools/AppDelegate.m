@@ -248,6 +248,14 @@
 
 }
 
+- (void)loginCancel {
+    if (!_returnView) {
+        [self showMainMenuScreen];
+    } else {
+        [self showReturnViewScreen];
+    }
+}
+
 - (void)loginManagerSuccess {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"isLogged"];
     [[NSUserDefaults standardUserDefaults] synchronize];

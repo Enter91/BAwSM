@@ -150,7 +150,11 @@
         [_loginButton sizeToFit];
         [_loginButton setCenter:tmpPoint];
         
-        [_registerButton setFrame:CGRectMake(30, self.view.frame.size.height-45, self.view.frame.size.width-60, 30)];
+        [_cancelButton setFrame:CGRectMake(30, self.view.frame.size.height-45, self.view.frame.size.width-60, 30)];
+        tmpPoint = _cancelButton.center;
+        [_cancelButton sizeToFit];
+        [_cancelButton setCenter:tmpPoint];
+        [_registerButton setFrame:CGRectMake(30, _cancelButton.frame.origin.y-38, self.view.frame.size.width-60, 30)];
         tmpPoint = _registerButton.center;
         [_registerButton sizeToFit];
         [_registerButton setCenter:tmpPoint];
@@ -183,10 +187,16 @@
         [_loginButton sizeToFit];
         [_loginButton setCenter:tmpPoint];
         
-        [_registerButton setFrame:CGRectMake(30, self.view.frame.size.height-45, self.view.frame.size.width - 60, 30)];
+        [_registerButton setFrame:CGRectMake(30, self.view.frame.size.height-35, self.view.frame.size.width/2.0 - 45, 30)];
         tmpPoint = _registerButton.center;
         [_registerButton sizeToFit];
         [_registerButton setCenter:tmpPoint];
+        
+        [_cancelButton setFrame:CGRectMake(self.view.frame.size.width/2 + 15, _registerButton.frame.origin.y, self.view.frame.size.width/2.0 - 45, 30)];
+        tmpPoint = _cancelButton.center;
+        [_cancelButton sizeToFit];
+        [_cancelButton setCenter:tmpPoint];
+        
     });
 }
 
@@ -257,4 +267,11 @@
     return YES;
 }
 
+- (IBAction)cancelAction:(id)sender {
+    if (_delegate) {
+        if ([_delegate respondsToSelector:@selector(loginCancel)]) {
+            [_delegate loginCancel];
+        }
+    }
+}
 @end

@@ -30,6 +30,13 @@
  */
 - (void)loginWantsRegisterUser;
 
+/*!
+ *  @author Damian Klimaszewski
+ *
+ *  @brief  Użytkownik zrezygnował z logowania
+ */
+- (void)loginCancel;
+
 @end
 
 /*!
@@ -79,6 +86,21 @@
  *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)registerAction:(id)sender;
+
+/*!
+ * @author Damian Klimaszewski
+ * @discussion Przycisk uruchamiający akcję zamknięcia ekranu logowania. Wywołuje metodę cancelAction:
+ */
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+
+/*!
+ *  @Author Damian Klimaszewski
+ *
+ *  @discussion Akcja zamknięcia okna logowania. Umożliwia powrót do głównego menu lub ostatnio otwartego kontrolera.
+ *
+ *  @param  sender Obiekt wywołujący akcję
+ */
+- (IBAction)cancelAction:(id)sender;
 
 /*!
  * @author Damian Klimaszewski

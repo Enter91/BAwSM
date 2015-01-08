@@ -121,6 +121,7 @@
  *
  *  @brief  Akcja ustawienia obiektu klasy RecorderViewController jako front view controllera
  *
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)videoRecorderOpenAction:(id)sender;
 
@@ -129,6 +130,7 @@
  *
  *  @brief  Akcja ustawienia obiektu klasy StatsViewController jako front view controllera
  *
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)statsOpenAction:(id)sender;
 
@@ -137,6 +139,7 @@
  *
  *  @brief  Akcja wysunięcia rear view controllera
  *
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)settingsOpenAction:(id)sender;
 

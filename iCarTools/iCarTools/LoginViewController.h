@@ -9,9 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "LoginManager.h"
 
+/*!
+ *  @author Damian Klimaszewski
+ *
+ *  @brief  Protokół klasy LoginViewControllerDelegate. Informuje o sukcesie logowania oraz czy nowy użytkownik chce się zarejestrować.
+ */
 @protocol LoginViewControllerDelegate <NSObject>
 
+/*!
+ *  @author Damian Klimaszewski
+ *
+ *  @brief  Logowanie powiodło się
+ */
 - (void)loginSuccess;
+
+/*!
+ *  @author Damian Klimaszewski
+ *
+ *  @brief  Użytkownik chce się zarejestrować. Delegat powinien wyświetlić kontroler rejestracji.
+ */
 - (void)loginWantsRegisterUser;
 
 @end
@@ -45,6 +61,7 @@
  *
  *  @discussion Akcja logowania. Przesyła zapytanie z podanym loginem i hasłem
  *
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)loginAction:(id)sender;
 
@@ -59,6 +76,7 @@
  *
  *  @discussion Otwiera RegisterUserViewController
  *
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)registerAction:(id)sender;
 

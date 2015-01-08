@@ -12,8 +12,20 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "GPSUtilities.h"
 
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Protokół klasy TutorialViewController
+ */
 @protocol TutorialViewControllerDelegate <NSObject>
 
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Informuje delegat o zakończeniu wyświetlania tutoriala. Uruchamiana po przejściu przez wszystkie stany.
+ *
+ *  @param wantsRegister Flaga określająca, czy użytkownik chce się zarejestrować.
+ */
 - (void)didEndTutorialWithRegistration:(BOOL)wantsRegister;
 
 @end

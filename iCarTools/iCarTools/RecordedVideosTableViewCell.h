@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Protokół klasy RecordedVideosTableViewCell. Zawiera metody uruchamiające odtwarzanie filmu i wyświetlenie mapy
+ */
 @protocol RecordedVideosTableViewCellDelegate <NSObject>
 
 /*!
@@ -31,6 +36,11 @@
 
 @end
 
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Klasa widoku pojedynczej komórki w tabeli.
+ */
 @interface RecordedVideosTableViewCell : UITableViewCell
 
 /*!

@@ -25,9 +25,25 @@
 
 /*!
  *  @author Damian Klimaszewski
- *  @discussion Własna annotacja z danymi z bazy
+ *
+ *  @brief  Własna annotacja z danymi z bazy
+ *
+ *  @param newTitle    Tytuł annotacji z nazwą stacji
+ *  @param newSubtitle Podtytuł annotacji z adresem stacji
+ *  @param location    Lokalizacja stacji
+ *  @param newCompany  Nazwa koncernu paliwowego
+ *
+ *  @return Obiekt typu MyCustomAnnotation
  */
 - (id)initWithTitle:(NSString *)newTitle Subtitle:(NSString *)newSubtitle Location:(CLLocationCoordinate2D)location Company:(NSString *)newCompany;
+
+/*!
+ *  @author Damian Klimaszewski
+ *
+ *  @brief  Tworzy annotację i zwraca jej widok.
+ *
+ *  @return Widok annotacji
+ */
 - (MKAnnotationView *) annotationView;
 
 /*!

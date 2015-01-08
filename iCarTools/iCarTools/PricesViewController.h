@@ -37,6 +37,7 @@
 /*!
  *  @author Damian Klimaszewski
  *  @discussion Przycisk powrotu do poprzedniego widoku
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)backButtonAction:(id)sender;
 

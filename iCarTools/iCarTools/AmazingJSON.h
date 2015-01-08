@@ -8,6 +8,11 @@
 
 @import Foundation;
 
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Protokół klasy AmazingJSON.
+ */
 @protocol AmazingJSONDelegate <NSObject>
 
 /*!

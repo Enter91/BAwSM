@@ -6,12 +6,6 @@
 // project.
 
 
-// SBJson
-#define COCOAPODS_POD_AVAILABLE_SBJson
-#define COCOAPODS_VERSION_MAJOR_SBJson 4
-#define COCOAPODS_VERSION_MINOR_SBJson 0
-#define COCOAPODS_VERSION_PATCH_SBJson 1
-
 // SWRevealViewController
 #define COCOAPODS_POD_AVAILABLE_SWRevealViewController
 #define COCOAPODS_VERSION_MAJOR_SWRevealViewController 2

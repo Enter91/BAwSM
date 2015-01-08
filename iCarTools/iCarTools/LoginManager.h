@@ -11,9 +11,27 @@
 #import "UserInfo.h"
 #import "KeychainItemWrapper.h"
 
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Protokół klasy LoginManager.
+ */
 @protocol LoginManagerDelegate <NSObject>
 
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Metoda informująca delegat o udanym logowaniu.
+ */
 - (void)loginManagerSuccess;
+
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Metoda informująca delegat o błędzie w trakcie logowania
+ *
+ *  @param errorMessage Komunikat błędu
+ */
 - (void)loginManagerFailWithErrorMessage:(NSString *)errorMessage;
 
 @end

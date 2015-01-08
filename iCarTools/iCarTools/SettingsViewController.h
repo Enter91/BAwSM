@@ -11,12 +11,30 @@
 #import "LoginManager.h"
 #import "LoginViewController.h"
 
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Delegat klasy SettingsViewController. Przekazuje poziom menu i numer klikniętej opcji. Informuje delegat o zamknięciu widoku przez użytkownika.
+ */
 @protocol SettingsViewControllerDelegate <NSObject>
 
 @required
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Przekazuje do delegata informację o poziomie menu i indeksie klikniętej komórki w UITableView
+ *
+ *  @param number   Indeks komórki
+ *  @param menuType Poziom menu
+ */
 - (void)clickedOption:(int)number inMenuType:(int)menuType;
 
 @optional
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Informuje delegat o tym, że widok zostanie zamknięty.
+ */
 - (void)settingsViewWillDisappear;
 
 @end

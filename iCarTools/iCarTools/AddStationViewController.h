@@ -139,12 +139,14 @@
 /*!
  *  @author Damian Klimaszewski
  *  @discussion Dodanie stacji do bazy
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)addStationAction:(id)sender;
 
 /*!
  *  @author Damian Klimaszewski
  *  @discussion Anulowanie dodawania stacji
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)cancelAction:(id)sender;
 

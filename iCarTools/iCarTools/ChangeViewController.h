@@ -127,12 +127,14 @@
 /*!
  *  @author Damian Klimaszewski
  *  @discussion Zapis wizyty na stacji do bazy
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)saveAction:(id)sender;
 
 /*!
  *  @author Damian Klimaszewski
  *  @discussion Anulowanie dodania wizyty
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)cancelAction:(id)sender;
 

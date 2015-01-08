@@ -11,10 +11,32 @@
 #import "UserInfo.h"
 #import "KeychainItemWrapper.h"
 
+/*!
+ *  @author Damian Klimaszewski
+ *
+ *  @brief  Protokół klasy RegisterUserViewController.
+ */
 @protocol RegisterUserViewControllerDelegate <NSObject>
 
+/*!
+ *  @author Damian Klimaszewski
+ *
+ *  @brief  Rejestracja zakończona pomyślnie
+ */
 - (void)registerUserSuccess;
+
+/*!
+ *  @author Damian Klimaszewski
+ *
+ *  @brief  Użytkownik już zarejestrowany. Delegat klasy powinien wyświetlić ekran logowania.
+ */
 - (void)registerUserAlreadyRegistered;
+
+/*!
+ *  @author Damian Klimaszewski
+ *
+ *  @brief  Użytkownik zrezygnował z rejestracji
+ */
 - (void)registerUserCancel;
 
 @end
@@ -121,6 +143,7 @@
  *
  *  @discussion Akcja wywołuje połączenie z bazą danych w celu zarejestrowania użytkownika
  *
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)registerAction:(id)sender;
 
@@ -128,6 +151,8 @@
  *  @Author Damian Klimaszewski
  *
  *  @discussion Akcja otwarcia widoku logowania
+ *
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)alreadyRegisteredAction:(id)sender;
 
@@ -135,6 +160,8 @@
  *  @Author Damian Klimaszewski
  *
  *  @discussion Akcja zamknięcia okna rejestracji. Umożliwia powrót do głównego menu lub ostatnio otwartego kontrolera.
+ *
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)cancelAction:(id)sender;
 

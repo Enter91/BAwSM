@@ -1,13 +1,10 @@
 PODS:
-  - SBJson (4.0.1)
   - SWRevealViewController (2.3.0)
 
 DEPENDENCIES:
-  - SBJson (~> 4.0.0)
   - SWRevealViewController
 
 SPEC CHECKSUMS:
-  SBJson: d71212c078abf4679d54b0d0565260c474e46235
   SWRevealViewController: f6d80638b8e12323e87ac79562345403a799cb77
 
 COCOAPODS: 0.35.0

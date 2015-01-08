@@ -9,6 +9,11 @@
 @import Foundation;
 @import CoreLocation;
 
+/*!
+ *  @author Michał Czwarnowski
+ *
+ *  @brief  Protokół klasy GPSUtilities.
+ */
 @protocol GPSUtilitiesDelegate <NSObject>
 
 /*!

@@ -23,7 +23,10 @@
 
 /*!
  *  @author Damian Klimaszewski
- *  @discussion inicjacja kompasu ze zmianą położenia
+ *
+ *  @discussion Inicjacja kompasu ze zmianą położenia
+ *
+ *  @param length Odległość kompasu od górnej krawędzi widoku
  */
 - (id)initWithLength:(CGFloat)length;
 

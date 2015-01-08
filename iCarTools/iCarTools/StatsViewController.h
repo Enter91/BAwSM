@@ -45,12 +45,14 @@
 /*!
  *  @author Damian Klimaszewski
  *  @discussion Przycisk przenosi użytkownika do widoku dodania stacji
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)addStationAction:(id)sender;
 
 /*!
  *  @author Damian Klimaszewski
  *  @discussion Przycisk wyszukiwania stacji na mapie
+ *  @param  sender Obiekt wywołujący akcję
  */
 - (IBAction)findStationAction:(id)sender;
 

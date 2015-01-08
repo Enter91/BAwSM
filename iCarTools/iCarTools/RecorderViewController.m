@@ -343,6 +343,7 @@
         [self.upperBackgroundView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
         [self.lowerBackgroundView setFrame:CGRectMake(0, self.view.frame.size.height-95, self.view.frame.size.width, 95)];
         titleLabel.alpha = 1.0;
+        [titleLabel setCenter:self.upperBackgroundView.center];
         [self.menuButton setFrame:CGRectMake(10, 5, 30, self.upperBackgroundView.frame.size.height-10)];
         [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
         [self.cameraRecordingButton setFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-75, 75, 75)];

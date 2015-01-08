@@ -89,8 +89,6 @@
         
         frontViewController = nil;
         settingsViewController = nil;
-    } else if ([self.window.rootViewController isKindOfClass:NSClassFromString(@"SWRevealViewController")] && ![self.viewController.frontViewController isKindOfClass:NSClassFromString(@"TutorialViewController")]) {
-        [self showMainMenuScreen];
     }
 }
 

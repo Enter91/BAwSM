@@ -12,24 +12,24 @@
 @import AssetsLibrary;
 @import MobileCoreServices;
 
-#import "LoginViewController.h"
+//#import "LoginViewController.h"
 #import <SWRevealViewController.h>
 
 #import "SettingsViewController.h"
-#import "AmazingJSON.h"
+//#import "AmazingJSON.h"
 #import "AppDelegate.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import "RecordedVideosViewController.h"
 #import "UIImage+Resizing.h"
 #import "DejalActivityView.h"
-#import "NSBag.h"
+//#import "NSBag.h"
 
 /*!
  *  @Author Michał Czwarnowski
  *
  *  @brief  Główny kontroler modułu nagrywającego. Pozwala na nagrywanie obrazu z kamery i zgłaszanie zdarzeń drogowych.
  */
-@interface RecorderViewController : UIViewController <UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate, SettingsViewControllerDelegate, AmazingJSONDelegate>
+@interface RecorderViewController : UIViewController <UINavigationControllerDelegate, GPSUtilitiesDelegate, AVCaptureFileOutputRecordingDelegate, SettingsViewControllerDelegate>
 
 /*!
  *  @Author Michał Czwarnowski
@@ -50,7 +50,7 @@
  *
  *  Widok, z którego został uruchomiony RecorderViewController. Wykorzystywany do powrotu do poprzedniego kontrolera.
  */
-@property (nonatomic, strong) UIViewController *parentView;
+//@property (nonatomic, strong) UIViewController *parentView;
 
 /*!
  *  @Author Michał Czwarnowski

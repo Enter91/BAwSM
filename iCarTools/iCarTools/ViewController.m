@@ -79,7 +79,7 @@
     }
     
     _recorderView = [[RecorderViewController alloc] initWithNibName:@"RecorderViewController" bundle:nil];
-    _recorderView.parentView = self;
+//    _recorderView.parentView = self;
     _recorderView.wantsCustomAnimation = YES;
     [self.revealViewController setFrontViewController:_recorderView animated:YES];
 }

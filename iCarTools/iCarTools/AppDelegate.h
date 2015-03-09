@@ -8,22 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import <SWRevealViewController.h>
-#import "LoginViewController.h"
+//#import "LoginViewController.h"
 #import "SettingsViewController.h"
 #import "TutorialViewController.h"
 #import "RecorderViewController.h"
-#import "StatsViewController.h"
-#import "RegisterUserViewController.h"
-#import "LoginManager.h"
+//#import "StatsViewController.h"
+//#import "RegisterUserViewController.h"
+//#import "LoginManager.h"
+#import "RecorderViewController.h"
 
 @class SWRevealViewController;
+@class RecorderViewController;
 
 /*!
  *  @Author Michał Czwarnowski
  *
  *  @brief  Główny delegat aplikacji. Jest to pierwsza klasa wywoływana z main.m po starcie aplikacji
  */
-@interface AppDelegate : UIResponder <UIApplicationDelegate, SWRevealViewControllerDelegate, TutorialViewControllerDelegate, RegisterUserViewControllerDelegate, LoginViewControllerDelegate, LoginManagerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, SWRevealViewControllerDelegate, TutorialViewControllerDelegate>
 
 /*!
  *  @Author Michał Czwarnowski
@@ -46,26 +48,28 @@
  */
 @property (strong, nonatomic) TutorialViewController *tutorial;
 
+@property (strong, nonatomic) RecorderViewController *recorderViewController;
+
 /*!
  *  @Author Michał Czwarnowski
  *
  *  @brief  Kontroler widoku logowania
  */
-@property (strong, nonatomic) LoginViewController *loginViewController;
+//@property (strong, nonatomic) LoginViewController *loginViewController;
 
 /*!
  *  @Author Michał Czwarnowski
  *
  *  @brief  Kontroler widoku rejestracji
  */
-@property (strong, nonatomic) RegisterUserViewController *registerUserViewController;
+//@property (strong, nonatomic) RegisterUserViewController *registerUserViewController;
 
 /*!
  *  @Author Michał Czwarnowski
  *
  *  @brief  Klasa zarządzająca danymi zalogowanego użytkownika
  */
-@property (strong, nonatomic) LoginManager *loginManager;
+//@property (strong, nonatomic) LoginManager *loginManager;
 
 /*!
  *  @Author Michał Czwarnowski

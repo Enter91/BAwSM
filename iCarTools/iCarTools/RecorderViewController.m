@@ -29,13 +29,13 @@
     UILabel *gpsStatusLabel;
 }
 
-@property (strong, nonatomic) NSBag *speedCameraBag;
-@property (strong, nonatomic) NSBag *crashAccidentBag;
-@property (strong, nonatomic) NSMutableArray *speedCameraSortedArray;
-@property (strong, nonatomic) NSMutableArray *crashAccidentSortedArray;
+//@property (strong, nonatomic) NSBag *speedCameraBag;
+//@property (strong, nonatomic) NSBag *crashAccidentBag;
+//@property (strong, nonatomic) NSMutableArray *speedCameraSortedArray;
+//@property (strong, nonatomic) NSMutableArray *crashAccidentSortedArray;
 
-@property CLLocationDegrees minDBLat, minDBLong, maxDBLat, maxDBLong;
-@property BOOL shouldForceStopNotification;
+//@property CLLocationDegrees minDBLat, minDBLong, maxDBLat, maxDBLong;
+//@property BOOL shouldForceStopNotification;
 
 @property (strong, nonatomic) GPSUtilities *gpsUtilities;
 
@@ -43,10 +43,10 @@
 
 //ELEMENTY INTERFEJSU
 @property (strong, nonatomic) UIButton *cameraRecordingButton;
-@property (strong, nonatomic) UIButton *speedNotificationButton;
-@property (strong, nonatomic) UIButton *crashNotificationButton;
+//@property (strong, nonatomic) UIButton *speedNotificationButton;
+//@property (strong, nonatomic) UIButton *crashNotificationButton;
 @property (strong, nonatomic) UIButton *menuButton;
-@property (strong, nonatomic) UIButton *exitButton;
+//@property (strong, nonatomic) UIButton *exitButton;
 
 @property (strong, nonatomic) UILabel *speedLabel;
 @property (strong, nonatomic) UILabel *speedUnitsLabel;
@@ -59,8 +59,8 @@
 @property (strong, nonatomic) UIImageView *whiteLine2;
 @property (strong, nonatomic) UIImageView *smallDotImageView;
 @property (strong, nonatomic) UIImageView *gpsStatusImageView;
-@property (strong, nonatomic) UIView *floatingAlertView;
-@property (strong, nonatomic) UIView *trafficAlertView;
+//@property (strong, nonatomic) UIView *floatingAlertView;
+//@property (strong, nonatomic) UIView *trafficAlertView;
 
 @end
 
@@ -85,7 +85,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    _shouldForceStopNotification = NO;
+//    _shouldForceStopNotification = NO;
     
     supportedVideoQuality = [[NSMutableArray alloc] init];
     supportedVideoQualityTranslatedNames = [[NSMutableArray alloc] init];
@@ -132,12 +132,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
-    _minDBLat = HUGE_VALF;
+    /*_minDBLat = HUGE_VALF;
     _minDBLong = HUGE_VALF;
     _maxDBLat = -HUGE_VALF;
     _maxDBLong = -HUGE_VALF;
     
-    _shouldForceStopNotification = NO;
+    _shouldForceStopNotification = NO;*/
     
     self.revealViewController.panGestureRecognizer.enabled = YES;
     self.revealViewController.tapGestureRecognizer.enabled = YES;
@@ -148,10 +148,10 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(notifyUserAboutNearestAccident) object:nil];
-    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshDatabaseOfAccidents) object:nil];
+//    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(notifyUserAboutNearestAccident) object:nil];
+//    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshDatabaseOfAccidents) object:nil];
     
-    _shouldForceStopNotification = YES;
+//    _shouldForceStopNotification = YES;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self teardownAVCapture];
@@ -163,7 +163,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     
-    _shouldForceStopNotification = NO;
+//    _shouldForceStopNotification = NO;
     
     [super viewDidAppear:animated];
     
@@ -208,7 +208,7 @@
     [self.menuButton removeTarget:[self revealViewController] action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
     [self.menuButton addTarget:[self revealViewController] action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
 
-    if (!self.exitButton) {
+    /*if (!self.exitButton) {
         self.exitButton = [[UIButton alloc] initWithFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
         [self.exitButton setImage:[UIImage imageNamed:@"exit-50"] forState:UIControlStateNormal];
     }
@@ -218,7 +218,7 @@
     }
     
     [self.exitButton removeTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
-    [self.exitButton addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
+    [self.exitButton addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];*/
     
     if (!self.cameraRecordingButton) {
         self.cameraRecordingButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-75, 75, 75)];
@@ -276,7 +276,7 @@
         [self.view addSubview:self.speedUnitsLabel];
     }
     
-    if (!self.speedNotificationButton) {
+    /*if (!self.speedNotificationButton) {
         self.speedNotificationButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+4, 79, 37)];
         [self.speedNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.speedNotificationButton.center.y)];
         [self.speedNotificationButton setImage:[UIImage imageNamed:@"suszarka"] forState:UIControlStateNormal];
@@ -290,7 +290,7 @@
         [self.crashNotificationButton setImage:[UIImage imageNamed:@"wypadek"] forState:UIControlStateNormal];
         [self.crashNotificationButton addTarget:self action:@selector(submitAccidentPosition) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.crashNotificationButton];
-    }
+    }*/
     
     if (!self.gpsStatusImageView) {
         self.gpsStatusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps_searching-256"]];
@@ -345,24 +345,24 @@
         titleLabel.alpha = 1.0;
         [titleLabel setCenter:self.upperBackgroundView.center];
         [self.menuButton setFrame:CGRectMake(10, 5, 30, self.upperBackgroundView.frame.size.height-10)];
-        [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
+//        [self.exitButton setFrame:CGRectMake(self.upperBackgroundView.frame.size.width-34, 5, 30, self.upperBackgroundView.frame.size.height-10)];
         [self.cameraRecordingButton setFrame:CGRectMake((self.view.frame.size.width-75)/2, self.view.frame.size.height-10-75, 75, 75)];
         [self.cameraRecordingButton setCenter:self.lowerBackgroundView.center];
         [self.whiteLine1 setFrame:CGRectMake(10, self.lowerBackgroundView.center.y-1, (self.view.frame.size.width-75.0)/2-20, 2)];
         [self.whiteLine2 setFrame:CGRectMake(self.cameraRecordingButton.frame.origin.x + self.cameraRecordingButton.frame.size.width + 10, self.lowerBackgroundView.center.y-1, (self.view.frame.size.width-75.0)/2-20, 2)];
         [self.speedUnitsLabel setFrame:CGRectMake(self.cameraRecordingButton.center.x - 75/2.0 - 35, self.view.frame.size.height-68-27, 25, 27)];
         [self.speedLabel setFrame:CGRectMake(10, self.view.frame.size.height-47-48, self.speedUnitsLabel.frame.origin.x - 10, 48)];
-        [self.speedNotificationButton setFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+4, 79, 37)];
+        /*[self.speedNotificationButton setFrame:CGRectMake(0, self.lowerBackgroundView.frame.origin.y+4, 79, 37)];
         [self.speedNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.speedNotificationButton.center.y)];
         [self.crashNotificationButton setFrame:CGRectMake(0, self.whiteLine2.frame.origin.y+6, 79, 37)];
-        [self.crashNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.crashNotificationButton.center.y)];
+        [self.crashNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.crashNotificationButton.center.y)];*/
         [self.gpsStatusImageView setFrame:CGRectMake(_whiteLine1.frame.origin.x, self.whiteLine1.frame.origin.y+6, 37, 37)];
         //[self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.gpsStatusImageView.center.y)];
         [gpsStatusLabel setFrame:CGRectMake(37+_whiteLine1.frame.origin.x, _whiteLine1.frame.origin.y+_whiteLine1.frame.size.height, _whiteLine1.frame.size.width-37, 46)];
         gpsStatusLabel.alpha = 1.0;
-        if (_trafficAlertView) {
-            [_trafficAlertView setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)];
-        }
+//        if (_trafficAlertView) {
+//            [_trafficAlertView setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)];
+//        }
     });
 }
 
@@ -373,25 +373,25 @@
         [self.upperBackgroundView setFrame:CGRectMake(0, 0, 44, self.view.frame.size.height)];
         [self.lowerBackgroundView setFrame:CGRectMake(self.view.frame.size.width-95, 0, 95, self.view.frame.size.height)];
         [self.menuButton setFrame:CGRectMake(5, 10, 34, 34)];
-        [self.exitButton setFrame:CGRectMake(5, self.view.frame.size.height-55, 34, 34)];        [self.cameraRecordingButton setFrame:CGRectMake(self.view.frame.size.width-10-75, (self.view.frame.size.height-75)/2, 75, 75)];
+//        [self.exitButton setFrame:CGRectMake(5, self.view.frame.size.height-55, 34, 34)];        [self.cameraRecordingButton setFrame:CGRectMake(self.view.frame.size.width-10-75, (self.view.frame.size.height-75)/2, 75, 75)];
         [self.cameraRecordingButton setCenter:self.lowerBackgroundView.center];
         [self.whiteLine1 setFrame:CGRectMake(self.view.frame.size.width - 90, (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
         [self.whiteLine2 setFrame:CGRectMake(self.view.frame.size.width - 90, self.view.frame.size.height - (self.view.frame.size.height-75)/4.0 - 1, 85, 2)];
         [self.speedLabel setFrame:CGRectMake(self.view.frame.size.width - 85, 0, 60, self.whiteLine1.frame.origin.y)];
         [self.speedUnitsLabel setFrame:CGRectMake(self.view.frame.size.width - 25, 0, 25, 27)];
         
-        [self.speedNotificationButton setFrame:CGRectMake(0, 0, 79, 37)];
+        /*[self.speedNotificationButton setFrame:CGRectMake(0, 0, 79, 37)];
         [self.speedNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.cameraRecordingButton.frame.origin.y + self.cameraRecordingButton.frame.size.height + (self.whiteLine2.frame.origin.y - self.cameraRecordingButton.frame.origin.y - self.cameraRecordingButton.frame.size.height)/2.0)];
         
         [self.crashNotificationButton setFrame:CGRectMake(0, 0, 79, 37)];
         [self.crashNotificationButton setCenter:CGPointMake(self.whiteLine2.center.x, self.whiteLine2.frame.origin.y + self.whiteLine2.frame.size.height + (self.view.frame.size.height - (self.whiteLine2.frame.origin.y+self.whiteLine2.frame.size.height))/2.0)];
-        
+        */
         [self.gpsStatusImageView setFrame:CGRectMake(0.0, self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height + (self.cameraRecordingButton.frame.origin.y - (self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height))/2.0, 37, 37)];
         [self.gpsStatusImageView setCenter:CGPointMake(self.whiteLine1.center.x, self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height + (self.cameraRecordingButton.frame.origin.y - (self.whiteLine1.frame.origin.y + self.whiteLine1.frame.size.height))/2.0)];
         
-        if (_trafficAlertView) {
-            [_trafficAlertView setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)];
-        }
+//        if (_trafficAlertView) {
+//            [_trafficAlertView setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)];
+//        }
     });
 }
 
@@ -761,9 +761,9 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     mCameraView.alpha = 0.0;
-    if (_floatingAlertView) {
-        _floatingAlertView.alpha = 0.0;
-    }
+//    if (_floatingAlertView) {
+//        _floatingAlertView.alpha = 0.0;
+//    }
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self setFramesForInterface:toInterfaceOrientation];
 }
@@ -774,9 +774,9 @@
     
     mCameraView.alpha = 0.0;
     
-    if (_floatingAlertView) {
-        [self hideFloatingAlertView];
-    }
+//    if (_floatingAlertView) {
+//        [self hideFloatingAlertView];
+//    }
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([session isRunning]) {
@@ -868,7 +868,7 @@
 }
 
 #pragma mark- Obsługa przycisków zdarzeń
-- (void)submitAccidentPosition {
+/*- (void)submitAccidentPosition {
     //accident_type_id 2
     
     if ([[NSUserDefaults standardUserDefaults] valueForKey:@"isLogged"] == [NSNumber numberWithBool:YES] && [[UserInfo sharedInstance] login].length > 0) {
@@ -1230,7 +1230,7 @@
             _trafficAlertView = nil;
         }];
     }
-}
+}*/
 
 /*!
  *  @Author Michał Czwarnowski
@@ -1239,7 +1239,7 @@
  *
  *  @param type 0 - błąd, 1 - poprawne dodanie zdarzenia, 2 - odświeżenie info z bazy, 3 - niezalogowany
  */
-- (void)showFloatingAlertViewWithType:(int)type {
+/*- (void)showFloatingAlertViewWithType:(int)type {
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideFloatingAlertView) object:nil];
     
@@ -1309,7 +1309,7 @@
             _floatingAlertView = nil;
         }];
     }
-}
+}*/
 
 #pragma mark- GPSUtilities Delegates
 - (void)locationUpdate:(CLLocation *)location {
@@ -1324,11 +1324,11 @@
         }
     });
     
-    if (location.coordinate.latitude >= _minDBLat && location.coordinate.latitude <= _maxDBLat && location.coordinate.longitude >= _minDBLong && location.coordinate.longitude <= _maxDBLat) {
+    /*if (location.coordinate.latitude >= _minDBLat && location.coordinate.latitude <= _maxDBLat && location.coordinate.longitude >= _minDBLong && location.coordinate.longitude <= _maxDBLat) {
         //jesteśmy w kwadracie, no update
     } else {
          [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:5.0];
-    }
+    }*/
     
     if (_isRecording && _pointsOnTheRouteArray) {
         NSLog(@"Dodano lokalizację: %@", location);
@@ -1346,7 +1346,7 @@
     if (state == 2) {
         self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_receiving-256"];
         [gpsStatusLabel setText:NSLocalizedString(@"GPS OK", nil)];
-        [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:5.0];
+//        [self performSelector:@selector(refreshDatabaseOfAccidents) withObject:nil afterDelay:5.0];
         
     } else if (state == 1) {
         self.gpsStatusImageView.image = [UIImage imageNamed:@"gps_searching-256"];
@@ -1369,12 +1369,12 @@
 }
 
 - (void)exit {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideTrafficAlert) object:nil];
-    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(notifyUserAboutNearestAccident) object:nil];
-    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshDatabaseOfAccidents) object:nil];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideFloatingAlertView) object:nil];
-    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockTrafficAccidentsButtons) object:nil];
-    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockTrafficAccidentsButtons) object:nil];
+//    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideTrafficAlert) object:nil];
+//    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(notifyUserAboutNearestAccident) object:nil];
+//    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshDatabaseOfAccidents) object:nil];
+//    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideFloatingAlertView) object:nil];
+//    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockTrafficAccidentsButtons) object:nil];
+//    [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(unlockTrafficAccidentsButtons) object:nil];
     [self teardownAVCapture];
     [self.gpsUtilities stopGPS];
     self.gpsUtilities.delegate = nil;
@@ -1383,8 +1383,8 @@
     _pointsOnTheRouteArray = nil;
     [self orientationUnlock];
     [((SettingsViewController *)self.revealViewController.rearViewController) setDelegate:nil];
-    [self.revealViewController setFrontViewController:_parentView animated:YES];
-    _parentView = nil;
+//    [self.revealViewController setFrontViewController:_parentView animated:YES];
+//    _parentView = nil;
 }
 
 - (NSString *)getStringDateFromCurrentDate {

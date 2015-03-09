@@ -38,7 +38,7 @@
     [super viewDidLoad];
     
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
-    UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Recorded videos", nil)];
+    UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Videos", nil)];
     navigationItem.leftBarButtonItem = barButton;
     [_navigationBar pushNavigationItem:navigationItem animated:NO];
     

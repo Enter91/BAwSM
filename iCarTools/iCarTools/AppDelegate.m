@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+//#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -22,15 +22,15 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"isLogged"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"isLogged"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self setRevealViewController];
     
-    if (!_loginManager) {
-        _loginManager = [[LoginManager alloc] init];
-    }
-    [_loginManager setDelegate:self];
+//    if (!_loginManager) {
+//        _loginManager = [[LoginManager alloc] init];
+//    }
+//    [_loginManager setDelegate:self];
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == [NSNumber numberWithBool:NO] || [[NSUserDefaults standardUserDefaults] objectForKey:@"tutorialShowed"] == nil) {
         _tutorial = [[TutorialViewController alloc] init];
@@ -38,9 +38,9 @@
         
         [self.viewController setFrontViewController:_tutorial animated:NO];
         
-    } else {
+    }/* else {
         [_loginManager loginUser];
-    }
+    }*/
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -49,16 +49,20 @@
 - (void)setRevealViewController {
     
     if (![self.window.rootViewController isKindOfClass:NSClassFromString(@"SWRevealViewController")]) {
-        ViewController *frontViewController = [[ViewController alloc] init];
+        
+        if (self.recorderViewController) {
+            self.recorderViewController = nil;
+        }
+        
+        self.recorderViewController = [[RecorderViewController alloc] init];
         SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
         
-        SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:settingsViewController frontViewController:frontViewController];
+        SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:settingsViewController frontViewController:self.recorderViewController];
         revealController.delegate = self;
         
-        frontViewController = nil;
         settingsViewController = nil;
         
-        [self updateSettingsViewControllerLoginInfo];
+        //[self updateSettingsViewControllerLoginInfo];
         
         _orientationIsLocked = NO;
         
@@ -68,7 +72,7 @@
                 self.window.rootViewController = self.viewController;
                 _tutorial = nil;
             }];
-        } else if (_registerUserViewController) {
+        }/* else if (_registerUserViewController) {
             [_registerUserViewController presentViewController:revealController animated:YES completion:^{
                 self.viewController = revealController;
                 self.window.rootViewController = self.viewController;
@@ -82,21 +86,26 @@
                 _loginViewController.delegate = nil;
                 _loginViewController = nil;
             }];
-        } else {
+        }*/ else {
             self.viewController = revealController;
             self.window.rootViewController = self.viewController;
         }
         
-        frontViewController = nil;
         settingsViewController = nil;
     }
 }
 
 - (void)showMainMenuScreen {
     _returnView = nil;
-    ViewController *frontViewController = [[ViewController alloc] init];
-    [self.viewController setFrontViewController:frontViewController animated:YES];
-    frontViewController = nil;
+    
+    if ([self.viewController.frontViewController isKindOfClass:NSClassFromString(@"RecorderViewController")]) {
+        //nic nie robimy
+    } else if (self.recorderViewController) {
+        [self.viewController setFrontViewController:self.recorderViewController animated:YES];
+    } else {
+        self.recorderViewController = [[RecorderViewController alloc] init];
+        [self.viewController setFrontViewController:self.recorderViewController animated:YES];
+    }
 }
 
 - (void)showReturnViewScreen {
@@ -151,7 +160,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"tutorialShowed"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    if (wantsRegister) {
+    /*if (wantsRegister) {
         _registerUserViewController = [[RegisterUserViewController alloc] init];
         _registerUserViewController.delegate = self;
         
@@ -163,10 +172,11 @@
 //        }];
     } else {
         [self showMainMenuScreen];
-    }
+    }*/
+    [self showMainMenuScreen];
 }
 
-- (void)showLoginViewScreen {
+/*- (void)showLoginViewScreen {
     
     if (_returnView) {
         _returnView = nil;
@@ -184,10 +194,10 @@
     [_loginViewController setDelegate:self];
     [self.viewController pushFrontViewController:_loginViewController animated:YES];
     
-}
+}*/
 
 #pragma mark- Delegaty RegisterView, LoginView i LoginManager
-- (void)registerUserSuccess {
+/*- (void)registerUserSuccess {
     if (!_returnView) {
         [self showMainMenuScreen];
     } else {
@@ -276,7 +286,7 @@
         NSLog(@"%@", [NSString stringWithFormat:@"%@ %@", [[UserInfo sharedInstance] first_name], [[UserInfo sharedInstance] last_name]]);
         [(SettingsViewController *)self.viewController.rearViewController setUserInfoWithName:[NSString stringWithFormat:@"%@ %@", [[UserInfo sharedInstance] first_name], [[UserInfo sharedInstance] last_name]]];
     }
-}
+}*/
 
 #pragma mark- Rotacje ekranu
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {

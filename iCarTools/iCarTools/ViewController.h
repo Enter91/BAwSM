@@ -11,7 +11,7 @@
 #import "StatsViewController.h"
 #import <SWRevealViewController.h>
 #import "CustomAnimationController.h"
-
+//#import "SettingsViewController.h"
 
 @interface ViewController : UIViewController <UINavigationControllerDelegate, SWRevealViewControllerDelegate>//, SettingsViewControllerDelegate>
 
